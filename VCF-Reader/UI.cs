@@ -66,7 +66,7 @@ namespace VCF_Reader
             {
                 foreach (DataGridViewCell cell in row.Cells)
                 {
-                    if (cell.Value.ToString().Contains(txt_search.Text))
+                    if (cell.Value.ToString().ToLower().Contains(txt_search.Text.ToLower()))
                         matchedRows.Add(row);
                 }
             }

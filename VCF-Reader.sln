@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCF-Reader", "VCF-Reader\VCF-Reader.csproj", "{2E91316B-811C-402A-908E-6AD879C5F7F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vCardLib", "vCardLib\vCardLib.csproj", "{1C234BC6-282E-455F-A46F-A472575DAECE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2E91316B-811C-402A-908E-6AD879C5F7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E91316B-811C-402A-908E-6AD879C5F7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E91316B-811C-402A-908E-6AD879C5F7F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C234BC6-282E-455F-A46F-A472575DAECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C234BC6-282E-455F-A46F-A472575DAECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C234BC6-282E-455F-A46F-A472575DAECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C234BC6-282E-455F-A46F-A472575DAECE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
