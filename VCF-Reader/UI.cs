@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using vCardLib;
@@ -17,8 +18,11 @@ namespace VCF_Reader
             if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.LastFilePath))
                 if (Properties.Settings.Default.LastFilePath.Contains(".vcf"))
                 {
-                    LoadVCF(Properties.Settings.Default.LastFilePath);
-                    lbl_file_path.Text = Properties.Settings.Default.LastFilePath;
+                    if (File.Exists(Properties.Settings.Default.LastFilePath))
+                    {
+                        LoadVCF(Properties.Settings.Default.LastFilePath);
+                        lbl_file_path.Text = Properties.Settings.Default.LastFilePath;
+                    }
                 }
         }
 
