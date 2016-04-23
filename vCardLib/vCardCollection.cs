@@ -14,14 +14,6 @@ namespace vCardLib
             List.Remove(vcard);
         }
 
-        public void RemoveAt(int index)
-        {
-            if (index < 0 || index >= List.Count)
-                throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-            else
-                List.RemoveAt(index);
-        }
-
         public vCard this[int index]
         {
             get

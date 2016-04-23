@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Thought.vCards;
+using vCardLib;
 
 namespace VCF_Reader
 {
@@ -44,14 +44,18 @@ namespace VCF_Reader
         private void LoadVCF(string filePath)
         {
             dgv_display.Rows.Clear();
-            vCard vcard = new vCard(filePath);
-            object[] row = new object[5];
-            row[0] = vcard.FamilyName;
-            row[1] = vcard.GivenName;
-            row[2] = vcard.EmailAddresses.Count > 0 ? vcard.EmailAddresses[0].ToString() : "";
-            row[3] = vcard.Phones.Count() > 0 ? vcard.Phones[0].FullNumber : "";
-            row[4] = vcard.Phones.Count() > 1 ? vcard.Phones[1].FullNumber : "";
-            dgv_display.Rows.Add(row);
+            vCardCollection vcardCollection = vCard.FromFile(filePath);
+
+            foreach(vCard vcard in vcardCollection)
+            {
+                object[] row = new object[5];
+                row[0] = vcard.Surname;
+                row[1] = vcard.Firstname;
+                row[2] = vcard.EmailAddresses.Count > 0 ? vcard.EmailAddresses[0].Email.Address : "";
+                row[3] = vcard.PhoneNumbers.Count > 0 ? vcard.PhoneNumbers[0].Number : "";
+                row[4] = vcard.PhoneNumbers.Count > 1 ? vcard.PhoneNumbers[1].Number : "";
+                dgv_display.Rows.Add(row);
+            }
 
             foreach (DataGridViewRow dRow in dgv_display.Rows)
             {
@@ -66,8 +70,9 @@ namespace VCF_Reader
             {
                 foreach (DataGridViewCell cell in row.Cells)
                 {
-                    if (cell.Value.ToString().ToLower().Contains(txt_search.Text.ToLower()))
-                        matchedRows.Add(row);
+                    if (cell.Value != null)
+                        if (cell.Value.ToString().ToLower().Contains(txt_search.Text.ToLower()))
+                            matchedRows.Add(row);
                 }
             }
             dgv_display.Rows.Clear();

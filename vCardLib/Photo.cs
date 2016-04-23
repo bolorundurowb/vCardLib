@@ -4,6 +4,6 @@ namespace vCardLib
 {
     public class Photo
     {
-        public Bitmap Photo { get; set; }
+        public Bitmap Picture { get; set; }
     }
 }

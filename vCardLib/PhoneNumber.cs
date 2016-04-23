@@ -8,14 +8,15 @@ namespace vCardLib
 {
     public class PhoneNumber
     {
-        public long Number { get; set; }
+        public string Number { get; set; }
         public PhoneNumberType Type { get; set; }
     }
 
-    internal enum PhoneNumberType
+    public enum PhoneNumberType
     {
         Work,
         Cell,
-        Home
+        Home,
+        Voice
     }
 }

@@ -48,9 +48,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thought.vCards">
-      <HintPath>..\..\..\..\..\Downloads\Compressed\Thought-vCards-04\Solution\Thought.vCards\bin\Debug\Thought.vCards.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UI.cs">
@@ -89,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="vcard~4.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vCardLib\vCardLib.csproj">
+      <Project>{1c234bc6-282e-455f-a46f-a472575daece}</Project>
+      <Name>vCardLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

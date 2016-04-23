@@ -9,7 +9,7 @@ namespace vCardLib
         public EmailType Type { get; set; }
     }
 
-    internal enum EmailType
+    public enum EmailType
     {
         Work,
         Cell,

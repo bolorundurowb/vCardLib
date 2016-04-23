@@ -66,7 +66,7 @@
             // 
             this.lbl_file_path.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbl_file_path.Location = new System.Drawing.Point(84, 10);
+            this.lbl_file_path.Location = new System.Drawing.Point(84, 12);
             this.lbl_file_path.Name = "lbl_file_path";
             this.lbl_file_path.Size = new System.Drawing.Size(447, 18);
             this.lbl_file_path.TabIndex = 2;
