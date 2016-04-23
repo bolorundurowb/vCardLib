@@ -1,4 +1,11 @@
-﻿using System;
+﻿
+/* =======================================================================
+ * vCard Test application for .NET
+ * Copyright (c) 2016 Bolorunduro Winner-Timothy http://www.github.com/VCF-Reader
+ * .
+ * ======================================================================= */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

@@ -1,4 +1,11 @@
-﻿using System;
+﻿
+/* =======================================================================
+ * vCard Library for .NET
+ * Copyright (c) 2016 Bolorunduro Winner-Timothy http://www.github.com/VCF-Reader
+ * .
+ * ======================================================================= */
+
+using System;
 using System.Drawing;
 using System.IO;
 using System.ComponentModel;
