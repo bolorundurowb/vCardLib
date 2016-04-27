@@ -50,7 +50,7 @@ namespace vCardLibTest
             vcard.Firstname = "Simi";
             vcard.Version = 2.1F;
             vcard.Surname = "Sis";
-            vcard.FullName = "Sis Simi";
+            vcard.FormattedName = "Sis Simi";
             vcard.Othernames = " ";
             PhoneNumber num1 = new PhoneNumber();
             num1.Number = "07038305040";

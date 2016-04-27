@@ -30,6 +30,12 @@ namespace vCardLib
         Work,
         Cell,
         Home,
-        Voice
+        Voice,
+        Text,
+        Fax,
+        Pager,
+        Video,
+        TextPhone,
+        MainNumber
     }
 }

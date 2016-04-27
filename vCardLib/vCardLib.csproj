@@ -43,8 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Address.cs" />
+    <Compile Include="AddressCollection.cs" />
     <Compile Include="EmailAddress.cs" />
     <Compile Include="EmailAddressCollection.cs" />
+    <Compile Include="Expertise.cs" />
+    <Compile Include="ExpertiseCollection.cs" />
+    <Compile Include="Hobby.cs" />
+    <Compile Include="HobbyCollection.cs" />
+    <Compile Include="Interest.cs" />
+    <Compile Include="InterestCollection.cs" />
     <Compile Include="PhoneNumber.cs" />
     <Compile Include="PhoneNumberCollection.cs" />
     <Compile Include="Photo.cs" />
