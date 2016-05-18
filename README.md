@@ -1,4 +1,6 @@
 # VCF-Reader
+[![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/VCF-Reader/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/VCF-Reader?branch=master)
+
 This tool was developed because i recently lost my android phone but was blessed to have created a VCF backup of all my contacts. VCF Reader loads contacts from a vcf file into a table which allows sorting and case insensitive searching. The table shows the Surname, the Firstname, one email address and two Phone numbers
 
 #vCardLib
