@@ -154,7 +154,7 @@ namespace vCardLib
                             {
                                 vcard.Version = float.Parse(contactDetail.Replace("VERSION:", "").Trim());
                             }
-                            if (vcard.Version == 2.1)
+                            if (vcard.Version.Equals(2.1F))
                             {
                                 if (contactDetail.StartsWith("FN:"))
                                 {
@@ -471,7 +471,11 @@ namespace vCardLib
                                         vcard.Kind = ContactType.Device;
                                 }
                             }
-                            else if (vcard.Version == 3.0)
+                            else if (vcard.Version.Equals(3.0F))
+                            {
+
+                            }
+                            else if (vcard.Version.Equals(4.0F))
                             {
 
                             }
