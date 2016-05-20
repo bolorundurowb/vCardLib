@@ -47,6 +47,7 @@
     <Compile Include="AddressCollection.cs" />
     <Compile Include="EmailAddress.cs" />
     <Compile Include="EmailAddressCollection.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Expertise.cs" />
     <Compile Include="ExpertiseCollection.cs" />
     <Compile Include="Hobby.cs" />
