@@ -7,7 +7,7 @@ This tool was developed because I recently lost my android phone but was blessed
 
 ##vCardLib
 
-This is the library that powers the VCF Reader. Unlike all other vCard libraries for .NET that I found, this library supports reading multiple contacts from a single vcf file and returns the contact objects in a vCardCollection. The library currently supports only vCard version 2.1 (will provide a curated list of properties soon), work on adding vCard 3.0 support is ongoing.
+This is the library that powers the VCF Reader. Unlike all other vCard libraries for .NET that I found, this library supports reading multiple contacts from a single vcf file and returns the contact objects in a vCardCollection. The library currently **supports only vCard version 2.1** (will provide a curated list of properties soon), work on adding vCard 3.0 support is ongoing.
 
 ####How to use the library:
 
@@ -20,14 +20,18 @@ Then add this using command:
 ```csharp
 using vCardLib;
 ```
-In your class you call the static method 'FromFile' and pass a string or StreamReader object to it:
+In your class you call the static method 'FromFile' and pass a string containing a path to it:
 
 ```csharp
-string filePath = //path to vcf file
+string filePath = //path to vcf file;
 
 vCardCollection contacts = vCard.FromFile(filePath);
 ```
-
+ Or pass a  StreamReader object to it:
+ ```csharp
+StreamReader sr = //generate a streamreader somehow;
+vCardCollection contacts = vCard.FromStream(sr);
+ ```
 
 Iterate over the collection and pick the vCard objects:
 
