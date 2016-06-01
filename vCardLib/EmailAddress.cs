@@ -30,7 +30,7 @@ namespace vCardLib
     public enum EmailType
     {
         Work,
-        Cell,
+        Internet,
         Home
     }
 }

@@ -30,7 +30,7 @@ vCardCollection contacts = vCard.FromFile(filePath);
  Or pass a  StreamReader object to it:
  ```csharp
 StreamReader sr = //generate a streamreader somehow;
-vCardCollection contacts = vCard.FromStream(sr);
+vCardCollection contacts = vCard.FromStreamReader(sr);
  ```
 
 Iterate over the collection and pick the vCard objects:

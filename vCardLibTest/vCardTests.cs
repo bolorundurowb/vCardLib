@@ -36,32 +36,71 @@ namespace vCardLibTest
         [ExpectedException(typeof(InvalidOperationException))]
         public void vCardWithInvalidFileStructure()
         {
-            string filePath = @"Test.txt";
-            vCardCollection vcardCollection = vCard.FromFile(filePath);
+
+            string file = @"VERSION:2.1
+N:Gump;Forrest
+FN:Forrest Gump
+ORG:Bubba Gump Shrimp Co.
+TITLE:Shrimp Man
+PHOTO;GIF:http://www.example.com/dir_photos/my_photo.gif
+TEL;WORK;VOICE:(111) 555-1212
+TEL;HOME;VOICE:(404) 555-1212
+ADR;WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
+LABEL;WORK;ENCODING=QUOTED-PRINTABLE:100 Waters Edge=0D=0ABaytown, LA 30314=0D=0AUnited States of America
+ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
+LABEL;HOME;ENCODING=QUOTED-PRINTABLE:42 Plantation St.=0D=0ABaytown, LA 30314=0D=0AUnited States of America
+EMAIL;PREF;INTERNET:forrestgump@example.com
+REV:20080424T195243Z";
+            Stream stream = GenerateStreamFromString(file);
+            vCardCollection vcardCollection = vCard.FromStreamReader(new StreamReader(stream));
         }
 
         [TestMethod]
         public void vCardWithValidFile()
         {
-            string filePath = @"Test.vcf";
-            vCardCollection vcardCollection = vCard.FromFile(filePath);
+            string file = @"BEGIN:VCARD
+VERSION:2.1
+N:Gump;Forrest
+FN:Forrest Gump
+TEL;WORK;VOICE:(111) 555-1212
+TEL;HOME;VOICE:(404) 555-1212
+ADR;WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
+ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
+EMAIL;PREF;INTERNET:forrestgump@example.com
+END:VCARD";
+            Stream stream = GenerateStreamFromString(file);
+            vCardCollection vcardCollection = vCard.FromStreamReader(new StreamReader(stream));
 
             vCard vcard = new vCard();
-            vcard.Firstname = "Simi";
+            vcard.Firstname = "Gump";
             vcard.Version = 2.1F;
-            vcard.Surname = "Sis";
-            vcard.FormattedName = "Sis Simi";
+            vcard.Surname = "Forrest";
+            vcard.FormattedName = "Forrest Gump";
             vcard.Othernames = " ";
             PhoneNumber num1 = new PhoneNumber();
-            num1.Number = "07038305040";
-            num1.Type = PhoneNumberType.Cell;
+            num1.Number = "(111) 555-1212";
+            num1.Type = PhoneNumberType.Work;
             vcard.PhoneNumbers.Add(num1);
             PhoneNumber num2 = new PhoneNumber();
-            num2.Number = "09038685791";
-            num2.Type = PhoneNumberType.Cell;
+            num2.Number = "(404) 555-1212";
+            num2.Type = PhoneNumberType.Home;
             vcard.PhoneNumbers.Add(num2);
+            EmailAddress email = new EmailAddress();
+            email.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
+            email.Type = EmailType.Internet;
+            vcard.EmailAddresses.Add(email);
 
             Assert.AreEqual(vcard, vcardCollection[0], "The contacts did not match");
+        }
+
+        public Stream GenerateStreamFromString(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
     }
 }

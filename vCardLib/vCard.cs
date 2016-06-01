@@ -161,14 +161,21 @@ namespace vCardLib
                                     string photoString = contactDetail + "\r\n";
                                     while (true)
                                     {
-                                        if (contactDetails[i + 1].StartsWith("PHOTO;"))
+                                        if (i >= contactDetails.Length)
                                         {
-                                            break;
+                                            if (contactDetails[i + 1].StartsWith("PHOTO;"))
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                i++;
+                                                photoString += contactDetails[i] + "\r\n";
+                                            }
                                         }
                                         else
                                         {
-                                            i++;
-                                            photoString += contactDetails[i] + "\r\n";
+                                            break;
                                         }
                                     }
                                     ProcessV2_1(ref vcard, contactDetail);
@@ -351,7 +358,7 @@ namespace vCardLib
                     emailString = emailString.Replace("INTERNET:", "");
                     EmailAddress emailAddress = new EmailAddress();
                     emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
-                    emailAddress.Type = EmailType.Cell;
+                    emailAddress.Type = EmailType.Internet;
                     vcard.EmailAddresses.Add(emailAddress);
                 }
                 else if (emailString.StartsWith("HOME:"))
@@ -509,7 +516,14 @@ namespace vCardLib
             var toCompare = obj as vCard;
             if (toCompare == null)
                 return false;
-            return this.Firstname == toCompare.Firstname && this.Surname == toCompare.Surname && this.FormattedName == toCompare.FormattedName && this.PhoneNumbers.Count == toCompare.PhoneNumbers.Count && this.EmailAddresses.Count == toCompare.EmailAddresses.Count && this.BirthDay == toCompare.BirthDay && this.BirthPlace == toCompare.BirthPlace && this.DeathPlace == toCompare.DeathPlace && this.Expertises.Count == toCompare.Expertises.Count && this.Gender == toCompare.Gender;
+            return this.Firstname == toCompare.Firstname
+                && this.Surname == toCompare.Surname
+                && this.FormattedName == toCompare.FormattedName
+                && this.PhoneNumbers.Count == toCompare.PhoneNumbers.Count
+                && this.EmailAddresses.Count == toCompare.EmailAddresses.Count
+                && this.BirthPlace == toCompare.BirthPlace
+                && this.DeathPlace == toCompare.DeathPlace
+                && this.Expertises.Count == toCompare.Expertises.Count;
         }
     }
 }
