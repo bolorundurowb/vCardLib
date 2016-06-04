@@ -41,4 +41,4 @@ foreach(vCard contact in contacts)
   Console.WriteLine(contact.FormattedName);
 }
 ```
-complete documentation on [github.io](http://www.bolorundurowb.github.io/VCF-Reader/)
+complete documentation on [github.io](http://bolorundurowb.github.io/VCF-Reader/)
