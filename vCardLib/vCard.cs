@@ -115,17 +115,9 @@ namespace vCardLib
         /// <returns>A collection of vCard objects, each with a contacts' full details</returns>
         public static vCardCollection FromFile(string filepath)
         {
-            if (string.IsNullOrEmpty(filepath))
-                throw new ArgumentNullException("The filepath supplied is null or empty");
-            else if (!File.Exists(filepath))
-                throw new FileNotFoundException("The specified file at the filepath does not exist");
-            else
-            {
-                using (StreamReader streamReader = new StreamReader(filepath))
-                {
-                    return FromStreamReader(streamReader);
-                }
-            }
+            vCardCollection vcardCollection = new vCardCollection();
+            //TODO: implement card getting logic
+            return vcardCollection;
         }
 
         public static vCardCollection FromStreamReader(StreamReader stream)
@@ -181,14 +173,6 @@ namespace vCardLib
                                     ProcessV2_1(ref vcard, contactDetail);
                                 }
                             }
-                            else if (vcard.Version.Equals(3.0F))
-                            {
-                                ProcessV3_0(ref vcard, contactDetail);
-                            }
-                            else if (vcard.Version.Equals(4.0F))
-                            {
-
-                            }
                         }
                         contacts.Add(vcard);
                     }
@@ -199,15 +183,7 @@ namespace vCardLib
 
         private static void ProcessV2_1(ref vCard vcard, string contactDetail)
         {
-            if (contactDetail.StartsWith("FN:"))
-            {
-                vcard.FormattedName = contactDetail.Replace("FN:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("URL:"))
-            {
-                vcard.URL = contactDetail.Replace("URL:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("GENDER:"))
+             if (contactDetail.StartsWith("GENDER:"))
             {
                 string genderString = contactDetail.Replace("GENDER:", "").Trim();
                 if (genderString.ToLower() == "male")
@@ -216,48 +192,6 @@ namespace vCardLib
                     vcard.Gender = GenderType.Female;
                 else
                     vcard.Gender = GenderType.Other;
-            }
-            else if (contactDetail.StartsWith("ORG:"))
-            {
-                vcard.Organization = contactDetail.Replace("ORG:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("TITLE:"))
-            {
-                vcard.Title = contactDetail.Replace("TITLE:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("LANG:"))
-            {
-                vcard.Language = contactDetail.Replace("LANG:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("NICKNAME:"))
-            {
-                vcard.NickName = contactDetail.Replace("NICKNAME:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("BIRTHPLACE"))
-            {
-                vcard.BirthPlace = contactDetail.Replace("BIRTHPLACE;", "").Replace("TEXT:", "").Replace("URI:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("DEATHPLACE"))
-            {
-                vcard.DeathPlace = contactDetail.Replace("DEATHPLACE;", "").Replace("TEXT:", "").Replace("URI:", "").Trim();
-            }
-            else if (contactDetail.StartsWith("BDAY"))
-            {
-                string dateString = contactDetail.Replace("BDAY:", "").Trim();
-                if (dateString.Length == 8)
-                    vcard.BirthDay = new DateTime(int.Parse(dateString.Substring(0, 4)), int.Parse(dateString.Substring(4, 2)), int.Parse(dateString.Substring(6, 2)));
-            }
-            else if (contactDetail.StartsWith("N:"))
-            {
-                string[] names = contactDetail.Replace("N:", "").Split(new string[] { ";" }, StringSplitOptions.None);
-                if (names.Length > 0)
-                    vcard.Firstname = names[0];
-                if (names.Length > 1)
-                    vcard.Surname = names[1];
-                for (int j = 2; j < names.Length; j++)
-                {
-                    vcard.Othernames = names[j] + " ";
-                }
             }
             else if (contactDetail.StartsWith("TEL;"))
             {
@@ -500,11 +434,6 @@ namespace vCardLib
                 else if (contactKindString == "DEVICE")
                     vcard.Kind = ContactType.Device;
             }
-        }
-
-        private static void ProcessV3_0(ref vCard vcard, string contactDetail)
-        {
-
         }
 
         public override bool Equals(object obj)
