@@ -177,11 +177,7 @@ namespace vCardLib
                                         {
                                             break;
                                         }
-                                    }
-                                    ProcessV2_1(ref vcard, contactDetail);
-                                }
-                                else
-                                {
+                                    }                                
                                     ProcessV2_1(ref vcard, contactDetail);
                                 }
                             }
