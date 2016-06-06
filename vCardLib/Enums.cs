@@ -4,7 +4,8 @@
     {
         Male,
         Female,
-        Other
+        Other,
+        None
     }
 
     public enum ContactType

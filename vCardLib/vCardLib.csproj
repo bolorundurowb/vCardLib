@@ -50,6 +50,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Expertise.cs" />
     <Compile Include="ExpertiseCollection.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Hobby.cs" />
     <Compile Include="HobbyCollection.cs" />
     <Compile Include="Interest.cs" />
