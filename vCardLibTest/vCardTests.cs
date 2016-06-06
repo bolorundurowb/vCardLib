@@ -50,7 +50,8 @@ LABEL;WORK;ENCODING=QUOTED-PRINTABLE:100 Waters Edge=0D=0ABaytown, LA 30314=0D=0
 ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
 LABEL;HOME;ENCODING=QUOTED-PRINTABLE:42 Plantation St.=0D=0ABaytown, LA 30314=0D=0AUnited States of America
 EMAIL;PREF;INTERNET:forrestgump@example.com
-REV:20080424T195243Z";
+REV:20080424T195243Z
+END:VCARD";
             Stream stream = GenerateStreamFromString(file);
             vCardCollection vcardCollection = vCard.FromStreamReader(new StreamReader(stream));
         }

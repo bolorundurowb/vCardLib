@@ -115,95 +115,27 @@ namespace vCardLib
         /// <returns>A collection of vCard objects, each with a contacts' full details</returns>
         public static vCardCollection FromFile(string filepath)
         {
-            vCardCollection vcardCollection = new vCardCollection();
-            //TODO: implement card getting logic
-            return vcardCollection;
+            StreamReader sr = Helper.GetStreamReaderFromFile(filepath);
+            return FromStreamReader(sr);
         }
 
-        public static vCardCollection FromStreamReader(StreamReader stream)
+        public static vCardCollection FromStreamReader(StreamReader streamReader)
         {
-            if (stream == null)
-                throw new NullReferenceException("The input stream cannot be null");
-            else
+            vCardCollection collection = new vCardCollection();
+            string contactsString = Helper.GetStringFromStreamReader(streamReader);
+            string[] contacts = Helper.GetContactsArrayFromString(contactsString);
+            foreach(string contact in contacts)
             {
-                vCardCollection contacts = new vCardCollection();
-                string vcfString;
-                vcfString = stream.ReadToEnd();
-                if (!(vcfString.Contains("BEGIN:VCARD") && vcfString.Contains("END:VCARD")))
-                    throw new InvalidOperationException("The vcf file does not seem to be a valid vcf file");
-                else
+                string[] contactDetails = Helper.GetContactDetailsArrayFromString(contact);
+                if (contactDetails.Length > 0)
                 {
-                    vcfString = vcfString.Replace("BEGIN:VCARD", "");
-                    string[] contactStrings = vcfString.Split(new string[] { "END:VCARD" }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (string contactString in contactStrings)
-                    {
-                        vCard vcard = new vCard();
-                        string[] contactDetails = contactString.Replace("PREF;", "").Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-                        for (int i = 0; i < contactDetails.Length; i++)
-                        {
-                            string contactDetail = contactDetails[i];
-                            if (contactDetail.StartsWith("VERSION:"))
-                            {
-                                vcard.Version = float.Parse(contactDetail.Replace("VERSION:", "").Trim());
-                            }
-                            if (vcard.Version.Equals(2.1F))
-                            {
-                                if (contactDetail.StartsWith("PHOTO;"))
-                                {
-                                    string photoString = contactDetail + "\r\n";
-                                    while (true)
-                                    {
-                                        if (i >= contactDetails.Length)
-                                        {
-                                            if (contactDetails[i + 1].StartsWith("PHOTO;"))
-                                            {
-                                                break;
-                                            }
-                                            else
-                                            {
-                                                i++;
-                                                photoString += contactDetails[i] + "\r\n";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }                                
-                                    ProcessV2_1(ref vcard, contactDetail);
-                                }
-                            }
-                        }
-                        contacts.Add(vcard);
-                    }
-                    return contacts;
+                    vCard details = Helper.GetVcardFromDetails(contactDetails);
+                    collection.Add(details);
                 }
+                else
+                    continue;
             }
-        }
-
-        private static void ProcessV2_1(ref vCard vcard, string contactDetail)
-        { 
-            /*else if (contactDetail.StartsWith("PHOTO;"))
-            {
-                contactDetail = contactDetail.Replace("PHOTO;ENCODING=BASE64;JPEG:", "");
-
-                byte[] bytes = System.Text.Encoding.ASCII.GetBytes(contactDetail);
-                string photoString64 = Convert.ToBase64String(bytes);
-
-                byte[] byteBuffer = Convert.FromBase64String(photoString64);
-                MemoryStream memoryStream = new MemoryStream(byteBuffer);
-                memoryStream.Position = 0;
-                TypeConverter tc = TypeDescriptor.GetConverter(typeof(Bitmap));
-                Bitmap bitmap = (Bitmap)tc.ConvertFrom(byteBuffer);
-                Photo photo = new Photo();
-                photo.Picture = bitmap;
-
-                memoryStream.Close();
-                memoryStream = null;
-                byteBuffer = null;
-
-                vcard.Pictures.Add(photo);
-            }*/
+            return collection;
         }
 
         public override bool Equals(object obj)

@@ -60,9 +60,9 @@ namespace vCardLib
                 if (vcard.Version.Equals(2.1F))
                     ProcessV2_1(ref vcard, contactDetails);
                 else if (vcard.Version.Equals(3.0F))
-                    ProcessV3_0(ref vcard);
+                    ProcessV3_0(ref vcard, contactDetails);
                 else if (vcard.Version.Equals(4.0F))
-                    ProcessV4_0(ref vcard);
+                    ProcessV4_0(ref vcard, contactDetails);
                 return vcard;
             }
         }
@@ -393,6 +393,8 @@ namespace vCardLib
                 foreach(string photoStr in photoStrings)
                 {
                     Photo photo = new Photo();
+
+                    //JPEG
                     if (photoStr.Replace("PHOTO;", "").StartsWith("JPEG:"))
                     {
                         photo.PhotoURL = photoStr.Replace("PHOTO;JPEG:", "").Trim();
@@ -400,7 +402,7 @@ namespace vCardLib
                         photo.Type = PhotoType.URL;
                         vcard.Pictures.Add(photo);
                     }
-                    else if (photoStr.Replace("PHOTO;", "").StartsWith("JPEG;ENCODING=BASE64:"))
+                    else if (photoStr.Contains("JPEG") && photoStr.Contains("ENCODING=BASE64"))
                     {
                         string photoString = "";
                         int photoStrIndex = Array.IndexOf(contactDetails, photoStr);
@@ -410,7 +412,7 @@ namespace vCardLib
                             {
                                 photoString += contactDetails[photoStrIndex];
                                 photoStrIndex++;
-                                if (contactDetails[photoStrIndex].StartsWith("PHOTO;"))
+                                if (photoStrIndex < contactDetails.Length && contactDetails[photoStrIndex].StartsWith("PHOTO;"))
                                     break;
                             }
                             else
@@ -419,23 +421,35 @@ namespace vCardLib
                             }
                         }
                         photoString = photoString.Trim();
-                        photoString = photoString.Replace("PHOTO;JPEG;ENCODING=BASE64:", "");
+                        photoString = photoString.Replace("PHOTO;", "");
+                        photoString = photoString.Replace("JPEG", "");
+                        photoString = photoString.Replace("ENCODING=BASE64", "");
+                        photoString = photoString.Trim(new char[] { ';', ':' });
 
                         photo.Encoding = PhotoEncoding.JPEG;
                         photo.Picture = GetImageFromBase64String(photoString);
                         photo.Type = PhotoType.Image;
                         vcard.Pictures.Add(photo);
                     }
+
+                    //GIF
+                    else if (photoStr.Replace("PHOTO;", "").StartsWith("GIF:"))
+                    {
+                        photo.PhotoURL = photoStr.Replace("PHOTO;GIF:", "").Trim();
+                        photo.Encoding = PhotoEncoding.GIF;
+                        photo.Type = PhotoType.URL;
+                        vcard.Pictures.Add(photo);
+                    }
                 }
             #endregion
         }
 
-        private static void ProcessV3_0(ref vCard vcard)
+        private static void ProcessV3_0(ref vCard vcard, string[] contactDetails)
         {
             throw new NotImplementedException("Sorry, support for vcard 3.0 hasn't been implemented");
         }
 
-        private static void ProcessV4_0(ref vCard vcard)
+        private static void ProcessV4_0(ref vCard vcard, string[] contactDetails)
         {
             throw new NotImplementedException("Sorry, support for vcard 4.0 hasn't been implemented");
         }

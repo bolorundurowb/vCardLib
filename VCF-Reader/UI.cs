@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using vCardLib;
 
@@ -38,8 +37,8 @@ namespace VCF_Reader
             ofd_pick_file.ShowDialog();
             if (!string.IsNullOrWhiteSpace(ofd_pick_file.FileName))
             {
-                lbl_file_path.Text = ofd_pick_file.FileName;
                 LoadVCF(ofd_pick_file.FileName);
+                lbl_file_path.Text = ofd_pick_file.FileName;
             }
         }
 
@@ -55,22 +54,29 @@ namespace VCF_Reader
         private void LoadVCF(string filePath)
         {
             dgv_display.Rows.Clear();
-            vCardCollection vcardCollection = vCard.FromFile(filePath);
-
-            foreach(vCard vcard in vcardCollection)
+            try
             {
-                object[] row = new object[5];
-                row[0] = vcard.Surname;
-                row[1] = vcard.Firstname;
-                row[2] = vcard.EmailAddresses.Count > 0 ? vcard.EmailAddresses[0].Email.Address : "";
-                row[3] = vcard.PhoneNumbers.Count > 0 ? vcard.PhoneNumbers[0].Number : "";
-                row[4] = vcard.PhoneNumbers.Count > 1 ? vcard.PhoneNumbers[1].Number : "";
-                dgv_display.Rows.Add(row);
+                vCardCollection vcardCollection = vCard.FromFile(filePath);
+
+                foreach (vCard vcard in vcardCollection)
+                {
+                    object[] row = new object[5];
+                    row[0] = vcard.Surname;
+                    row[1] = vcard.Firstname;
+                    row[2] = vcard.EmailAddresses.Count > 0 ? vcard.EmailAddresses[0].Email.Address : "";
+                    row[3] = vcard.PhoneNumbers.Count > 0 ? vcard.PhoneNumbers[0].Number : "";
+                    row[4] = vcard.PhoneNumbers.Count > 1 ? vcard.PhoneNumbers[1].Number : "";
+                    dgv_display.Rows.Add(row);
+                }
+
+                foreach (DataGridViewRow dRow in dgv_display.Rows)
+                {
+                    allRows.Add(dRow);
+                }
             }
-
-            foreach (DataGridViewRow dRow in dgv_display.Rows)
+            catch(NotImplementedException)
             {
-                allRows.Add(dRow);
+                MessageBox.Show("Sorry, the file you tried to open has contacts in a version that is currently unsupported. Please bear with us.", "Unsupported File", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
