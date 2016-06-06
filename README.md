@@ -1,5 +1,5 @@
 # This project contains two sub projects
-[![Build status](https://ci.appveyor.com/api/projects/status/sbhyvvpj8jy8ifmw/branch/master?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader/branch/master)   [![SourceForge](https://img.shields.io/badge/downloads-8%2Fwk-brightgreen.svg)](https://sourceforge.net/projects/vcf-reader/) [![NuGet](https://img.shields.io/badge/nuget-1.1.1-blue.svg)](https://www.nuget.org/packages/vCardLib.dll) [![NETFramework](https://img.shields.io/badge/.net-4.5-ff66b6.svg)]()
+[![Build status](https://ci.appveyor.com/api/projects/status/sbhyvvpj8jy8ifmw/branch/master?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader/branch/master)   [![SourceForge](https://img.shields.io/badge/downloads-10%2Fwk-brightgreen.svg)](https://sourceforge.net/projects/vcf-reader/) [![NuGet](https://img.shields.io/badge/nuget-1.1.3-blue.svg)](https://www.nuget.org/packages/vCardLib.dll) [![NETFramework](https://img.shields.io/badge/.net-4.5-ff66b6.svg)]()
 
 ## VCF-Reader
 
