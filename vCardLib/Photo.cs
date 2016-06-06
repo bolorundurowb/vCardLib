@@ -15,5 +15,20 @@ namespace vCardLib
     public class Photo
     {
         public Bitmap Picture { get; set; }
+        public PhotoType Type { get; set; }
+        public PhotoEncoding Encoding { get; set; }
+        public string PhotoURL { get; set; }
+    }
+
+    public enum PhotoEncoding
+    {
+        JPEG,
+        GIF
+    }
+
+    public enum PhotoType
+    {
+        Image,
+        URL
     }
 }
