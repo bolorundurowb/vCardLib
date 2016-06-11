@@ -1,4 +1,6 @@
-﻿namespace vCardLib
+﻿using System.ComponentModel;
+
+namespace vCardLib
 {
     public enum GenderType
     {

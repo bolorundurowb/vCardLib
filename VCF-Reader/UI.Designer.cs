@@ -147,7 +147,7 @@
             // 
             // ofd_pick_file
             // 
-            this.ofd_pick_file.Filter = "vCard Files|*.vcf|vCard Files|*.vcard";
+            this.ofd_pick_file.Filter = "vCard Files (*vcf)|*.vcf|vCard Files (*.vcard)|*.vcard";
             this.ofd_pick_file.Title = "Pick Contact File";
             // 
             // UI
@@ -164,7 +164,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "VCF Reader 1.1";
+            this.Text = "VCF Reader 1.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UI_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_display)).EndInit();
             this.ResumeLayout(false);
