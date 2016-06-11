@@ -8,7 +8,7 @@ This tool was developed because I recently lost my android phone but was blessed
 
 ##vCardLib
 
-This is the library that powers the VCF Reader. Unlike all other vCard libraries for .NET that I found, this library supports reading multiple contacts from a single vcf file and returns the contact objects in a vCardCollection. The library currently **supports only vCard version 2.1** (will provide a curated list of properties soon), work on adding vCard 3.0 support is ongoing.
+This is the library that powers the VCF Reader. Unlike all other vCard libraries for .NET that I found, this library supports reading multiple contacts from a single vcf file and returns the contact objects in a vCardCollection. The library currently **supports only vCard version 2.1 and 3.0** (will provide a curated list of properties soon), work on adding vCard 3.0 support is ongoing.
 
 ####How to use the library:
 
