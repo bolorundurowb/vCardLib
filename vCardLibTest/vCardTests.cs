@@ -94,6 +94,44 @@ END:VCARD";
             Assert.AreEqual(vcard, vcardCollection[0], "The contacts did not match");
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void UnsupportedVcardVersion()
+        {
+            string file = @"BEGIN:VCARD
+VERSION:4.0
+END:VCARD";
+            Stream stream = GenerateStreamFromString(file);
+            vCardCollection vcardCollection = vCard.FromStreamReader(new StreamReader(stream));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void VcardWithNullStream()
+        {
+            StreamReader sr = null;
+            vCard.FromStreamReader(sr);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetContactsFromEmptyString()
+        {
+            string contactString = String.Empty;
+            Helper.GetContactsArrayFromString(contactString);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void VcardWithoutVersionTag()
+        {
+            string file = @"BEGIN:VCARD
+EMAIL:test@example.com
+END:VCARD";
+            Stream stream = GenerateStreamFromString(file);
+            vCardCollection vcardCollection = vCard.FromStreamReader(new StreamReader(stream));
+        }
+
         public Stream GenerateStreamFromString(string s)
         {
             MemoryStream stream = new MemoryStream();

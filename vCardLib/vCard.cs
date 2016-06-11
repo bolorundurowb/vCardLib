@@ -72,27 +72,65 @@ namespace vCardLib
         /// </summary>
         public PhotoCollection Pictures { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string NickName { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ContactType Kind { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public GenderType Gender { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public AddressCollection Addresses { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Language { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime BirthDay { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string BirthPlace { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ExpertiseCollection Expertises { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string DeathPlace { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public HobbyCollection Hobbies { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public InterestCollection Interests { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TimeZone { get; set; }
 
         /// <summary>
         /// Default constructor, it initializes the collections in the vCard object
@@ -119,6 +157,11 @@ namespace vCardLib
             return FromStreamReader(sr);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamReader"></param>
+        /// <returns></returns>
         public static vCardCollection FromStreamReader(StreamReader streamReader)
         {
             vCardCollection collection = new vCardCollection();
@@ -138,6 +181,11 @@ namespace vCardLib
             return collection;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             var toCompare = obj as vCard;

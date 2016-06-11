@@ -36,6 +36,11 @@ namespace vCardLib
         Pager,
         Video,
         TextPhone,
-        MainNumber
+        MainNumber,
+        BBS,
+        Modem,
+        Car,
+        ISDN,
+        None
     }
 }
