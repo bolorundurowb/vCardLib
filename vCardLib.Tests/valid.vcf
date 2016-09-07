@@ -1,0 +1,10 @@
+﻿BEGIN:VCARD
+VERSION:2.1
+N:Gump;Forrest
+FN:Forrest Gump
+TEL;WORK;VOICE:(111) 555-1212
+TEL;HOME;VOICE:(404) 555-1212
+ADR;WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
+ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
+EMAIL;PREF;INTERNET:forrestgump@example.com
+END:VCARD
