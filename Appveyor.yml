@@ -12,6 +12,7 @@ install:
     nuget install ReportGenerator -Version 2.4.5.0 -OutputDirectory tools
 build:
   verbosity: normal
+build_script:
 - cmd: >-
     msbuild VCF-Reader.sln  /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 test_script:
