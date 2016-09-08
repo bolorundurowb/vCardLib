@@ -31,6 +31,10 @@ namespace vCardLib
     {
         Work,
         Internet,
-        Home
+        Home,
+        AOL,
+        Applelink,
+        IBMMail,
+        None
     }
 }

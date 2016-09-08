@@ -1,6 +1,6 @@
 # This project contains two sub projects
 
-[![Build status](https://ci.appveyor.com/api/projects/status/sbhyvvpj8jy8ifmw/branch/master?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader/branch/master)  [![Test Coverage](https://codeclimate.com/github/bolorundurowb/VCF-Reader/badges/coverage.svg)](https://codeclimate.com/github/bolorundurowb/VCF-Reader/coverage)   [![SourceForge](https://img.shields.io/badge/downloads-10%2Fwk-brightgreen.svg)](https://sourceforge.net/projects/vcf-reader/) [![NuGet](https://img.shields.io/badge/nuget-1.1.3-blue.svg)](https://www.nuget.org/packages/vCardLib.dll) [![NETFramework](https://img.shields.io/badge/.net-4.5-ff66b6.svg)]()
+[![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/VCF-Reader/badge.svg?branch=dev)](https://coveralls.io/github/bolorundurowb/VCF-Reader?branch=dev)   [![SourceForge](https://img.shields.io/badge/downloads-10%2Fwk-brightgreen.svg)](https://sourceforge.net/projects/vcf-reader/) [![NuGet](https://img.shields.io/badge/nuget-1.1.3-blue.svg)](https://www.nuget.org/packages/vCardLib.dll) [![Mono](https://img.shields.io/badge/mono-4.4.2-ff66b6.svg)]()
 
 ## VCF-Reader
 
@@ -8,7 +8,7 @@ This tool was developed because I recently lost my android phone but was blessed
 
 ##vCardLib
 
-This is the library that powers the VCF Reader. Unlike all other vCard libraries for .NET that I found, this library supports reading multiple contacts from a single vcf file and returns the contact objects in a vCardCollection. The library currently **supports only vCard version 2.1** (will provide a curated list of properties soon), work on adding vCard 3.0 support is ongoing.
+This is the library that powers the VCF Reader. Unlike all other vCard libraries for .NET that I found, this library supports reading multiple contacts from a single vcf file and returns the contact objects in a vCardCollection. The library currently **supports only vCard version 2.1 and 3.0** (will provide a curated list of properties soon), work on adding vCard 3.0 support is ongoing.
 
 ####How to use the library:
 

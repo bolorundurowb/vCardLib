@@ -9,6 +9,11 @@
     public enum AddressType
     {
         Work,
-        Home
+        Home,
+        Domestic,
+        International,
+        Postal,
+        Parcel,
+        None
     }
 }
