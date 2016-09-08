@@ -1,0 +1,10 @@
+language: csharp
+solution: VCF-Reader.sln
+mono:
+ - latest
+install:
+  - nuget restore VCF-Reader.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release solution-name.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./vCardLib.Tests/bin/Release/vCardLib.Tests.dll
