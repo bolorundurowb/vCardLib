@@ -1,5 +1,3 @@
-
-
 nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory tools
 nuget install OpenCover -Version 4.6.519 -OutputDirectory tools
 nuget install coveralls.net -Version 0.7.0 -OutputDirectory tools
