@@ -6,6 +6,7 @@
  * ======================================================================= */
 
 using System;
+using System.IO;
 
 namespace vCardLib
 {
@@ -53,6 +54,58 @@ namespace vCardLib
                 else
                     List[index] = value;
             }
+        }
+
+        public void Save(string filePath, WriteOptions writeOptions = WriteOptions.ThrowError)
+        {
+            if (writeOptions == WriteOptions.ThrowError)
+            {
+                if (File.Exists(filePath))
+                {
+                    throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
+                }
+            }
+            string vcardString = "";
+            foreach(vCard vcard in this)
+            {
+                if(vcard.Version == 2.1f)
+                {
+                    vcard.WriteV2ObjectToString(ref vcardString);
+                }
+                else if (vcard.Version == 3.0f)
+                {
+                    vcard.WriteV3ObjectToString(ref vcardString);
+                }
+            }
+            File.WriteAllText(filePath, vcardString);
+        }
+
+        public void Save(string filePath, float version, WriteOptions writeOptions = WriteOptions.ThrowError)
+        {
+            if (writeOptions == WriteOptions.ThrowError)
+            {
+                if (File.Exists(filePath))
+                {
+                    throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
+                }
+            }
+            string vcardString = "";
+
+            if (version == 2.1f)
+            {
+                foreach (vCard vcard in this)
+                {
+                    vcard.WriteV2ObjectToString(ref vcardString);
+                }
+            }
+            else if (version == 3.0f)
+            {
+                foreach (vCard vcard in this)
+                {
+                    vcard.WriteV3ObjectToString(ref vcardString);
+                }
+            }
+            File.WriteAllText(filePath, vcardString);
         }
     }
 }

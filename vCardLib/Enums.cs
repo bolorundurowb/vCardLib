@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace vCardLib
+﻿namespace vCardLib
 {
     public enum GenderType
     {
@@ -18,5 +16,11 @@ namespace vCardLib
         Location,
         Application,
         Device
+    }
+
+    public enum WriteOptions
+    {
+        Overwrite,
+        ThrowError
     }
 }

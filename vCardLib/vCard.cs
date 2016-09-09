@@ -198,5 +198,227 @@ namespace vCardLib
                 && this.DeathPlace == toCompare.DeathPlace
                 && this.Expertises.Count == toCompare.Expertises.Count;
         }
+
+        public bool Save(string filePath, WriteOptions writeOption = WriteOptions.ThrowError)
+        {
+            if(writeOption == WriteOptions.ThrowError)
+            {
+                if (File.Exists(filePath))
+                {
+                    throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
+                }
+            }
+            return Save(filePath, this.Version, writeOption);
+        }
+
+        public bool Save(string filePath, float version, WriteOptions writeOption = WriteOptions.ThrowError)
+        {
+            if (writeOption == WriteOptions.ThrowError)
+            {
+                if (File.Exists(filePath))
+                {
+                    throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
+                }
+            }
+            if (version == 2.1F)
+            {
+                string vcfString = "";
+                WriteV2ObjectToString(ref vcfString);
+                File.WriteAllText(filePath, vcfString);
+            }
+            else if (version == 3.0F)
+            {
+                string vcfString = "";
+                WriteV3ObjectToString(ref vcfString);
+                File.WriteAllText(filePath, vcfString);
+            }
+            else if (version == 4.0F)
+            {
+                throw new NotImplementedException("Writing for v4 is not implemented");
+            }
+            else
+            {
+                throw new ArgumentException("version is not a valid vcf version");
+            }
+            return true;
+        }
+
+        public void WriteV3ObjectToString(ref string vCardString)
+        {
+            vCardString += "BEGIN:VCARD" + Environment.NewLine;
+            vCardString += "VERSION:3.0" + Environment.NewLine;
+            vCardString += "N:" + this.Firstname + ";" + this.Surname + ";" + this.Othernames + Environment.NewLine;
+            vCardString += "FN:" + this.FormattedName + Environment.NewLine;
+            vCardString += "ORG:" + this.Organization + Environment.NewLine;
+            vCardString += "TITLE:" + this.Title + Environment.NewLine;
+            vCardString += "URL:" + this.URL + Environment.NewLine;
+            vCardString += "NICKNAME:" + this.NickName + Environment.NewLine;
+            vCardString += "KIND:" + this.Kind.ToString().ToUpper() + Environment.NewLine;
+            vCardString += "GENDER:" + this.Gender + Environment.NewLine;
+            vCardString += "LANG:" + this.Language + Environment.NewLine;
+            vCardString += "BIRTHPLACE:" + this.BirthPlace + Environment.NewLine;
+            vCardString += "DEATHPLACE:" + this.DeathPlace + Environment.NewLine;
+            vCardString += "TZ:" + this.TimeZone + Environment.NewLine;
+            vCardString += "BDAY:" + this.BirthDay.Year + this.BirthDay.ToString("00") + this.BirthDay.ToString("00");
+            foreach(PhoneNumber phoneNumber in this.PhoneNumbers)
+            {
+                vCardString += Environment.NewLine;
+                if (phoneNumber.Type == PhoneNumberType.None)
+                {
+                    vCardString += "TEL:" + phoneNumber.Number;
+                }
+                else if (phoneNumber.Type == PhoneNumberType.MainNumber)
+                {
+                    vCardString += "TEL;TYPE=MAIN-NUMBER:" + phoneNumber.Number;
+                }
+                else
+                {
+                    vCardString += "TEL;TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number;
+                }
+            }
+            foreach(EmailAddress email in this.EmailAddresses)
+            {
+                vCardString += Environment.NewLine;
+                if (email.Type == EmailType.None)
+                {
+                    vCardString += "EMAIL:" + email.Email.Address;
+                }
+                else
+                {
+                    vCardString += "EMAIL;TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email.Address;
+                }
+            }
+            foreach(Address address in this.Addresses)
+            {
+                vCardString += Environment.NewLine;
+                if (address.Type == AddressType.None)
+                {
+                    vCardString += "ADR:" + address.Location;
+                }
+                else
+                {
+                    vCardString += "ADR;TYPE=" + address.Type.ToString().ToUpper() + ":" + address.Location;
+                }
+            }
+            foreach(Photo photo in this.Pictures)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "PHOTO;TYPE=" + photo.Encoding;
+                if(photo.Type == PhotoType.URL)
+                {
+                    vCardString += ";VALUE=URI:" + photo.PhotoURL;
+                }
+                else if(photo.Type == PhotoType.Image)
+                {
+                    vCardString += ";ENCODING=b:" + photo.ToBase64String();
+                }
+            }
+            foreach(Expertise expertise in this.Expertises)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "EXPERTISE;LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area;
+            }
+            foreach(Hobby hobby in this.Hobbies)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "HOBBY;LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity;
+            }
+            foreach(Interest interest in this.Interests)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity;
+            }
+            vCardString += Environment.NewLine;
+            vCardString += "END:VCARD";
+        }
+
+        public void WriteV2ObjectToString(ref string vCardString)
+        {
+            vCardString += "BEGIN:VCARD" + Environment.NewLine;
+            vCardString += "VERSION:2.1" + Environment.NewLine;
+            vCardString += "N:" + this.Firstname + ";" + this.Surname + ";" + this.Othernames + Environment.NewLine;
+            vCardString += "FN:" + this.FormattedName + Environment.NewLine;
+            vCardString += "ORG:" + this.Organization + Environment.NewLine;
+            vCardString += "TITLE:" + this.Title + Environment.NewLine;
+            vCardString += "URL:" + this.URL + Environment.NewLine;
+            vCardString += "NICKNAME:" + this.NickName + Environment.NewLine;
+            vCardString += "KIND:" + this.Kind.ToString().ToUpper() + Environment.NewLine;
+            vCardString += "GENDER:" + this.Gender + Environment.NewLine;
+            vCardString += "LANG:" + this.Language + Environment.NewLine;
+            vCardString += "BIRTHPLACE:" + this.BirthPlace + Environment.NewLine;
+            vCardString += "DEATHPLACE:" + this.DeathPlace + Environment.NewLine;
+            vCardString += "TZ:" + this.TimeZone + Environment.NewLine;
+            vCardString += "BDAY:" + this.BirthDay.Year + this.BirthDay.ToString("00") + this.BirthDay.ToString("00");
+            foreach (PhoneNumber phoneNumber in this.PhoneNumbers)
+            {
+                vCardString += Environment.NewLine;
+                if (phoneNumber.Type == PhoneNumberType.None)
+                {
+                    vCardString += "TEL:" + phoneNumber.Number;
+                }
+                else if(phoneNumber.Type == PhoneNumberType.MainNumber)
+                {
+                    vCardString += "TEL;MAIN-NUMBER:" + phoneNumber.Number;
+                }
+                else
+                {
+                    vCardString += "TEL;" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number;
+                }
+            }
+            foreach (EmailAddress email in this.EmailAddresses)
+            {
+                vCardString += Environment.NewLine;
+                if (email.Type == EmailType.None)
+                {
+                    vCardString += "EMAIL:" + email.Email.Address;
+                }
+                else
+                {
+                    vCardString += "EMAIL;" + email.Type.ToString().ToUpper() + ":" + email.Email.Address;
+                }
+            }
+            foreach (Address address in this.Addresses)
+            {
+                vCardString += Environment.NewLine;
+                if (address.Type == AddressType.None)
+                {
+                    vCardString += "ADR:" + address.Location;
+                }
+                else
+                {
+                    vCardString += "ADR;" + address.Type.ToString().ToUpper() + ":" + address.Location;
+                }
+            }
+            foreach (Photo photo in this.Pictures)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "PHOTO;" + photo.Encoding;
+                if (photo.Type == PhotoType.URL)
+                {
+                    vCardString += ":" + photo.PhotoURL;
+                }
+                else if (photo.Type == PhotoType.Image)
+                {
+                    vCardString += ";ENCODING=BASE64:" + photo.ToBase64String();
+                }
+            }
+            foreach (Expertise expertise in this.Expertises)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "EXPERTISE;LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area;
+            }
+            foreach (Hobby hobby in this.Hobbies)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "HOBBY;LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity;
+            }
+            foreach (Interest interest in this.Interests)
+            {
+                vCardString += Environment.NewLine;
+                vCardString += "INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity;
+            }
+            vCardString += Environment.NewLine;
+            vCardString += "END:VCARD";
+        }
     }
 }
