@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Reflection;
 
 namespace vCardLib.Tests
 {
-	[TestFixture]
+    [TestFixture]
 	public class Test
 	{
 		[Test]
