@@ -267,7 +267,7 @@ namespace vCardLib.Tests
 			PhoneNumber number = new PhoneNumber();
 			numberCollection.Add(number);
 			Assert.AreEqual (numberCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(PhoneNumber), numberCollection [0]);
+			Assert.IsInstanceOf<PhoneNumber> (numberCollection [0]);
 			numberCollection.Remove(number);
 			Assert.AreEqual (numberCollection.Count, 0);
 
@@ -275,7 +275,7 @@ namespace vCardLib.Tests
 			EmailAddress email = new EmailAddress();
 			emailCollection.Add(email);
 			Assert.AreEqual (emailCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(EmailAddress), emailCollection [0]);
+			Assert.IsInstanceOf<EmailAddress> (emailCollection [0]);
 			emailCollection.Remove(email);
 			Assert.AreEqual (emailCollection.Count, 0);
 
@@ -283,7 +283,7 @@ namespace vCardLib.Tests
 			Address address = new Address();
 			addressCollection.Add(address);
 			Assert.AreEqual (addressCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(Address), addressCollection [0]);
+			Assert.IsInstanceOf<Address> (addressCollection [0]);
 			addressCollection.Remove(address);
 			Assert.AreEqual (addressCollection.Count, 0);
 
@@ -291,7 +291,7 @@ namespace vCardLib.Tests
 			Hobby hobby = new Hobby();
 			hobbyCollection.Add(hobby);
 			Assert.AreEqual (hobbyCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(Hobby), hobbyCollection [0]);
+			Assert.IsInstanceOf<Hobby>(hobbyCollection [0]);
 			hobbyCollection.Remove(hobby);
 			Assert.AreEqual (hobbyCollection.Count, 0);
 
@@ -299,7 +299,7 @@ namespace vCardLib.Tests
 			Interest interest = new Interest();
 			interestCollection.Add(interest);
 			Assert.AreEqual (interestCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(Interest), interestCollection [0]);
+			Assert.IsInstanceOf<Interest>(interestCollection [0]);
 			interestCollection.Remove(interest);
 			Assert.AreEqual (interestCollection.Count, 0);
 
@@ -307,7 +307,7 @@ namespace vCardLib.Tests
 			Expertise expertise = new Expertise();
 			expertiseCollection.Add(expertise);
 			Assert.AreEqual (expertiseCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(Expertise), expertiseCollection [0]);
+			Assert.IsInstanceOf<Expertise> ( expertiseCollection [0]);
 			expertiseCollection.Remove(expertise);
 			Assert.AreEqual (expertiseCollection.Count, 0);
 
@@ -315,7 +315,7 @@ namespace vCardLib.Tests
 			Photo photo = new Photo();
 			photoCollection.Add(photo);
 			Assert.AreEqual (photoCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(Photo), photoCollection [0]);
+			Assert.IsInstanceOf<Photo> ( photoCollection [0]);
 			photoCollection.Remove(photo);
 			Assert.AreEqual (photoCollection.Count, 0);
 
@@ -323,7 +323,7 @@ namespace vCardLib.Tests
 			vCard vcard = new vCard();
 			vcardCollection.Add(vcard);
 			Assert.AreEqual (vcardCollection.Count, 1);
-			Assert.IsInstanceOfType (typeof(vCard), vcardCollection [0]);
+			Assert.IsInstanceOf<vCard>(vcardCollection [0]);
 			vcardCollection.Remove(vcard);
 			Assert.AreEqual (vcardCollection.Count, 0);
 		}
