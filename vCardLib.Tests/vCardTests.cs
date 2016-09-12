@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Reflection;
 
 namespace vCardLib.Tests
 {
-	[TestFixture]
+    [TestFixture]
 	public class Test
 	{
 		[Test]
@@ -216,7 +215,7 @@ namespace vCardLib.Tests
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string filePath = Path.Combine(assemblyFolder, "newCollection.vcf");
 
-            collection.Save(filePath, 3.0f, WriteOptions.Overwrite);
+            collection.Save(filePath, 3.0F, WriteOptions.Overwrite);
             Assert.IsTrue(File.Exists(filePath));
 
             Assert.Greater(vCard.FromFile(filePath).Count, 0);
@@ -224,6 +223,110 @@ namespace vCardLib.Tests
             string number = vCard.FromFile(filePath)[0].PhoneNumbers[0].Number;
             Assert.AreEqual(number, vcard.PhoneNumbers[0].Number);
         }
+
+		[Test]
+		public void InvalidVcardVersionThrowsException()
+		{
+			vCard vcard = new vCard ();
+			Assert.Throws<ArgumentException> (delegate {
+				vcard.Save ("", 5.2F, WriteOptions.Overwrite);
+			});
+		}
+
+		[Test]
+		public void VersionFourVcardThrowsException()
+		{
+			vCard vcard = new vCard ();
+			Assert.Throws<NotImplementedException> (delegate {
+				vcard.Save ("", 4.0F, WriteOptions.Overwrite);
+			});
+		}
+
+		[Test]
+		public void InvalidVcardCollecionVersionThrowsException()
+		{
+			vCardCollection collection = new vCardCollection ();
+			Assert.Throws<ArgumentException> (delegate {
+				collection.Save ("", 5.2F, WriteOptions.Overwrite);
+			});
+		}
+
+		[Test]
+		public void VersionFourVcardCollectionThrowsException()
+		{
+			vCardCollection collection = new vCardCollection ();
+			Assert.Throws<NotImplementedException> (delegate {
+				collection.Save ("", 4.0F, WriteOptions.Overwrite);
+			});
+		}
+
+		[Test]
+		public void ObjectCollectionsDontThrowExceptions()
+		{
+			PhoneNumberCollection numberCollection = new PhoneNumberCollection();
+			PhoneNumber number = new PhoneNumber();
+			numberCollection.Add(number);
+			Assert.AreEqual (numberCollection.Count, 1);
+			Assert.IsInstanceOf<PhoneNumber> (numberCollection [0]);
+			numberCollection.Remove(number);
+			Assert.AreEqual (numberCollection.Count, 0);
+
+			EmailAddressCollection emailCollection = new EmailAddressCollection();
+			EmailAddress email = new EmailAddress();
+			emailCollection.Add(email);
+			Assert.AreEqual (emailCollection.Count, 1);
+			Assert.IsInstanceOf<EmailAddress> (emailCollection [0]);
+			emailCollection.Remove(email);
+			Assert.AreEqual (emailCollection.Count, 0);
+
+			AddressCollection addressCollection = new AddressCollection();
+			Address address = new Address();
+			addressCollection.Add(address);
+			Assert.AreEqual (addressCollection.Count, 1);
+			Assert.IsInstanceOf<Address> (addressCollection [0]);
+			addressCollection.Remove(address);
+			Assert.AreEqual (addressCollection.Count, 0);
+
+			HobbyCollection hobbyCollection = new HobbyCollection();
+			Hobby hobby = new Hobby();
+			hobbyCollection.Add(hobby);
+			Assert.AreEqual (hobbyCollection.Count, 1);
+			Assert.IsInstanceOf<Hobby>(hobbyCollection [0]);
+			hobbyCollection.Remove(hobby);
+			Assert.AreEqual (hobbyCollection.Count, 0);
+
+			InterestCollection interestCollection = new InterestCollection();
+			Interest interest = new Interest();
+			interestCollection.Add(interest);
+			Assert.AreEqual (interestCollection.Count, 1);
+			Assert.IsInstanceOf<Interest>(interestCollection [0]);
+			interestCollection.Remove(interest);
+			Assert.AreEqual (interestCollection.Count, 0);
+
+			ExpertiseCollection expertiseCollection = new ExpertiseCollection();
+			Expertise expertise = new Expertise();
+			expertiseCollection.Add(expertise);
+			Assert.AreEqual (expertiseCollection.Count, 1);
+			Assert.IsInstanceOf<Expertise> ( expertiseCollection [0]);
+			expertiseCollection.Remove(expertise);
+			Assert.AreEqual (expertiseCollection.Count, 0);
+
+			PhotoCollection photoCollection = new PhotoCollection();
+			Photo photo = new Photo();
+			photoCollection.Add(photo);
+			Assert.AreEqual (photoCollection.Count, 1);
+			Assert.IsInstanceOf<Photo> ( photoCollection [0]);
+			photoCollection.Remove(photo);
+			Assert.AreEqual (photoCollection.Count, 0);
+
+			vCardCollection vcardCollection = new vCardCollection();
+			vCard vcard = new vCard();
+			vcardCollection.Add(vcard);
+			Assert.AreEqual (vcardCollection.Count, 1);
+			Assert.IsInstanceOf<vCard>(vcardCollection [0]);
+			vcardCollection.Remove(vcard);
+			Assert.AreEqual (vcardCollection.Count, 0);
+		}
     }
 }
 

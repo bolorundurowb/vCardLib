@@ -142,6 +142,9 @@ namespace vCardLib
             Interests = new InterestCollection();
             Hobbies = new HobbyCollection();
             Expertises = new ExpertiseCollection();
+			//Set the default vCard version as 2.1
+			Version = 2.1F;
+
         }
 
         /// <summary>
@@ -243,7 +246,7 @@ namespace vCardLib
             return true;
         }
 
-        public void WriteV3ObjectToString(ref string vCardString)
+        internal void WriteV3ObjectToString(ref string vCardString)
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:3.0" + Environment.NewLine;
@@ -332,7 +335,7 @@ namespace vCardLib
             vCardString += "END:VCARD";
         }
 
-        public void WriteV2ObjectToString(ref string vCardString)
+		internal void WriteV2ObjectToString(ref string vCardString)
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:2.1" + Environment.NewLine;

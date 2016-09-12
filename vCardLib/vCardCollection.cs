@@ -76,6 +76,14 @@ namespace vCardLib
                 {
                     vcard.WriteV3ObjectToString(ref vcardString);
                 }
+				else if (vcard.Version == 4.0F)
+				{
+					throw new NotImplementedException("Writing for v4 is not implemented");
+				}
+				else
+				{
+					throw new ArgumentException("version is not a valid vcf version");
+				}
             }
             File.WriteAllText(filePath, vcardString);
         }
@@ -105,6 +113,14 @@ namespace vCardLib
                     vcard.WriteV3ObjectToString(ref vcardString);
                 }
             }
+			else if (version == 4.0F)
+			{
+				throw new NotImplementedException("Writing for v4 is not implemented");
+			}
+			else
+			{
+				throw new ArgumentException("version is not a valid vcf version");
+			}
             File.WriteAllText(filePath, vcardString);
         }
     }
