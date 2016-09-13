@@ -1,0 +1,1 @@
+mono ./packages/Open.Cover.4.6.519/tools/OpenCover.Console.exe -register:user -filter:+[vCard*]* -target:mono ./packages/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe -targetargs: mono ./vCardLib.Tests/bin\Debug/vCardLib.Tests.dll
