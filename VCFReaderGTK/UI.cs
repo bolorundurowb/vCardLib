@@ -6,8 +6,6 @@ using VCFReaderGTK;
 
 public partial class UI: Gtk.Window
 {
-	private string dbPath = Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData) + 
-		System.IO.Path.DirectorySeparatorChar + "VCFReader" + System.IO.Path.DirectorySeparatorChar + "userstore.xml";
 	private NodeStore store;
 	private NodeStore Store
 	{
@@ -22,9 +20,9 @@ public partial class UI: Gtk.Window
 	public UI () : base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		if (File.Exists (dbPath)) {
-
-		}
+		//Bind a text changed event handler for the search box
+		txt_search.Buffer.Changed += new EventHandler(txt_search_TextChanged);
+		//
 		dgv_contacts.NodeStore = Store;
 		//
 		dgv_contacts.AppendColumn ("Full Name", new Gtk.CellRendererText (), "text", 0).Resizable = true;
@@ -32,6 +30,12 @@ public partial class UI: Gtk.Window
 		dgv_contacts.AppendColumn ("Phone Number 1", new Gtk.CellRendererText (), "text", 2).Resizable = true;
 		dgv_contacts.AppendColumn ("phone Number 2", new Gtk.CellRendererText (), "text", 3).Resizable = true;
 		dgv_contacts.ShowAll ();
+		//Customize the file chooser button
+		FileFilter filter  = new FileFilter();
+		filter.Name = "vCard Files";
+		filter.AddPattern ("*.vcf");
+		filter.AddPattern ("*.vcard");
+		ofd_select_vcard.AddFilter (filter);
 	}
 
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
@@ -62,5 +66,20 @@ public partial class UI: Gtk.Window
 			md.Run ();
 			md.Destroy ();
 		}
+	}
+
+	protected void txt_search_TextChanged(object sender, EventArgs e)
+	{
+		NodeStore searchStore = new NodeStore (typeof(Node));
+		string searchQuery = txt_search.Buffer.Text;
+		foreach (Node node in Store) {
+			if (node.EmailAddress.Contains (searchQuery) ||
+			    node.FullName.Contains (searchQuery) ||
+			    node.PhoneNumber1.Contains (searchQuery) ||
+			    node.PhoneNumber2.Contains (searchQuery)) {
+				searchStore.AddNode (node);
+			}
+		}
+		dgv_contacts.NodeStore = searchStore;
 	}
 }

@@ -78,4 +78,9 @@
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="vcard.jpg">
+      <DeployService-UseProjectRelativePath>True</DeployService-UseProjectRelativePath>
+    </Content>
+  </ItemGroup>
 </Project>

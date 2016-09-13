@@ -26,8 +26,10 @@ public partial class UI
 		global::Stetic.Gui.Initialize (this);
 		// Widget UI
 		this.Name = "UI";
-		this.Title = global::Mono.Unix.Catalog.GetString ("MainWindow");
+		this.Title = global::Mono.Unix.Catalog.GetString ("VCF Reader 1.3");
+		this.Icon = new global::Gdk.Pixbuf (global::System.IO.Path.Combine (global::System.AppDomain.CurrentDomain.BaseDirectory, "./vcard.jpg"));
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
+		this.Gravity = ((global::Gdk.Gravity)(5));
 		// Container child UI.Gtk.Container+ContainerChild
 		this.vbox1 = new global::Gtk.VBox ();
 		this.vbox1.Name = "vbox1";
