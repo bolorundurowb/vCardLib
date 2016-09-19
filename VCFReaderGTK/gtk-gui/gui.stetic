@@ -15,7 +15,7 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="UI" design-size="559 410">
+  <widget class="Gtk.Window" id="UI" design-size="830 477">
     <property name="MemberName" />
     <property name="Title" translatable="yes">VCF Reader 1.3</property>
     <property name="Icon">file:./vcard.jpg</property>
@@ -98,16 +98,9 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+          <widget class="Gtk.NodeView" id="dgv_contacts">
             <property name="MemberName" />
-            <property name="ShadowType">In</property>
-            <child>
-              <widget class="Gtk.NodeView" id="dgv_contacts">
-                <property name="MemberName" />
-                <property name="CanFocus">True</property>
-                <property name="ShowScrollbars">True</property>
-              </widget>
-            </child>
+            <property name="CanFocus">True</property>
           </widget>
           <packing>
             <property name="Position">2</property>

@@ -28,7 +28,7 @@ public partial class UI: Gtk.Window
 		dgv_contacts.AppendColumn ("Full Name", new Gtk.CellRendererText (), "text", 0).Resizable = true;
 		dgv_contacts.AppendColumn ("Email Address", new Gtk.CellRendererText (), "text", 1).Resizable = true;
 		dgv_contacts.AppendColumn ("Phone Number 1", new Gtk.CellRendererText (), "text", 2).Resizable = true;
-		dgv_contacts.AppendColumn ("phone Number 2", new Gtk.CellRendererText (), "text", 3).Resizable = true;
+		dgv_contacts.AppendColumn ("Phone Number 2", new Gtk.CellRendererText (), "text", 3).Resizable = true;
 		dgv_contacts.ShowAll ();
 		//Customize the file chooser button
 		FileFilter filter  = new FileFilter();

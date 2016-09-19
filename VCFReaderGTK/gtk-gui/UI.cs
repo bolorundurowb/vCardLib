@@ -17,8 +17,6 @@ public partial class UI
 	
 	private global::Gtk.TextView txt_search;
 	
-	private global::Gtk.ScrolledWindow GtkScrolledWindow;
-	
 	private global::Gtk.NodeView dgv_contacts;
 
 	protected virtual void Build ()
@@ -86,23 +84,18 @@ public partial class UI
 		w6.Expand = false;
 		w6.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
-		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
-		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
-		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
 		this.dgv_contacts = new global::Gtk.NodeView ();
 		this.dgv_contacts.CanFocus = true;
 		this.dgv_contacts.Name = "dgv_contacts";
-		this.GtkScrolledWindow.Add (this.dgv_contacts);
-		this.vbox1.Add (this.GtkScrolledWindow);
-		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.GtkScrolledWindow]));
-		w8.Position = 2;
+		this.vbox1.Add (this.dgv_contacts);
+		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.dgv_contacts]));
+		w7.Position = 2;
 		this.Add (this.vbox1);
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 559;
-		this.DefaultHeight = 410;
+		this.DefaultWidth = 830;
+		this.DefaultHeight = 477;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
 		this.ofd_select_vcard.SelectionChanged += new global::System.EventHandler (this.OnOfdSelectVcardSelectionChanged);
