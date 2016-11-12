@@ -98,9 +98,16 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.NodeView" id="dgv_contacts">
+          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
             <property name="MemberName" />
-            <property name="CanFocus">True</property>
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.NodeView" id="dgv_contacts">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="ShowScrollbars">True</property>
+              </widget>
+            </child>
           </widget>
           <packing>
             <property name="Position">2</property>
