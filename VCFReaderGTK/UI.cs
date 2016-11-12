@@ -25,8 +25,20 @@ public partial class UI: Gtk.Window
 		//
 		dgv_contacts.NodeStore = Store;
 		//
-		dgv_contacts.AppendColumn ("Full Name", new Gtk.CellRendererText (), "text", 0).Resizable = true;
-		dgv_contacts.AppendColumn ("Email Address", new Gtk.CellRendererText (), "text", 1).Resizable = true;
+		TreeViewColumn fullNameCol = new TreeViewColumn("Full Name", new Gtk.CellRendererText(), "text");
+		fullNameCol.Resizable = true;
+		fullNameCol.Expand = true;
+		fullNameCol.MinWidth = 150;
+		fullNameCol.Sizing = TreeViewColumnSizing.Autosize;
+		//
+		TreeViewColumn emailCol = new TreeViewColumn("Email", new Gtk.CellRendererText(), "text");
+		emailCol.Resizable = true;
+		emailCol.Expand = true;
+		emailCol.MinWidth = 150;
+		emailCol.Sizing = TreeViewColumnSizing.Autosize;
+		//
+		dgv_contacts.AppendColumn(fullNameCol);
+		dgv_contacts.AppendColumn(emailCol);
 		dgv_contacts.AppendColumn ("Phone Number 1", new Gtk.CellRendererText (), "text", 2).Resizable = true;
 		dgv_contacts.AppendColumn ("Phone Number 2", new Gtk.CellRendererText (), "text", 3).Resizable = true;
 		dgv_contacts.ShowAll ();
@@ -62,7 +74,7 @@ public partial class UI: Gtk.Window
 		else
 		{
 			MessageDialog md = new MessageDialog (this, DialogFlags.DestroyWithParent, MessageType.Error,
-				                   ButtonsType.Close, "The selected file either doesnt exist, or is of an incorrect format");
+				                   ButtonsType.Close, "The selected file either doesn't exist, or is of an incorrect format.");
 			md.Run ();
 			md.Destroy ();
 		}
