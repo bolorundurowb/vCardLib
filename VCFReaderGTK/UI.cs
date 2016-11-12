@@ -25,22 +25,34 @@ public partial class UI: Gtk.Window
 		//
 		dgv_contacts.NodeStore = Store;
 		//
-		TreeViewColumn fullNameCol = new TreeViewColumn("Full Name", new Gtk.CellRendererText(), "text");
+		TreeViewColumn fullNameCol = new TreeViewColumn("Full Name", new Gtk.CellRendererText(), "text", 0);
 		fullNameCol.Resizable = true;
 		fullNameCol.Expand = true;
 		fullNameCol.MinWidth = 150;
 		fullNameCol.Sizing = TreeViewColumnSizing.Autosize;
 		//
-		TreeViewColumn emailCol = new TreeViewColumn("Email", new Gtk.CellRendererText(), "text");
+		TreeViewColumn emailCol = new TreeViewColumn("Email", new Gtk.CellRendererText(), "text", 1);
 		emailCol.Resizable = true;
 		emailCol.Expand = true;
 		emailCol.MinWidth = 150;
 		emailCol.Sizing = TreeViewColumnSizing.Autosize;
 		//
+		TreeViewColumn phoneOneCol = new TreeViewColumn("Phone Number One", new Gtk.CellRendererText(), "text", 2);
+		phoneOneCol.Resizable = true;
+		phoneOneCol.Expand = true;
+		phoneOneCol.MinWidth = 150;
+		phoneOneCol.Sizing = TreeViewColumnSizing.Autosize;
+		//
+		TreeViewColumn phoneTwoCol = new TreeViewColumn("Phone Number Two", new Gtk.CellRendererText(), "text", 3);
+		phoneTwoCol.Resizable = true;
+		phoneTwoCol.Expand = true;
+		phoneTwoCol.MinWidth = 150;
+		phoneTwoCol.Sizing = TreeViewColumnSizing.Autosize;
+		//
 		dgv_contacts.AppendColumn(fullNameCol);
 		dgv_contacts.AppendColumn(emailCol);
-		dgv_contacts.AppendColumn ("Phone Number 1", new Gtk.CellRendererText (), "text", 2).Resizable = true;
-		dgv_contacts.AppendColumn ("Phone Number 2", new Gtk.CellRendererText (), "text", 3).Resizable = true;
+		dgv_contacts.AppendColumn(phoneOneCol);
+		dgv_contacts.AppendColumn(phoneTwoCol);
 		dgv_contacts.ShowAll ();
 		//Customize the file chooser button
 		FileFilter filter  = new FileFilter();
