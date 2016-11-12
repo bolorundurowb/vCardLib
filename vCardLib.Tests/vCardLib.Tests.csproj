@@ -35,6 +35,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PhotoCollections.Test.cs" />
     <Compile Include="vCardTests.cs" />
     <Compile Include="Photos.Test.cs" />
   </ItemGroup>
