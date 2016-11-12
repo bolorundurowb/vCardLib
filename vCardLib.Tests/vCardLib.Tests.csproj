@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="vCardTests.cs" />
+    <Compile Include="Photos.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
