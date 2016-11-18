@@ -4,7 +4,7 @@ using System;
 namespace vCardLib.Tests
 {
     [TestFixture]
-    class PhotoCollections
+    class PhotoCollectionTests
     {
         [Test]
         public void InsertAndRemove()
@@ -32,6 +32,5 @@ namespace vCardLib.Tests
                 photoCollection[0] = photo;
             });
         }
-
     }
 }

@@ -35,9 +35,11 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PhotoCollections.Test.cs" />
+    <Compile Include="PhotoCollectionTests.cs" />
     <Compile Include="vCardTests.cs" />
-    <Compile Include="Photos.Test.cs" />
+    <Compile Include="PhotoTests.cs" />
+    <Compile Include="EmailAddressTests.cs" />
+    <Compile Include="EmailAddressCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -49,6 +51,9 @@
     </None>
     <None Include="unsupported.vcf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
