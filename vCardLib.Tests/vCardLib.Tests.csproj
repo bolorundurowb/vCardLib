@@ -42,6 +42,9 @@
     <Compile Include="EmailAddressCollectionTests.cs" />
     <Compile Include="AddressTests.cs" />
     <Compile Include="AddressCollectionTests.cs" />
+    <Compile Include="EnumTests.cs" />
+    <Compile Include="ExpertiseTests.cs" />
+    <Compile Include="ExpertiseCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
