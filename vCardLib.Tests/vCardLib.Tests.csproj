@@ -40,6 +40,8 @@
     <Compile Include="PhotoTests.cs" />
     <Compile Include="EmailAddressTests.cs" />
     <Compile Include="EmailAddressCollectionTests.cs" />
+    <Compile Include="AddressTests.cs" />
+    <Compile Include="AddressCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -51,9 +53,6 @@
     </None>
     <None Include="unsupported.vcf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="image.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
