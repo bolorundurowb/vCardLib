@@ -1,6 +1,6 @@
 # This project contains two sub projects
 
-[![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/VCF-Reader/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/VCF-Reader?branch=master)   [![Download VCF Reader](https://img.shields.io/sourceforge/dw/vcf-reader.svg)](https://sourceforge.net/projects/vcf-reader/files/latest/download) [![NuGet](https://img.shields.io/badge/nuget-2.0.0-blue.svg)](https://www.nuget.org/packages/vCardLib.dll) [![Mono](https://img.shields.io/badge/mono-4.4.2-ff66b6.svg)]()
+[![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/VCF-Reader/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/VCF-Reader?branch=master)   [![Download VCF Reader](https://img.shields.io/sourceforge/dw/vcf-reader.svg)](https://sourceforge.net/projects/vcf-reader/files/latest/download) [![NuGet](https://img.shields.io/badge/nuget-2.1.0-blue.svg)](https://www.nuget.org/packages/vCardLib.dll) [![Mono](https://img.shields.io/badge/mono-4.4.2-ff66b6.svg)]()
 
 ## VCF-Reader
 
