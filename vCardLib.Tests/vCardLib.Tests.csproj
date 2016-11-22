@@ -45,6 +45,12 @@
     <Compile Include="EnumTests.cs" />
     <Compile Include="ExpertiseTests.cs" />
     <Compile Include="ExpertiseCollectionTests.cs" />
+    <Compile Include="HobbyTests.cs" />
+    <Compile Include="HobbyCollectionTests.cs" />
+    <Compile Include="InterestTests.cs" />
+    <Compile Include="InterestCollectionTests.cs" />
+    <Compile Include="PhoneNumberTests.cs" />
+    <Compile Include="PhoneNumberCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
