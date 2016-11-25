@@ -1120,7 +1120,7 @@ namespace vCardLib
             throw new NotImplementedException("Sorry, support for vcard 4.0 hasn't been implemented");
         }
 
-        private static Bitmap GetImageFromBase64String(string base64String)
+        public static Bitmap GetImageFromBase64String(string base64String)
         {
             try
             {
@@ -1128,7 +1128,7 @@ namespace vCardLib
                 Bitmap bmp;
                 using (var ms = new MemoryStream(imageBytes))
                 {
-                    bmp = new Bitmap(ms);
+					bmp = (Bitmap)Image.FromStream(ms);
                 }
                 return bmp;
             }
