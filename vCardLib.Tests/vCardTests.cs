@@ -9,31 +9,6 @@ namespace vCardLib.Tests
 	public class Test
 	{
 		[Test]
-		public void EmptyOrNullFilePathThrowsArgumentNullException()
-		{
-			string filePath = null;
-			Assert.Throws<ArgumentNullException>(delegate { vCard.FromFile(filePath); });
-			filePath = String.Empty;
-			Assert.Throws<ArgumentNullException>(delegate { vCard.FromFile(filePath); });
-		}
-
-		[Test]
-		public void NonExistentFilePathThrowsFileNotFoundException()
-		{
-			string filePath = @"C:\Test.vcf";
-			Assert.Throws<FileNotFoundException>(delegate { vCard.FromFile(filePath); });
-		}
-
-		[Test]
-		public void InvalidFileThrowsInvalidOperationException()
-		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
-			StreamReader streamReader = new StreamReader(filePath);
-			Assert.Throws<InvalidOperationException>(delegate { vCard.FromStreamReader(streamReader); });
-		}
-
-		[Test]
 		public void ValidVcard()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

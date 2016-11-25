@@ -51,6 +51,7 @@
     <Compile Include="InterestCollectionTests.cs" />
     <Compile Include="PhoneNumberTests.cs" />
     <Compile Include="PhoneNumberCollectionTests.cs" />
+    <Compile Include="HelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
