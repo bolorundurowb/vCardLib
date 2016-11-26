@@ -8,147 +8,124 @@ namespace vCardLib.Tests
     [TestFixture]
 	public class Test
 	{
+		vCard vcard = new vCard();
 		[Test]
-		public void ValidVcard()
+		public void GenerateValidVcard()
+		{
+			Assert.DoesNotThrow(delegate
+			{
+				vcard.Addresses = new AddressCollection();
+				vcard.BirthDay = new DateTime();
+				vcard.BirthPlace = "";
+				vcard.DeathPlace = "";
+				vcard.EmailAddresses = new EmailAddressCollection();
+				vcard.Expertises = new ExpertiseCollection();
+				vcard.Firstname = "";
+				vcard.FormattedName = "";
+				vcard.Gender = GenderType.Female;
+				vcard.Hobbies = new HobbyCollection();
+				vcard.Interests = new InterestCollection();
+				vcard.Kind = ContactType.Application;
+				vcard.Language = "English";
+				vcard.NickName = "";
+				vcard.Organization = "";
+				vcard.Othernames = "";
+				vcard.PhoneNumbers = new PhoneNumberCollection();
+				vcard.Pictures = new PhotoCollection();
+				vcard.Surname = "";
+				vcard.TimeZone = "GMT+1";
+				vcard.Title = "Mr";
+				vcard.URL = "";
+				vcard.Version = 2.1F;
+			});
+		}
+
+		[Test]
+		public void ReadsCardsWithoutErrors()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "valid.vcf");
-			vCardCollection vcardCollection = vCard.FromFile(filePath);
-			//
-			vCard vcard = new vCard();
-			vcard.Firstname = "Gump";
-			vcard.Version = 2.1F;
-			vcard.Surname = "Forrest";
-			vcard.FormattedName = "Forrest Gump";
-			vcard.Othernames = " ";
-			PhoneNumber num1 = new PhoneNumber();
-			num1.Number = "(111) 555-1212";
-			num1.Type = PhoneNumberType.Work;
-			vcard.PhoneNumbers.Add(num1);
-			PhoneNumber num2 = new PhoneNumber();
-			num2.Number = "(404) 555-1212";
-			num2.Type = PhoneNumberType.Home;
-			vcard.PhoneNumbers.Add(num2);
-			EmailAddress email = new EmailAddress();
-			email.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
-			email.Type = EmailType.Internet;
-			vcard.EmailAddresses.Add(email);
-			//
-			Assert.AreEqual(vcardCollection[0], vcard, "The contacts didn't match");
+			vCardCollection collection = null;
+			Assert.DoesNotThrow(delegate {
+				collection = vCard.FromFile(filePath);
+			});
+			Assert.IsNotNull(collection);
+			Assert.IsTrue(collection.Count > 0);
+			filePath = Path.Combine(assemblyFolder, "valid3.0.vcf");
+			collection = null;
+			Assert.DoesNotThrow(delegate {
+				collection = vCard.FromFile(filePath);
+			});
+			Assert.IsNotNull(collection);
+			Assert.IsTrue(collection.Count > 0);
 		}
 
 		[Test]
-		public void UnsupportedFileThrowsNotImplementedException()
+		public void DoesNotOverwriteExceptInstructed()
 		{
+			Assert.IsNotNull(vcard);
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "unsupported.vcf");
-			Assert.Throws<NotImplementedException>(delegate { vCard.FromFile(filePath); });
+			string filePath = Path.Combine(assemblyFolder, "valid.vcf");
+			Assert.Throws<InvalidOperationException>(delegate {
+				vcard.Save(filePath);
+			});
 		}
 
         [Test]
-        public void WrittenVcard2IsValid()
+        public void Savesv2CardWithoutErrors()
         {
-            vCard vcard = new vCard();
-            vcard.Version = 2.1F;
-            vcard.Surname = "Bolorunduro";
-            EmailAddress email = new EmailAddress();
-            email.Email = new System.Net.Mail.MailAddress("ogatimo@gmail.com");
-            email.Type = EmailType.Internet;
-            vcard.EmailAddresses.Add(email);
-            PhoneNumber phone = new PhoneNumber();
-            phone.Number = "009238992";
-            phone.Type = PhoneNumberType.MainNumber;
-            vcard.PhoneNumbers.Add(phone);
-
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePath = Path.Combine(assemblyFolder, "new.vcf");
-
-            vcard.Save(filePath, WriteOptions.Overwrite);
-            Assert.IsTrue(File.Exists(filePath));
-
-            Assert.Greater(vCard.FromFile(filePath).Count, 0);
-
-            Assert.AreEqual(vCard.FromFile(filePath)[0].Surname, vcard.Surname);
-        }
-
-        [Test]
-        public void WrittenVcard3IsValid()
-        {
-            vCard vcard = new vCard();
-            vcard.Version = 3.0F;
-            vcard.Surname = "Bolorunduro";
-            EmailAddress email = new EmailAddress();
-            email.Email = new System.Net.Mail.MailAddress("ogatimo@gmail.com");
-            email.Type = EmailType.Internet;
-            vcard.EmailAddresses.Add(email);
-            PhoneNumber phone = new PhoneNumber();
-            phone.Number = "009238992";
-            phone.Type = PhoneNumberType.MainNumber;
-            vcard.PhoneNumbers.Add(phone);
-
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
-
-            vcard.Save(filePath, WriteOptions.Overwrite);
-            Assert.IsTrue(File.Exists(filePath));
-
-            Assert.Greater(vCard.FromFile(filePath).Count, 0);
-
-            string number = vCard.FromFile(filePath)[0].PhoneNumbers[0].Number;
-            Assert.AreEqual(number, vcard.PhoneNumbers[0].Number);
-        }
-
-        [Test]
-        public void UnsupportedVcardVersionThrowsNotImplementedException()
-        {
-            vCard vcard = new vCard();
-            vcard.Version = 4.0F;
-            Assert.Throws<NotImplementedException>(delegate { vcard.Save("temp.vcf"); });
-        }
-
-        [Test]
-        public void UseAllVcardProperties()
-        {
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
+			Assert.IsNotNull(vcard);
             Assert.DoesNotThrow(delegate
             {
-                vCard vcard = new vCard();
                 vcard.Firstname = "Gump";
-                vcard.Version = 2.1F;
                 vcard.Surname = "Forrest";
                 vcard.FormattedName = "Forrest Gump";
-                vcard.Othernames = " ";
                 PhoneNumber num1 = new PhoneNumber();
                 num1.Number = "(111) 555-1212";
-                num1.Type = PhoneNumberType.Work;
+				num1.Type = PhoneNumberType.None;
                 vcard.PhoneNumbers.Add(num1);
                 PhoneNumber num2 = new PhoneNumber();
                 num2.Number = "(404) 555-1212";
                 num2.Type = PhoneNumberType.Home;
                 vcard.PhoneNumbers.Add(num2);
-                EmailAddress email = new EmailAddress();
-                email.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
-                email.Type = EmailType.Internet;
-                vcard.EmailAddresses.Add(email);
-                vcard.URL = "http://www.google.com";
-                vcard.Organization = "Facebook";
-                vcard.Title = "baba nla fuji";
-                vcard.NickName = "Pasuma";
-                vcard.Kind = ContactType.Individual;
-                vcard.Gender = GenderType.Male;
-                vcard.Language = "en-US";
-                vcard.BirthDay = DateTime.Now;
-                vcard.BirthPlace = "Makurdi";
-                vcard.DeathPlace = "Takoraddi";
-                vcard.TimeZone = "GMT-1";
-                Address address = new Address();
-                address.Location = "Sabo, Yaba";
-                address.Type = AddressType.Work;
-                vcard.Addresses.Add(address);
-                Photo photo = new Photo();
-                photo.Encoding = PhotoEncoding.JPEG;
-                photo.PhotoURL = "www.google/images";
-                photo.Type = PhotoType.URL;
-                vcard.Pictures.Add(photo);
+				PhoneNumber num3 = new PhoneNumber();
+				num3.Number = "(404) 555-1212";
+				num3.Type = PhoneNumberType.MainNumber;
+				vcard.PhoneNumbers.Add(num3);
+                EmailAddress email1 = new EmailAddress();
+                email1.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
+                email1.Type = EmailType.None;
+                vcard.EmailAddresses.Add(email1);
+				EmailAddress email2 = new EmailAddress();
+				email2.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
+				email2.Type = EmailType.Internet;
+				vcard.EmailAddresses.Add(email2);
+                Address address1 = new Address();
+                address1.Location = "Sabo, Yaba";
+				address1.Type = AddressType.None;
+                vcard.Addresses.Add(address1);
+				Address address2 = new Address();
+				address2.Location = "Sabo, Yaba";
+				address2.Type = AddressType.Work;
+				vcard.Addresses.Add(address2);
+                Photo photo1 = new Photo();
+                photo1.Encoding = PhotoEncoding.JPEG;
+                photo1.PhotoURL = "www.google/images";
+                photo1.Type = PhotoType.URL;
+                vcard.Pictures.Add(photo1);
+
+				var request = System.Net.WebRequest.Create("https://jpeg.org/images/jpeg-logo-plain.png");
+				System.Net.WebResponse response = request.GetResponse();
+				Stream responseStream = response.GetResponseStream();
+
+				Photo photo2 = new Photo();
+				photo2.Type = PhotoType.Image;
+				photo2.Encoding = PhotoEncoding.JPEG;
+				photo2.Picture = new System.Drawing.Bitmap(responseStream);
+				vcard.Pictures.Add(photo2);
+
                 Hobby hobby = new Hobby();
                 hobby.Activity = "Watching Hobbits";
                 hobby.Level = Level.Medium;
@@ -162,47 +139,26 @@ namespace vCardLib.Tests
                 expertise.Level = Level.Medium;
                 vcard.Expertises.Add(expertise);
 
-                string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                string filePath = Path.Combine(assemblyFolder, "newAll.vcf");
                 vcard.Save(filePath, WriteOptions.Overwrite);
             });
+			Assert.IsTrue(File.Exists(filePath));
         }
 
         [Test]
         public void WrittenVcardCollectionIsValid()
         {
-            vCard vcard = new vCard();
-            vcard.Version = 2.1F;
-            vcard.Surname = "Bolorunduro";
-            EmailAddress email = new EmailAddress();
-            email.Email = new System.Net.Mail.MailAddress("ogatimo@gmail.com");
-            email.Type = EmailType.Internet;
-            vcard.EmailAddresses.Add(email);
-            PhoneNumber phone = new PhoneNumber();
-            phone.Number = "009238992";
-            phone.Type = PhoneNumberType.MainNumber;
-            vcard.PhoneNumbers.Add(phone);
-
-            vCardCollection collection = new vCardCollection();
-            collection.Add(vcard);
-            collection.Add(vcard);
-
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePath = Path.Combine(assemblyFolder, "newCollection.vcf");
-
-            collection.Save(filePath, 3.0F, WriteOptions.Overwrite);
-            Assert.IsTrue(File.Exists(filePath));
-
-            Assert.Greater(vCard.FromFile(filePath).Count, 0);
-
-            string number = vCard.FromFile(filePath)[0].PhoneNumbers[0].Number;
-            Assert.AreEqual(number, vcard.PhoneNumbers[0].Number);
+			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
+			Assert.IsNotNull(vcard);
+			Assert.DoesNotThrow(delegate {
+				vcard.Save(filePath, 3.0f, WriteOptions.Overwrite);
+			});
+			Assert.IsTrue(File.Exists(filePath));
         }
 
 		[Test]
-		public void InvalidVcardVersionThrowsException()
+		public void InvalidVcardSaveDetailsThrowsException()
 		{
-			vCard vcard = new vCard ();
 			Assert.Throws<ArgumentException> (delegate {
 				vcard.Save ("", 5.2F, WriteOptions.Overwrite);
 			});
@@ -211,96 +167,9 @@ namespace vCardLib.Tests
 		[Test]
 		public void VersionFourVcardThrowsException()
 		{
-			vCard vcard = new vCard ();
 			Assert.Throws<NotImplementedException> (delegate {
 				vcard.Save ("", 4.0F, WriteOptions.Overwrite);
 			});
-		}
-
-		[Test]
-		public void InvalidVcardCollecionVersionThrowsException()
-		{
-			vCardCollection collection = new vCardCollection ();
-			Assert.Throws<ArgumentException> (delegate {
-				collection.Save ("", 5.2F, WriteOptions.Overwrite);
-			});
-		}
-
-		[Test]
-		public void VersionFourVcardCollectionThrowsException()
-		{
-			vCardCollection collection = new vCardCollection ();
-			Assert.Throws<NotImplementedException> (delegate {
-				collection.Save ("", 4.0F, WriteOptions.Overwrite);
-			});
-		}
-
-		[Test]
-		public void ObjectCollectionsDontThrowExceptions()
-		{
-			PhoneNumberCollection numberCollection = new PhoneNumberCollection();
-			PhoneNumber number = new PhoneNumber();
-			numberCollection.Add(number);
-			Assert.AreEqual (numberCollection.Count, 1);
-			Assert.IsInstanceOf<PhoneNumber> (numberCollection [0]);
-			numberCollection.Remove(number);
-			Assert.AreEqual (numberCollection.Count, 0);
-
-			EmailAddressCollection emailCollection = new EmailAddressCollection();
-			EmailAddress email = new EmailAddress();
-			emailCollection.Add(email);
-			Assert.AreEqual (emailCollection.Count, 1);
-			Assert.IsInstanceOf<EmailAddress> (emailCollection [0]);
-			emailCollection.Remove(email);
-			Assert.AreEqual (emailCollection.Count, 0);
-
-			AddressCollection addressCollection = new AddressCollection();
-			Address address = new Address();
-			addressCollection.Add(address);
-			Assert.AreEqual (addressCollection.Count, 1);
-			Assert.IsInstanceOf<Address> (addressCollection [0]);
-			addressCollection.Remove(address);
-			Assert.AreEqual (addressCollection.Count, 0);
-
-			HobbyCollection hobbyCollection = new HobbyCollection();
-			Hobby hobby = new Hobby();
-			hobbyCollection.Add(hobby);
-			Assert.AreEqual (hobbyCollection.Count, 1);
-			Assert.IsInstanceOf<Hobby>(hobbyCollection [0]);
-			hobbyCollection.Remove(hobby);
-			Assert.AreEqual (hobbyCollection.Count, 0);
-
-			InterestCollection interestCollection = new InterestCollection();
-			Interest interest = new Interest();
-			interestCollection.Add(interest);
-			Assert.AreEqual (interestCollection.Count, 1);
-			Assert.IsInstanceOf<Interest>(interestCollection [0]);
-			interestCollection.Remove(interest);
-			Assert.AreEqual (interestCollection.Count, 0);
-
-			ExpertiseCollection expertiseCollection = new ExpertiseCollection();
-			Expertise expertise = new Expertise();
-			expertiseCollection.Add(expertise);
-			Assert.AreEqual (expertiseCollection.Count, 1);
-			Assert.IsInstanceOf<Expertise> ( expertiseCollection [0]);
-			expertiseCollection.Remove(expertise);
-			Assert.AreEqual (expertiseCollection.Count, 0);
-
-			PhotoCollection photoCollection = new PhotoCollection();
-			Photo photo = new Photo();
-			photoCollection.Add(photo);
-			Assert.AreEqual (photoCollection.Count, 1);
-			Assert.IsInstanceOf<Photo> ( photoCollection [0]);
-			photoCollection.Remove(photo);
-			Assert.AreEqual (photoCollection.Count, 0);
-
-			vCardCollection vcardCollection = new vCardCollection();
-			vCard vcard = new vCard();
-			vcardCollection.Add(vcard);
-			Assert.AreEqual (vcardCollection.Count, 1);
-			Assert.IsInstanceOf<vCard>(vcardCollection [0]);
-			vcardCollection.Remove(vcard);
-			Assert.AreEqual (vcardCollection.Count, 0);
 		}
     }
 }

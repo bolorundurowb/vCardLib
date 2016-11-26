@@ -36,7 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PhotoCollectionTests.cs" />
-    <Compile Include="vCardTests.cs" />
+    <Compile Include="vCardTests.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="PhotoTests.cs" />
     <Compile Include="EmailAddressTests.cs" />
     <Compile Include="EmailAddressCollectionTests.cs" />
@@ -63,6 +65,9 @@
     </None>
     <None Include="unsupported.vcf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="valid3.0.vcf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
