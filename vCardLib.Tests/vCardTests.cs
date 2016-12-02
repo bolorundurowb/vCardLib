@@ -145,7 +145,7 @@ namespace vCardLib.Tests
         }
 
         [Test]
-        public void WrittenVcardCollectionIsValid()
+        public void Savesv3CardWithoutErrors()
         {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
