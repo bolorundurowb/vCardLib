@@ -15,6 +15,7 @@ namespace vCardLib.Tests
                 photoCollection.Add(photo);
                 photoCollection[0] = photo;
                 photo = photoCollection[0];
+				photoCollection.Remove(photo);
             });
         }
 
