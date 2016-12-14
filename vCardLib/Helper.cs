@@ -204,6 +204,14 @@ namespace vCardLib
                         phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
+					else if (phoneString.StartsWith("TEXTPHONE"))
+					{
+						phoneString = phoneString.Replace("TEXTPHONE:", "");
+						PhoneNumber phoneNumber = new PhoneNumber();
+						phoneNumber.Number = phoneString;
+						phoneNumber.Type = PhoneNumberType.Fax;
+						vcard.PhoneNumbers.Add(phoneNumber);
+					}
                     else if (phoneString.StartsWith("TEXT"))
                     {
                         phoneString = phoneString.Replace("TEXT:", "");
@@ -226,14 +234,6 @@ namespace vCardLib
                         PhoneNumber phoneNumber = new PhoneNumber();
                         phoneNumber.Number = phoneString;
                         phoneNumber.Type = PhoneNumberType.Pager;
-                        vcard.PhoneNumbers.Add(phoneNumber);
-                    }
-                    else if (phoneString.StartsWith("TEXTPHONE"))
-                    {
-                        phoneString = phoneString.Replace("TEXTPHONE:", "");
-                        PhoneNumber phoneNumber = new PhoneNumber();
-                        phoneNumber.Number = phoneString;
-                        phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
                     else if (phoneString.StartsWith("MAIN-NUMBER"))
@@ -721,6 +721,14 @@ namespace vCardLib
                         phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
+					else if (phoneString.StartsWith("TEXTPHONE"))
+					{
+						phoneString = phoneString.Replace("TEXTPHONE:", "");
+						PhoneNumber phoneNumber = new PhoneNumber();
+						phoneNumber.Number = phoneString;
+						phoneNumber.Type = PhoneNumberType.Fax;
+						vcard.PhoneNumbers.Add(phoneNumber);
+					}
                     else if (phoneString.StartsWith("TEXT"))
                     {
                         phoneString = phoneString.Replace("TEXT:", "");
@@ -743,14 +751,6 @@ namespace vCardLib
                         PhoneNumber phoneNumber = new PhoneNumber();
                         phoneNumber.Number = phoneString;
                         phoneNumber.Type = PhoneNumberType.Pager;
-                        vcard.PhoneNumbers.Add(phoneNumber);
-                    }
-                    else if (phoneString.StartsWith("TEXTPHONE"))
-                    {
-                        phoneString = phoneString.Replace("TEXTPHONE:", "");
-                        PhoneNumber phoneNumber = new PhoneNumber();
-                        phoneNumber.Number = phoneString;
-                        phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
                     else if (phoneString.StartsWith("MAIN-NUMBER"))
