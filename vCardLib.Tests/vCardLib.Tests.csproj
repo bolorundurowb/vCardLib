@@ -35,7 +35,26 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="vCardTests.cs" />
+    <Compile Include="PhotoCollectionTests.cs" />
+    <Compile Include="vCardTests.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="PhotoTests.cs" />
+    <Compile Include="EmailAddressTests.cs" />
+    <Compile Include="EmailAddressCollectionTests.cs" />
+    <Compile Include="AddressTests.cs" />
+    <Compile Include="AddressCollectionTests.cs" />
+    <Compile Include="EnumTests.cs" />
+    <Compile Include="ExpertiseTests.cs" />
+    <Compile Include="ExpertiseCollectionTests.cs" />
+    <Compile Include="HobbyTests.cs" />
+    <Compile Include="HobbyCollectionTests.cs" />
+    <Compile Include="InterestTests.cs" />
+    <Compile Include="InterestCollectionTests.cs" />
+    <Compile Include="PhoneNumberTests.cs" />
+    <Compile Include="PhoneNumberCollectionTests.cs" />
+    <Compile Include="HelperTests.cs" />
+    <Compile Include="vCardCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,6 +66,12 @@
     </None>
     <None Include="unsupported.vcf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="valid3.0.vcf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="version21.vcf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

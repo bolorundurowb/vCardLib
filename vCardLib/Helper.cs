@@ -136,9 +136,9 @@ namespace vCardLib
             if (genderString != null)
             {
                 genderString = genderString.Replace("GENDER:", "").Trim();
-                if (genderString.ToLower() == "male")
+                if (genderString.ToLower() == "male" || genderString.ToLower() == "m")
                     vcard.Gender = GenderType.Male;
-                else if (genderString.ToLower() == "female")
+                else if (genderString.ToLower() == "female" || genderString.ToLower() == "f")
                     vcard.Gender = GenderType.Female;
                 else
                     vcard.Gender = GenderType.Other;
@@ -204,6 +204,14 @@ namespace vCardLib
                         phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
+					else if (phoneString.StartsWith("TEXTPHONE"))
+					{
+						phoneString = phoneString.Replace("TEXTPHONE:", "");
+						PhoneNumber phoneNumber = new PhoneNumber();
+						phoneNumber.Number = phoneString;
+						phoneNumber.Type = PhoneNumberType.Fax;
+						vcard.PhoneNumbers.Add(phoneNumber);
+					}
                     else if (phoneString.StartsWith("TEXT"))
                     {
                         phoneString = phoneString.Replace("TEXT:", "");
@@ -226,14 +234,6 @@ namespace vCardLib
                         PhoneNumber phoneNumber = new PhoneNumber();
                         phoneNumber.Number = phoneString;
                         phoneNumber.Type = PhoneNumberType.Pager;
-                        vcard.PhoneNumbers.Add(phoneNumber);
-                    }
-                    else if (phoneString.StartsWith("TEXTPHONE"))
-                    {
-                        phoneString = phoneString.Replace("TEXTPHONE:", "");
-                        PhoneNumber phoneNumber = new PhoneNumber();
-                        phoneNumber.Number = phoneString;
-                        phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
                     else if (phoneString.StartsWith("MAIN-NUMBER"))
@@ -295,8 +295,7 @@ namespace vCardLib
                         //Remove multiple typing
                         if (emailString.Contains(";"))
                         {
-                            int index = emailString.LastIndexOf(";");
-                            emailString = emailString.Remove(0, index + 1);
+							emailString = emailString.Replace(";", "");
                         }
 
                         //Logic
@@ -648,9 +647,9 @@ namespace vCardLib
             if (genderString != null)
             {
                 genderString = genderString.Replace("GENDER:", "").Trim();
-                if (genderString.ToLower() == "male")
+                if (genderString.ToLower() == "male" || genderString.ToLower() == "m")
                     vcard.Gender = GenderType.Male;
-                else if (genderString.ToLower() == "female")
+				else if (genderString.ToLower() == "female" || genderString.ToLower() == "f")
                     vcard.Gender = GenderType.Female;
                 else
                     vcard.Gender = GenderType.Other;
@@ -722,6 +721,14 @@ namespace vCardLib
                         phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
+					else if (phoneString.StartsWith("TEXTPHONE"))
+					{
+						phoneString = phoneString.Replace("TEXTPHONE:", "");
+						PhoneNumber phoneNumber = new PhoneNumber();
+						phoneNumber.Number = phoneString;
+						phoneNumber.Type = PhoneNumberType.Fax;
+						vcard.PhoneNumbers.Add(phoneNumber);
+					}
                     else if (phoneString.StartsWith("TEXT"))
                     {
                         phoneString = phoneString.Replace("TEXT:", "");
@@ -744,14 +751,6 @@ namespace vCardLib
                         PhoneNumber phoneNumber = new PhoneNumber();
                         phoneNumber.Number = phoneString;
                         phoneNumber.Type = PhoneNumberType.Pager;
-                        vcard.PhoneNumbers.Add(phoneNumber);
-                    }
-                    else if (phoneString.StartsWith("TEXTPHONE"))
-                    {
-                        phoneString = phoneString.Replace("TEXTPHONE:", "");
-                        PhoneNumber phoneNumber = new PhoneNumber();
-                        phoneNumber.Number = phoneString;
-                        phoneNumber.Type = PhoneNumberType.Fax;
                         vcard.PhoneNumbers.Add(phoneNumber);
                     }
                     else if (phoneString.StartsWith("MAIN-NUMBER"))
@@ -814,8 +813,7 @@ namespace vCardLib
                         //Remove multiple typing
                         if (emailString.Contains(";"))
                         {
-                            int index = emailString.LastIndexOf(";");
-                            emailString = emailString.Remove(0, index + 1);
+							emailString = emailString.Replace(";", "");
                         }
                         if (emailString.Contains(","))
                         {
@@ -1120,7 +1118,7 @@ namespace vCardLib
             throw new NotImplementedException("Sorry, support for vcard 4.0 hasn't been implemented");
         }
 
-        private static Bitmap GetImageFromBase64String(string base64String)
+        public static Bitmap GetImageFromBase64String(string base64String)
         {
             try
             {
@@ -1128,7 +1126,7 @@ namespace vCardLib
                 Bitmap bmp;
                 using (var ms = new MemoryStream(imageBytes))
                 {
-                    bmp = new Bitmap(ms);
+					bmp = (Bitmap)Image.FromStream(ms);
                 }
                 return bmp;
             }
