@@ -262,7 +262,7 @@ namespace vCardLib
             vCardString += "BIRTHPLACE:" + this.BirthPlace + Environment.NewLine;
             vCardString += "DEATHPLACE:" + this.DeathPlace + Environment.NewLine;
             vCardString += "TZ:" + this.TimeZone + Environment.NewLine;
-            vCardString += "BDAY:" + this.BirthDay.Year + this.BirthDay.ToString("00") + this.BirthDay.ToString("00");
+			vCardString += "BDAY:" + this.BirthDay.Year + this.BirthDay.Month.ToString("00") + this.BirthDay.Day.ToString("00");
             foreach(PhoneNumber phoneNumber in this.PhoneNumbers)
             {
                 vCardString += Environment.NewLine;

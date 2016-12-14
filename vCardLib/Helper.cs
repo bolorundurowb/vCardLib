@@ -136,9 +136,9 @@ namespace vCardLib
             if (genderString != null)
             {
                 genderString = genderString.Replace("GENDER:", "").Trim();
-                if (genderString.ToLower() == "male")
+                if (genderString.ToLower() == "male" || genderString.ToLower() == "m")
                     vcard.Gender = GenderType.Male;
-                else if (genderString.ToLower() == "female")
+                else if (genderString.ToLower() == "female" || genderString.ToLower() == "f")
                     vcard.Gender = GenderType.Female;
                 else
                     vcard.Gender = GenderType.Other;
@@ -648,9 +648,9 @@ namespace vCardLib
             if (genderString != null)
             {
                 genderString = genderString.Replace("GENDER:", "").Trim();
-                if (genderString.ToLower() == "male")
+                if (genderString.ToLower() == "male" || genderString.ToLower() == "m")
                     vcard.Gender = GenderType.Male;
-                else if (genderString.ToLower() == "female")
+				else if (genderString.ToLower() == "female" || genderString.ToLower() == "f")
                     vcard.Gender = GenderType.Female;
                 else
                     vcard.Gender = GenderType.Other;

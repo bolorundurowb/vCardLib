@@ -113,5 +113,35 @@ namespace vCardLib.Tests
 			image = Helper.GetImageFromBase64String(base64String);
 			//Assert.IsNotNull(image);
 		}
+
+		[Test]
+		public void ProcessV2_1Coverage()
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string filePath = Path.Combine(assemblyFolder, "version21.vcf");
+			vCardCollection vcardCollection = null;
+			Assert.DoesNotThrow(delegate {
+				vcardCollection = vCard.FromFile(filePath);
+			});
+			Assert.IsNotNull(vcardCollection);
+			Assert.AreEqual(vcardCollection.Count, 1);
+			Assert.DoesNotThrow(delegate {
+				vcardCollection.Save(Path.Combine(assemblyFolder, "version30.vcf"), 3.0f, WriteOptions.Overwrite);
+			});
+		}
+
+		[Test]
+		public void ProcessV3_0Coverage()
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string filePath = Path.Combine(assemblyFolder, "version30.vcf");
+			vCardCollection vcardCollection = null;
+			Assert.DoesNotThrow(delegate
+			{
+				vcardCollection = vCard.FromFile(filePath);
+			});
+			Assert.IsNotNull(vcardCollection);
+			Assert.AreEqual(vcardCollection.Count, 1);
+		}
 	}
 }
