@@ -9,10 +9,9 @@ REV:20080424T195243Z
 LANG:fr-CA
 BDAY:19700310
 URL:http://www.johndoe.com
+TZ:GMT+1
 BIRTHPLACE:Maida Vale
 DEATHPLACE:Maida Vale
-GENDER:FEMALE
-GENDER:MALE
 GENDER:FISH
 KIND:INDIVIDUAL
 KIND:GROUP
@@ -21,15 +20,16 @@ KIND:LOCATION
 KIND:APPLICATION
 KIND:DEVICE
 PHOTO;GIF:http://www.example.com/dir_photos/my_photo.gif
+PHOTO;JPEG:http://www.example.com/dir_photos/my_photo.jpg
 ADR:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;POSTAL:;;42 Plantation St.;Baytown;LA;30314;United States of America
-ADR;WORK;PREF:;;100 Waters Edge;Baytown;LA;30314;United States of America
+ADR;WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
 ADR;INTL:;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;POSTAL:;;42 Plantation St.;Baytown;LA;30314;United States of America
 ADR;PARCEL:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;DOM:;;42 Plantation St.;Baytown;LA;30314;United States of America
-EMAIL:forrestgump@example.com
+EMAIL:forrestgump@example.com;
 EMAIL;AOL:forrestgump@example.com
 EMAIL;IBMMAIL:forrestgump@example.com
 EMAIL;APPLELINK:forrestgump@example.com
@@ -42,14 +42,14 @@ TEL;MODEM:(123) 555-5832
 TEL;ISDN:(123) 555-5832
 TEL;BBS:(123) 555-5832
 TEL;MAIN-NUMBER:(123) 555-5832
-TEL;TEXT-PHONE:(123) 555-5832
+TEL;TEXTPHONE:(123) 555-5832
 TEL;PAGER:(123) 555-5832
 TEL;VIDEO:(123) 555-5832
 TEL;FAX:(123) 555-5832
 TEL;TEXT:(123) 555-5832
 TEL;VOICE:(123) 555-5832
-TEL;WORK;VOICE:(111) 555-1212
-TEL;HOME;VOICE:(404) 555-1212
+TEL;WORK:(111) 555-1212
+TEL;HOME:(404) 555-1212
 TEL;CELL:(123) 555-5832
 EXPERTISE;HIGH:Computer Science
 EXPERTISE;MEDIUM:Computer Science

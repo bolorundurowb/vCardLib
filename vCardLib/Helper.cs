@@ -295,8 +295,7 @@ namespace vCardLib
                         //Remove multiple typing
                         if (emailString.Contains(";"))
                         {
-                            int index = emailString.LastIndexOf(";");
-                            emailString = emailString.Remove(0, index + 1);
+							emailString = emailString.Replace(";", "");
                         }
 
                         //Logic
@@ -814,8 +813,7 @@ namespace vCardLib
                         //Remove multiple typing
                         if (emailString.Contains(";"))
                         {
-                            int index = emailString.LastIndexOf(";");
-                            emailString = emailString.Remove(0, index + 1);
+							emailString = emailString.Replace(";", "");
                         }
                         if (emailString.Contains(","))
                         {
