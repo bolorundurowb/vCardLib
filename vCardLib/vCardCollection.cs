@@ -47,6 +47,14 @@ namespace vCardLib
             }
         }
 
+        /// <summary>
+        /// Saves a vcard collection to a vcf file
+        /// </summary>
+        /// <param name="filePath">Path to save to</param>
+        /// <param name="writeOptions">Determines if the method throws and exception if the save path exists or not</param>
+        /// <exception cref="InvalidOperationException">The file already exists</exception>
+        /// <exception cref="NotImplementedException">version 4 files are not yet supported</exception>
+        /// <exception cref="ArgumentException">The vcard version is invalid</exception>
         public void Save(string filePath, WriteOptions writeOptions = WriteOptions.ThrowError)
         {
             if (writeOptions == WriteOptions.ThrowError)
@@ -79,6 +87,15 @@ namespace vCardLib
             File.WriteAllText(filePath, vcardString);
         }
 
+        /// <summary>
+        /// Saves a vcard collection to a vcf file
+        /// </summary>
+        /// <param name="filePath">Path to save to</param>
+        /// <param name="version">Specify the version you want to save in</param>
+        /// <param name="writeOptions">Determines if the method throws and exception if the save path exists or not</param>
+        /// <exception cref="InvalidOperationException">The file already exists</exception>
+        /// <exception cref="NotImplementedException">version 4 files are not yet supported</exception>
+        /// <exception cref="ArgumentException">The vcard version is invalid</exception>
         public void Save(string filePath, float version, WriteOptions writeOptions = WriteOptions.ThrowError)
         {
             if (writeOptions == WriteOptions.ThrowError)

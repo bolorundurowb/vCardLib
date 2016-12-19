@@ -64,63 +64,69 @@ namespace vCardLib
         public PhotoCollection Pictures { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's nickname
         /// </summary>
         public string NickName { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact type
         /// </summary>
         public ContactType Kind { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's gender
         /// </summary>
         public GenderType Gender { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's addresses
         /// </summary>
         public AddressCollection Addresses { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's language
         /// </summary>
+        /// <example>
+        /// vcard.Language = "en-US";
+        /// </example>
         public string Language { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's birthday
         /// </summary>
         public DateTime BirthDay { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's birth place
         /// </summary>
         public string BirthPlace { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact'c areas of expertise
         /// </summary>
         public ExpertiseCollection Expertises { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's death place
         /// </summary>
         public string DeathPlace { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's hobbies
         /// </summary>
         public HobbyCollection Hobbies { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's interests
         /// </summary>
         public InterestCollection Interests { get; set; }
 
         /// <summary>
-        /// 
+        /// The contact's timezone
         /// </summary>
+        /// <example>
+        /// vcard.TimeZone = "GMT-1";
+        /// </example>
         public string TimeZone { get; set; }
 
         /// <summary>
@@ -195,6 +201,13 @@ namespace vCardLib
                 && Expertises.Count == toCompare.Expertises.Count;
         }
 
+        /// <summary>
+        /// Save a vcard object to a vcf file
+        /// </summary>
+        /// <param name="filePath">Path to file to save to</param>
+        /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
+        /// <returns>A boolean value stating whether the save option was successful or not</returns>
+        /// <exception cref="InvalidOperationException">The given file path already exists</exception>
         public bool Save(string filePath, WriteOptions writeOption = WriteOptions.ThrowError)
         {
             if(writeOption == WriteOptions.ThrowError)
@@ -207,6 +220,14 @@ namespace vCardLib
             return Save(filePath, Version, writeOption);
         }
 
+        /// <summary>
+        /// Save a vcard object to a vcf file
+        /// </summary>
+        /// <param name="filePath">Path to file to save to</param>
+        /// <param name="version">Set the save version</param>
+        /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
+        /// <returns>A boolean value stating whether the save option was successful or not</returns>
+        /// <exception cref="InvalidOperationException">The file already exists</exception>
         public bool Save(string filePath, float version, WriteOptions writeOption = WriteOptions.ThrowError)
         {
             if (writeOption == WriteOptions.ThrowError)
@@ -239,6 +260,10 @@ namespace vCardLib
             return true;
         }
 
+        /// <summary>
+        /// Write a vCard to a string
+        /// </summary>
+        /// <param name="vCardString">An empty string passed by reference</param>
         internal void WriteV3ObjectToString(ref string vCardString)
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
@@ -328,7 +353,11 @@ namespace vCardLib
             vCardString += "END:VCARD";
         }
 
-		internal void WriteV2ObjectToString(ref string vCardString)
+        /// <summary>
+        /// Write a vCard to a string
+        /// </summary>
+        /// <param name="vCardString">An empty string passed by reference</param>
+        internal void WriteV2ObjectToString(ref string vCardString)
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:2.1" + Environment.NewLine;
