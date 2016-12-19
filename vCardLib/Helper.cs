@@ -57,6 +57,11 @@ namespace vCardLib
             return contactsString.Split(new[] { "END:VCARD" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        /// <summary>
+        /// Sanitizes input and splits a single contact string intoits constituent parts
+        /// </summary>
+        /// <param name="contactString">A string containing the contact details</param>
+        /// <returns>A string array of details, one per line</returns>
         public static string[] GetContactDetailsArrayFromString(string contactString)
         {
             contactString = contactString.Replace("PREF;", "").Replace("pref;", "");
@@ -81,6 +86,11 @@ namespace vCardLib
             return vcard;
         }
 
+        /// <summary>
+        /// Converts an array of contact details to a vCard object
+        /// </summary>
+        /// <param name="vcard">An empty vCard object passed by reference</param>
+        /// <param name="contactDetails">An array of contact details</param>
         private static void ProcessV2_1(ref vCard vcard, string[] contactDetails)
         {
             #region Simple Properties
@@ -592,6 +602,11 @@ namespace vCardLib
             #endregion
         }
 
+        /// <summary>
+        /// Converts an array of contact details to a vCard object
+        /// </summary>
+        /// <param name="vcard">An empty vCard object passed by reference</param>
+        /// <param name="contactDetails">An array of contact details</param>
         private static void ProcessV3_0(ref vCard vcard, string[] contactDetails)
         {
             #region Simple Properties
@@ -1125,11 +1140,22 @@ namespace vCardLib
             #endregion
         }
 
+        /// <summary>
+        /// Converts an array of contact details to a vCard object
+        /// </summary>
+        /// <param name="vcard">An empty vCard object passed by reference</param>
+        /// <param name="contactDetails">An array of contact details</param>
+        /// <exception cref="NotImplementedException">Support for version 4 hasn't been implemented</exception>
         private static void ProcessV4_0(ref vCard vcard, string[] contactDetails)
         {
             throw new NotImplementedException("Sorry, support for vcard 4.0 hasn't been implemented");
         }
 
+        /// <summary>
+        /// Converts a base 64 string to an image
+        /// </summary>
+        /// <param name="base64String">properly encoded base 64 string</param>
+        /// <returns>A bitmap object or null if the string is invalid</returns>
         public static Bitmap GetImageFromBase64String(string base64String)
         {
             try

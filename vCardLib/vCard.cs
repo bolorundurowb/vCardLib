@@ -1,11 +1,4 @@
-﻿
-/* =======================================================================
- * vCard Library for .NET
- * Copyright (c) 2016 Bolorunduro Winner-Timothy http://www.github.com/VCF-Reader
- * .
- * ======================================================================= */
-
-using System;
+﻿using System;
 using System.IO;
 
 namespace vCardLib
@@ -192,14 +185,14 @@ namespace vCardLib
             var toCompare = obj as vCard;
             if (toCompare == null)
                 return false;
-            return this.Firstname == toCompare.Firstname
-                && this.Surname == toCompare.Surname
-                && this.FormattedName == toCompare.FormattedName
-                && this.PhoneNumbers.Count == toCompare.PhoneNumbers.Count
-                && this.EmailAddresses.Count == toCompare.EmailAddresses.Count
-                && this.BirthPlace == toCompare.BirthPlace
-                && this.DeathPlace == toCompare.DeathPlace
-                && this.Expertises.Count == toCompare.Expertises.Count;
+            return Firstname == toCompare.Firstname
+                && Surname == toCompare.Surname
+                && FormattedName == toCompare.FormattedName
+                && PhoneNumbers.Count == toCompare.PhoneNumbers.Count
+                && EmailAddresses.Count == toCompare.EmailAddresses.Count
+                && BirthPlace == toCompare.BirthPlace
+                && DeathPlace == toCompare.DeathPlace
+                && Expertises.Count == toCompare.Expertises.Count;
         }
 
         public bool Save(string filePath, WriteOptions writeOption = WriteOptions.ThrowError)
@@ -211,7 +204,7 @@ namespace vCardLib
                     throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
                 }
             }
-            return Save(filePath, this.Version, writeOption);
+            return Save(filePath, Version, writeOption);
         }
 
         public bool Save(string filePath, float version, WriteOptions writeOption = WriteOptions.ThrowError)
@@ -250,20 +243,20 @@ namespace vCardLib
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:3.0" + Environment.NewLine;
-            vCardString += "N:" + this.Firstname + ";" + this.Surname + ";" + this.Othernames + Environment.NewLine;
-            vCardString += "FN:" + this.FormattedName + Environment.NewLine;
-            vCardString += "ORG:" + this.Organization + Environment.NewLine;
-            vCardString += "TITLE:" + this.Title + Environment.NewLine;
-            vCardString += "URL:" + this.URL + Environment.NewLine;
-            vCardString += "NICKNAME:" + this.NickName + Environment.NewLine;
-            vCardString += "KIND:" + this.Kind.ToString().ToUpper() + Environment.NewLine;
-            vCardString += "GENDER:" + this.Gender + Environment.NewLine;
-            vCardString += "LANG:" + this.Language + Environment.NewLine;
-            vCardString += "BIRTHPLACE:" + this.BirthPlace + Environment.NewLine;
-            vCardString += "DEATHPLACE:" + this.DeathPlace + Environment.NewLine;
-            vCardString += "TZ:" + this.TimeZone + Environment.NewLine;
-			vCardString += "BDAY:" + this.BirthDay.Year + this.BirthDay.Month.ToString("00") + this.BirthDay.Day.ToString("00");
-            foreach(PhoneNumber phoneNumber in this.PhoneNumbers)
+            vCardString += "N:" + Firstname + ";" + Surname + ";" + Othernames + Environment.NewLine;
+            vCardString += "FN:" + FormattedName + Environment.NewLine;
+            vCardString += "ORG:" + Organization + Environment.NewLine;
+            vCardString += "TITLE:" + Title + Environment.NewLine;
+            vCardString += "URL:" + URL + Environment.NewLine;
+            vCardString += "NICKNAME:" + NickName + Environment.NewLine;
+            vCardString += "KIND:" + Kind.ToString().ToUpper() + Environment.NewLine;
+            vCardString += "GENDER:" + Gender + Environment.NewLine;
+            vCardString += "LANG:" + Language + Environment.NewLine;
+            vCardString += "BIRTHPLACE:" + BirthPlace + Environment.NewLine;
+            vCardString += "DEATHPLACE:" + DeathPlace + Environment.NewLine;
+            vCardString += "TZ:" + TimeZone + Environment.NewLine;
+			vCardString += "BDAY:" + BirthDay.Year + BirthDay.Month.ToString("00") + BirthDay.Day.ToString("00");
+            foreach(PhoneNumber phoneNumber in PhoneNumbers)
             {
                 vCardString += Environment.NewLine;
                 if (phoneNumber.Type == PhoneNumberType.None)
@@ -279,7 +272,7 @@ namespace vCardLib
                     vCardString += "TEL;TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number;
                 }
             }
-            foreach(EmailAddress email in this.EmailAddresses)
+            foreach(EmailAddress email in EmailAddresses)
             {
                 vCardString += Environment.NewLine;
                 if (email.Type == EmailType.None)
@@ -291,7 +284,7 @@ namespace vCardLib
                     vCardString += "EMAIL;TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email.Address;
                 }
             }
-            foreach(Address address in this.Addresses)
+            foreach(Address address in Addresses)
             {
                 vCardString += Environment.NewLine;
                 if (address.Type == AddressType.None)
@@ -303,7 +296,7 @@ namespace vCardLib
                     vCardString += "ADR;TYPE=" + address.Type.ToString().ToUpper() + ":" + address.Location;
                 }
             }
-            foreach(Photo photo in this.Pictures)
+            foreach(Photo photo in Pictures)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "PHOTO;TYPE=" + photo.Encoding;
@@ -316,17 +309,17 @@ namespace vCardLib
                     vCardString += ";ENCODING=b:" + photo.ToBase64String();
                 }
             }
-            foreach(Expertise expertise in this.Expertises)
+            foreach(Expertise expertise in Expertises)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "EXPERTISE;LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area;
             }
-            foreach(Hobby hobby in this.Hobbies)
+            foreach(Hobby hobby in Hobbies)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "HOBBY;LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity;
             }
-            foreach(Interest interest in this.Interests)
+            foreach(Interest interest in Interests)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity;
@@ -339,20 +332,20 @@ namespace vCardLib
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:2.1" + Environment.NewLine;
-            vCardString += "N:" + this.Firstname + ";" + this.Surname + ";" + this.Othernames + Environment.NewLine;
-            vCardString += "FN:" + this.FormattedName + Environment.NewLine;
-            vCardString += "ORG:" + this.Organization + Environment.NewLine;
-            vCardString += "TITLE:" + this.Title + Environment.NewLine;
-            vCardString += "URL:" + this.URL + Environment.NewLine;
-            vCardString += "NICKNAME:" + this.NickName + Environment.NewLine;
-            vCardString += "KIND:" + this.Kind.ToString().ToUpper() + Environment.NewLine;
-            vCardString += "GENDER:" + this.Gender + Environment.NewLine;
-            vCardString += "LANG:" + this.Language + Environment.NewLine;
-            vCardString += "BIRTHPLACE:" + this.BirthPlace + Environment.NewLine;
-            vCardString += "DEATHPLACE:" + this.DeathPlace + Environment.NewLine;
-            vCardString += "TZ:" + this.TimeZone + Environment.NewLine;
-            vCardString += "BDAY:" + this.BirthDay.Year + this.BirthDay.ToString("00") + this.BirthDay.ToString("00");
-            foreach (PhoneNumber phoneNumber in this.PhoneNumbers)
+            vCardString += "N:" + Firstname + ";" + Surname + ";" + Othernames + Environment.NewLine;
+            vCardString += "FN:" + FormattedName + Environment.NewLine;
+            vCardString += "ORG:" + Organization + Environment.NewLine;
+            vCardString += "TITLE:" + Title + Environment.NewLine;
+            vCardString += "URL:" + URL + Environment.NewLine;
+            vCardString += "NICKNAME:" + NickName + Environment.NewLine;
+            vCardString += "KIND:" + Kind.ToString().ToUpper() + Environment.NewLine;
+            vCardString += "GENDER:" + Gender + Environment.NewLine;
+            vCardString += "LANG:" + Language + Environment.NewLine;
+            vCardString += "BIRTHPLACE:" + BirthPlace + Environment.NewLine;
+            vCardString += "DEATHPLACE:" + DeathPlace + Environment.NewLine;
+            vCardString += "TZ:" + TimeZone + Environment.NewLine;
+            vCardString += "BDAY:" + BirthDay.Year + BirthDay.ToString("00") + BirthDay.ToString("00");
+            foreach (PhoneNumber phoneNumber in PhoneNumbers)
             {
                 vCardString += Environment.NewLine;
                 if (phoneNumber.Type == PhoneNumberType.None)
@@ -368,7 +361,7 @@ namespace vCardLib
                     vCardString += "TEL;" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number;
                 }
             }
-            foreach (EmailAddress email in this.EmailAddresses)
+            foreach (EmailAddress email in EmailAddresses)
             {
                 vCardString += Environment.NewLine;
                 if (email.Type == EmailType.None)
@@ -380,7 +373,7 @@ namespace vCardLib
                     vCardString += "EMAIL;" + email.Type.ToString().ToUpper() + ":" + email.Email.Address;
                 }
             }
-            foreach (Address address in this.Addresses)
+            foreach (Address address in Addresses)
             {
                 vCardString += Environment.NewLine;
                 if (address.Type == AddressType.None)
@@ -392,7 +385,7 @@ namespace vCardLib
                     vCardString += "ADR;" + address.Type.ToString().ToUpper() + ":" + address.Location;
                 }
             }
-            foreach (Photo photo in this.Pictures)
+            foreach (Photo photo in Pictures)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "PHOTO;" + photo.Encoding;
@@ -405,17 +398,17 @@ namespace vCardLib
                     vCardString += ";ENCODING=BASE64:" + photo.ToBase64String();
                 }
             }
-            foreach (Expertise expertise in this.Expertises)
+            foreach (Expertise expertise in Expertises)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "EXPERTISE;LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area;
             }
-            foreach (Hobby hobby in this.Hobbies)
+            foreach (Hobby hobby in Hobbies)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "HOBBY;LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity;
             }
-            foreach (Interest interest in this.Interests)
+            foreach (Interest interest in Interests)
             {
                 vCardString += Environment.NewLine;
                 vCardString += "INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity;

@@ -1,11 +1,4 @@
-﻿
-/* =======================================================================
- * vCard Library for .NET
- * Copyright (c) 2016 Bolorunduro Winner-Timothy http://www.github.com/VCF-Reader
- * .
- * ======================================================================= */
-
-using System;
+﻿using System;
 using System.IO;
 
 namespace vCardLib
@@ -44,15 +37,13 @@ namespace vCardLib
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (vCard)List[index];
+                return (vCard)List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                List[index] = value;
             }
         }
 

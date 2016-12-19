@@ -2,6 +2,9 @@
 
 namespace vCardLib
 {
+    /// <summary>
+    /// A collection of contacts' Hobbies
+    /// </summary>
     public class HobbyCollection : System.Collections.CollectionBase
     {
         /// <summary>
@@ -33,15 +36,13 @@ namespace vCardLib
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (Hobby)List[index];
+                return (Hobby)List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                List[index] = value;
             }
         }
     }
