@@ -1,11 +1,4 @@
-﻿
-/* =======================================================================
- * vCard Library for .NET
- * Copyright (c) 2016 Bolorunduro Winner-Timothy http://www.github.com/VCF-Reader
- * .
- * ======================================================================= */
-
-namespace vCardLib
+﻿namespace vCardLib
 {
     /// <summary>
     /// Object to store phone  number details
@@ -16,6 +9,7 @@ namespace vCardLib
         /// The Number
         /// </summary>
         public string Number { get; set; }
+
         /// <summary>
         /// The number type
         /// </summary>

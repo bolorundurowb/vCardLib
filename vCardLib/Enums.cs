@@ -1,5 +1,8 @@
 ﻿namespace vCardLib
 {
+    /// <summary>
+    /// Gender types
+    /// </summary>
     public enum GenderType
     {
         Male,
@@ -8,6 +11,9 @@
         None
     }
 
+    /// <summary>
+    /// Contact types
+    /// </summary>
     public enum ContactType
     {
         Individual,
@@ -18,6 +24,9 @@
         Device
     }
 
+    /// <summary>
+    /// Available write options
+    /// </summary>
     public enum WriteOptions
     {
         Overwrite,

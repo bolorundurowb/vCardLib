@@ -2,8 +2,15 @@
 
 namespace vCardLib
 {
+    /// <summary>
+    /// Collection class to hold all contact addresses
+    /// </summary>
     public class AddressCollection : System.Collections.CollectionBase
     {
+        /// <summary>
+        /// Add an address to the collection
+        /// </summary>
+        /// <param name="Address">An address</param>
         public void Add(Address Address)
         {
             List.Add(Address);

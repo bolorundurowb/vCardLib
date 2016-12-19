@@ -2,6 +2,9 @@
 
 namespace vCardLib
 {
+    /// <summary>
+    /// Collection class to hold all contact expertises
+    /// </summary>
     public class ExpertiseCollection : System.Collections.CollectionBase
     {
         /// <summary>
