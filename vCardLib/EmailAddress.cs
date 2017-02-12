@@ -1,11 +1,4 @@
-﻿
-/* =======================================================================
- * vCard Library for .NET
- * Copyright (c) 2016 Bolorunduro Winner-Timothy http://www.github.com/VCF-Reader
- * .
- * ======================================================================= */
-
-using System.Net.Mail;
+﻿using System.Net.Mail;
 
 namespace vCardLib
 {

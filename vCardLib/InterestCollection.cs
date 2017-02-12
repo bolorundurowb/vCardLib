@@ -2,12 +2,15 @@
 
 namespace vCardLib
 {
+    /// <summary>
+    /// A collection to hold a contacts' interests
+    /// </summary>
     public class InterestCollection : System.Collections.CollectionBase
     {
         /// <summary>
-     /// Method to add interest to the interest collection
-     /// </summary>
-     /// <param name="interest">Interest object to be added</param>
+        /// Method to add interest to the interest collection
+        /// </summary>
+        /// <param name="interest">Interest object to be added</param>
         public void Add(Interest interest)
         {
             List.Add(interest);
@@ -33,15 +36,13 @@ namespace vCardLib
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (Interest)List[index];
+                return (Interest)List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                List[index] = value;
             }
         }
     }

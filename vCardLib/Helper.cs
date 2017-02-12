@@ -2,52 +2,72 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 
 namespace vCardLib
 {
+    /// <summary>
+    /// Class to holder all suppoting methods
+    /// </summary>
     public class Helper
     {
+        /// <summary>
+        /// Creates a stream reader from supplied file
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>A streamreader object</returns>
+        /// <exception cref="ArgumentNullException">Supplied path is null or empty</exception>
+        /// <exception cref="FileNotFoundException"></exception>
         public static StreamReader GetStreamReaderFromFile(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentNullException("The filepath supplied is null or empty");
-            else if (!File.Exists(filePath))
+            if (!File.Exists(filePath))
                 throw new FileNotFoundException("The specified file at the filepath does not exist");
-            else
-            {
-                return new StreamReader(filePath);
-            }
+            return new StreamReader(filePath);
         }
 
+        /// <summary>
+        /// Converts the stream reader to a string
+        /// </summary>
+        /// <param name="streamReader">A valid stream reader object</param>
+        /// <returns>A string containing the  text in the stream</returns>
+        /// <exception cref="ArgumentNullException">The stream provided was null</exception>
         public static string GetStringFromStreamReader(StreamReader streamReader)
         {
             if (streamReader == null)
                 throw new ArgumentNullException("The input stream cannot be null");
-            else
-            {
-                return streamReader.ReadToEnd();
-            }
+            return streamReader.ReadToEnd();
         }
 
+        /// <summary>
+        /// Splits a single contact string into individual contact strings
+        /// </summary>
+        /// <param name="contactsString">A string representation of the vcard</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException">The input is null or empty</exception>
+        /// <exception cref="InvalidOperationException">The string does not start and end with appropriate tags</exception>
         public static string[] GetContactsArrayFromString(string contactsString)
         {
             if (string.IsNullOrWhiteSpace(contactsString))
                 throw new ArgumentException("string cannot be null, empty or composed of only whitespace characters");
-            else if (!(contactsString.Contains("BEGIN:VCARD") && contactsString.Contains("END:VCARD")))
+            if (!(contactsString.Contains("BEGIN:VCARD") && contactsString.Contains("END:VCARD")))
                 throw new InvalidOperationException("The vcard file does not seem to be a valid vcard file");
-            else
-            {
-                contactsString = contactsString.Replace("BEGIN:VCARD", "");
-                return contactsString.Split(new string[] { "END:VCARD" }, StringSplitOptions.RemoveEmptyEntries);
-            }
+            contactsString = contactsString.Replace("BEGIN:VCARD", "");
+            return contactsString.Split(new[] { "END:VCARD" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        /// <summary>
+        /// Sanitizes input and splits a single contact string intoits constituent parts
+        /// </summary>
+        /// <param name="contactString">A string containing the contact details</param>
+        /// <returns>A string array of details, one per line</returns>
         public static string[] GetContactDetailsArrayFromString(string contactString)
         {
             contactString = contactString.Replace("PREF;", "").Replace("pref;", "");
             contactString = contactString.Replace("PREF,", "").Replace("pref,", "");
             contactString = contactString.Replace(",PREF", "").Replace(",pref", "");
-            return contactString.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return contactString.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static vCard GetVcardFromDetails(string[] contactDetails)
@@ -55,20 +75,22 @@ namespace vCardLib
             string versionString = contactDetails.FirstOrDefault(s => s.StartsWith("VERSION:"));
             if (versionString == null)
                 throw new InvalidOperationException("details do not contain a specification for 'Version'.");
-            else
-            {
-                vCard vcard = new vCard();
-                vcard.Version = float.Parse(versionString.Replace("VERSION:", "").Trim());
-                if (vcard.Version.Equals(2.1F))
-                    ProcessV2_1(ref vcard, contactDetails);
-                else if (vcard.Version.Equals(3.0F))
-                    ProcessV3_0(ref vcard, contactDetails);
-                else if (vcard.Version.Equals(4.0F))
-                    ProcessV4_0(ref vcard, contactDetails);
-                return vcard;
-            }
+            vCard vcard = new vCard();
+            vcard.Version = float.Parse(versionString.Replace("VERSION:", "").Trim());
+            if (vcard.Version.Equals(2.1F))
+                ProcessV2_1(ref vcard, contactDetails);
+            else if (vcard.Version.Equals(3.0F))
+                ProcessV3_0(ref vcard, contactDetails);
+            else if (vcard.Version.Equals(4.0F))
+                ProcessV4_0(ref vcard, contactDetails);
+            return vcard;
         }
 
+        /// <summary>
+        /// Converts an array of contact details to a vCard object
+        /// </summary>
+        /// <param name="vcard">An empty vCard object passed by reference</param>
+        /// <param name="contactDetails">An array of contact details</param>
         private static void ProcessV2_1(ref vCard vcard, string[] contactDetails)
         {
             #region Simple Properties
@@ -115,7 +137,7 @@ namespace vCardLib
             string nString = contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
             if (nString != null)
             {
-                string[] names = nString.Replace("N:", "").Split(new string[] { ";" }, StringSplitOptions.None);
+                var names = nString.Replace("N:", "").Split(new[] { ";" }, StringSplitOptions.None);
                 if (names.Length > 0)
                     vcard.Firstname = names[0];
                 if (names.Length > 1)
@@ -303,7 +325,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("INTERNET:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Internet;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -311,7 +333,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("HOME:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Home;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -319,7 +341,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("WORK:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Work;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -327,7 +349,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.AOL;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -335,7 +357,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Applelink;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -343,14 +365,14 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Work;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
                         else
                         {
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.None;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -560,7 +582,7 @@ namespace vCardLib
                         photoString = photoString.Replace("PHOTO;", "");
                         photoString = photoString.Replace("JPEG", "");
                         photoString = photoString.Replace("ENCODING=BASE64", "");
-                        photoString = photoString.Trim(new char[] { ';', ':' });
+                        photoString = photoString.Trim(';', ':');
 
                         photo.Encoding = PhotoEncoding.JPEG;
                         photo.Picture = GetImageFromBase64String(photoString);
@@ -580,6 +602,11 @@ namespace vCardLib
             #endregion
         }
 
+        /// <summary>
+        /// Converts an array of contact details to a vCard object
+        /// </summary>
+        /// <param name="vcard">An empty vCard object passed by reference</param>
+        /// <param name="contactDetails">An array of contact details</param>
         private static void ProcessV3_0(ref vCard vcard, string[] contactDetails)
         {
             #region Simple Properties
@@ -626,7 +653,7 @@ namespace vCardLib
             string nString = contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
             if (nString != null)
             {
-                string[] names = nString.Replace("N:", "").Split(new string[] { ";" }, StringSplitOptions.None);
+                string[] names = nString.Replace("N:", "").Split(new[] { ";" }, StringSplitOptions.None);
                 if (names.Length > 0)
                     vcard.Firstname = names[0];
                 if (names.Length > 1)
@@ -826,7 +853,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("INTERNET:", "").Replace("internet:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Internet;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -834,7 +861,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("HOME:", "").Replace("home:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Home;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -842,7 +869,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("WORK:", "").Replace("work:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Work;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -850,7 +877,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.AOL;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -858,7 +885,7 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Applelink;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -866,14 +893,14 @@ namespace vCardLib
                         {
                             emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.Work;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
                         else
                         {
                             EmailAddress emailAddress = new EmailAddress();
-                            emailAddress.Email = new System.Net.Mail.MailAddress(emailString);
+                            emailAddress.Email = new MailAddress(emailString);
                             emailAddress.Type = EmailType.None;
                             vcard.EmailAddresses.Add(emailAddress);
                         }
@@ -1093,7 +1120,7 @@ namespace vCardLib
                         photoString = photoString.Replace("PHOTO;", "");
                         photoString = photoString.Replace("JPEG", "").Replace("jpeg", "");
                         photoString = photoString.Replace("ENCODING=b", "");
-                        photoString = photoString.Trim(new char[] { ';', ':' });
+                        photoString = photoString.Trim(';', ':');
 
                         photo.Encoding = PhotoEncoding.JPEG;
                         photo.Picture = GetImageFromBase64String(photoString);
@@ -1113,11 +1140,22 @@ namespace vCardLib
             #endregion
         }
 
+        /// <summary>
+        /// Converts an array of contact details to a vCard object
+        /// </summary>
+        /// <param name="vcard">An empty vCard object passed by reference</param>
+        /// <param name="contactDetails">An array of contact details</param>
+        /// <exception cref="NotImplementedException">Support for version 4 hasn't been implemented</exception>
         private static void ProcessV4_0(ref vCard vcard, string[] contactDetails)
         {
             throw new NotImplementedException("Sorry, support for vcard 4.0 hasn't been implemented");
         }
 
+        /// <summary>
+        /// Converts a base 64 string to an image
+        /// </summary>
+        /// <param name="base64String">properly encoded base 64 string</param>
+        /// <returns>A bitmap object or null if the string is invalid</returns>
         public static Bitmap GetImageFromBase64String(string base64String)
         {
             try

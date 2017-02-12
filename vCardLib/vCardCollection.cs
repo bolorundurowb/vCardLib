@@ -1,11 +1,4 @@
-﻿
-/* =======================================================================
- * vCard Library for .NET
- * Copyright (c) 2016 Bolorunduro Winner-Timothy http://www.github.com/VCF-Reader
- * .
- * ======================================================================= */
-
-using System;
+﻿using System;
 using System.IO;
 
 namespace vCardLib
@@ -44,18 +37,24 @@ namespace vCardLib
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (vCard)List[index];
+                return (vCard)List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                List[index] = value;
             }
         }
 
+        /// <summary>
+        /// Saves a vcard collection to a vcf file
+        /// </summary>
+        /// <param name="filePath">Path to save to</param>
+        /// <param name="writeOptions">Determines if the method throws and exception if the save path exists or not</param>
+        /// <exception cref="InvalidOperationException">The file already exists</exception>
+        /// <exception cref="NotImplementedException">version 4 files are not yet supported</exception>
+        /// <exception cref="ArgumentException">The vcard version is invalid</exception>
         public void Save(string filePath, WriteOptions writeOptions = WriteOptions.ThrowError)
         {
             if (writeOptions == WriteOptions.ThrowError)
@@ -88,6 +87,15 @@ namespace vCardLib
             File.WriteAllText(filePath, vcardString);
         }
 
+        /// <summary>
+        /// Saves a vcard collection to a vcf file
+        /// </summary>
+        /// <param name="filePath">Path to save to</param>
+        /// <param name="version">Specify the version you want to save in</param>
+        /// <param name="writeOptions">Determines if the method throws and exception if the save path exists or not</param>
+        /// <exception cref="InvalidOperationException">The file already exists</exception>
+        /// <exception cref="NotImplementedException">version 4 files are not yet supported</exception>
+        /// <exception cref="ArgumentException">The vcard version is invalid</exception>
         public void Save(string filePath, float version, WriteOptions writeOptions = WriteOptions.ThrowError)
         {
             if (writeOptions == WriteOptions.ThrowError)
