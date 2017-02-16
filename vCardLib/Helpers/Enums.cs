@@ -1,4 +1,4 @@
-﻿namespace vCardLib
+﻿namespace vCardLib.Helpers
 {
     /// <summary>
     /// Gender types

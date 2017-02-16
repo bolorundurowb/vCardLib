@@ -1,48 +1,51 @@
 ﻿using System;
+using vCardLib.Models;
 
-namespace vCardLib
+namespace vCardLib.Collections
 {
     /// <summary>
-    /// A collection of contacts' Hobbies
+    /// Collection class to hold all contact expertises
     /// </summary>
-    public class HobbyCollection : System.Collections.CollectionBase
+    public class ExpertiseCollection : System.Collections.CollectionBase
     {
         /// <summary>
-        /// Method to add hobby to the hobby collection
+        /// Method to add expertise to the expertise collection
         /// </summary>
-        /// <param name="hobby">Hobby object to be added</param>
-        public void Add(Hobby hobby)
+        /// <param name="expertise">Expertise object to be added</param>
+        public void Add(Expertise expertise)
         {
-            List.Add(hobby);
+            List.Add(expertise);
         }
 
         /// <summary>
-        /// Method to remove a hobby from the hobby collection
+        /// Method to remove a expertise from the expertise collection
         /// </summary>
-        /// <param name="hobby">Hobby object to be removed</param>
-        public void Remove(Hobby hobby)
+        /// <param name="expertise">Expertise object to be removed</param>
+        public void Remove(Expertise expertise)
         {
-            List.Remove(hobby);
+            List.Remove(expertise);
         }
 
         /// <summary>
         /// Indexer to enable index access to the collection
         /// </summary>
         /// <param name="index">zero based index of the object to be returned</param>
-        /// <returns>a Hobby object at the specified index</returns>
-        public Hobby this[int index]
+        /// <returns>a Expertise object at the specified index</returns>
+        public Expertise this[int index]
         {
             get
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                return (Hobby)List[index];
+                else
+                    return (Expertise)List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                List[index] = value;
+                else
+                    List[index] = value;
             }
         }
     }

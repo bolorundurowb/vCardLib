@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using NUnit.Framework;
+using vCardLib.Collections;
+using vCardLib.Helpers;
 
 namespace vCardLib.Tests
 {

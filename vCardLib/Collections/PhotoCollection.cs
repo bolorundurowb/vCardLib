@@ -1,42 +1,43 @@
 ﻿using System;
+using vCardLib.Models;
 
-namespace vCardLib
+namespace vCardLib.Collections
 {
     /// <summary>
-    /// A collection to hold a contacts' interests
+    /// Collection class to hold all contact photos
     /// </summary>
-    public class InterestCollection : System.Collections.CollectionBase
+    public class PhotoCollection : System.Collections.CollectionBase
     {
         /// <summary>
-        /// Method to add interest to the interest collection
+        /// Method to add photo to the photo collection
         /// </summary>
-        /// <param name="interest">Interest object to be added</param>
-        public void Add(Interest interest)
+        /// <param name="photo">Photo object to be added</param>
+        public void Add(Photo photo)
         {
-            List.Add(interest);
+            List.Add(photo);
         }
 
         /// <summary>
-        /// Method to remove a interest from the interest collection
+        /// Method to remove a photo from the photo collection
         /// </summary>
-        /// <param name="interest">Interest object to be removed</param>
-        public void Remove(Interest interest)
+        /// <param name="photo">Photo object to be removed</param>
+        public void Remove(Photo photo)
         {
-            List.Remove(interest);
+            List.Remove(photo);
         }
 
         /// <summary>
         /// Indexer to enable index access to the collection
         /// </summary>
         /// <param name="index">zero based index of the object to be returned</param>
-        /// <returns>a Interest object at the specified index</returns>
-        public Interest this[int index]
+        /// <returns>a Photo object at the specified index</returns>
+        public Photo this[int index]
         {
             get
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                return (Interest)List[index];
+                return (Photo)List[index];
             }
             set
             {

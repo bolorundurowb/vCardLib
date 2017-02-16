@@ -1,4 +1,4 @@
-﻿namespace vCardLib
+﻿namespace vCardLib.Models
 {
     /// <summary>
     /// Holds Expertise properties

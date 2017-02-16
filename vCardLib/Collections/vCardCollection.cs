@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
+using vCardLib.Helpers;
 
-namespace vCardLib
+namespace vCardLib.Collections
 {
     /// <summary>
     /// Collection class to hold all vCard objects extracted

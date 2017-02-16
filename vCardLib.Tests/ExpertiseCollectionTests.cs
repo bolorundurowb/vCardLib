@@ -1,6 +1,9 @@
 ﻿// Created by Bolorunduro Winner-Timothy on  11/18/2016 at 10:59 AM
 using System;
 using NUnit.Framework;
+using vCardLib.Collections;
+using vCardLib.Models;
+
 namespace vCardLib.Tests
 {
 	[TestFixture]

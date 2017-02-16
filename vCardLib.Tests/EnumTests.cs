@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using vCardLib.Helpers;
+
 namespace vCardLib.Tests
 {
 	[TestFixture]

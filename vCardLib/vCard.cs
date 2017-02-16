@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using vCardLib.Collections;
+using vCardLib.Helpers;
+using vCardLib.Models;
 
 namespace vCardLib
 {

@@ -1,5 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
+using vCardLib.Collections;
+using vCardLib.Models;
 
 namespace vCardLib.Tests
 {

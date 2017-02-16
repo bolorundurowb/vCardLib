@@ -1,50 +1,49 @@
 ﻿using System;
+using vCardLib.Models;
 
-namespace vCardLib
+namespace vCardLib.Collections
 {
     /// <summary>
-    /// Collection class to hold all contact expertises
+    /// Collection class to hold all contact phone numbers
     /// </summary>
-    public class ExpertiseCollection : System.Collections.CollectionBase
+    public class PhoneNumberCollection : System.Collections.CollectionBase
     {
         /// <summary>
-        /// Method to add expertise to the expertise collection
+        /// Method to add phone number to the phone number collection
         /// </summary>
-        /// <param name="expertise">Expertise object to be added</param>
-        public void Add(Expertise expertise)
+        /// <param name="phoneNumber">Phone number object to be added</param>
+        public void Add(PhoneNumber phoneNumber)
         {
-            List.Add(expertise);
+            List.Add(phoneNumber);
         }
 
         /// <summary>
-        /// Method to remove a expertise from the expertise collection
+        /// Method to remove a phone number from the phone number collection
         /// </summary>
-        /// <param name="expertise">Expertise object to be removed</param>
-        public void Remove(Expertise expertise)
+        /// <param name="phoneNumber">Phone number object to be removed</param>
+        public void Remove(PhoneNumber phoneNumber)
         {
-            List.Remove(expertise);
+            List.Remove(phoneNumber);
         }
 
         /// <summary>
         /// Indexer to enable index access to the collection
         /// </summary>
         /// <param name="index">zero based index of the object to be returned</param>
-        /// <returns>a Expertise object at the specified index</returns>
-        public Expertise this[int index]
+        /// <returns>a Phone number object at the specified index</returns>
+        public PhoneNumber this[int index]
         {
             get
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (Expertise)List[index];
+                return (PhoneNumber)List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                List[index] = value;
             }
         }
     }

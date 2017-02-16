@@ -3,6 +3,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using vCardLib.Helpers;
+using vCardLib.Models;
 
 namespace vCardLib
 {

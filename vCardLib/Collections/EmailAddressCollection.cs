@@ -1,6 +1,7 @@
 ﻿using System;
+using vCardLib.Models;
 
-namespace vCardLib
+namespace vCardLib.Collections
 {
     /// <summary>
     /// Collection class to hold all contact emailAddresss
