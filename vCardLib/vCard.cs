@@ -17,19 +17,29 @@ namespace vCardLib
         public float Version { get; set; }
 
         /// <summary>
-        /// The lastname or Surname of the contact
+        /// The Family name or Surname of the contact
         /// </summary>
-        public string Surname { get; set; }
+        public string FamilyName { get; set; }
 
         /// <summary>
         /// The Firstname or Given name of the contact
         /// </summary>
-        public string Firstname { get; set; }
+        public string GivenName { get; set; }
 
         /// <summary>
-        /// A concatenation of all other names the contact has
+        /// The middle name of the contact
         /// </summary>
-        public string Othernames { get; set; }
+        public string MiddleName { get; set; }
+
+        /// <summary>
+        /// The prefix of the contact
+        /// </summary>
+        public string Prefix { get; set; }
+
+        /// <summary>
+        /// The suffix of the contact
+        /// </summary>
+        public string Suffix { get; set; }
 
         /// <summary>
         /// The full name of the contact
@@ -37,19 +47,14 @@ namespace vCardLib
         public string FormattedName { get; set; }
 
         /// <summary>
-        /// A collection of phone numbers associated with the contact
+        /// The contact's nickname
         /// </summary>
-        public PhoneNumberCollection PhoneNumbers { get; set; }
-
-        /// <summary>
-        /// A collection of email addresses associated with the contact
-        /// </summary>
-        public EmailAddressCollection EmailAddresses { get; set; }
+        public string NickName { get; set; }
 
         /// <summary>
         /// A url associated with the contact
         /// </summary>
-        public string URL { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// An organization the cotact belongs to
@@ -62,16 +67,6 @@ namespace vCardLib
         public string Title { get; set; }
 
         /// <summary>
-        /// A collection of photos associated with the contact
-        /// </summary>
-        public PhotoCollection Pictures { get; set; }
-
-        /// <summary>
-        /// The contact's nickname
-        /// </summary>
-        public string NickName { get; set; }
-
-        /// <summary>
         /// The contact type
         /// </summary>
         public ContactType Kind { get; set; }
@@ -80,11 +75,6 @@ namespace vCardLib
         /// The contact's gender
         /// </summary>
         public GenderType Gender { get; set; }
-
-        /// <summary>
-        /// The contact's addresses
-        /// </summary>
-        public AddressCollection Addresses { get; set; }
 
         /// <summary>
         /// The contact's language
@@ -105,14 +95,34 @@ namespace vCardLib
         public string BirthPlace { get; set; }
 
         /// <summary>
-        /// The contact'c areas of expertise
-        /// </summary>
-        public ExpertiseCollection Expertises { get; set; }
-
-        /// <summary>
         /// The contact's death place
         /// </summary>
         public string DeathPlace { get; set; }
+
+        /// <summary>
+        /// A collection of phone numbers associated with the contact
+        /// </summary>
+        public PhoneNumberCollection PhoneNumbers { get; set; }
+
+        /// <summary>
+        /// A collection of email addresses associated with the contact
+        /// </summary>
+        public EmailAddressCollection EmailAddresses { get; set; }
+
+        /// <summary>
+        /// A collection of photos associated with the contact
+        /// </summary>
+        public PhotoCollection Pictures { get; set; }
+
+        /// <summary>
+        /// The contact's addresses
+        /// </summary>
+        public AddressCollection Addresses { get; set; }
+
+        /// <summary>
+        /// The contact'c areas of expertise
+        /// </summary>
+        public ExpertiseCollection Expertises { get; set; }
 
         /// <summary>
         /// The contact's hobbies
@@ -185,26 +195,6 @@ namespace vCardLib
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            var toCompare = obj as vCard;
-            if (toCompare == null)
-                return false;
-            return Firstname == toCompare.Firstname
-                && Surname == toCompare.Surname
-                && FormattedName == toCompare.FormattedName
-                && PhoneNumbers.Count == toCompare.PhoneNumbers.Count
-                && EmailAddresses.Count == toCompare.EmailAddresses.Count
-                && BirthPlace == toCompare.BirthPlace
-                && DeathPlace == toCompare.DeathPlace
-                && Expertises.Count == toCompare.Expertises.Count;
-        }
-
-        /// <summary>
         /// Save a vcard object to a vcf file
         /// </summary>
         /// <param name="filePath">Path to file to save to</param>
@@ -271,11 +261,11 @@ namespace vCardLib
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:3.0" + Environment.NewLine;
-            vCardString += "N:" + Firstname + ";" + Surname + ";" + Othernames + Environment.NewLine;
+            vCardString += "N:" + FamilyName + ";" + GivenName + ";" + MiddleName + ";" + Prefix + ";" + Suffix + Environment.NewLine;
             vCardString += "FN:" + FormattedName + Environment.NewLine;
             vCardString += "ORG:" + Organization + Environment.NewLine;
             vCardString += "TITLE:" + Title + Environment.NewLine;
-            vCardString += "URL:" + URL + Environment.NewLine;
+            vCardString += "URL:" + Url + Environment.NewLine;
             vCardString += "NICKNAME:" + NickName + Environment.NewLine;
             vCardString += "KIND:" + Kind.ToString().ToUpper() + Environment.NewLine;
             vCardString += "GENDER:" + Gender + Environment.NewLine;
@@ -364,11 +354,11 @@ namespace vCardLib
         {
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:2.1" + Environment.NewLine;
-            vCardString += "N:" + Firstname + ";" + Surname + ";" + Othernames + Environment.NewLine;
+            vCardString += "N:" + FamilyName + ";" + GivenName + ";" + MiddleName + ";" + Prefix + ";" + Suffix + Environment.NewLine;
             vCardString += "FN:" + FormattedName + Environment.NewLine;
             vCardString += "ORG:" + Organization + Environment.NewLine;
             vCardString += "TITLE:" + Title + Environment.NewLine;
-            vCardString += "URL:" + URL + Environment.NewLine;
+            vCardString += "URL:" + Url + Environment.NewLine;
             vCardString += "NICKNAME:" + NickName + Environment.NewLine;
             vCardString += "KIND:" + Kind.ToString().ToUpper() + Environment.NewLine;
             vCardString += "GENDER:" + Gender + Environment.NewLine;

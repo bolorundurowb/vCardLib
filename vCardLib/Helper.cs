@@ -106,7 +106,7 @@ namespace vCardLib
 
             string urlString = contactDetails.FirstOrDefault(s => s.StartsWith("URL:"));
             if (urlString != null)
-                vcard.URL = urlString.Replace("URL:", "").Trim();
+				vcard.Url = urlString.Replace("URL:", "").Trim();
 
             string orgString = contactDetails.FirstOrDefault(s => s.StartsWith("ORG:"));
             if (orgString != null)
