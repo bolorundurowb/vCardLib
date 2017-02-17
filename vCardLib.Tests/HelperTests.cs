@@ -87,26 +87,6 @@ namespace vCardLib.Tests
 		}
 
 		[Test]
-		public void GetVcardFomDetails()
-		{
-			string[] contactDetails = { "EMAIL:me@org.org" };
-			Assert.Throws<InvalidOperationException>(delegate {
-				Helper.GetVcardFromDetails(contactDetails);
-			});
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "valid.vcf");
-			var streamReader = Helper.GetStreamReaderFromFile(filePath);
-			var vcardString = Helper.GetStringFromStreamReader(streamReader);
-			var contacts = Helper.GetContactsArrayFromString(vcardString);
-			contactDetails = Helper.GetContactDetailsArrayFromString(contacts[0]);
-			vCard vcard = null;
-			Assert.DoesNotThrow(delegate {
-				vcard = Helper.GetVcardFromDetails(contactDetails);
-			});
-			Assert.IsNotNull(vcard);
-		}
-
-		[Test]
 		public void GetImageFromBase64String()
 		{
 			string base64String = null;

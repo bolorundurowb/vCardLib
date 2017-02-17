@@ -4,6 +4,7 @@ using System.IO;
 using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Helpers;
+using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Tests
 {
@@ -46,13 +47,13 @@ namespace vCardLib.Tests
 				File.Delete("vcardcollection1.vcf");
 			vCardCollection vcardCollection = new vCardCollection();
 			vCard vcard = new vCard();
-			vcard.Version = 2.1f;
+			vcard.Version = Version.V2;
 			vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
 				vcardCollection.Save("vcardcollection1.vcf");
 			});
-			vcard.Version = 3.0f;
+			vcard.Version = Version.V3;
 			vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
@@ -63,16 +64,9 @@ namespace vCardLib.Tests
 				vcardCollection.Save("vcardcollection1.vcf");
 			});
 			//
-			vcard.Version = 4.0f;
+			vcard.Version = Version.V4;
 			vcardCollection.Add(vcard);
 			Assert.Throws<NotImplementedException>(delegate
-			{
-				vcardCollection.Save("vcardcollection1.vcf", WriteOptions.Overwrite);
-			});
-			//
-			vcard.Version = 5.0f;
-			vcardCollection.Add(vcard);
-			Assert.Throws<ArgumentException>(delegate
 			{
 				vcardCollection.Save("vcardcollection1.vcf", WriteOptions.Overwrite);
 			});
@@ -85,7 +79,7 @@ namespace vCardLib.Tests
 				File.Delete("vcardcollection2.vcf");
 			vCardCollection vcardCollection = new vCardCollection();
 			vCard vcard = new vCard();
-			vcard.Version = 2.1f;
+			vcard.Version = Version.V2;
 			Assert.DoesNotThrow(delegate
 			{
 				vcardCollection.Save("vcardcollection2.vcf", 2.1f, WriteOptions.ThrowError);

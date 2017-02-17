@@ -51,8 +51,12 @@
     <Compile Include="Collections\PhoneNumberCollection.cs" />
     <Compile Include="Collections\PhotoCollection.cs" />
     <Compile Include="Collections\vCardCollection.cs" />
-    <Compile Include="Helper.cs" />
+      <Compile Include="Deserializers\Deserializer.cs"/>
+      <Compile Include="Deserializers\V2Deserializer.cs"/>
+      <Compile Include="Deserializers\V3Deserializer.cs"/>
+      <Compile Include="Deserializers\V4Deserializer.cs"/>
     <Compile Include="Helpers\Enums.cs" />
+      <Compile Include="Helpers\Helper.cs"/>
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\EmailAddress.cs" />
     <Compile Include="Models\Expertise.cs" />
@@ -60,6 +64,10 @@
     <Compile Include="Models\Interest.cs" />
     <Compile Include="Models\PhoneNumber.cs" />
     <Compile Include="Models\Photo.cs" />
+      <Compile Include="Serializers\Serializer.cs"/>
+      <Compile Include="Serializers\V2Serializer.cs"/>
+      <Compile Include="Serializers\V3Serializer.cs"/>
+      <Compile Include="Serializers\V4Serializer.cs"/>
     <Compile Include="vCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,10 +75,6 @@
     <Content Include="lib-icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Deserializers" />
-    <Folder Include="Serializers" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,6 +5,7 @@ using System.Reflection;
 using vCardLib.Collections;
 using vCardLib.Helpers;
 using vCardLib.Models;
+using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Tests
 {
@@ -23,7 +24,11 @@ namespace vCardLib.Tests
 				vcard.DeathPlace = "";
 				vcard.EmailAddresses = new EmailAddressCollection();
 				vcard.Expertises = new ExpertiseCollection();
-				vcard.Firstname = "";
+				vcard.FamilyName = "";
+			    vcard.GivenName = "";
+			    vcard.MiddleName = "";
+			    vcard.Prefix = "HRH";
+			    vcard.Suffix = "PhD";
 				vcard.FormattedName = "";
 				vcard.Gender = GenderType.Female;
 				vcard.Hobbies = new HobbyCollection();
@@ -32,14 +37,12 @@ namespace vCardLib.Tests
 				vcard.Language = "English";
 				vcard.NickName = "";
 				vcard.Organization = "";
-				vcard.Othernames = "";
 				vcard.PhoneNumbers = new PhoneNumberCollection();
 				vcard.Pictures = new PhotoCollection();
-				vcard.Surname = "";
 				vcard.TimeZone = "GMT+1";
 				vcard.Title = "Mr";
-				vcard.URL = "";
-				vcard.Version = 2.1F;
+				vcard.Url = "";
+				vcard.Version = Version.V2;
 			});
 		}
 
@@ -82,8 +85,8 @@ namespace vCardLib.Tests
 			Assert.IsNotNull(vcard);
             Assert.DoesNotThrow(delegate
             {
-                vcard.Firstname = "Gump";
-                vcard.Surname = "Forrest";
+                vcard.GivenName = "Gump";
+                vcard.FamilyName = "Forrest";
                 vcard.FormattedName = "Forrest Gump";
                 PhoneNumber num1 = new PhoneNumber();
                 num1.Number = "(111) 555-1212";
@@ -154,24 +157,16 @@ namespace vCardLib.Tests
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
 			Assert.IsNotNull(vcard);
 			Assert.DoesNotThrow(delegate {
-				vcard.Save(filePath, 3.0f, WriteOptions.Overwrite);
+				vcard.Save(filePath, Version.V3, WriteOptions.Overwrite);
 			});
 			Assert.IsTrue(File.Exists(filePath));
         }
 
 		[Test]
-		public void InvalidVcardSaveDetailsThrowsException()
-		{
-			Assert.Throws<ArgumentException> (delegate {
-				vcard.Save ("", 5.2F, WriteOptions.Overwrite);
-			});
-		}
-
-		[Test]
 		public void VersionFourVcardThrowsException()
 		{
 			Assert.Throws<NotImplementedException> (delegate {
-				vcard.Save ("", 4.0F, WriteOptions.Overwrite);
+				vcard.Save ("", Version.V4, WriteOptions.Overwrite);
 			});
 		}
     }

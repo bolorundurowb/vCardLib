@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using vCardLib.Helpers;
+using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Collections
 {
@@ -68,15 +69,15 @@ namespace vCardLib.Collections
             string vcardString = "";
             foreach(vCard vcard in this)
             {
-                if(vcard.Version == 2.1f)
+                if(vcard.Version == Version.V2)
                 {
                     vcard.WriteV2ObjectToString(ref vcardString);
                 }
-                else if (vcard.Version == 3.0f)
+                else if (vcard.Version == Version.V3)
                 {
                     vcard.WriteV3ObjectToString(ref vcardString);
                 }
-				else if (vcard.Version == 4.0F)
+				else if (vcard.Version == Version.V4)
 				{
 					throw new NotImplementedException("Writing for v4 is not implemented");
 				}

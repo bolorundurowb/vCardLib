@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using vCardLib.Collections;
+using vCardLib.Deserializers;
 using vCardLib.Helpers;
 using vCardLib.Models;
+using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib
 {
@@ -14,7 +16,7 @@ namespace vCardLib
         /// <summary>
         /// The version of the vcf file
         /// </summary>
-        public float Version { get; set; }
+        public Helpers.Version Version { get; set; }
 
         /// <summary>
         /// The Family name or Surname of the contact
@@ -87,7 +89,7 @@ namespace vCardLib
         /// <summary>
         /// The contact's birthday
         /// </summary>
-        public DateTime BirthDay { get; set; }
+        public DateTime? BirthDay { get; set; }
 
         /// <summary>
         /// The contact's birth place
@@ -155,7 +157,7 @@ namespace vCardLib
             Hobbies = new HobbyCollection();
             Expertises = new ExpertiseCollection();
 			//Set the default vCard version as 2.1
-			Version = 2.1F;
+			Version = Version.V2;
 
         }
 
@@ -164,34 +166,21 @@ namespace vCardLib
         /// </summary>
         /// <param name="filepath">Path to the vcf file</param>
         /// <returns>A collection of vCard objects, each with a contacts' full details</returns>
+        [Obsolete("This method is now obsolete, use Deserializer.FromFile instead")]
         public static vCardCollection FromFile(string filepath)
         {
-            StreamReader sr = Helper.GetStreamReaderFromFile(filepath);
-            return FromStreamReader(sr);
+            return Deserializer.FromFile(filepath);
         }
 
         /// <summary>
-        /// 
+        /// Method to read in a vcf file and extract all contents to a vCardColllection
         /// </summary>
-        /// <param name="streamReader"></param>
-        /// <returns></returns>
+        /// <param name="streamReader">A stream reader containing the vcard details</param>
+        /// <returns>A collection of vCard objects, each with a contacts' full details</returns>
+        [Obsolete("This method is now obsolete, use Deserializer.FromStreamReader instead")]
         public static vCardCollection FromStreamReader(StreamReader streamReader)
         {
-            vCardCollection collection = new vCardCollection();
-            string contactsString = Helper.GetStringFromStreamReader(streamReader);
-            string[] contacts = Helper.GetContactsArrayFromString(contactsString);
-            foreach(string contact in contacts)
-            {
-                string[] contactDetails = Helper.GetContactDetailsArrayFromString(contact);
-                if (contactDetails.Length > 0)
-                {
-                    vCard details = Helper.GetVcardFromDetails(contactDetails);
-                    collection.Add(details);
-                }
-                else
-                    continue;
-            }
-            return collection;
+            return Deserializer.FromStreamReader(streamReader);
         }
 
         /// <summary>
@@ -207,7 +196,9 @@ namespace vCardLib
             {
                 if (File.Exists(filePath))
                 {
-                    throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
+                    throw new InvalidOperationException("A file with the given filePath exists."
+                        + " If you want to overwrite the file, then call this method"
+                        + " and pass the optional overwrite option");
                 }
             }
             return Save(filePath, Version, writeOption);
@@ -221,7 +212,7 @@ namespace vCardLib
         /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
         /// <returns>A boolean value stating whether the save option was successful or not</returns>
         /// <exception cref="InvalidOperationException">The file already exists</exception>
-        public bool Save(string filePath, float version, WriteOptions writeOption = WriteOptions.ThrowError)
+        public bool Save(string filePath, Version version, WriteOptions writeOption = WriteOptions.ThrowError)
         {
             if (writeOption == WriteOptions.ThrowError)
             {
@@ -230,19 +221,19 @@ namespace vCardLib
                     throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
                 }
             }
-            if (version == 2.1F)
+            if (version == Version.V2)
             {
                 string vcfString = "";
                 WriteV2ObjectToString(ref vcfString);
                 File.WriteAllText(filePath, vcfString);
             }
-            else if (version == 3.0F)
+            else if (version == Version.V3)
             {
                 string vcfString = "";
                 WriteV3ObjectToString(ref vcfString);
                 File.WriteAllText(filePath, vcfString);
             }
-            else if (version == 4.0F)
+            else if (version == Version.V4)
             {
                 throw new NotImplementedException("Writing for v4 is not implemented");
             }
@@ -273,7 +264,12 @@ namespace vCardLib
             vCardString += "BIRTHPLACE:" + BirthPlace + Environment.NewLine;
             vCardString += "DEATHPLACE:" + DeathPlace + Environment.NewLine;
             vCardString += "TZ:" + TimeZone + Environment.NewLine;
-			vCardString += "BDAY:" + BirthDay.Year + BirthDay.Month.ToString("00") + BirthDay.Day.ToString("00");
+            if (BirthDay != null)
+            {
+                var birthDay = (DateTime) BirthDay;
+                vCardString += "BDAY:" + birthDay.Year + birthDay.Month.ToString("00") + birthDay.Day.ToString("00");
+            }
+
             foreach(PhoneNumber phoneNumber in PhoneNumbers)
             {
                 vCardString += Environment.NewLine;
@@ -366,7 +362,11 @@ namespace vCardLib
             vCardString += "BIRTHPLACE:" + BirthPlace + Environment.NewLine;
             vCardString += "DEATHPLACE:" + DeathPlace + Environment.NewLine;
             vCardString += "TZ:" + TimeZone + Environment.NewLine;
-            vCardString += "BDAY:" + BirthDay.Year + BirthDay.ToString("00") + BirthDay.ToString("00");
+            if (BirthDay != null)
+            {
+                var birthDay = (DateTime) BirthDay;
+                vCardString += "BDAY:" + birthDay.Year + birthDay.Month.ToString("00") + birthDay.Day.ToString("00");
+            }
             foreach (PhoneNumber phoneNumber in PhoneNumbers)
             {
                 vCardString += Environment.NewLine;
