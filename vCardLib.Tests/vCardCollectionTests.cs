@@ -46,9 +46,8 @@ namespace vCardLib.Tests
 			if (File.Exists("vcardcollection1.vcf"))
 				File.Delete("vcardcollection1.vcf");
 			vCardCollection vcardCollection = new vCardCollection();
-			vCard vcard = new vCard();
-			vcard.Version = Version.V2;
-			vcardCollection.Add(vcard);
+		    vCard vcard = new vCard {Version = Version.V2};
+		    vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
 				vcardCollection.Save("vcardcollection1.vcf");
@@ -78,9 +77,8 @@ namespace vCardLib.Tests
 			if (File.Exists("vcardcollection2.vcf"))
 				File.Delete("vcardcollection2.vcf");
 			vCardCollection vcardCollection = new vCardCollection();
-			vCard vcard = new vCard();
-			vcard.Version = Version.V2;
-			Assert.DoesNotThrow(delegate
+		    vCard vcard = new vCard {Version = Version.V2};
+		    Assert.DoesNotThrow(delegate
 			{
 				vcardCollection.Save("vcardcollection2.vcf", 2.1f, WriteOptions.ThrowError);
 			});
