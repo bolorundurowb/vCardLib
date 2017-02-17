@@ -15,31 +15,33 @@ namespace vCardLib.Deserializers
         {
             contactDetails = contactDetailStrings;
 
-            vCard vcard = new vCard();
-            vcard.Addresses = ParseAddresses();
-            vcard.BirthDay = ParseBirthDay();
-            vcard.BirthPlace = ParseBirthPlace();
-            vcard.DeathPlace = ParseDeathPlace();
-            vcard.EmailAddresses = ParseEmailAddresses();
-            vcard.Expertises = ParseExpertises();
-            vcard.FamilyName = ParseFamilyName();
-            vcard.FormattedName = ParseFormattedName();
-            vcard.Gender = ParseGender();
-            vcard.GivenName = ParseGivenName();
-            vcard.Hobbies = ParseHobbies();
-            vcard.Interests = ParseInterests();
-            vcard.Kind = ParseKind();
-            vcard.Language = ParseLanguage();
-            vcard.MiddleName = ParseMiddleName();
-            vcard.NickName = ParseNickname();
-            vcard.Organization = ParseOrganization();
-            vcard.PhoneNumbers = ParseTelephoneNumbers();
-            vcard.Pictures = ParsePhotos();
-            vcard.Prefix = ParsePrefix();
-            vcard.Suffix = ParseSuffix();
-            vcard.TimeZone = ParseTimeZone();
-            vcard.Title = ParseTitle();
-            vcard.Url = ParseUrl();
+            vCard vcard = new vCard
+            {
+                Addresses = ParseAddresses(),
+                BirthDay = ParseBirthDay(),
+                BirthPlace = ParseBirthPlace(),
+                DeathPlace = ParseDeathPlace(),
+                EmailAddresses = ParseEmailAddresses(),
+                Expertises = ParseExpertises(),
+                FamilyName = ParseFamilyName(),
+                FormattedName = ParseFormattedName(),
+                Gender = ParseGender(),
+                GivenName = ParseGivenName(),
+                Hobbies = ParseHobbies(),
+                Interests = ParseInterests(),
+                Kind = ParseKind(),
+                Language = ParseLanguage(),
+                MiddleName = ParseMiddleName(),
+                NickName = ParseNickname(),
+                Organization = ParseOrganization(),
+                PhoneNumbers = ParseTelephoneNumbers(),
+                Pictures = ParsePhotos(),
+                Prefix = ParsePrefix(),
+                Suffix = ParseSuffix(),
+                TimeZone = ParseTimeZone(),
+                Title = ParseTitle(),
+                Url = ParseUrl()
+            };
             return vcard;
         }
 
@@ -194,7 +196,7 @@ namespace vCardLib.Deserializers
         private static PhoneNumberCollection ParseTelephoneNumbers()
         {
             PhoneNumberCollection phoneNumberCollection = new PhoneNumberCollection();
-            
+
             var telStrings = contactDetails.Where(s => s.StartsWith("TEL"));
             foreach(string telString in telStrings)
             {
@@ -364,7 +366,7 @@ namespace vCardLib.Deserializers
         private static EmailAddressCollection ParseEmailAddresses()
         {
             EmailAddressCollection emailAddressCollection = new EmailAddressCollection();
-            
+
             var emailStrings = contactDetails.Where(s => s.StartsWith("EMAIL"));
             foreach (string email in emailStrings)
             {
@@ -654,7 +656,6 @@ namespace vCardLib.Deserializers
             foreach(string photoStr in photoStrings)
             {
                 Photo photo = new Photo();
-                //JPEG
                 if (photoStr.Replace("PHOTO;", "").StartsWith("JPEG:"))
                 {
                     photo.PhotoURL = photoStr.Replace("PHOTO;JPEG:", "").Trim();
@@ -692,7 +693,6 @@ namespace vCardLib.Deserializers
                     photoCollection.Add(photo);
                 }
 
-                //GIF
                 else if (photoStr.Replace("PHOTO;", "").StartsWith("GIF:"))
                 {
                     photo.PhotoURL = photoStr.Replace("PHOTO;GIF:", "").Trim();
