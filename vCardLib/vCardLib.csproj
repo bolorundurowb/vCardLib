@@ -60,6 +60,7 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\EmailAddress.cs" />
     <Compile Include="Models\Expertise.cs" />
+      <Compile Include="Models\Geo.cs"/>
     <Compile Include="Models\Hobby.cs" />
     <Compile Include="Models\Interest.cs" />
     <Compile Include="Models\PhoneNumber.cs" />

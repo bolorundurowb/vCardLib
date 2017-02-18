@@ -24,6 +24,7 @@ namespace vCardLib.Deserializers
                 Expertises = ParseExpertises(),
                 FamilyName = ParseFamilyName(),
                 FormattedName = ParseFormattedName(),
+                Geo = ParseGeo(),
                 Gender = ParseGender(),
                 GivenName = ParseGivenName(),
                 Hobbies = ParseHobbies(),
@@ -721,6 +722,31 @@ namespace vCardLib.Deserializers
                 }
             }
             return photoCollection;
+        }
+
+        public static Geo ParseGeo()
+        {
+            var geoString = _contactDetails.FirstOrDefault(x => x.StartsWith("GEO"));
+            if (geoString != null)
+            {
+                geoString = geoString.Replace("GEO:", "");
+                var geoParts = geoString.Split(';');
+                if (geoParts.Length == 2)
+                {
+                    double longitude;
+                    var longSuccess = double.TryParse(geoParts[0], out longitude);
+                    double latitude;
+                    var latSuccess = double.TryParse(geoParts[1], out latitude);
+                    if (longSuccess && latSuccess)
+                    {
+                        Geo geo = new Geo();
+                        geo.Latitude = latitude;
+                        geo.Longitude = latitude;
+                        return geo;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

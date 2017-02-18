@@ -16,7 +16,7 @@ namespace vCardLib
         /// <summary>
         /// The version of the vcf file
         /// </summary>
-        public Helpers.Version Version { get; set; }
+        public Version Version { get; set; }
 
         /// <summary>
         /// The Family name or Surname of the contact
@@ -57,6 +57,19 @@ namespace vCardLib
         /// A url associated with the contact
         /// </summary>
         public string Url { get; set; }
+
+        /// <summary>
+        /// The contact's timezone
+        /// </summary>
+        /// <example>
+        /// vcard.TimeZone = "GMT-1";
+        /// </example>
+        public string TimeZone { get; set; }
+
+        /// <summary>
+        /// The contacts geographical location specified by a longitude and latitude
+        /// </summary>
+        public Geo Geo { get; set; }
 
         /// <summary>
         /// An organization the cotact belongs to
@@ -135,14 +148,6 @@ namespace vCardLib
         /// The contact's interests
         /// </summary>
         public InterestCollection Interests { get; set; }
-
-        /// <summary>
-        /// The contact's timezone
-        /// </summary>
-        /// <example>
-        /// vcard.TimeZone = "GMT-1";
-        /// </example>
-        public string TimeZone { get; set; }
 
         /// <summary>
         /// Default constructor, it initializes the collections in the vCard object
