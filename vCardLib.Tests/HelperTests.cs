@@ -110,7 +110,7 @@ namespace vCardLib.Tests
 			Assert.IsNotNull(vcardCollection);
 			Assert.AreEqual(vcardCollection.Count, 1);
 			Assert.DoesNotThrow(delegate {
-				vcardCollection.Save(Path.Combine(assemblyFolder, "version30.vcf"), Version.V3, WriteOptions.Overwrite);
+				vcardCollection.Save(Path.Combine(assemblyFolder, "version30.vcf"), Version.V2, WriteOptions.Overwrite);
 			});
 		}
 

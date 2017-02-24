@@ -61,10 +61,15 @@ namespace vCardLib.Serializers
             {
                 if (File.Exists(filePath))
                 {
-                    throw new InvalidOperationException("A file with the given filePath exists. If you want to overwrite the file, then call this method and pass the optional overwrite option");
+                    throw new InvalidOperationException(
+                        "A file with the given filePath exists."
+                        + " If you want to overwrite the file,"
+                        + " then call this method and pass the "
+                        + "optional overwrite option"
+                    );
                 }
             }
-            string vcardString = "";
+            var vcardString = "";
             if (version == Version.V2)
             {
                 foreach(vCard vcard in vcardCollection)

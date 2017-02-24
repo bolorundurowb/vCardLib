@@ -90,10 +90,10 @@ namespace vCardLib.Tests
 			{
 				vcardCollection.Save("vcardcollection2.vcf", Version.V3, WriteOptions.Overwrite);
 			});
-			Assert.Throws<NotImplementedException>(delegate
-			{
-				vcardCollection.Save("vcardcollection2.vcf", Version.V4, WriteOptions.Overwrite);
-			});
+//			Assert.Throws<NotImplementedException>(delegate
+//			{
+//				vcardCollection.Save("vcardcollection2.vcf", Version.V4, WriteOptions.Overwrite);
+//			});
 		}
 	}
 }
