@@ -116,6 +116,16 @@ namespace vCardLib
         public string DeathPlace { get; set; }
 
         /// <summary>
+        /// The contacts skype PSTN number
+        /// </summary>
+        public string XSkypePstnNumber { get; set; }
+
+        /// <summary>
+        /// The contacts skype display number
+        /// </summary>
+        public string XSkypeDisplayNumber { get; set; }
+
+        /// <summary>
         /// A collection of phone numbers associated with the contact
         /// </summary>
         public PhoneNumberCollection PhoneNumbers { get; set; }
