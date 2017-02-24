@@ -50,24 +50,24 @@ namespace vCardLib.Tests
 		    vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf");
+				vcardCollection.Save("vcardcollection1.vcf", Version.V2);
 			});
 			vcard.Version = Version.V3;
 			vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf", WriteOptions.Overwrite);
+				vcardCollection.Save("vcardcollection1.vcf", Version.V3, WriteOptions.Overwrite);
 			});
 			Assert.Throws<InvalidOperationException>(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf");
+				vcardCollection.Save("vcardcollection1.vcf", Version.V2);
 			});
 			//
 			vcard.Version = Version.V4;
 			vcardCollection.Add(vcard);
 			Assert.Throws<NotImplementedException>(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf", WriteOptions.Overwrite);
+				vcardCollection.Save("vcardcollection1.vcf", Version.V4, WriteOptions.Overwrite);
 			});
 		}
 
@@ -80,23 +80,19 @@ namespace vCardLib.Tests
 		    vCard vcard = new vCard {Version = Version.V2};
 		    Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection2.vcf", 2.1f, WriteOptions.ThrowError);
+				vcardCollection.Save("vcardcollection2.vcf", Version.V2);
 			});
 			Assert.Throws<InvalidOperationException>(delegate
 			{
-				vcardCollection.Save("vcardcollection2.vcf", 2.1f);
+				vcardCollection.Save("vcardcollection2.vcf", Version.V2);
 			});
 			Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection2.vcf", 3.0f, WriteOptions.Overwrite);
+				vcardCollection.Save("vcardcollection2.vcf", Version.V3, WriteOptions.Overwrite);
 			});
 			Assert.Throws<NotImplementedException>(delegate
 			{
-				vcardCollection.Save("vcardcollection2.vcf", 4.0f, WriteOptions.Overwrite);
-			});
-			Assert.Throws<ArgumentException>(delegate
-			{
-				vcardCollection.Save("vcardcollection2.vcf", 5.4f, WriteOptions.Overwrite);
+				vcardCollection.Save("vcardcollection2.vcf", Version.V4, WriteOptions.Overwrite);
 			});
 		}
 	}

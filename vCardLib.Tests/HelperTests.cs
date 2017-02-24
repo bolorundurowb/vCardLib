@@ -5,6 +5,7 @@ using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Helpers;
+using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Tests
 {
@@ -109,7 +110,7 @@ namespace vCardLib.Tests
 			Assert.IsNotNull(vcardCollection);
 			Assert.AreEqual(vcardCollection.Count, 1);
 			Assert.DoesNotThrow(delegate {
-				vcardCollection.Save(Path.Combine(assemblyFolder, "version30.vcf"), 3.0f, WriteOptions.Overwrite);
+				vcardCollection.Save(Path.Combine(assemblyFolder, "version30.vcf"), Version.V3, WriteOptions.Overwrite);
 			});
 		}
 
