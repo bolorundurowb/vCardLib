@@ -22,6 +22,12 @@ namespace vCardLib.Serializers
             vCardString += "BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine;
             vCardString += "DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine;
             vCardString += "TZ:" + vcard.TimeZone + Environment.NewLine;
+            vCardString += "X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine;
+            vCardString += "X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine;
+            if (vcard.Geo != null)
+            {
+                vCardString += "GEO:" + vcard.Geo.Longitude + ";" + vcard.Geo.Latitude;
+            }
             if (vcard.BirthDay != null)
             {
                 var birthDay = (DateTime) vcard.BirthDay;

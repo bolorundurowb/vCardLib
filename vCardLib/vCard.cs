@@ -205,7 +205,6 @@ namespace vCardLib
         /// <param name="filePath">Path to file to save to</param>
         /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
         /// <returns>A boolean value stating whether the save option was successful or not</returns>
-        /// <exception cref="InvalidOperationException">The given file path already exists</exception>
         public bool Save(string filePath, WriteOptions writeOption = WriteOptions.ThrowError)
         {
             return Save(filePath, Version, writeOption);
@@ -218,7 +217,6 @@ namespace vCardLib
         /// <param name="version">Set the save version</param>
         /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
         /// <returns>A boolean value stating whether the save option was successful or not</returns>
-        /// <exception cref="InvalidOperationException">The file already exists</exception>
         public bool Save(string filePath, Version version, WriteOptions writeOption = WriteOptions.ThrowError)
         {
             return Serializer.Serialize(this, filePath, version, writeOption);
