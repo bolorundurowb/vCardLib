@@ -121,9 +121,9 @@ namespace vCardLib
         public string XSkypePstnNumber { get; set; }
 
         /// <summary>
-        /// The contacts skype display number
+        /// The contacts skype display name
         /// </summary>
-        public string XSkypeDisplayNumber { get; set; }
+        public string XSkypeDisplayName { get; set; }
 
         /// <summary>
         /// A collection of phone numbers associated with the contact

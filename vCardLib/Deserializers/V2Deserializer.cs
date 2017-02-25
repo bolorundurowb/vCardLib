@@ -41,7 +41,9 @@ namespace vCardLib.Deserializers
                 Suffix = ParseSuffix(),
                 TimeZone = ParseTimeZone(),
                 Title = ParseTitle(),
-                Url = ParseUrl()
+                Url = ParseUrl(),
+                XSkypeDisplayName = ParseXSkypeDisplayName(),
+                XSkypePstnNumber = ParseXSkypePstnNumber()
             };
             return vcard;
         }
@@ -728,6 +730,26 @@ namespace vCardLib.Deserializers
                 }
             }
             return null;
+        }
+
+        private static string ParseXSkypeDisplayName()
+        {
+            var xSkypeDisplayNumberString = _contactDetails.FirstOrDefault(x => x.StartsWith("X-SKYPE-DISPLAYNAME"));
+            if (xSkypeDisplayNumberString != null)
+            {
+                return xSkypeDisplayNumberString.Replace("X-SKYPE-DISPLAYNAME:", "");
+            }
+            return String.Empty;
+        }
+
+        private static string ParseXSkypePstnNumber()
+        {
+            var xSkypePstnString = _contactDetails.FirstOrDefault(x => x.StartsWith("X-SKYPE-PSTNNUMBER"));
+            if (xSkypePstnString != null)
+            {
+                return xSkypePstnString.Replace("X-SKYPE-PSTNNUMBER:", "");
+            }
+            return String.Empty;
         }
     }
 }
