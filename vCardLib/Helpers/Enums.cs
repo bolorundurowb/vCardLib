@@ -1,4 +1,4 @@
-﻿namespace vCardLib
+﻿namespace vCardLib.Helpers
 {
     /// <summary>
     /// Gender types
@@ -31,5 +31,15 @@
     {
         Overwrite,
         ThrowError
+    }
+
+    /// <summary>
+    /// vCard version
+    /// </summary>
+    public enum Version
+    {
+        V2,
+        V3,
+        V4
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace vCardLib
+﻿namespace vCardLib.Models
 {
     /// <summary>
     /// Class to describe a contacts' interest

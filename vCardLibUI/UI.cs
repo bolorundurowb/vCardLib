@@ -2,6 +2,7 @@
 using Gtk;
 using vCardLib;
 using System.IO;
+using vCardLib.Collections;
 using VCFReaderGTK;
 
 public partial class UI: Gtk.Window

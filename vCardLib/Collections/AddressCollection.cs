@@ -1,48 +1,51 @@
 ﻿using System;
+using vCardLib.Models;
 
-namespace vCardLib
+namespace vCardLib.Collections
 {
     /// <summary>
-    /// Collection class to hold all contact phone numbers
+    /// Collection class to hold all contact addresses
     /// </summary>
-    public class PhoneNumberCollection : System.Collections.CollectionBase
+    public class AddressCollection : System.Collections.CollectionBase
     {
         /// <summary>
-        /// Method to add phone number to the phone number collection
+        /// Add an address to the collection
         /// </summary>
-        /// <param name="phoneNumber">Phone number object to be added</param>
-        public void Add(PhoneNumber phoneNumber)
+        /// <param name="Address">An address</param>
+        public void Add(Address Address)
         {
-            List.Add(phoneNumber);
+            List.Add(Address);
         }
 
         /// <summary>
-        /// Method to remove a phone number from the phone number collection
+        /// Method to remove an Address from the Address collection
         /// </summary>
-        /// <param name="phoneNumber">Phone number object to be removed</param>
-        public void Remove(PhoneNumber phoneNumber)
+        /// <param name="Address">Address object to be removed</param>
+        public void Remove(Address Address)
         {
-            List.Remove(phoneNumber);
+            List.Remove(Address);
         }
 
         /// <summary>
         /// Indexer to enable index access to the collection
         /// </summary>
         /// <param name="index">zero based index of the object to be returned</param>
-        /// <returns>a Phone number object at the specified index</returns>
-        public PhoneNumber this[int index]
+        /// <returns>an Address object at the specified index</returns>
+        public Address this[int index]
         {
             get
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                return (PhoneNumber)List[index];
+                else
+                    return (Address)List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
                     throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                List[index] = value;
+                else
+                    List[index] = value;
             }
         }
     }

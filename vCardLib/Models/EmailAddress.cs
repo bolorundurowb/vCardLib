@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 
-namespace vCardLib
+namespace vCardLib.Models
 {
     /// <summary>
     /// Class to hold email addresses

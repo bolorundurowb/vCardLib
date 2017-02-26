@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vCardLib", "vCardLib\vCardL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vCardLib.Tests", "vCardLib.Tests\vCardLib.Tests.csproj", "{34B428BD-CF5B-4034-AC3A-36CEB98B7306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCFReaderGTK", "VCFReaderGTK\VCFReaderGTK.csproj", "{AAF9DF0D-3FCB-4DFE-95DB-3EEF3FBB694C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vCardLibUI", "vCardLibUI\vCardLibUI.csproj", "{AAF9DF0D-3FCB-4DFE-95DB-3EEF3FBB694C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

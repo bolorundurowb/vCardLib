@@ -2,6 +2,9 @@
 using System;
 using System.IO;
 using NUnit.Framework;
+using vCardLib.Collections;
+using vCardLib.Helpers;
+using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Tests
 {
@@ -43,36 +46,28 @@ namespace vCardLib.Tests
 			if (File.Exists("vcardcollection1.vcf"))
 				File.Delete("vcardcollection1.vcf");
 			vCardCollection vcardCollection = new vCardCollection();
-			vCard vcard = new vCard();
-			vcard.Version = 2.1f;
-			vcardCollection.Add(vcard);
+		    vCard vcard = new vCard {Version = Version.V2};
+		    vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf");
+				vcardCollection.Save("vcardcollection1.vcf", Version.V2);
 			});
-			vcard.Version = 3.0f;
+			vcard.Version = Version.V3;
 			vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf", WriteOptions.Overwrite);
+				vcardCollection.Save("vcardcollection1.vcf", Version.V3, WriteOptions.Overwrite);
 			});
 			Assert.Throws<InvalidOperationException>(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf");
+				vcardCollection.Save("vcardcollection1.vcf", Version.V2);
 			});
 			//
-			vcard.Version = 4.0f;
+			vcard.Version = Version.V4;
 			vcardCollection.Add(vcard);
 			Assert.Throws<NotImplementedException>(delegate
 			{
-				vcardCollection.Save("vcardcollection1.vcf", WriteOptions.Overwrite);
-			});
-			//
-			vcard.Version = 5.0f;
-			vcardCollection.Add(vcard);
-			Assert.Throws<ArgumentException>(delegate
-			{
-				vcardCollection.Save("vcardcollection1.vcf", WriteOptions.Overwrite);
+				vcardCollection.Save("vcardcollection1.vcf", Version.V4, WriteOptions.Overwrite);
 			});
 		}
 
@@ -82,28 +77,23 @@ namespace vCardLib.Tests
 			if (File.Exists("vcardcollection2.vcf"))
 				File.Delete("vcardcollection2.vcf");
 			vCardCollection vcardCollection = new vCardCollection();
-			vCard vcard = new vCard();
-			vcard.Version = 2.1f;
-			Assert.DoesNotThrow(delegate
+		    vCard vcard = new vCard {Version = Version.V2};
+		    Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection2.vcf", 2.1f, WriteOptions.ThrowError);
+				vcardCollection.Save("vcardcollection2.vcf", Version.V2);
 			});
 			Assert.Throws<InvalidOperationException>(delegate
 			{
-				vcardCollection.Save("vcardcollection2.vcf", 2.1f);
+				vcardCollection.Save("vcardcollection2.vcf", Version.V2);
 			});
 			Assert.DoesNotThrow(delegate
 			{
-				vcardCollection.Save("vcardcollection2.vcf", 3.0f, WriteOptions.Overwrite);
+				vcardCollection.Save("vcardcollection2.vcf", Version.V3, WriteOptions.Overwrite);
 			});
-			Assert.Throws<NotImplementedException>(delegate
-			{
-				vcardCollection.Save("vcardcollection2.vcf", 4.0f, WriteOptions.Overwrite);
-			});
-			Assert.Throws<ArgumentException>(delegate
-			{
-				vcardCollection.Save("vcardcollection2.vcf", 5.4f, WriteOptions.Overwrite);
-			});
+//			Assert.Throws<NotImplementedException>(delegate
+//			{
+//				vcardCollection.Save("vcardcollection2.vcf", Version.V4, WriteOptions.Overwrite);
+//			});
 		}
 	}
 }

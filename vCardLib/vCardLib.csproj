@@ -43,25 +43,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address.cs" />
-    <Compile Include="AddressCollection.cs" />
-    <Compile Include="EmailAddress.cs" />
-    <Compile Include="EmailAddressCollection.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="Expertise.cs" />
-    <Compile Include="ExpertiseCollection.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Hobby.cs" />
-    <Compile Include="HobbyCollection.cs" />
-    <Compile Include="Interest.cs" />
-    <Compile Include="InterestCollection.cs" />
-    <Compile Include="PhoneNumber.cs" />
-    <Compile Include="PhoneNumberCollection.cs" />
-    <Compile Include="Photo.cs" />
-    <Compile Include="PhotoCollection.cs" />
+    <Compile Include="Collections\AddressCollection.cs" />
+    <Compile Include="Collections\EmailAddressCollection.cs" />
+    <Compile Include="Collections\ExpertiseCollection.cs" />
+    <Compile Include="Collections\HobbyCollection.cs" />
+    <Compile Include="Collections\InterestCollection.cs" />
+    <Compile Include="Collections\PhoneNumberCollection.cs" />
+    <Compile Include="Collections\PhotoCollection.cs" />
+    <Compile Include="Collections\vCardCollection.cs" />
+      <Compile Include="Deserializers\Deserializer.cs"/>
+      <Compile Include="Deserializers\V2Deserializer.cs"/>
+      <Compile Include="Deserializers\V3Deserializer.cs"/>
+      <Compile Include="Deserializers\V4Deserializer.cs"/>
+    <Compile Include="Helpers\Enums.cs" />
+      <Compile Include="Helpers\Helper.cs"/>
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\EmailAddress.cs" />
+    <Compile Include="Models\Expertise.cs" />
+      <Compile Include="Models\Geo.cs"/>
+    <Compile Include="Models\Hobby.cs" />
+    <Compile Include="Models\Interest.cs" />
+    <Compile Include="Models\PhoneNumber.cs" />
+    <Compile Include="Models\Photo.cs" />
+      <Compile Include="Serializers\Serializer.cs"/>
+      <Compile Include="Serializers\V2Serializer.cs"/>
+      <Compile Include="Serializers\V3Serializer.cs"/>
+      <Compile Include="Serializers\V4Serializer.cs"/>
     <Compile Include="vCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="vCardCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib-icon.ico">
