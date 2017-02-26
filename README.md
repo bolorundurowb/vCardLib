@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/VCF-Reader/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/VCF-Reader?branch=master)    [![Mono](https://img.shields.io/badge/mono-4.4.2-ff66b6.svg)]()
 
-## VCF-Reader
+## vCardLibUI
  [![Download VCF Reader](https://img.shields.io/sourceforge/dt/vcf-reader.svg)](https://sourceforge.net/projects/vcf-reader/files/latest/download) [![License: MIT](https://img.shields.io/badge/License-GPLv3-yellow.svg)]()
 
 This tool was developed because I recently lost my android phone but was blessed to have created a VCF backup of all my contacts. VCF Reader loads contacts from a vCard (VCF) file into a table which allows sorting and case insensitive searching. The table shows the Surname, the first name, one email address and two Phone numbers
