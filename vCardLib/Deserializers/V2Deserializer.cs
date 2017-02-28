@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using vCardLib.Collections;
@@ -38,6 +39,7 @@ namespace vCardLib.Deserializers
                 PhoneNumbers = ParseTelephoneNumbers(),
                 Pictures = ParsePhotos(),
                 Prefix = ParsePrefix(),
+                Revision = ParseRevision(),
                 Suffix = ParseSuffix(),
                 TimeZone = ParseTimeZone(),
                 Title = ParseTitle(),
@@ -750,6 +752,24 @@ namespace vCardLib.Deserializers
                 return xSkypePstnString.Replace("X-SKYPE-PSTNNUMBER:", "");
             }
             return String.Empty;
+        }
+
+        private static DateTime? ParseRevision()
+        {
+            string revisionString = _contactDetails.FirstOrDefault(x => x.StartsWith("REV"));
+            if (revisionString != null)
+            {
+                revisionString = revisionString.Replace("REV:", "");
+                DateTime revision;
+                string format = "yyyyMMddTHHmmssZ";
+                var dateTimeStyle = DateTimeStyles.None;
+                IFormatProvider provider = new CultureInfo("en-US", true);
+                if (DateTime.TryParseExact(revisionString, format, provider, dateTimeStyle, out revision))
+                {
+                    return revision;
+                }
+            }
+            return null;
         }
     }
 }

@@ -118,7 +118,7 @@ namespace vCardLib
         /// <summary>
         /// The last time the vCard was updated
         /// </summary>
-        public DateTime Revision { get; set; }
+        public DateTime? Revision { get; set; }
 
         /// <summary>
         /// The contacts skype PSTN number
