@@ -8,7 +8,7 @@ namespace vCardLib.Serializers
 {
     public class Serializer
     {
-        internal static bool Serialize(vCard vcard, string filePath, Version version, WriteOptions options = WriteOptions.ThrowError)
+        public static bool Serialize(vCard vcard, string filePath, Version version, WriteOptions options = WriteOptions.ThrowError)
         {
             if (options == WriteOptions.ThrowError)
             {

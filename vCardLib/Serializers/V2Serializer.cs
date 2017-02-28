@@ -5,7 +5,7 @@ namespace vCardLib.Serializers
 {
     public class V2Serializer
     {
-        internal static string Serialize(vCard vcard)
+        public static string Serialize(vCard vcard)
         {
             string vCardString = "";
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
