@@ -35,25 +35,25 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionTests\AddressCollectionTests.cs" />
+    <Compile Include="CollectionTests\EmailAddressCollectionTests.cs" />
+    <Compile Include="CollectionTests\ExpertiseCollectionTests.cs" />
+    <Compile Include="CollectionTests\HobbyCollectionTests.cs" />
+    <Compile Include="CollectionTests\InterestCollectionTests.cs" />
+    <Compile Include="HelperTests\EnumTests.cs" />
+    <Compile Include="HelperTests\HelperTests.cs" />
+    <Compile Include="ModelTests\AddressTests.cs" />
+    <Compile Include="ModelTests\EmailAddressTests.cs" />
+    <Compile Include="ModelTests\ExpertiseTests.cs" />
+    <Compile Include="ModelTests\HobbyTests.cs" />
+    <Compile Include="ModelTests\InterestTests.cs" />
     <Compile Include="PhotoCollectionTests.cs" />
     <Compile Include="vCardTests.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="PhotoTests.cs" />
-    <Compile Include="EmailAddressTests.cs" />
-    <Compile Include="EmailAddressCollectionTests.cs" />
-    <Compile Include="AddressTests.cs" />
-    <Compile Include="AddressCollectionTests.cs" />
-    <Compile Include="EnumTests.cs" />
-    <Compile Include="ExpertiseTests.cs" />
-    <Compile Include="ExpertiseCollectionTests.cs" />
-    <Compile Include="HobbyTests.cs" />
-    <Compile Include="HobbyCollectionTests.cs" />
-    <Compile Include="InterestTests.cs" />
-    <Compile Include="InterestCollectionTests.cs" />
     <Compile Include="PhoneNumberTests.cs" />
     <Compile Include="PhoneNumberCollectionTests.cs" />
-    <Compile Include="HelperTests.cs" />
     <Compile Include="vCardCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +82,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DeserializerTests" />
+    <Folder Include="SerializersTests" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

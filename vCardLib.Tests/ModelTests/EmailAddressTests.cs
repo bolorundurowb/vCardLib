@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using vCardLib.Models;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.ModelTests
 {
 	[TestFixture]
 	public class EmailAddressTests
@@ -11,10 +11,12 @@ namespace vCardLib.Tests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				var emailAddress = new EmailAddress();
-				emailAddress.Email = new System.Net.Mail.MailAddress("test@test.org");
-				emailAddress.Type = EmailType.AOL;
-				emailAddress.Type = EmailType.Applelink;
+			    var emailAddress = new EmailAddress
+			    {
+			        Email = new System.Net.Mail.MailAddress("test@test.org"),
+			        Type = EmailType.AOL
+			    };
+			    emailAddress.Type = EmailType.Applelink;
 				emailAddress.Type = EmailType.Home;
 				emailAddress.Type = EmailType.IBMMail;
 				emailAddress.Type = EmailType.Internet;

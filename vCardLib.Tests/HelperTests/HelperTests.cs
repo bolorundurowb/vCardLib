@@ -1,4 +1,5 @@
 ﻿// Created by Bolorunduro Winner-Timothy on  11/25/2016 at 7:43 AM
+
 using System;
 using System.IO;
 using System.Reflection;
@@ -7,7 +8,7 @@ using vCardLib.Collections;
 using vCardLib.Helpers;
 using Version = vCardLib.Helpers.Version;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.HelperTests
 {
 	[TestFixture]
 	public class HelperTests
