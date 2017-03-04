@@ -40,6 +40,10 @@
     <Compile Include="CollectionTests\ExpertiseCollectionTests.cs" />
     <Compile Include="CollectionTests\HobbyCollectionTests.cs" />
     <Compile Include="CollectionTests\InterestCollectionTests.cs" />
+    <Compile Include="DeserializerTests\DeserializerTests.cs" />
+    <Compile Include="DeserializerTests\V2DeserializerTests.cs" />
+    <Compile Include="DeserializerTests\V3DeserializerTests.cs" />
+    <Compile Include="DeserializerTests\V4DeserializerTests.cs" />
     <Compile Include="HelperTests\EnumTests.cs" />
     <Compile Include="HelperTests\HelperTests.cs" />
     <Compile Include="ModelTests\AddressTests.cs" />
@@ -84,7 +88,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DeserializerTests" />
     <Folder Include="SerializersTests" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

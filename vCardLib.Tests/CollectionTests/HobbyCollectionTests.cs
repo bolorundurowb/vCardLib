@@ -16,9 +16,8 @@ namespace vCardLib.Tests.CollectionTests
 			Assert.DoesNotThrow(delegate
 			{
 				Hobby hobby = new Hobby();
-				HobbyCollection hobbyCollection = new HobbyCollection();
-				hobbyCollection.Add(hobby);
-				hobby = hobbyCollection[0];
+			    HobbyCollection hobbyCollection = new HobbyCollection {hobby};
+			    hobby = hobbyCollection[0];
 				hobbyCollection[0] = hobby;
 				hobbyCollection.Remove(hobby);
 			});
