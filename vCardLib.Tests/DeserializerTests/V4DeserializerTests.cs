@@ -10,7 +10,11 @@ namespace vCardLib.Tests.DeserializerTests
         [Test]
         public void ParseTest()
         {
-            Assert.Throws<NotImplementedException>(delegate { V4Deserializer.Parse(new[] {"test"}); });
+            Assert.Throws<NotImplementedException>(
+                delegate
+                {
+                    V4Deserializer.Parse(new[] {"test"});
+                });
         }
     }
 }

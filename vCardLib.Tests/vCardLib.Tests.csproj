@@ -49,6 +49,7 @@
     <Compile Include="ModelTests\AddressTests.cs" />
     <Compile Include="ModelTests\EmailAddressTests.cs" />
     <Compile Include="ModelTests\ExpertiseTests.cs" />
+    <Compile Include="ModelTests\GeoTests.cs" />
     <Compile Include="ModelTests\HobbyTests.cs" />
     <Compile Include="ModelTests\InterestTests.cs" />
     <Compile Include="PhotoCollectionTests.cs" />
@@ -89,7 +90,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SerializersTests" />
     <Folder Include="SerializerTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
