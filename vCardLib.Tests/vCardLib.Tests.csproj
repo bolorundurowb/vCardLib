@@ -59,6 +59,7 @@
     <Compile Include="PhoneNumberTests.cs" />
     <Compile Include="PhoneNumberCollectionTests.cs" />
     <Compile Include="vCardCollectionTests.cs" />
+    <Compile Include="SerializerTests\V4SerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SerializersTests" />
+    <Folder Include="SerializerTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
