@@ -6,7 +6,7 @@ branches:
 
 image: Visual Studio 2015
 
-clone_folder: c:\projects\vcardlib
+clone_folder: c:\projects\
 
 environment:
   COVERALLS_REPO_TOKEN:
@@ -31,5 +31,5 @@ test_script:
   - nuget install OpenCover -Version 4.6.519 -OutputDirectory tools
   - nuget install coveralls.net -Version 0.7.0 -OutputDirectory tools
   - nuget install ReportGenerator -Version 2.4.5.0 -OutputDirectory tools
-  - cd C:\projects\vcardlib\
+  - cd C:\projects\
   - ps: .\coverage.ps1 
