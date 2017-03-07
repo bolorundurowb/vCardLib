@@ -5,6 +5,10 @@ namespace vCardLib.Tests.DeserializerTests
     [TestFixture]
     public class DeserializerTests
     {
-
+        [Test]
+        public void FromFileTest()
+        {
+            
+        }
     }
 }
