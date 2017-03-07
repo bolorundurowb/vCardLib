@@ -14,9 +14,6 @@ environment:
 
 platform: Any CPU
 
-platform:
-  - Any CPU
-
 configuration: Debug
 
 build:
