@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Collections;
@@ -40,6 +41,52 @@ namespace vCardLib.Tests.DeserializerTests
                 collection = Deserializer.FromStreamReader(streamReader);
             });
             Assert.AreEqual(1, collection.Count);
+        }
+
+        [Test]
+        public void GetVcardFromDetailsNullTest()
+        {
+            string[] details = null;
+            Assert.Throws<InvalidOperationException>(delegate
+            {
+                Deserializer.GetVcardFromDetails(details);
+            });
+        }
+
+        [Test]
+        public void GetVcardFromDetailsValidDataTest()
+        {
+            string[] details = new[]
+            {
+                "VERSION:2.1"
+            };
+            vCard vcard = null;
+            Assert.DoesNotThrow(delegate
+            {
+                vcard = Deserializer.GetVcardFromDetails(details);
+            });
+            Assert.AreEqual(Helpers.Version.V2, vcard.Version);
+
+            details = new[]
+            {
+                "VERSION:3.0"
+            };
+            vcard = null;
+            Assert.DoesNotThrow(delegate
+            {
+                vcard = Deserializer.GetVcardFromDetails(details);
+            });
+            Assert.AreEqual(Helpers.Version.V3, vcard.Version);
+
+            details = new[]
+            {
+                "VERSION:4.0"
+            };
+            vcard = null;
+            Assert.Throws<NotImplementedException>(delegate
+            {
+                vcard = Deserializer.GetVcardFromDetails(details);
+            });
         }
     }
 }
