@@ -1,6 +1,6 @@
 # This project contains two sub projects
 
-[![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/VCF-Reader/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/VCF-Reader?branch=master)    [![Mono](https://img.shields.io/badge/mono-4.4.2-ff66b6.svg)]()
+[![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/vCardLib/badge.svg?branch=dev)](https://coveralls.io/github/bolorundurowb/vCardLib?branch=dev)    [![Mono](https://img.shields.io/badge/mono-4.4.2-ff66b6.svg)]()
 
 ## vCardLibUI
  [![Download VCF Reader](https://img.shields.io/sourceforge/dt/vcf-reader.svg)](https://sourceforge.net/projects/vcf-reader/files/latest/download) [![License: MIT](https://img.shields.io/badge/License-GPLv3-yellow.svg)]()
