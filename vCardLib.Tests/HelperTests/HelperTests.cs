@@ -76,7 +76,7 @@ namespace vCardLib.Tests.HelperTests
 		public void GetContactDetailsArrayFromStringIsStable()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "valid.vcf");
+			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			var streamReader = Helper.GetStreamReaderFromFile(filePath);
 			var vcardString = Helper.GetStringFromStreamReader(streamReader);
 			var contacts = Helper.GetContactsArrayFromString(vcardString);
@@ -103,7 +103,7 @@ namespace vCardLib.Tests.HelperTests
 		public void ProcessV2_1Coverage()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "version21.vcf");
+			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			vCardCollection vcardCollection = null;
 			Assert.DoesNotThrow(delegate {
 				vcardCollection = vCard.FromFile(filePath);
@@ -111,7 +111,7 @@ namespace vCardLib.Tests.HelperTests
 			Assert.IsNotNull(vcardCollection);
 			Assert.AreEqual(vcardCollection.Count, 1);
 			Assert.DoesNotThrow(delegate {
-				vcardCollection.Save(Path.Combine(assemblyFolder, "version30.vcf"), Version.V2, WriteOptions.Overwrite);
+				vcardCollection.Save(Path.Combine(assemblyFolder, "version3.vcf"), Version.V3, WriteOptions.Overwrite);
 			});
 		}
 
@@ -119,7 +119,7 @@ namespace vCardLib.Tests.HelperTests
 		public void ProcessV3_0Coverage()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "version30.vcf");
+			string filePath = Path.Combine(assemblyFolder, "version3.vcf");
 			vCardCollection vcardCollection = null;
 			Assert.DoesNotThrow(delegate
 			{

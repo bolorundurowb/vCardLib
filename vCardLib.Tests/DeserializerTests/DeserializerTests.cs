@@ -47,7 +47,7 @@ namespace vCardLib.Tests.DeserializerTests
         public void GetVcardFromDetailsNullTest()
         {
             string[] details = null;
-            Assert.Throws<InvalidOperationException>(delegate
+			Assert.Throws<InvalidDataException>(delegate
             {
                 Deserializer.GetVcardFromDetails(details);
             });
