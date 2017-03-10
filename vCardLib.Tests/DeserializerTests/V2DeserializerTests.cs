@@ -23,7 +23,7 @@ namespace vCardLib.Tests.DeserializerTests
                 vcard = V2Deserializer.Parse(contacts);
             });
             Assert.IsNotNull(vcard);
-
+            //TODO: More assertions to check data integrity should be added
         }
     }
 }
