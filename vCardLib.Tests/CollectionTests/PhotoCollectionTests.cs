@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
+using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Models;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.CollectionTests
 {
     [TestFixture]
     class PhotoCollectionTests

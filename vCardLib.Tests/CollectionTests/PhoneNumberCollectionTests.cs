@@ -1,10 +1,11 @@
 ﻿// Created by Bolorunduro Winner-Timothy on  11/22/2016 at 5:38 AM
+
 using System;
 using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Models;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.CollectionTests
 {
 	[TestFixture]
 	public class PhoneNumberCollectionTests

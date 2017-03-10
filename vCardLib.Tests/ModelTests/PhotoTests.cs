@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using vCardLib.Models;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.ModelTests
 {
 	[TestFixture]
 	public class PhotoTests
