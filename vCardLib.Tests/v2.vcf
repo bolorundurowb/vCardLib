@@ -24,7 +24,6 @@ KIND:DEVICE
 PHOTO;GIF:http://www.example.com/dir_photos/my_photo.gif
 PHOTO;JPEG:http://www.example.com/dir_photos/my_photo.jpg
 ADR:;;100 Waters Edge;Baytown;LA;30314;United States of America
-ADR;POSTAL:;;42 Plantation St.;Baytown;LA;30314;United States of America
 ADR;WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
 ADR;INTL:;100 Waters Edge;Baytown;LA;30314;United States of America

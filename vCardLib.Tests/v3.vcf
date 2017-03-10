@@ -19,11 +19,25 @@ KIND:ORG
 PHOTO;VALUE=URI;TYPE=GIF:http://www.example.com/dir_photos/my_photo.gif
 TEL;TYPE=WORK,VOICE:(111) 555-1212
 TEL;TYPE=HOME,VOICE:(404) 555-1212
+TEL;TYPE=CAR,VOICE:(111) 555-1212
+TEL;TYPE=MODEM,VOICE:(404) 555-1212
+TEL;TYPE=MAIN-NUMBER,VOICE:(111) 555-1212
+TEL;TYPE=TEXTPHONE,VOICE:(404) 555-1212
+TEL;TYPE=PAGER,VOICE:(111) 555-1212
+TEL;TYPE=VIDEO,VOICE:(404) 555-1212
+TEL;TYPE=ISDN,VOICE:(111) 555-1212
+TEL;TYPE=BBS,VOICE:(404) 555-1212
 ADR;TYPE=WORK,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of Amer
  ica
+ADR;TYPE=HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
+ADR;TYPE=POSTAL,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of Amer
+ ica
+ADR;TYPE=INTL:;;42 Plantation St.;Baytown;LA;30314;United States of America
+ADR;TYPE=PARCEL,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of Amer
+ ica
+ADR;TYPE=DOM:;;42 Plantation St.;Baytown;LA;30314;United States of America
 LABEL;TYPE=WORK,PREF:100 Waters Edge\nBaytown\, LA 30314\nUnited States of 
  America
-ADR;TYPE=HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
 LABEL;TYPE=HOME:42 Plantation St.\nBaytown\, LA 30314\nUnited States of Ame
  rica
 EMAIL:forrestgump@example.com
