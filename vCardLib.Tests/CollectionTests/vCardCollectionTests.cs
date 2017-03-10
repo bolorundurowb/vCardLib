@@ -1,4 +1,5 @@
 ﻿// Created by Bolorunduro Winner-Timothy on  12/1/2016 at 6:27 PM
+
 using System;
 using System.IO;
 using NUnit.Framework;
@@ -6,7 +7,7 @@ using vCardLib.Collections;
 using vCardLib.Helpers;
 using Version = vCardLib.Helpers.Version;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.CollectionTests
 {
 	[TestFixture]
 	public class vCardCollectionTests

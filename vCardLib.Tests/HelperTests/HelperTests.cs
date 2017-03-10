@@ -1,4 +1,5 @@
 ﻿// Created by Bolorunduro Winner-Timothy on  11/25/2016 at 7:43 AM
+
 using System;
 using System.IO;
 using System.Reflection;
@@ -7,7 +8,7 @@ using vCardLib.Collections;
 using vCardLib.Helpers;
 using Version = vCardLib.Helpers.Version;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.HelperTests
 {
 	[TestFixture]
 	public class HelperTests
@@ -75,7 +76,7 @@ namespace vCardLib.Tests
 		public void GetContactDetailsArrayFromStringIsStable()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "valid.vcf");
+			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			var streamReader = Helper.GetStreamReaderFromFile(filePath);
 			var vcardString = Helper.GetStringFromStreamReader(streamReader);
 			var contacts = Helper.GetContactsArrayFromString(vcardString);
@@ -102,7 +103,7 @@ namespace vCardLib.Tests
 		public void ProcessV2_1Coverage()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "version21.vcf");
+			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			vCardCollection vcardCollection = null;
 			Assert.DoesNotThrow(delegate {
 				vcardCollection = vCard.FromFile(filePath);
@@ -110,7 +111,7 @@ namespace vCardLib.Tests
 			Assert.IsNotNull(vcardCollection);
 			Assert.AreEqual(vcardCollection.Count, 1);
 			Assert.DoesNotThrow(delegate {
-				vcardCollection.Save(Path.Combine(assemblyFolder, "version30.vcf"), Version.V2, WriteOptions.Overwrite);
+				vcardCollection.Save(Path.Combine(assemblyFolder, "version3.vcf"), Version.V3, WriteOptions.Overwrite);
 			});
 		}
 
@@ -118,7 +119,7 @@ namespace vCardLib.Tests
 		public void ProcessV3_0Coverage()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "version30.vcf");
+			string filePath = Path.Combine(assemblyFolder, "version3.vcf");
 			vCardCollection vcardCollection = null;
 			Assert.DoesNotThrow(delegate
 			{

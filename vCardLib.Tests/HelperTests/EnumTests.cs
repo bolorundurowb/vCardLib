@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using vCardLib.Helpers;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.HelperTests
 {
 	[TestFixture]
 	public class EnumTests

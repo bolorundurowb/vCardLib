@@ -1,8 +1,9 @@
 ﻿// Created by Bolorunduro Winner-Timothy on  11/18/2016 at 10:51 AM
+
 using NUnit.Framework;
 using vCardLib.Models;
 
-namespace vCardLib.Tests
+namespace vCardLib.Tests.ModelTests
 {
 	[TestFixture]
 	public class ExpertiseTests
@@ -11,10 +12,12 @@ namespace vCardLib.Tests
 		public void ExpertiseIsStable()
 		{
 			Assert.DoesNotThrow(delegate {
-				Expertise expertise = new Expertise();
-				expertise.Area = "Engineering";
-				expertise.Level = Level.High;
-				expertise.Level = Level.Low;
+			    Expertise expertise = new Expertise
+			    {
+			        Area = "Engineering",
+			        Level = Level.High
+			    };
+			    expertise.Level = Level.Low;
 				expertise.Level = Level.Medium;
 			});
 		}

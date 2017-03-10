@@ -1,6 +1,6 @@
 BEGIN:VCARD
 VERSION:2.1
-N:Gump;Forrest;;Mr.
+N:Gump;Forrest;;Mr;JP.
 FN:Forrest Gump
 ORG:Bubba Gump Shrimp Co.
 TITLE:Shrimp Man
@@ -13,6 +13,8 @@ TZ:GMT+1
 BIRTHPLACE:Maida Vale
 DEATHPLACE:Maida Vale
 GENDER:FISH
+GEO:+35.23;-56.78
+REV:20080424T195243Z
 KIND:INDIVIDUAL
 KIND:GROUP
 KIND:ORG
@@ -22,7 +24,6 @@ KIND:DEVICE
 PHOTO;GIF:http://www.example.com/dir_photos/my_photo.gif
 PHOTO;JPEG:http://www.example.com/dir_photos/my_photo.jpg
 ADR:;;100 Waters Edge;Baytown;LA;30314;United States of America
-ADR;POSTAL:;;42 Plantation St.;Baytown;LA;30314;United States of America
 ADR;WORK:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
 ADR;INTL:;100 Waters Edge;Baytown;LA;30314;United States of America
@@ -60,4 +61,6 @@ HOBBY;LOW:Computer Science
 INTEREST;HIGH:Computer Science
 INTEREST;MEDIUM:Computer Science
 INTEREST;LOW:Computer Science
+X-SKYPE-DISPLAYNAME:John Doe
+X-SKYPE-PSTNNUMBER:+234555995
 END:VCARD

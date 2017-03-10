@@ -50,14 +50,14 @@ namespace vCardLib.Tests
 		public void ReadsCardsWithoutErrors()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "valid.vcf");
+			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			vCardCollection collection = null;
 			Assert.DoesNotThrow(delegate {
 				collection = vCard.FromFile(filePath);
 			});
 			Assert.IsNotNull(collection);
 			Assert.IsTrue(collection.Count > 0);
-			filePath = Path.Combine(assemblyFolder, "valid3.0.vcf");
+			filePath = Path.Combine(assemblyFolder, "v3.vcf");
 			collection = null;
 			Assert.DoesNotThrow(delegate {
 				collection = vCard.FromFile(filePath);
@@ -71,7 +71,7 @@ namespace vCardLib.Tests
 		{
 			Assert.IsNotNull(vcard);
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "valid.vcf");
+			string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
 			Assert.Throws<InvalidOperationException>(delegate {
 				vcard.Save(filePath);
 			});

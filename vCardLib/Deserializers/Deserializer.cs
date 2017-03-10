@@ -34,6 +34,10 @@ namespace vCardLib.Deserializers
 
         public static vCard GetVcardFromDetails(string[] contactDetails)
         {
+			if (contactDetails == null || contactDetails.Length == 0)
+			{
+				throw new InvalidDataException("the details cannot be null or empty");
+			}
             string versionString = contactDetails.FirstOrDefault(s => s.StartsWith("VERSION:"));
             if (versionString == null)
             {

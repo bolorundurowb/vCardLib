@@ -116,6 +116,11 @@ namespace vCardLib
         public string DeathPlace { get; set; }
 
         /// <summary>
+        /// The last time the vCard was updated
+        /// </summary>
+        public DateTime? Revision { get; set; }
+
+        /// <summary>
         /// The contacts skype PSTN number
         /// </summary>
         public string XSkypePstnNumber { get; set; }
