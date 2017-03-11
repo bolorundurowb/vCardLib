@@ -74,31 +74,35 @@ namespace vCardLib.Serializers
                     );
                 }
             }
-            var vcardString = "";
+            if (vcardCollection == null)
+            {
+                throw new ArgumentNullException("The vcard collection cannot be null.");
+            }
+            var vcardCollectionString = "";
             if (version == Version.V2)
             {
                 foreach(vCard vcard in vcardCollection)
                 {
-                    vcardString += V2Serializer.Serialize(vcard);
+                    vcardCollectionString += V2Serializer.Serialize(vcard);
                 }
             }
             else if (version == Version.V3)
             {
                 foreach (vCard vcard in vcardCollection)
                 {
-                    vcardString += V3Serializer.Serialize(vcard);
+                    vcardCollectionString += V3Serializer.Serialize(vcard);
                 }
             }
             else
             {
                 foreach (vCard vcard in vcardCollection)
                 {
-                    vcardString += V4Serializer.Serialize(vcard);
+                    vcardCollectionString += V4Serializer.Serialize(vcard);
                 }
             }
             try
             {
-                File.WriteAllText(filePath, vcardString);
+                File.WriteAllText(filePath, vcardCollectionString);
                 return true;
             }
             catch (Exception e)
