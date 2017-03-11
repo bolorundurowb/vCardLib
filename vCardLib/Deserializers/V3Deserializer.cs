@@ -679,50 +679,80 @@ namespace vCardLib.Deserializers
             var photoStrings = _contactDetails.Where(s => s.StartsWith("PHOTO;"));
             foreach (string photoStr in photoStrings)
             {
-                Photo photo = new Photo();
-                if (photoStr.Replace("PHOTO;", "").StartsWith("JPEG:") || photoStr.Replace("PHOTO;", "").StartsWith("jpeg:"))
+                var photoString = photoStr.Replace("PHOTO;", "");
+                if (photoString.Contains("TYPE=JPEG") || photoString.Contains("TYPE=jpeg"))
                 {
-                    photo.PhotoURL = photoStr.Replace("PHOTO;JPEG:", "").Replace("PHOTO;jpeg:", "").Trim();
-                    photo.Encoding = PhotoEncoding.JPEG;
-                    photo.Type = PhotoType.URL;
-                    photoCollection.Add(photo);
-                }
-                else if (photoStr.Contains("JPEG") || photoStr.Contains("jpeg") && photoStr.Contains("ENCODING=b"))
-                {
-                    string photoString = "";
-                    int photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
-                    while (true)
+                    photoString = photoString
+                        .Replace("TYPE=JPEG", "")
+                        .Replace("TYPE=jpeg:", "")
+                        .Trim();
+                    if (photoString.Contains("VALUE=URI") || photoString.Contains("VALUE=uri"))
                     {
-                        if (photoStrIndex < _contactDetails.Length)
+                        Photo photo = new Photo
                         {
-                            photoString += _contactDetails[photoStrIndex];
-                            photoStrIndex++;
-                            if (photoStrIndex < _contactDetails.Length && _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
-                                break;
-                        }
-                        else
-                        {
-                            break;
-                        }
+                            PhotoURL = photoString
+                                .Replace("VALUE=URI", "")
+                                .Replace("VALUE=uri", "")
+                                .Trim(';', ':'),
+                            Encoding = PhotoEncoding.JPEG,
+                            Type = PhotoType.URL
+                        };
+                        photoCollection.Add(photo);
                     }
-                    photoString = photoString.Trim();
-                    photoString = photoString.Replace("PHOTO;", "");
-                    photoString = photoString.Replace("JPEG", "").Replace("jpeg", "");
-                    photoString = photoString.Replace("ENCODING=b", "");
-                    photoString = photoString.Trim(';', ':');
-
-                    photo.Encoding = PhotoEncoding.JPEG;
-                    photo.Picture = Helper.GetImageFromBase64String(photoString);
-                    photo.Type = PhotoType.Image;
-                    photoCollection.Add(photo);
+                    else if (photoString.Contains("ENCODING=b"))
+                    {
+                        int photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
+                        while (true)
+                        {
+                            if (photoStrIndex < _contactDetails.Length)
+                            {
+                                photoString += _contactDetails[photoStrIndex];
+                                photoStrIndex++;
+                                if (photoStrIndex < _contactDetails.Length && _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
+                                    break;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        photoString = photoString
+                            .Replace("PHOTO;", "")
+                            .Replace("JPEG", "")
+                            .Replace("jpeg", "")
+                            .Replace("ENCODING=b", "")
+                            .Trim(';', ':')
+                            .Trim();
+                        var photo = new Photo
+                        {
+                            Encoding = PhotoEncoding.JPEG,
+                            Picture = Helper.GetImageFromBase64String(photoString),
+                            Type = PhotoType.Image
+                        };
+                        photoCollection.Add(photo);
+                    }
                 }
-
-                else if (photoStr.Replace("PHOTO;", "").StartsWith("GIF:") || photoStr.Replace("PHOTO;", "").StartsWith("gif:"))
+                else if (photoString.Contains("TYPE=GIF") || photoString.Contains("TYPE=gif"))
                 {
-                    photo.PhotoURL = photoStr.Replace("PHOTO;GIF:", "").Replace("PHOTO;gif:", "").Trim();
-                    photo.Encoding = PhotoEncoding.GIF;
-                    photo.Type = PhotoType.URL;
-                    photoCollection.Add(photo);
+                    photoString = photoString
+                        .Replace("TYPE=URI", "")
+                        .Replace("TYPE=uri", "")
+                        .Trim();
+                    if (photoString.Contains("VALUE=URI") || photoString.Contains("VALUE=uri"))
+                    {
+                        Photo photo = new Photo
+                        {
+                            PhotoURL = photoString
+                                .Replace("VALUE=URI", "")
+                                .Replace("VALUE=uri", "")
+                                .Trim(';', ':')
+                                .Trim(),
+                            Encoding = PhotoEncoding.GIF,
+                            Type = PhotoType.URL
+                        };
+                        photoCollection.Add(photo);
+                    }
+
                 }
             }
             return photoCollection;

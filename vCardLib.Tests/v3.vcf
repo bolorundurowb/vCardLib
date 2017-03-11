@@ -33,21 +33,15 @@ TEL;TYPE=PAGER:(111) 555-1212
 TEL;TYPE=VIDEO:(404) 555-1212
 TEL;TYPE=ISDN:(111) 555-1212
 TEL;TYPE=BBS:(404) 555-1212
-ADR:;;100 Waters Edge;Baytown;LA;30314;United States of Amer
- ica
-ADR;TYPE=WORK,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of Amer
- ica
+ADR:;;100 Waters Edge;Baytown;LA;30314;United States of America
+ADR;TYPE=WORK,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;TYPE=HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America
-ADR;TYPE=POSTAL,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of Amer
- ica
+ADR;TYPE=POSTAL,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;TYPE=INTL:;;42 Plantation St.;Baytown;LA;30314;United States of America
-ADR;TYPE=PARCEL,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of Amer
- ica
+ADR;TYPE=PARCEL,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;TYPE=DOM:;;42 Plantation St.;Baytown;LA;30314;United States of America
-LABEL;TYPE=WORK,PREF:100 Waters Edge\nBaytown\, LA 30314\nUnited States of 
- America
-LABEL;TYPE=HOME:42 Plantation St.\nBaytown\, LA 30314\nUnited States of Ame
- rica
+LABEL;TYPE=WORK,PREF:100 Waters Edge\nBaytown\, LA 30314\nUnited States of America
+LABEL;TYPE=HOME:42 Plantation St.\nBaytown\, LA 30314\nUnited States of America
 EMAIL:forrestgump@example.com
 EMAIL;TYPE=HOME:forrestgump@example.com
 EMAIL;TYPE=INTERNET:forrestgump@example.com

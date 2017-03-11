@@ -53,7 +53,7 @@ namespace vCardLib.Tests.SerializerTests
         [Test]
         public void SerializeVcardCollectionTest()
         {
-            string filePath = Path.Combine(assemblyFolder, "v3.vcf");
+            string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
             vCardCollection vcardCollection = null;
             Assert.Throws<InvalidOperationException>(delegate
             {
