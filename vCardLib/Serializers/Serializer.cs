@@ -22,6 +22,10 @@ namespace vCardLib.Serializers
                     );
                 }
             }
+            if (vcard == null)
+            {
+                throw new ArgumentNullException("The vcard cannot be null.");
+            }
             if (version == Version.V2)
             {
                 try
@@ -52,14 +56,10 @@ namespace vCardLib.Serializers
             {
                 V4Serializer.Serialize(vcard);
             }
-            else
-            {
-                throw new ArgumentException("version is not a valid vcf version");
-            }
             return true;
         }
 
-        internal static bool Serialize(vCardCollection vcardCollection, string filePath, Version version,
+        public static bool Serialize(vCardCollection vcardCollection, string filePath, Version version,
             WriteOptions options = WriteOptions.ThrowError)
         {
             if (options == WriteOptions.ThrowError)
