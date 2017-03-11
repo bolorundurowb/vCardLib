@@ -57,6 +57,7 @@
     <Compile Include="ModelTests\InterestTests.cs" />
     <Compile Include="ModelTests\PhoneNumberTests.cs" />
     <Compile Include="ModelTests\PhotoTests.cs" />
+    <Compile Include="SerializerTests\SerializerTests.cs"/>
     <Compile Include="vCardTests.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
