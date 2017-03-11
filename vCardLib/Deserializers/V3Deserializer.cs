@@ -723,13 +723,21 @@ namespace vCardLib.Deserializers
                             .Replace("ENCODING=b", "")
                             .Trim(';', ':')
                             .Trim();
-                        var photo = new Photo
+                        try
                         {
-                            Encoding = PhotoEncoding.JPEG,
-                            Picture = Helper.GetImageFromBase64String(photoString),
-                            Type = PhotoType.Image
-                        };
-                        photoCollection.Add(photo);
+                            var photo = new Photo
+                            {
+                                Encoding = PhotoEncoding.JPEG,
+                                Picture = Helper.GetImageFromBase64String(photoString),
+                                Type = PhotoType.Image
+                            };
+                            photoCollection.Add(photo);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                            //TODO: send error to logger
+                        }
                     }
                 }
                 else if (photoString.Contains("TYPE=GIF") || photoString.Contains("TYPE=gif"))
