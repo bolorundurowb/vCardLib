@@ -3,8 +3,16 @@ using vCardLib.Models;
 
 namespace vCardLib.Serializers
 {
+    /// <summary>
+    /// Handles the serialization of version 3 cards
+    /// </summary>
     public class V3Serializer
     {
+        /// <summary>
+        /// Converts the vCard properties to a string
+        /// </summary>
+        /// <param name="vcard">The vcard object to be serialized</param>
+        /// <returns>A string representing  the serialized properties of the vcard</returns>
         public static string Serialize(vCard vcard)
         {
             string vCardString = "";
