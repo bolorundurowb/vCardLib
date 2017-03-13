@@ -1,5 +1,8 @@
 ﻿namespace vCardLib.Models
 {
+    /// <summary>
+    /// Holds the Location properties
+    /// </summary>
     public class Geo
     {
         /// <summary>
