@@ -18,5 +18,4 @@ namespace vCardLib.Serializers
             throw new NotImplementedException("Writing for v4 is not implemented");
         }
     }
-
 }

@@ -6,8 +6,21 @@ using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Serializers
 {
+    /// <summary>
+    /// Entry point for serializing vCard objects
+    /// </summary>
     public class Serializer
     {
+        /// <summary>
+        /// Writes a vcard object to a file
+        /// </summary>
+        /// <param name="vcard">The vcard object to be written</param>
+        /// <param name="filePath">The path the vcard should be saved to</param>
+        /// <param name="version">The version to be serialized into</param>
+        /// <param name="options">State whether the card should be overwritten if it exists</param>
+        /// <returns>A value stating if the serialization was successful or not</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
+        /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
         public static bool Serialize(vCard vcard, string filePath, Version version, WriteOptions options = WriteOptions.ThrowError)
         {
             if (options == WriteOptions.ThrowError)
@@ -59,6 +72,16 @@ namespace vCardLib.Serializers
             return true;
         }
 
+        /// <summary>
+        /// Writes a vcard collection object to a file
+        /// </summary>
+        /// <param name="vcardCollection">The vcard collection object to be written</param>
+        /// <param name="filePath">The path the collection should be saved to</param>
+        /// <param name="version">The version to be serialized into</param>
+        /// <param name="options">tate whether the card should be overwritten if it exists</param>
+        /// <returns>A value stating if the serialization was successful or not</returns>
+        /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
+        /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
         public static bool Serialize(vCardCollection vcardCollection, string filePath, Version version,
             WriteOptions options = WriteOptions.ThrowError)
         {
