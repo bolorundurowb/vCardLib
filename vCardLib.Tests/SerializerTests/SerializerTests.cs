@@ -102,6 +102,7 @@ namespace vCardLib.Tests.SerializerTests
             FileAssert.Exists(filePath);
 
             filePath = Path.Combine(assemblyFolder, "testV4collection.vcf");
+            vcardCollection.Add(new vCard());
             Assert.Throws<NotImplementedException>(delegate
             {
                 Serializer.Serialize(vcardCollection, filePath, Version.V4);
