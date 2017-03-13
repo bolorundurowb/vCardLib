@@ -11,6 +11,12 @@ namespace vCardLib.Deserializers
     public class V3Deserializer
     {
         private static string[] _contactDetails;
+
+        /// <summary>
+        /// Parse the text representing the vCard object
+        /// </summary>
+        /// <param name="contactDetailStrings">An array of the vcard properties as strings</param>
+        /// <returns>A version 3 vcard object</returns>
         public static vCard Parse(string[] contactDetailStrings)
         {
             _contactDetails = contactDetailStrings;
