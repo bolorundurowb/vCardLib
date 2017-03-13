@@ -122,11 +122,6 @@ namespace vCardLib.Tests.SerializerTests
             {
                 Serializer.Serialize(vcardCollection, filePath, Version.V3);
             });
-
-            Assert.Throws<NotImplementedException>(delegate
-            {
-                Serializer.Serialize(vcardCollection, filePath, Version.V4);
-            });
         }
     }
 }
