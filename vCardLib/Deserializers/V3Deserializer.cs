@@ -54,8 +54,11 @@ namespace vCardLib.Deserializers
             };
             return vcard;
         }
-        
 
+        /// <summary>
+        /// Gets the url from the details array
+        /// </summary>
+        /// <returns>A string representing the url or an empty string</returns>
         private static string ParseUrl()
         {
             string urlString = _contactDetails.FirstOrDefault(s => s.StartsWith("URL:"));
