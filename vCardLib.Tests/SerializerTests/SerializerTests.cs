@@ -107,5 +107,26 @@ namespace vCardLib.Tests.SerializerTests
                 Serializer.Serialize(vcardCollection, filePath, Version.V4);
             });
         }
+
+        [Test]
+        public void SerializeVcardCollectionErrorTest()
+        {
+            string filePath = null;
+            vCardCollection vcardCollection  = new vCardCollection();
+            Assert.DoesNotThrow(delegate
+            {
+                Serializer.Serialize(vcardCollection, filePath, Version.V2);
+            });
+
+            Assert.DoesNotThrow(delegate
+            {
+                Serializer.Serialize(vcardCollection, filePath, Version.V3);
+            });
+
+            Assert.Throws<NotImplementedException>(delegate
+            {
+                Serializer.Serialize(vcardCollection, filePath, Version.V4);
+            });
+        }
     }
 }
