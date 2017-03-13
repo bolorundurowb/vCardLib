@@ -51,6 +51,28 @@ namespace vCardLib.Tests.SerializerTests
         }
 
         [Test]
+        public void SerializeVcardErrorTest()
+        {
+            string filePath = null;
+            vCard vcard = new vCard();
+            filePath = null;
+            Assert.DoesNotThrow(delegate
+            {
+                Serializer.Serialize(vcard, filePath, Version.V2);
+            });
+
+            Assert.DoesNotThrow(delegate
+            {
+                Serializer.Serialize(vcard, filePath, Version.V3);
+            });
+
+            Assert.Throws<NotImplementedException>(delegate
+            {
+                Serializer.Serialize(vcard, filePath, Version.V4);
+            });
+        }
+
+        [Test]
         public void SerializeVcardCollectionTest()
         {
             string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
