@@ -57,7 +57,8 @@
     <Compile Include="ModelTests\InterestTests.cs" />
     <Compile Include="ModelTests\PhoneNumberTests.cs" />
     <Compile Include="ModelTests\PhotoTests.cs" />
-    <Compile Include="SerializerTests\SerializerTests.cs"/>
+      <Compile Include="SerializerTests\SerializerTests.cs"/>
+      <Compile Include="SerializerTests\V3SerializerTests.cs"/>
     <Compile Include="vCardTests.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -90,5 +91,8 @@
   <ItemGroup>
     <Folder Include="SerializerTests\" />
   </ItemGroup>
+    <ItemGroup>
+        <Compile Include="SerializerTests\V2SerializerTests.cs"/>
+    </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
