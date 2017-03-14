@@ -4,9 +4,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
-using vCardLib.Collections;
 using vCardLib.Helpers;
-using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Tests.HelperTests
 {
@@ -14,7 +12,7 @@ namespace vCardLib.Tests.HelperTests
 	public class HelperTests
 	{
 		[Test]
-		public void GetStreamReaderChecksValidity()
+		public void GetStreamReaderTest()
 		{
 			string filePath = null;
 			Assert.Throws<ArgumentNullException>(delegate { 
@@ -35,7 +33,7 @@ namespace vCardLib.Tests.HelperTests
 		}
 
 		[Test]
-		public void GetStringFromStreamReaderChecksValidity()
+		public void GetStringFromStreamReaderTest()
 		{
 			StreamReader streamReader = null;
 			Assert.Throws<ArgumentNullException>(delegate {
@@ -53,7 +51,7 @@ namespace vCardLib.Tests.HelperTests
 		}
 
 		[Test]
-		public void GetContactsArrayFromStringChecksValidity()
+		public void GetContactsArrayFromStringTest()
 		{
 			string contactsString = "   ";
 			Assert.Throws<ArgumentException>(delegate {
@@ -73,7 +71,7 @@ namespace vCardLib.Tests.HelperTests
 		}
 
 		[Test]
-		public void GetContactDetailsArrayFromStringIsStable()
+		public void GetContactDetailsArrayFromStringTest()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
@@ -97,36 +95,6 @@ namespace vCardLib.Tests.HelperTests
 			base64String = @"R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==";
 			image = Helper.GetImageFromBase64String(base64String);
 			//Assert.IsNotNull(image);
-		}
-
-		[Test]
-		public void ProcessV2_1Coverage()
-		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
-			vCardCollection vcardCollection = null;
-			Assert.DoesNotThrow(delegate {
-				vcardCollection = vCard.FromFile(filePath);
-			});
-			Assert.IsNotNull(vcardCollection);
-			Assert.AreEqual(vcardCollection.Count, 1);
-			Assert.DoesNotThrow(delegate {
-				vcardCollection.Save(Path.Combine(assemblyFolder, "version3.vcf"), Version.V3, WriteOptions.Overwrite);
-			});
-		}
-
-		[Test]
-		public void ProcessV3_0Coverage()
-		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "version3.vcf");
-			vCardCollection vcardCollection = null;
-			Assert.DoesNotThrow(delegate
-			{
-				vcardCollection = vCard.FromFile(filePath);
-			});
-			Assert.IsNotNull(vcardCollection);
-			Assert.AreEqual(vcardCollection.Count, 1);
 		}
 	}
 }

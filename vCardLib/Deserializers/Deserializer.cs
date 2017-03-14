@@ -7,14 +7,27 @@ using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Deserializers
 {
+    /// <summary>
+    /// The entry class for all deserializer tasks
+    /// </summary>
     public class Deserializer
     {
+        /// <summary>
+        /// Retrieves a vcard collection object from a given vcard file
+        /// </summary>
+        /// <param name="filePath">Path to the vcf or vcard file</param>
+        /// <returns>A <see cref="vCardCollection"/></returns>
         public static vCardCollection FromFile(string filePath)
         {
             StreamReader streamReader = Helper.GetStreamReaderFromFile(filePath);
             return FromStreamReader(streamReader);
         }
 
+        /// <summary>
+        /// Retrieves a vcard
+        /// </summary>
+        /// <param name="streamReader"><see cref="StreamReader"/> containing a vcard(s)</param>
+        /// <returns>A <see cref="vCardCollection"/></returns>
         public static vCardCollection FromStreamReader(StreamReader streamReader)
         {
             vCardCollection collection = new vCardCollection();
@@ -32,6 +45,13 @@ namespace vCardLib.Deserializers
             return collection;
         }
 
+        /// <summary>
+        /// Creates a vcard object from an array of vcard properties
+        /// </summary>
+        /// <param name="contactDetails">A string array of vcard properties</param>
+        /// <returns>A <see cref="vCard"/> object</returns>
+        /// <exception cref="InvalidDataException">When the array is null or empty</exception>
+        /// <exception cref="InvalidOperationException">When  no version is stated</exception>
         public static vCard GetVcardFromDetails(string[] contactDetails)
         {
 			if (contactDetails == null || contactDetails.Length == 0)
