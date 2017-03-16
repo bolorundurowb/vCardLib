@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VCFReaderGTK
+namespace vCardLibUI.Models
 {
 	[Gtk.TreeNode (ListOnly=true)]
 	public class Node : Gtk.TreeNode

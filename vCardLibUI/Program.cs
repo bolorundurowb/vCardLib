@@ -1,7 +1,6 @@
-﻿using System;
-using Gtk;
+﻿using Gtk;
 
-namespace VCFReaderGTK
+namespace vCardLibUI
 {
 	class MainClass
 	{
