@@ -26,7 +26,7 @@ public partial class UI
 		global::Stetic.Gui.Initialize(this);
 		// Widget UI
 		this.Name = "UI";
-		this.Title = global::Mono.Unix.Catalog.GetString("VCF Reader 1.3");
+		this.Title = global::Mono.Unix.Catalog.GetString("vCardLib UI 1.4");
 		this.Icon = new global::Gdk.Pixbuf(global::System.IO.Path.Combine(global::System.AppDomain.CurrentDomain.BaseDirectory, "./vcard.jpg"));
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 		this.Gravity = ((global::Gdk.Gravity)(5));
@@ -102,8 +102,8 @@ public partial class UI
 		{
 			this.Child.ShowAll();
 		}
-		this.DefaultWidth = 830;
-		this.DefaultHeight = 477;
+		this.DefaultWidth = 666;
+		this.DefaultHeight = 432;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.ofd_select_vcard.SelectionChanged += new global::System.EventHandler(this.OnOfdSelectVcardSelectionChanged);

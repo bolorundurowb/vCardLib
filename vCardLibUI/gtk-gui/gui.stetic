@@ -6,7 +6,7 @@
   </configuration>
   <import>
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <widget-library name="../bin/Debug/VCFReaderGTK.exe" internal="true" />
+    <widget-library name="../bin/Debug/vCardLibUI.exe" internal="true" />
   </import>
   <icon-factory>
     <icon-set id="app-icon">
@@ -15,9 +15,9 @@
       </source>
     </icon-set>
   </icon-factory>
-  <widget class="Gtk.Window" id="UI" design-size="830 477">
+  <widget class="Gtk.Window" id="UI" design-size="666 432">
     <property name="MemberName" />
-    <property name="Title" translatable="yes">VCF Reader 1.3</property>
+    <property name="Title" translatable="yes">vCardLib UI 1.4</property>
     <property name="Icon">file:./vcard.jpg</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Gravity">Center</property>

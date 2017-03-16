@@ -3,7 +3,8 @@ using Gtk;
 using vCardLib;
 using System.IO;
 using vCardLib.Collections;
-using VCFReaderGTK;
+using vCardLibUI.Models;
+using vCardLib.Deserializers;
 
 public partial class UI: Gtk.Window
 {
@@ -73,23 +74,47 @@ public partial class UI: Gtk.Window
 	{
 		if (File.Exists (ofd_select_vcard.Filename) && (System.IO.Path.GetExtension (ofd_select_vcard.Filename) == ".vcf" ||
 			System.IO.Path.GetExtension (ofd_select_vcard.Filename) == ".vcard")) {
-			vCardCollection collection = vCard.FromFile (ofd_select_vcard.Filename);
-			foreach (vCard vcard in collection) {
-				Node node = new Node ();
-				node.FullName = vcard.FormattedName;
-				node.EmailAddress = vcard.EmailAddresses.Count > 0 ? vcard.EmailAddresses [0].Email.Address : "";
-				node.PhoneNumber1 = vcard.PhoneNumbers.Count > 0 ? vcard.PhoneNumbers [0].Number : "";
-				node.PhoneNumber2 = vcard.PhoneNumbers.Count > 1 ? vcard.PhoneNumbers [1].Number : "";
+		    // Remove previous content
+		    Store.Clear();
+		    // Get new data
+		    try
+		    {
+		        vCardCollection collection = Deserializer.FromFile(ofd_select_vcard.Filename);
+		        foreach (vCard vcard in collection)
+		        {
+		            Node node = new Node();
+		            node.FullName = vcard.FormattedName;
+		            node.EmailAddress = vcard.EmailAddresses.Count > 0 ? vcard.EmailAddresses[0].Email.Address : "";
+		            node.PhoneNumber1 = vcard.PhoneNumbers.Count > 0 ? vcard.PhoneNumbers[0].Number : "";
+		            node.PhoneNumber2 = vcard.PhoneNumbers.Count > 1 ? vcard.PhoneNumbers[1].Number : "";
 
-				Store.AddNode (node);
-			}
+		            Store.AddNode(node);
+		        }
+		    }
+		    catch (NotImplementedException exception)
+		    {
+		        Console.WriteLine(exception.Message);
+		        MessageDialog md = new MessageDialog(this, DialogFlags.DestroyWithParent, MessageType.Error,
+		            ButtonsType.Close, "The selected file not yet supported by this library.\nError: " + exception.Message);
+		        md.Run();
+		        md.Destroy();
+		    }
+		    catch (Exception exception)
+		    {
+		        Console.WriteLine(exception.Message);
+		        MessageDialog md = new MessageDialog (this, DialogFlags.DestroyWithParent, MessageType.Error,
+		            ButtonsType.Close, "The selected file is of an incorrect format.\nError: " + exception.Message);
+		        md.Run ();
+		        md.Destroy ();
+		    }
+
 		}
 		else
 		{
-			MessageDialog md = new MessageDialog (this, DialogFlags.DestroyWithParent, MessageType.Error,
-				                   ButtonsType.Close, "The selected file either doesn't exist, or is of an incorrect format.");
-			md.Run ();
-			md.Destroy ();
+		    MessageDialog md = new MessageDialog (this, DialogFlags.DestroyWithParent, MessageType.Error,
+		        ButtonsType.Close, "The selected file either doesn't exist, or is of an incorrect format.");
+		    md.Run ();
+		    md.Destroy ();
 		}
 	}
 
