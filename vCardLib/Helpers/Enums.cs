@@ -42,4 +42,14 @@
         V3,
         V4
     }
+
+	/// <summary>
+	/// Various activity levels
+	/// </summary>
+	public enum Level
+	{
+		High,
+		Medium,
+		Low
+	}
 }

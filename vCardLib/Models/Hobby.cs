@@ -1,4 +1,6 @@
-﻿namespace vCardLib.Models
+﻿using vCardLib.Helpers;
+
+namespace vCardLib.Models
 {
     /// <summary>
     /// Class to describe a contacts' hobby
@@ -14,15 +16,5 @@
         /// How proficient the contact is at the activity
         /// </summary>
         public Level Level { get; set; }
-    }
-
-    /// <summary>
-    /// Various activity levels
-    /// </summary>
-    public enum Level
-    {
-        High,
-        Medium,
-        Low
     }
 }
