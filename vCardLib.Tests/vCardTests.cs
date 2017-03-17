@@ -41,6 +41,7 @@ namespace vCardLib.Tests
 				vcard.TimeZone = "GMT+1";
 				vcard.Title = "Mr";
 				vcard.Url = "";
+			    vcard.Note = "Hello World";
 				vcard.Version = Version.V2;
 			});
 		}
