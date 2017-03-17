@@ -16,7 +16,7 @@ GENDER:FISH
 GEO:+35.23;-56.78
 REV:20080424T195243Z
 NOTE:proficient in the tiger\n crane style
-KIND:DEVICE
+KIND:LOCATION
 PHOTO;GIF:http://www.example.com/dir_photos/my_photo.gif
 PHOTO;JPEG:http://www.example.com/dir_photos/my_photo.jpg
 ADR:;;100 Waters Edge;Baytown;LA;30314;United States of America
