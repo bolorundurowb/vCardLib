@@ -13,7 +13,7 @@ namespace vCardLib.Tests.DeserializerTests
             Assert.Throws<NotImplementedException>(
                 delegate
                 {
-                    V4Deserializer.Parse(new[] {"test"});
+                    V4Deserializer.Parse(new[] {"test"}, new vCard());
                 });
         }
     }
