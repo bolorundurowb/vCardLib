@@ -234,7 +234,9 @@ namespace vCardLib.Deserializers
         {
             string deathplaceString = _contactDetails.FirstOrDefault(s => s.StartsWith("DEATHPLACE:"));
             if (deathplaceString != null)
+            {
                 return deathplaceString.Replace("DEATHPLACE:", "").Trim();
+            }
             return String.Empty;
         }
 
@@ -247,9 +249,18 @@ namespace vCardLib.Deserializers
             string bdayString = _contactDetails.FirstOrDefault(s => s.StartsWith("BDAY:"));
             if (bdayString != null)
             {
-                bdayString = bdayString.Replace("BDAY:", "").Replace("-", "").Trim();
-                if(bdayString.Length == 8)
-                    return  new DateTime(int.Parse(bdayString.Substring(0, 4)), int.Parse(bdayString.Substring(4, 2)), int.Parse(bdayString.Substring(6, 2)));
+                bdayString = bdayString
+                    .Replace("BDAY:", "")
+                    .Replace("-", "")
+                    .Trim();
+                DateTime birthday;
+                string format = "yyyyMMdd";
+                var dateTimeStyle = DateTimeStyles.None;
+                IFormatProvider provider = new CultureInfo("en-US", true);
+                if (DateTime.TryParseExact(bdayString, format, provider, dateTimeStyle, out birthday))
+                {
+                    return birthday;
+                }
             }
             return null;
         }
@@ -387,7 +398,10 @@ namespace vCardLib.Deserializers
             string revisionString = _contactDetails.FirstOrDefault(x => x.StartsWith("REV"));
             if (revisionString != null)
             {
-                revisionString = revisionString.Replace("REV:", "");
+                revisionString = revisionString
+                    .Replace("REV:", "")
+                    .Replace("-", "")
+                    .Trim();
                 DateTime revision;
                 string format = "yyyyMMddTHHmmssZ";
                 var dateTimeStyle = DateTimeStyles.None;
