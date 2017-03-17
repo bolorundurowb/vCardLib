@@ -18,6 +18,7 @@ namespace vCardLib.Serializers
             string vCardString = "";
             vCardString += "BEGIN:VCARD" + Environment.NewLine;
             vCardString += "VERSION:2.1" + Environment.NewLine;
+            vCardString += "REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine;
             vCardString += "N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine;
             vCardString += "FN:" + vcard.FormattedName + Environment.NewLine;
             vCardString += "ORG:" + vcard.Organization + Environment.NewLine;
