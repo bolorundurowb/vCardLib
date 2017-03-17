@@ -134,5 +134,55 @@ namespace vCardLib.Serializers
                 return false;
             }
         }
+
+        private static string Serialize(vCard vcard, Version version)
+        {
+            string vCardString = "";
+            vCardString += "BEGIN:VCARD" + Environment.NewLine;
+
+            vCardString += "REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine;
+            vCardString += "N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine;
+            vCardString += "FN:" + vcard.FormattedName + Environment.NewLine;
+            vCardString += "ORG:" + vcard.Organization + Environment.NewLine;
+            vCardString += "TITLE:" + vcard.Title + Environment.NewLine;
+            vCardString += "URL:" + vcard.Url + Environment.NewLine;
+            vCardString += "NICKNAME:" + vcard.NickName + Environment.NewLine;
+            vCardString += "KIND:" + vcard.Kind.ToString().ToUpper() + Environment.NewLine;
+            vCardString += "GENDER:" + vcard.Gender + Environment.NewLine;
+            vCardString += "LANG:" + vcard.Language + Environment.NewLine;
+            vCardString += "BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine;
+            vCardString += "DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine;
+            vCardString += "TZ:" + vcard.TimeZone + Environment.NewLine;
+            vCardString += "X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine;
+            vCardString += "X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine;
+            if (vcard.Geo != null)
+            {
+                vCardString += "GEO:" + vcard.Geo.Longitude + ";" + vcard.Geo.Latitude;
+            }
+            if (vcard.BirthDay != null)
+            {
+                var birthDay = (DateTime) vcard.BirthDay;
+                vCardString += "BDAY:" + birthDay.Year + birthDay.Month.ToString("00") + birthDay.Day.ToString("00");
+            }
+
+            if (version == Version.V2)
+            {
+                vCardString += "VERSION:2.1" + Environment.NewLine;
+                vCardString += V2Serializer.Serialize(vcard);
+            }
+            else if (version == Version.V3)
+            {
+                vCardString += "VERSION:3.0" + Environment.NewLine;
+                vCardString += V3Serializer.Serialize(vcard);
+            }
+            else
+            {
+                vCardString += "VERSION:4.0" + Environment.NewLine;
+                vCardString += V4Serializer.Serialize(vcard);
+            }
+            vCardString += Environment.NewLine;
+            vCardString += "END:VCARD";
+            return vCardString;
+        }
     }
 }

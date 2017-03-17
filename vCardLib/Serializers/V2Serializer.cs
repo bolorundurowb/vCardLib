@@ -16,32 +16,6 @@ namespace vCardLib.Serializers
         public static string Serialize(vCard vcard)
         {
             string vCardString = "";
-            vCardString += "BEGIN:VCARD" + Environment.NewLine;
-            vCardString += "VERSION:2.1" + Environment.NewLine;
-            vCardString += "REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine;
-            vCardString += "N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine;
-            vCardString += "FN:" + vcard.FormattedName + Environment.NewLine;
-            vCardString += "ORG:" + vcard.Organization + Environment.NewLine;
-            vCardString += "TITLE:" + vcard.Title + Environment.NewLine;
-            vCardString += "URL:" + vcard.Url + Environment.NewLine;
-            vCardString += "NICKNAME:" + vcard.NickName + Environment.NewLine;
-            vCardString += "KIND:" + vcard.Kind.ToString().ToUpper() + Environment.NewLine;
-            vCardString += "GENDER:" + vcard.Gender + Environment.NewLine;
-            vCardString += "LANG:" + vcard.Language + Environment.NewLine;
-            vCardString += "BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine;
-            vCardString += "DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine;
-            vCardString += "TZ:" + vcard.TimeZone + Environment.NewLine;
-            vCardString += "X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine;
-            vCardString += "X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine;
-            if (vcard.Geo != null)
-            {
-                vCardString += "GEO:" + vcard.Geo.Longitude + ";" + vcard.Geo.Latitude;
-            }
-            if (vcard.BirthDay != null)
-            {
-                var birthDay = (DateTime) vcard.BirthDay;
-                vCardString += "BDAY:" + birthDay.Year + birthDay.Month.ToString("00") + birthDay.Day.ToString("00");
-            }
             foreach (PhoneNumber phoneNumber in vcard.PhoneNumbers)
             {
                 vCardString += Environment.NewLine;
@@ -110,8 +84,6 @@ namespace vCardLib.Serializers
                 vCardString += Environment.NewLine;
                 vCardString += "INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity;
             }
-            vCardString += Environment.NewLine;
-            vCardString += "END:VCARD";
             return vCardString;
         }
     }
