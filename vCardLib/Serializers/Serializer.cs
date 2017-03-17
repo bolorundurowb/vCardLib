@@ -44,7 +44,7 @@ namespace vCardLib.Serializers
             {
                 try
                 {
-                    string vcfString = V2Serializer.Serialize(vcard);
+					string vcfString = Serialize(vcard, Version.V2);
                     File.WriteAllText(filePath, vcfString);
                 }
                 catch (Exception e)
@@ -57,7 +57,7 @@ namespace vCardLib.Serializers
             {
                 try
                 {
-                    string vcfString = V3Serializer.Serialize(vcard);
+					string vcfString = Serialize(vcard, Version.V3);
                     File.WriteAllText(filePath, vcfString);
                 }
                 catch (Exception e)
@@ -68,7 +68,9 @@ namespace vCardLib.Serializers
             }
             else if (version == Version.V4)
             {
-                V4Serializer.Serialize(vcard);
+				//TODO: once support has been implemented, enable writing capabilities
+				/*string vcfString = */Serialize(vcard, Version.V4);
+				//File.WriteAllText(filePath, vcfString)
             }
             return true;
         }
