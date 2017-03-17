@@ -106,21 +106,21 @@ namespace vCardLib.Serializers
             {
                 foreach(vCard vcard in vcardCollection)
                 {
-                    vcardCollectionString += V2Serializer.Serialize(vcard);
+                    vcardCollectionString += Serialize(vcard, Version.V2);
                 }
             }
             else if (version == Version.V3)
             {
                 foreach (vCard vcard in vcardCollection)
                 {
-                    vcardCollectionString += V3Serializer.Serialize(vcard);
+                    vcardCollectionString += Serialize(vcard, Version.V3);
                 }
             }
             else
             {
                 foreach (vCard vcard in vcardCollection)
                 {
-                    vcardCollectionString += V4Serializer.Serialize(vcard);
+                    vcardCollectionString += Serialize(vcard, Version.V4);
                 }
             }
             try
