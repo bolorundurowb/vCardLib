@@ -343,6 +343,18 @@ namespace vCardLib.Deserializers
         }
 
         /// <summary>
+        /// Gets the time zone from the details array
+        /// </summary>
+        /// <returns>A string representing the time zone or an empty string</returns>
+        private static string ParseNote()
+        {
+            string noteString = _contactDetails.FirstOrDefault(s => s.StartsWith("NOTE"));
+            if (noteString != null)
+                return noteString.Replace("NOTE:", "").Trim();
+            return String.Empty;
+        }
+
+        /// <summary>
         /// Gets the gender from the details array
         /// </summary>
         /// <returns>A <see cref="GenderType"/> representing the gender</returns>

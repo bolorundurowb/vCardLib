@@ -175,6 +175,10 @@ namespace vCardLib.Serializers
             {
                 stringBuilder.Append("TZ:" + vcard.TimeZone + Environment.NewLine);
             }
+            if (!string.IsNullOrEmpty(vcard.Note))
+            {
+                stringBuilder.Append("NOTE:" + vcard.Note);
+            }
             if (!string.IsNullOrEmpty(vcard.XSkypeDisplayName))
             {
                 stringBuilder.Append("X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine);

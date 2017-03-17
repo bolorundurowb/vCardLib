@@ -55,6 +55,11 @@ namespace vCardLib
         public string NickName { get; set; }
 
         /// <summary>
+        /// The contants special note
+        /// </summary>
+        public string Note { get; set; }
+
+        /// <summary>
         /// A url associated with the contact
         /// </summary>
         public string Url { get; set; }
