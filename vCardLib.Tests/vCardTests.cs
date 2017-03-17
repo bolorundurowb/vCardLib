@@ -20,13 +20,13 @@ namespace vCardLib.Tests
 			{
 				vcard.Addresses = new AddressCollection();
 				vcard.BirthDay = new DateTime();
-				vcard.BirthPlace = "";
-				vcard.DeathPlace = "";
+				vcard.BirthPlace = "Mississipi";
+				vcard.DeathPlace = "Washington";
 				vcard.EmailAddresses = new EmailAddressCollection();
 				vcard.Expertises = new ExpertiseCollection();
-				vcard.FamilyName = "";
-			    vcard.GivenName = "";
-			    vcard.MiddleName = "";
+				vcard.FamilyName = "Gump";
+			    vcard.GivenName = "Forrest";
+			    vcard.MiddleName = "Johnson";
 			    vcard.Prefix = "HRH";
 			    vcard.Suffix = "PhD";
 				vcard.Gender = GenderType.Female;
@@ -34,13 +34,13 @@ namespace vCardLib.Tests
 				vcard.Interests = new InterestCollection();
 				vcard.Kind = ContactType.Application;
 				vcard.Language = "English";
-				vcard.NickName = "";
-				vcard.Organization = "";
+				vcard.NickName = "Gumpy";
+				vcard.Organization = "Google";
 				vcard.PhoneNumbers = new PhoneNumberCollection();
 				vcard.Pictures = new PhotoCollection();
 				vcard.TimeZone = "GMT+1";
 				vcard.Title = "Mr";
-				vcard.Url = "";
+				vcard.Url = "http://google.com";
 			    vcard.Note = "Hello World";
 				vcard.Version = Version.V2;
 			});
