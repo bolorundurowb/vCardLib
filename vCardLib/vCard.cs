@@ -47,7 +47,7 @@ namespace vCardLib
         /// <summary>
         /// The full name of the contact
         /// </summary>
-        public string FormattedName { get; set; }
+        public string FormattedName => $"{FamilyName};{GivenName};{MiddleName};{Prefix};{Suffix}";
 
         /// <summary>
         /// The contact's nickname

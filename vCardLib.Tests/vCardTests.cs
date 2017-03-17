@@ -29,7 +29,6 @@ namespace vCardLib.Tests
 			    vcard.MiddleName = "";
 			    vcard.Prefix = "HRH";
 			    vcard.Suffix = "PhD";
-				vcard.FormattedName = "";
 				vcard.Gender = GenderType.Female;
 				vcard.Hobbies = new HobbyCollection();
 				vcard.Interests = new InterestCollection();
@@ -85,9 +84,8 @@ namespace vCardLib.Tests
 			Assert.IsNotNull(vcard);
             Assert.DoesNotThrow(delegate
             {
-                vcard.GivenName = "Gump";
-                vcard.FamilyName = "Forrest";
-                vcard.FormattedName = "Forrest Gump";
+                vcard.GivenName = "Forrest";
+                vcard.FamilyName = "Gump";
                 PhoneNumber num1 = new PhoneNumber();
                 num1.Number = "(111) 555-1212";
 				num1.Type = PhoneNumberType.None;

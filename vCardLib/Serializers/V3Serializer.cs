@@ -60,13 +60,14 @@ namespace vCardLib.Serializers
             {
                 vCardString += Environment.NewLine;
                 vCardString += "PHOTO;TYPE=" + photo.Encoding;
-                if(photo.Type == PhotoType.URL)
+                switch (photo.Type)
                 {
-                    vCardString += ";VALUE=URI:" + photo.PhotoURL;
-                }
-                else if(photo.Type == PhotoType.Image)
-                {
-                    vCardString += ";ENCODING=b:" + photo.ToBase64String();
+                    case PhotoType.URL:
+                        vCardString += ";VALUE=URI:" + photo.PhotoURL;
+                        break;
+                    case PhotoType.Image:
+                        vCardString += ";ENCODING=b:" + photo.ToBase64String();
+                        break;
                 }
             }
             foreach(Expertise expertise in vcard.Expertises)

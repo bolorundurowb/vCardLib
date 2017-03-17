@@ -5,7 +5,6 @@ using System.Linq;
 using vCardLib.Collections;
 using vCardLib.Helpers;
 using vCardLib.Models;
-using vCardLib.Serializers;
 using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Deserializers
@@ -41,11 +40,9 @@ namespace vCardLib.Deserializers
             foreach(string contact in contacts)
             {
                 string[] contactDetails = Helper.GetContactDetailsArrayFromString(contact);
-                if (contactDetails.Length > 0)
-                {
-                    vCard details = GetVcardFromDetails(contactDetails);
-                    collection.Add(details);
-                }
+                if (contactDetails.Length <= 0) continue;
+                vCard details = GetVcardFromDetails(contactDetails);
+                collection.Add(details);
             }
             return collection;
         }
@@ -85,6 +82,12 @@ namespace vCardLib.Deserializers
             return vcard;
         }
 
+        /// <summary>
+        /// Central point from which all deserializing starts
+        /// </summary>
+        /// <param name="contactDetails">A string array of the contact details</param>
+        /// <param name="version">The version to be deserialized from</param>
+        /// <returns>A <see cref="vCard"/> comtaining the contacts details</returns>
         private static vCard Deserialize(string[] contactDetails, Version version)
         {
             _contactDetails = contactDetails;
@@ -95,7 +98,6 @@ namespace vCardLib.Deserializers
                 BirthPlace = ParseBirthPlace(),
                 DeathPlace = ParseDeathPlace(),
                 FamilyName = ParseFamilyName(),
-                FormattedName = ParseFormattedName(),
                 Geo = ParseGeo(),
                 Gender = ParseGender(),
                 GivenName = ParseGivenName(),
@@ -113,17 +115,14 @@ namespace vCardLib.Deserializers
                 XSkypeDisplayName = ParseXSkypeDisplayName(),
                 XSkypePstnNumber = ParseXSkypePstnNumber()
             };
-            if (version == Version.V2)
+            switch (version)
             {
-                return V2Deserializer.Parse(contactDetails, vcard);
-            }
-            else if (version == Version.V3)
-            {
-                return V3Deserializer.Parse(contactDetails, vcard);
-            }
-            else
-            {
-                return V4Deserializer.Parse(contactDetails, vcard);
+                case Version.V2:
+                    return V2Deserializer.Parse(contactDetails, vcard);
+                case Version.V3:
+                    return V3Deserializer.Parse(contactDetails, vcard);
+                default:
+                    return V4Deserializer.Parse(contactDetails, vcard);
             }
         }
 
@@ -162,20 +161,6 @@ namespace vCardLib.Deserializers
             string urlString = _contactDetails.FirstOrDefault(s => s.StartsWith("URL:"));
             if (urlString != null)
                 return urlString.Replace("URL:", "").Trim();
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the formatted name from the details array
-        /// </summary>
-        /// <returns>A string representing the formatted name or an empty string</returns>
-        private static string ParseFormattedName()
-        {
-            string fnString = _contactDetails.FirstOrDefault(s => s.StartsWith("FN:"));
-            if (fnString != null)
-            {
-                return fnString.Replace("FN:", "").Trim();
-            }
             return string.Empty;
         }
 
