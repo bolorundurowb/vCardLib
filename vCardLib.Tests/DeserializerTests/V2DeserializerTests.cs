@@ -20,7 +20,7 @@ namespace vCardLib.Tests.DeserializerTests
             vCard vcard = null;
             Assert.DoesNotThrow(delegate
             {
-                vcard = V2Deserializer.Parse(contacts);
+                vcard = V2Deserializer.Parse(contacts, vcard);
             });
             Assert.IsNotNull(vcard);
             //TODO: More assertions to check data integrity should be added

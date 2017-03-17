@@ -16,10 +16,7 @@ namespace vCardLib.Tests.SerializerTests
                 vCard vcard = new vCard();
                 vcardString = V2Serializer.Serialize(vcard);
             });
-            Assert.IsNotEmpty(vcardString);
-            Assert.IsTrue(vcardString.Contains("BEGIN:VCARD"));
-            Assert.IsTrue(vcardString.Contains("VERSION:2.1"));
-            Assert.IsTrue(vcardString.Contains("END:VCARD"));
+            Assert.IsEmpty(vcardString);
         }
     }
 }

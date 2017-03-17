@@ -47,12 +47,17 @@ namespace vCardLib
         /// <summary>
         /// The full name of the contact
         /// </summary>
-        public string FormattedName { get; set; }
+        public string FormattedName => $"{FamilyName};{GivenName};{MiddleName};{Prefix};{Suffix}";
 
         /// <summary>
         /// The contact's nickname
         /// </summary>
         public string NickName { get; set; }
+
+        /// <summary>
+        /// The contants special note
+        /// </summary>
+        public string Note { get; set; }
 
         /// <summary>
         /// A url associated with the contact

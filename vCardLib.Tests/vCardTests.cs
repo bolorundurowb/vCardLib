@@ -20,28 +20,28 @@ namespace vCardLib.Tests
 			{
 				vcard.Addresses = new AddressCollection();
 				vcard.BirthDay = new DateTime();
-				vcard.BirthPlace = "";
-				vcard.DeathPlace = "";
+				vcard.BirthPlace = "Mississipi";
+				vcard.DeathPlace = "Washington";
 				vcard.EmailAddresses = new EmailAddressCollection();
 				vcard.Expertises = new ExpertiseCollection();
-				vcard.FamilyName = "";
-			    vcard.GivenName = "";
-			    vcard.MiddleName = "";
+				vcard.FamilyName = "Gump";
+			    vcard.GivenName = "Forrest";
+			    vcard.MiddleName = "Johnson";
 			    vcard.Prefix = "HRH";
 			    vcard.Suffix = "PhD";
-				vcard.FormattedName = "";
 				vcard.Gender = GenderType.Female;
 				vcard.Hobbies = new HobbyCollection();
 				vcard.Interests = new InterestCollection();
 				vcard.Kind = ContactType.Application;
 				vcard.Language = "English";
-				vcard.NickName = "";
-				vcard.Organization = "";
+				vcard.NickName = "Gumpy";
+				vcard.Organization = "Google";
 				vcard.PhoneNumbers = new PhoneNumberCollection();
 				vcard.Pictures = new PhotoCollection();
 				vcard.TimeZone = "GMT+1";
 				vcard.Title = "Mr";
-				vcard.Url = "";
+				vcard.Url = "http://google.com";
+			    vcard.Note = "Hello World";
 				vcard.Version = Version.V2;
 			});
 		}
@@ -78,16 +78,15 @@ namespace vCardLib.Tests
 		}
 
         [Test]
-        public void Savesv2CardWithoutErrors()
+        public void SavesV2CardWithoutErrors()
         {
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
 			Assert.IsNotNull(vcard);
             Assert.DoesNotThrow(delegate
             {
-                vcard.GivenName = "Gump";
-                vcard.FamilyName = "Forrest";
-                vcard.FormattedName = "Forrest Gump";
+                vcard.GivenName = "Forrest";
+                vcard.FamilyName = "Gump";
                 PhoneNumber num1 = new PhoneNumber();
                 num1.Number = "(111) 555-1212";
 				num1.Type = PhoneNumberType.None;
@@ -151,7 +150,7 @@ namespace vCardLib.Tests
         }
 
         [Test]
-        public void Savesv3CardWithoutErrors()
+        public void SavesV3CardWithoutErrors()
         {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
@@ -163,7 +162,7 @@ namespace vCardLib.Tests
         }
 
 		[Test]
-		public void VersionFourVcardThrowsException()
+		public void SavesV4CardThrowsException()
 		{
 			Assert.Throws<NotImplementedException> (delegate {
 				vcard.Save ("", Version.V4, WriteOptions.Overwrite);
