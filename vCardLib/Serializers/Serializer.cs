@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using vCardLib.Collections;
 using vCardLib.Helpers;
 using Version = vCardLib.Helpers.Version;
@@ -137,82 +138,82 @@ namespace vCardLib.Serializers
 
         private static string Serialize(vCard vcard, Version version)
         {
-            string vCardString = "";
-            vCardString += "BEGIN:VCARD" + Environment.NewLine;
-            vCardString += "REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine;
-            vCardString += "N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine;
-            vCardString += "FN:" + vcard.FormattedName + Environment.NewLine;
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("BEGIN:VCARD" + Environment.NewLine);
+            stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
+            stringBuilder.Append("N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine);
+            stringBuilder.Append("FN:" + vcard.FormattedName + Environment.NewLine);
             if (!string.IsNullOrEmpty(vcard.Organization))
             {
-                vCardString += "ORG:" + vcard.Organization + Environment.NewLine;
+                stringBuilder.Append("ORG:" + vcard.Organization + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.Title))
             {
-                vCardString += "TITLE:" + vcard.Title + Environment.NewLine;
+                stringBuilder.Append("TITLE:" + vcard.Title + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.Url))
             {
-                vCardString += "URL:" + vcard.Url + Environment.NewLine;
+                stringBuilder.Append("URL:" + vcard.Url + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.NickName))
             {
-                vCardString += "NICKNAME:" + vcard.NickName + Environment.NewLine;
+                stringBuilder.Append("NICKNAME:" + vcard.NickName + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.Language))
             {
-                vCardString += "LANG:" + vcard.Language + Environment.NewLine;
+                stringBuilder.Append("LANG:" + vcard.Language + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.BirthPlace))
             {
-                vCardString += "BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine;
+                stringBuilder.Append("BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.DeathPlace))
             {
-                vCardString += "DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine;
+                stringBuilder.Append("DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.TimeZone))
             {
-                vCardString += "TZ:" + vcard.TimeZone + Environment.NewLine;
+                stringBuilder.Append("TZ:" + vcard.TimeZone + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.XSkypeDisplayName))
             {
-                vCardString += "X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine;
+                stringBuilder.Append("X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine);
             }
             if (!string.IsNullOrEmpty(vcard.XSkypePstnNumber))
             {
-                vCardString += "X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine;
+                stringBuilder.Append("X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine);
             }
-            vCardString += "KIND:" + vcard.Kind.ToString().ToUpper() + Environment.NewLine;
-            vCardString += "GENDER:" + vcard.Gender.ToString().ToUpper() + Environment.NewLine;
+            stringBuilder.Append("KIND:" + vcard.Kind.ToString().ToUpper() + Environment.NewLine);
+            stringBuilder.Append("GENDER:" + vcard.Gender.ToString().ToUpper() + Environment.NewLine);
 
             if (vcard.Geo != null)
             {
-                vCardString += "GEO:" + vcard.Geo.Longitude + ";" + vcard.Geo.Latitude;
+                stringBuilder.Append("GEO:" + vcard.Geo.Longitude + ";" + vcard.Geo.Latitude);
             }
             if (vcard.BirthDay != null)
             {
                 var birthDay = (DateTime) vcard.BirthDay;
-                vCardString += "BDAY:" + birthDay.Year + birthDay.Month.ToString("00") + birthDay.Day.ToString("00");
+                stringBuilder.Append("BDAY:" + birthDay.Year + birthDay.Month.ToString("00") + birthDay.Day.ToString("00"));
             }
 
             if (version == Version.V2)
             {
-                vCardString += "VERSION:2.1" + Environment.NewLine;
-                vCardString += V2Serializer.Serialize(vcard);
+                stringBuilder.Append("VERSION:2.1" + Environment.NewLine);
+                stringBuilder.Append(V2Serializer.Serialize(vcard));
             }
             else if (version == Version.V3)
             {
-                vCardString += "VERSION:3.0" + Environment.NewLine;
-                vCardString += V3Serializer.Serialize(vcard);
+                stringBuilder.Append("VERSION:3.0" + Environment.NewLine);
+                stringBuilder.Append(V3Serializer.Serialize(vcard));
             }
             else
             {
-                vCardString += "VERSION:4.0" + Environment.NewLine;
-                vCardString += V4Serializer.Serialize(vcard);
+                stringBuilder.Append("VERSION:4.0" + Environment.NewLine);
+                stringBuilder.Append(V4Serializer.Serialize(vcard));
             }
-            vCardString += Environment.NewLine;
-            vCardString += "END:VCARD";
-            return vCardString;
+            stringBuilder.Append(Environment.NewLine);
+            stringBuilder.Append("END:VCARD");
+            return stringBuilder.ToString();
         }
     }
 }
