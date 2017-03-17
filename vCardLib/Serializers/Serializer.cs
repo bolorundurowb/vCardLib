@@ -142,18 +142,49 @@ namespace vCardLib.Serializers
             vCardString += "REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine;
             vCardString += "N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine;
             vCardString += "FN:" + vcard.FormattedName + Environment.NewLine;
-            vCardString += "ORG:" + vcard.Organization + Environment.NewLine;
-            vCardString += "TITLE:" + vcard.Title + Environment.NewLine;
-            vCardString += "URL:" + vcard.Url + Environment.NewLine;
-            vCardString += "NICKNAME:" + vcard.NickName + Environment.NewLine;
+            if (!string.IsNullOrEmpty(vcard.Organization))
+            {
+                vCardString += "ORG:" + vcard.Organization + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.Title))
+            {
+                vCardString += "TITLE:" + vcard.Title + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.Url))
+            {
+                vCardString += "URL:" + vcard.Url + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.NickName))
+            {
+                vCardString += "NICKNAME:" + vcard.NickName + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.Language))
+            {
+                vCardString += "LANG:" + vcard.Language + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.BirthPlace))
+            {
+                vCardString += "BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.DeathPlace))
+            {
+                vCardString += "DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.TimeZone))
+            {
+                vCardString += "TZ:" + vcard.TimeZone + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.XSkypeDisplayName))
+            {
+                vCardString += "X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(vcard.XSkypePstnNumber))
+            {
+                vCardString += "X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine;
+            }
             vCardString += "KIND:" + vcard.Kind.ToString().ToUpper() + Environment.NewLine;
-            vCardString += "GENDER:" + vcard.Gender + Environment.NewLine;
-            vCardString += "LANG:" + vcard.Language + Environment.NewLine;
-            vCardString += "BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine;
-            vCardString += "DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine;
-            vCardString += "TZ:" + vcard.TimeZone + Environment.NewLine;
-            vCardString += "X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine;
-            vCardString += "X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine;
+            vCardString += "GENDER:" + vcard.Gender.ToString().ToUpper() + Environment.NewLine;
+
             if (vcard.Geo != null)
             {
                 vCardString += "GEO:" + vcard.Geo.Longitude + ";" + vcard.Geo.Latitude;

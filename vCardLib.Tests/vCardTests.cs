@@ -77,7 +77,7 @@ namespace vCardLib.Tests
 		}
 
         [Test]
-        public void Savesv2CardWithoutErrors()
+        public void SavesV2CardWithoutErrors()
         {
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
@@ -149,7 +149,7 @@ namespace vCardLib.Tests
         }
 
         [Test]
-        public void Savesv3CardWithoutErrors()
+        public void SavesV3CardWithoutErrors()
         {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
@@ -161,7 +161,7 @@ namespace vCardLib.Tests
         }
 
 		[Test]
-		public void VersionFourVcardThrowsException()
+		public void SavesV4CardThrowsException()
 		{
 			Assert.Throws<NotImplementedException> (delegate {
 				vcard.Save ("", Version.V4, WriteOptions.Overwrite);
