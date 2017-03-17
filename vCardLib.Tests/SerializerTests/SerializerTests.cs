@@ -29,6 +29,31 @@ namespace vCardLib.Tests.SerializerTests
             });
 
             vcard = new vCard();
+            vcard.Addresses = new AddressCollection();
+            vcard.BirthDay = new DateTime();
+            vcard.BirthPlace = "Mississipi";
+            vcard.DeathPlace = "Washington";
+            vcard.EmailAddresses = new EmailAddressCollection();
+            vcard.Expertises = new ExpertiseCollection();
+            vcard.FamilyName = "Gump";
+            vcard.GivenName = "Forrest";
+            vcard.MiddleName = "Johnson";
+            vcard.Prefix = "HRH";
+            vcard.Suffix = "PhD";
+            vcard.Gender = GenderType.Female;
+            vcard.Hobbies = new HobbyCollection();
+            vcard.Interests = new InterestCollection();
+            vcard.Kind = ContactType.Application;
+            vcard.Language = "English";
+            vcard.NickName = "Gumpy";
+            vcard.Organization = "Google";
+            vcard.PhoneNumbers = new PhoneNumberCollection();
+            vcard.Pictures = new PhotoCollection();
+            vcard.TimeZone = "GMT+1";
+            vcard.Title = "Mr";
+            vcard.Url = "http://google.com";
+            vcard.Note = "Hello World";
+            vcard.Version = Version.V2;
             filePath = Path.Combine(assemblyFolder, "testV2.vcf");
             Assert.DoesNotThrow(delegate
             {
