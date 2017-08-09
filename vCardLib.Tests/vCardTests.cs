@@ -154,7 +154,7 @@ namespace vCardLib.Tests
                 expertise.Level = Level.Medium;
                 _vcard.Expertises.Add(expertise);
 
-                _vcard.Save(filePath, WriteOptions.Overwrite);
+                _vcard.Save(filePath, WriteOptions.Overwrite, Encoding.UTF7);
             });
 			Assert.IsTrue(File.Exists(filePath));
         }
@@ -180,10 +180,21 @@ namespace vCardLib.Tests
 		}
 
 		[Test]
-		public void Read_Non_UTF8_Vcard()
+		public void Read_Saved_Vcard()
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
+			Assert.DoesNotThrow(delegate
+			{
+				var vcard = Deserializer.FromFile(filePath);
+			});
+		}
+
+		[Test]
+		public void Read_Non_UTF8_Vcard()
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
 			Assert.DoesNotThrow(delegate
 			{
 				var vcard = Deserializer.FromFile(filePath);
