@@ -154,7 +154,7 @@ namespace vCardLib.Tests
                 expertise.Level = Level.Medium;
                 _vcard.Expertises.Add(expertise);
 
-                _vcard.Save(filePath, WriteOptions.Overwrite, Encoding.UTF7);
+                _vcard.Save(filePath, WriteOptions.Overwrite, Encoding.BigEndianUnicode);
             });
 			Assert.IsTrue(File.Exists(filePath));
         }
