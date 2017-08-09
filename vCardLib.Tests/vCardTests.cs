@@ -2,7 +2,9 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using vCardLib.Collections;
+using vCardLib.Deserializers;
 using vCardLib.Helpers;
 using vCardLib.Models;
 using Version = vCardLib.Helpers.Version;
@@ -164,7 +166,7 @@ namespace vCardLib.Tests
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
 			Assert.IsNotNull(_vcard);
 			Assert.DoesNotThrow(delegate {
-				_vcard.Save(filePath, Version.V3, WriteOptions.Overwrite);
+				_vcard.Save(filePath, Version.V3, WriteOptions.Overwrite, Encoding.ASCII);
 			});
 			Assert.IsTrue(File.Exists(filePath));
         }
@@ -174,6 +176,17 @@ namespace vCardLib.Tests
 		{
 			Assert.Throws<NotImplementedException> (delegate {
 				_vcard.Save ("", Version.V4, WriteOptions.Overwrite);
+			});
+		}
+
+		[Test]
+		public void Read_Non_UTF8_Vcard()
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
+			Assert.DoesNotThrow(delegate
+			{
+				var vcard = Deserializer.FromFile(filePath);
 			});
 		}
     }
