@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using vCardLib.Helpers;
 using vCardLib.Serializers;
 using Version = vCardLib.Helpers.Version;
@@ -54,13 +55,14 @@ namespace vCardLib.Collections
         /// </summary>
         /// <param name="filePath">Path to save to</param>
         /// <param name="version">Specify the version you want to save in</param>
+        /// <param name="encoding">The file encoding to use</param>
         /// <param name="writeOptions">Determines if the method throws and exception if the save path exists or not</param>
         /// <exception cref="InvalidOperationException">The file already exists</exception>
         /// <exception cref="NotImplementedException">version 4 files are not yet supported</exception>
         /// <exception cref="ArgumentException">The vcard version is invalid</exception>
-        public bool Save(string filePath, Version version, WriteOptions writeOptions = WriteOptions.ThrowError)
+        public bool Save(string filePath, Version version, WriteOptions writeOptions = WriteOptions.ThrowError, Encoding encoding = null)
         {
-            return Serializer.Serialize(this, filePath, version, writeOptions);
+            return Serializer.Serialize(this, filePath, version, writeOptions, encoding);
         }
     }
 }
