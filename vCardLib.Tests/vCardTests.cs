@@ -10,39 +10,47 @@ using Version = vCardLib.Helpers.Version;
 namespace vCardLib.Tests
 {
     [TestFixture]
-	public class Test
+	public class vCardTests
 	{
-		vCard vcard = new vCard();
+		readonly vCard _vcard = new vCard();
+		
 		[Test]
 		public void GenerateValidVcard()
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				vcard.Addresses = new AddressCollection();
-				vcard.BirthDay = new DateTime();
-				vcard.BirthPlace = "Mississipi";
-				vcard.DeathPlace = "Washington";
-				vcard.EmailAddresses = new EmailAddressCollection();
-				vcard.Expertises = new ExpertiseCollection();
-				vcard.FamilyName = "Gump";
-			    vcard.GivenName = "Forrest";
-			    vcard.MiddleName = "Johnson";
-			    vcard.Prefix = "HRH";
-			    vcard.Suffix = "PhD";
-				vcard.Gender = GenderType.Female;
-				vcard.Hobbies = new HobbyCollection();
-				vcard.Interests = new InterestCollection();
-				vcard.Kind = ContactType.Application;
-				vcard.Language = "English";
-				vcard.NickName = "Gumpy";
-				vcard.Organization = "Google";
-				vcard.PhoneNumbers = new PhoneNumberCollection();
-				vcard.Pictures = new PhotoCollection();
-				vcard.TimeZone = "GMT+1";
-				vcard.Title = "Mr";
-				vcard.Url = "http://google.com";
-			    vcard.Note = "Hello World";
-				vcard.Version = Version.V2;
+				_vcard.Addresses = new AddressCollection();
+				_vcard.BirthDay = new DateTime();
+				_vcard.BirthPlace = "Mississipi";
+				_vcard.DeathPlace = "Washington";
+				_vcard.EmailAddresses = new EmailAddressCollection();
+				_vcard.Expertises = new ExpertiseCollection();
+				_vcard.FamilyName = "Gump";
+			    _vcard.GivenName = "Forrest";
+			    _vcard.MiddleName = "Johnson";
+			    _vcard.Prefix = "HRH";
+			    _vcard.Suffix = "PhD";
+				_vcard.Gender = GenderType.Female;
+				_vcard.Hobbies = new HobbyCollection();
+				_vcard.Interests = new InterestCollection();
+				_vcard.Kind = ContactType.Application;
+				_vcard.Language = "English";
+				_vcard.NickName = "Gumpy";
+				_vcard.Organization = "Google";
+				_vcard.PhoneNumbers = new PhoneNumberCollection();
+				_vcard.Pictures = new PhotoCollection();
+				_vcard.TimeZone = "GMT+1";
+				_vcard.Title = "Mr";
+				_vcard.Url = "http://google.com";
+			    _vcard.Note = "Hello World";
+				_vcard.Geo = new Geo()
+				{
+					Latitude = -1.345,
+					Longitude = +34.67
+				};
+				_vcard.XSkypeDisplayName = "Forrest J Gump";
+				_vcard.XSkypePstnNumber = "23949490044";
+				_vcard.Version = Version.V2;
 			});
 		}
 
@@ -69,11 +77,11 @@ namespace vCardLib.Tests
 		[Test]
 		public void DoesNotOverwriteExceptInstructed()
 		{
-			Assert.IsNotNull(vcard);
+			Assert.IsNotNull(_vcard);
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
 			Assert.Throws<InvalidOperationException>(delegate {
-				vcard.Save(filePath);
+				_vcard.Save(filePath);
 			});
 		}
 
@@ -82,44 +90,44 @@ namespace vCardLib.Tests
         {
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
-			Assert.IsNotNull(vcard);
+			Assert.IsNotNull(_vcard);
             Assert.DoesNotThrow(delegate
             {
-                vcard.GivenName = "Forrest";
-                vcard.FamilyName = "Gump";
+                _vcard.GivenName = "Forrest";
+                _vcard.FamilyName = "Gump";
                 PhoneNumber num1 = new PhoneNumber();
                 num1.Number = "(111) 555-1212";
 				num1.Type = PhoneNumberType.None;
-                vcard.PhoneNumbers.Add(num1);
+                _vcard.PhoneNumbers.Add(num1);
                 PhoneNumber num2 = new PhoneNumber();
                 num2.Number = "(404) 555-1212";
                 num2.Type = PhoneNumberType.Home;
-                vcard.PhoneNumbers.Add(num2);
+                _vcard.PhoneNumbers.Add(num2);
 				PhoneNumber num3 = new PhoneNumber();
 				num3.Number = "(404) 555-1212";
 				num3.Type = PhoneNumberType.MainNumber;
-				vcard.PhoneNumbers.Add(num3);
+				_vcard.PhoneNumbers.Add(num3);
                 EmailAddress email1 = new EmailAddress();
                 email1.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
                 email1.Type = EmailType.None;
-                vcard.EmailAddresses.Add(email1);
+                _vcard.EmailAddresses.Add(email1);
 				EmailAddress email2 = new EmailAddress();
 				email2.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
 				email2.Type = EmailType.Internet;
-				vcard.EmailAddresses.Add(email2);
+				_vcard.EmailAddresses.Add(email2);
                 Address address1 = new Address();
                 address1.Location = "Sabo, Yaba";
 				address1.Type = AddressType.None;
-                vcard.Addresses.Add(address1);
+                _vcard.Addresses.Add(address1);
 				Address address2 = new Address();
 				address2.Location = "Sabo, Yaba";
 				address2.Type = AddressType.Work;
-				vcard.Addresses.Add(address2);
+				_vcard.Addresses.Add(address2);
                 Photo photo1 = new Photo();
                 photo1.Encoding = PhotoEncoding.JPEG;
                 photo1.PhotoURL = "www.google/images";
                 photo1.Type = PhotoType.URL;
-                vcard.Pictures.Add(photo1);
+                _vcard.Pictures.Add(photo1);
 
 				var request = System.Net.WebRequest.Create("https://jpeg.org/images/jpeg-logo-plain.png");
 				System.Net.WebResponse response = request.GetResponse();
@@ -129,22 +137,22 @@ namespace vCardLib.Tests
 				photo2.Type = PhotoType.Image;
 				photo2.Encoding = PhotoEncoding.JPEG;
 				photo2.Picture = new System.Drawing.Bitmap(responseStream);
-				vcard.Pictures.Add(photo2);
+				_vcard.Pictures.Add(photo2);
 
                 Hobby hobby = new Hobby();
                 hobby.Activity = "Watching Hobbits";
                 hobby.Level = Level.Medium;
-                vcard.Hobbies.Add(hobby);
+                _vcard.Hobbies.Add(hobby);
                 Interest interest = new Interest();
                 interest.Activity = "Watching Hobbits";
                 interest.Level = Level.Medium;
-                vcard.Interests.Add(interest);
+                _vcard.Interests.Add(interest);
                 Expertise expertise = new Expertise();
                 expertise.Area = "Watching Hobbits";
                 expertise.Level = Level.Medium;
-                vcard.Expertises.Add(expertise);
+                _vcard.Expertises.Add(expertise);
 
-                vcard.Save(filePath, WriteOptions.Overwrite);
+                _vcard.Save(filePath, WriteOptions.Overwrite);
             });
 			Assert.IsTrue(File.Exists(filePath));
         }
@@ -154,9 +162,9 @@ namespace vCardLib.Tests
         {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
-			Assert.IsNotNull(vcard);
+			Assert.IsNotNull(_vcard);
 			Assert.DoesNotThrow(delegate {
-				vcard.Save(filePath, Version.V3, WriteOptions.Overwrite);
+				_vcard.Save(filePath, Version.V3, WriteOptions.Overwrite);
 			});
 			Assert.IsTrue(File.Exists(filePath));
         }
@@ -165,7 +173,7 @@ namespace vCardLib.Tests
 		public void SavesV4CardThrowsException()
 		{
 			Assert.Throws<NotImplementedException> (delegate {
-				vcard.Save ("", Version.V4, WriteOptions.Overwrite);
+				_vcard.Save ("", Version.V4, WriteOptions.Overwrite);
 			});
 		}
     }
