@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using vCardLib.Collections;
 using vCardLib.Deserializers;
 using vCardLib.Helpers;
@@ -214,10 +215,11 @@ namespace vCardLib
         /// </summary>
         /// <param name="filePath">Path to file to save to</param>
         /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
+        /// <param name="encoding">The file encoding to use</param>
         /// <returns>A boolean value stating whether the save option was successful or not</returns>
-        public bool Save(string filePath, WriteOptions writeOption = WriteOptions.ThrowError)
+        public bool Save(string filePath, WriteOptions writeOption = WriteOptions.ThrowError, Encoding encoding = null)
         {
-            return Save(filePath, Version, writeOption);
+            return Save(filePath, Version, writeOption, encoding);
         }
 
         /// <summary>
@@ -226,10 +228,11 @@ namespace vCardLib
         /// <param name="filePath">Path to file to save to</param>
         /// <param name="version">Set the save version</param>
         /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
+        /// <param name="encoding">The file encoding to use</param>
         /// <returns>A boolean value stating whether the save option was successful or not</returns>
-        public bool Save(string filePath, Version version, WriteOptions writeOption = WriteOptions.ThrowError)
+        public bool Save(string filePath, Version version, WriteOptions writeOption = WriteOptions.ThrowError, Encoding encoding = null)
         {
-            return Serializer.Serialize(this, filePath, version, writeOption);
+            return Serializer.Serialize(this, filePath, version, writeOption, encoding);
         }
     }
 }

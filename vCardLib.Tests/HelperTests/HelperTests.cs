@@ -26,7 +26,8 @@ namespace vCardLib.Tests.HelperTests
 			Assert.Throws<FileNotFoundException>(delegate {
 				Helper.GetStreamReaderFromFile(filePath); 
 			});
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			filePath = Path.Combine(assemblyFolder, "invalid.vcf");
 			StreamReader streamReader = Helper.GetStreamReaderFromFile(filePath);
 			Assert.IsNotNull(streamReader);
@@ -39,7 +40,7 @@ namespace vCardLib.Tests.HelperTests
 			Assert.Throws<ArgumentNullException>(delegate {
 				Helper.GetStringFromStreamReader(streamReader);
 			});
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
 			streamReader = Helper.GetStreamReaderFromFile(filePath);
 			string vcardString = null;
@@ -73,7 +74,7 @@ namespace vCardLib.Tests.HelperTests
 		[Test]
 		public void GetContactDetailsArrayFromStringTest()
 		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			var streamReader = Helper.GetStreamReaderFromFile(filePath);
 			var vcardString = Helper.GetStringFromStreamReader(streamReader);

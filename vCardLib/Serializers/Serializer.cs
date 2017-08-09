@@ -19,11 +19,17 @@ namespace vCardLib.Serializers
         /// <param name="filePath">The path the vcard should be saved to</param>
         /// <param name="version">The version to be serialized into</param>
         /// <param name="options">State whether the card should be overwritten if it exists</param>
+        /// <param name="encoding">The encoding to save the file with</param>
         /// <returns>A value stating if the serialization was successful or not</returns>
         /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
         /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
-        public static bool Serialize(vCard vcard, string filePath, Version version, WriteOptions options = WriteOptions.ThrowError)
+        public static bool Serialize(vCard vcard, string filePath, Version version, WriteOptions options = WriteOptions.ThrowError, Encoding encoding = null)
         {
+            if (encoding == null)
+            {
+                encoding = Encoding.Unicode;
+            }
+            
             if (options == WriteOptions.ThrowError)
             {
                 if (File.Exists(filePath))
@@ -45,7 +51,7 @@ namespace vCardLib.Serializers
                 try
                 {
 					string vcfString = Serialize(vcard, Version.V2);
-                    File.WriteAllText(filePath, vcfString);
+                    File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
                 {
@@ -58,7 +64,7 @@ namespace vCardLib.Serializers
                 try
                 {
 					string vcfString = Serialize(vcard, Version.V3);
-                    File.WriteAllText(filePath, vcfString);
+                    File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
                 {
@@ -82,12 +88,18 @@ namespace vCardLib.Serializers
         /// <param name="filePath">The path the collection should be saved to</param>
         /// <param name="version">The version to be serialized into</param>
         /// <param name="options">tate whether the card should be overwritten if it exists</param>
+        /// <param name="encoding">The encoding to save the file with</param>
         /// <returns>A value stating if the serialization was successful or not</returns>
         /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
         /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
-        public static bool Serialize(vCardCollection vcardCollection, string filePath, Version version,
-            WriteOptions options = WriteOptions.ThrowError)
-        {
+        public static bool Serialize(vCardCollection vcardCollection, string filePath, Version version, 
+            WriteOptions options = WriteOptions.ThrowError, Encoding encoding = null)
+        { 
+            if (encoding == null)
+            {
+                encoding = Encoding.Unicode;
+            }
+            
             if (options == WriteOptions.ThrowError)
             {
                 if (File.Exists(filePath))
@@ -128,7 +140,7 @@ namespace vCardLib.Serializers
             }
             try
             {
-                File.WriteAllText(filePath, vcardCollectionString);
+                File.WriteAllText(filePath, vcardCollectionString, encoding);
                 return true;
             }
             catch (Exception e)
