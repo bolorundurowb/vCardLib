@@ -2,6 +2,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Helpers;
@@ -54,8 +55,10 @@ namespace vCardLib.Tests.CollectionTests
 			{
 				vcardCollection.Save("vcardcollection1.vcf", Version.V2);
 			});
+			
 			vcard.Version = Version.V3;
 			vcardCollection.Add(vcard);
+			
 			Assert.DoesNotThrow(delegate
 			{
 				vcardCollection.Save("vcardcollection1.vcf", Version.V3, WriteOptions.Overwrite);
@@ -81,6 +84,8 @@ namespace vCardLib.Tests.CollectionTests
 			
 			vCardCollection vcardCollection = new vCardCollection();
 		    vCard vcard = new vCard {Version = Version.V2};
+			vcardCollection.Add(vcard);
+			
 		    Assert.DoesNotThrow(delegate
 			{
 				vcardCollection.Save("vcardcollection2.vcf", Version.V2);
@@ -92,6 +97,10 @@ namespace vCardLib.Tests.CollectionTests
 			Assert.DoesNotThrow(delegate
 			{
 				vcardCollection.Save("vcardcollection2.vcf", Version.V3, WriteOptions.Overwrite);
+			});
+			Assert.DoesNotThrow(delegate
+			{
+				vcardCollection.Save("vcardcollection2.vcf", Version.V3, WriteOptions.Overwrite, Encoding.ASCII);
 			});
 //			Assert.Throws<NotImplementedException>(delegate
 //			{
