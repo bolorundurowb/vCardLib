@@ -1,85 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AAF9DF0D-3FCB-4DFE-95DB-3EEF3FBB694C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>vCardLibUI</RootNamespace>
+    <AssemblyName>vCardLibUI</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AtkSharp, Version=3.22.24.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AtkSharp.3.22.24.16\lib\netstandard2.0\AtkSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CairoSharp, Version=3.22.24.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CairoSharp.3.22.24.16\lib\netstandard2.0\CairoSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GdkSharp, Version=3.22.24.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GdkSharp.3.22.24.16\lib\netstandard2.0\GdkSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GioSharp, Version=3.22.24.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GioSharp.3.22.24.16\lib\netstandard2.0\GioSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GLibSharp, Version=3.22.24.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GLibSharp.3.22.24.16\lib\netstandard2.0\GLibSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GtkSharp, Version=3.22.24.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GtkSharp.3.22.24.16\lib\netstandard2.0\GtkSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PangoSharp, Version=3.22.24.16, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PangoSharp.3.22.24.16\lib\netstandard2.0\PangoSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <SpecificVersion>False</SpecificVersion>
+      <Package>glade-sharp-2.0</Package>
+    </Reference>
+    <Reference Include="Mono.Posix" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gtk-gui\gui.stetic">
+      <LogicalName>gui.stetic</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="gtk-gui\generated.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI.cs" />
+    <Compile Include="gtk-gui\UI.cs" />
+    <Compile Include="Models\Node.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\vCardLib\vCardLib.csproj">
+      <Project>{1C234BC6-282E-455F-A46F-A472575DAECE}</Project>
+      <Name>vCardLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="vcard.jpg">
+      <DeployService-UseProjectRelativePath>True</DeployService-UseProjectRelativePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="..\packages\Mono.Posix.5.4.0.201\build\net45\Mono.Posix.targets" Condition="Exists('..\packages\Mono.Posix.5.4.0.201\build\net45\Mono.Posix.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{AAF9DF0D-3FCB-4DFE-95DB-3EEF3FBB694C}</ProjectGuid>
-        <OutputType>WinExe</OutputType>
-        <RootNamespace>vCardLibUI</RootNamespace>
-        <AssemblyName>vCardLibUI</AssemblyName>
-        <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug</OutputPath>
-        <DefineConstants>DEBUG;</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>full</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release</OutputPath>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-        <ConsolePause>false</ConsolePause>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="System"/>
-        <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-            <SpecificVersion>False</SpecificVersion>
-            <Package>gtk-sharp-2.0</Package>
-        </Reference>
-        <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-            <SpecificVersion>False</SpecificVersion>
-            <Package>gtk-sharp-2.0</Package>
-        </Reference>
-        <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-            <SpecificVersion>False</SpecificVersion>
-            <Package>glib-sharp-2.0</Package>
-        </Reference>
-        <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-            <SpecificVersion>False</SpecificVersion>
-            <Package>glade-sharp-2.0</Package>
-        </Reference>
-        <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-            <SpecificVersion>False</SpecificVersion>
-            <Package>gtk-sharp-2.0</Package>
-        </Reference>
-        <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-            <SpecificVersion>False</SpecificVersion>
-            <Package>gtk-sharp-2.0</Package>
-        </Reference>
-        <Reference Include="Mono.Posix"/>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="gtk-gui\gui.stetic">
-            <LogicalName>gui.stetic</LogicalName>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="gtk-gui\generated.cs"/>
-        <Compile Include="Program.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="UI.cs"/>
-        <Compile Include="gtk-gui\UI.cs"/>
-        <Compile Include="Models\Node.cs"/>
-    </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets"/>
-    <ItemGroup>
-        <ProjectReference Include="..\vCardLib\vCardLib.csproj">
-            <Project>{1C234BC6-282E-455F-A46F-A472575DAECE}</Project>
-            <Name>vCardLib</Name>
-        </ProjectReference>
-    </ItemGroup>
-    <ItemGroup/>
-    <ItemGroup>
-        <Content Include="vcard.jpg">
-            <DeployService-UseProjectRelativePath>True</DeployService-UseProjectRelativePath>
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
+    <Error Condition="!Exists('..\packages\Mono.Posix.5.4.0.201\build\net45\Mono.Posix.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Mono.Posix.5.4.0.201\build\net45\Mono.Posix.targets'))" />
+  </Target>
 </Project>

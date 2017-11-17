@@ -154,6 +154,7 @@ namespace vCardLib.Serializers
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("BEGIN:VCARD" + Environment.NewLine);
+			stringBuilder.Append("VERSION:" + FormatVersion( version ) + Environment.NewLine);
             stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
             stringBuilder.Append("N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine);
             stringBuilder.Append("FN:" + vcard.FormattedName + Environment.NewLine);
@@ -233,5 +234,20 @@ namespace vCardLib.Serializers
             stringBuilder.Append("END:VCARD");
             return stringBuilder.ToString();
         }
-    }
+
+		private static string FormatVersion( Version version )
+		{
+			switch ( version )
+			{
+				case Version.V2:
+					return "2.1";
+				case Version.V3:
+					return "3.0";
+				case Version.V4:
+					return "4.0";
+			}
+
+			return "2.1";
+		}
+	}
 }

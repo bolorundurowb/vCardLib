@@ -11,7 +11,7 @@ using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Tests
 {
-    [TestFixture]
+	[TestFixture]
 	public class vCardTests
 	{
 		readonly vCard _vcard = new vCard();
@@ -28,10 +28,11 @@ namespace vCardLib.Tests
 				_vcard.EmailAddresses = new EmailAddressCollection();
 				_vcard.Expertises = new ExpertiseCollection();
 				_vcard.FamilyName = "Gump";
-			    _vcard.GivenName = "Forrest";
-			    _vcard.MiddleName = "Johnson";
-			    _vcard.Prefix = "HRH";
-			    _vcard.Suffix = "PhD";
+				_vcard.GivenName = "Forrest";
+				_vcard.MiddleName = "Johnson";
+				_vcard.Prefix = "HRH";
+				_vcard.Suffix = "PhD";
+				_vcard.FormattedName = "HRH Forrest Johnson Gump, PhD";
 				_vcard.Gender = GenderType.Female;
 				_vcard.Hobbies = new HobbyCollection();
 				_vcard.Interests = new InterestCollection();
@@ -44,7 +45,7 @@ namespace vCardLib.Tests
 				_vcard.TimeZone = "GMT+1";
 				_vcard.Title = "Mr";
 				_vcard.Url = "http://google.com";
-			    _vcard.Note = "Hello World";
+				_vcard.Note = "Hello World";
 				_vcard.Geo = new Geo()
 				{
 					Latitude = -1.345,
@@ -54,6 +55,62 @@ namespace vCardLib.Tests
 				_vcard.XSkypePstnNumber = "23949490044";
 				_vcard.Version = Version.V2;
 			});
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_Empty()
+		{
+			var vc = new vCard();
+			Assert.IsEmpty( vc.FormattedName );
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_Prefix()
+		{
+			var vc = new vCard() { Prefix = "HRH" };
+			Assert.AreEqual( "HRH", vc.FormattedName );
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_PrefixGiven()
+		{
+			var vc = new vCard() { Prefix = "HRH", GivenName = "Forrest" };
+			Assert.AreEqual( "HRH Forrest", vc.FormattedName );
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_PrefixGivenMiddle()
+		{
+			var vc = new vCard() { Prefix = "HRH", GivenName = "Forrest", MiddleName = "Johnson" };
+			Assert.AreEqual( "HRH Forrest Johnson", vc.FormattedName );
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_PrefixGivenMiddleFamily()
+		{
+			var vc = new vCard() { Prefix = "HRH", GivenName = "Forrest", MiddleName = "Johnson", FamilyName = "Gump" };
+			Assert.AreEqual( "HRH Forrest Johnson Gump", vc.FormattedName );
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_PrefixGivenMiddleFamilySuffix()
+		{
+			var vc = new vCard() { Prefix = "HRH", GivenName = "Forrest", MiddleName = "Johnson", FamilyName = "Gump", Suffix = "PhD" };
+			Assert.AreEqual( "HRH Forrest Johnson Gump, PhD", vc.FormattedName );
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_GivenFamily_MixedNullEmpty()
+		{
+			var vc = new vCard() { Prefix = "", GivenName = "Forrest", MiddleName = null, FamilyName = "Gump", Suffix = "" };
+			Assert.AreEqual( "Forrest Gump", vc.FormattedName );
+		}
+
+		[Test]
+		public void GeneratesProposedFormattedName_Override()
+		{
+			var vc = new vCard() { Prefix = "HRH", GivenName = "Forrest", MiddleName = "Johnson", FamilyName = "Gump", Suffix = "PhD", FormattedName = "Override Name" };
+			Assert.AreEqual( "Override Name", vc.FormattedName );
 		}
 
 		[Test]
@@ -87,49 +144,49 @@ namespace vCardLib.Tests
 			});
 		}
 
-        [Test]
-        public void SavesV2CardWithoutErrors()
-        {
+		[Test]
+		public void SavesV2CardWithoutErrors()
+		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
 			Assert.IsNotNull(_vcard);
-            Assert.DoesNotThrow(delegate
-            {
-                _vcard.GivenName = "Forrest";
-                _vcard.FamilyName = "Gump";
-                PhoneNumber num1 = new PhoneNumber();
-                num1.Number = "(111) 555-1212";
+			Assert.DoesNotThrow(delegate
+			{
+				_vcard.GivenName = "Forrest";
+				_vcard.FamilyName = "Gump";
+				PhoneNumber num1 = new PhoneNumber();
+				num1.Number = "(111) 555-1212";
 				num1.Type = PhoneNumberType.None;
-                _vcard.PhoneNumbers.Add(num1);
-                PhoneNumber num2 = new PhoneNumber();
-                num2.Number = "(404) 555-1212";
-                num2.Type = PhoneNumberType.Home;
-                _vcard.PhoneNumbers.Add(num2);
+				_vcard.PhoneNumbers.Add(num1);
+				PhoneNumber num2 = new PhoneNumber();
+				num2.Number = "(404) 555-1212";
+				num2.Type = PhoneNumberType.Home;
+				_vcard.PhoneNumbers.Add(num2);
 				PhoneNumber num3 = new PhoneNumber();
 				num3.Number = "(404) 555-1212";
 				num3.Type = PhoneNumberType.MainNumber;
 				_vcard.PhoneNumbers.Add(num3);
-                EmailAddress email1 = new EmailAddress();
-                email1.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
-                email1.Type = EmailType.None;
-                _vcard.EmailAddresses.Add(email1);
+				EmailAddress email1 = new EmailAddress();
+				email1.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
+				email1.Type = EmailType.None;
+				_vcard.EmailAddresses.Add(email1);
 				EmailAddress email2 = new EmailAddress();
 				email2.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
 				email2.Type = EmailType.Internet;
 				_vcard.EmailAddresses.Add(email2);
-                Address address1 = new Address();
-                address1.Location = "Sabo, Yaba";
+				Address address1 = new Address();
+				address1.Location = "Sabo, Yaba";
 				address1.Type = AddressType.None;
-                _vcard.Addresses.Add(address1);
+				_vcard.Addresses.Add(address1);
 				Address address2 = new Address();
 				address2.Location = "Sabo, Yaba";
 				address2.Type = AddressType.Work;
 				_vcard.Addresses.Add(address2);
-                Photo photo1 = new Photo();
-                photo1.Encoding = PhotoEncoding.JPEG;
-                photo1.PhotoURL = "www.google/images";
-                photo1.Type = PhotoType.URL;
-                _vcard.Pictures.Add(photo1);
+				Photo photo1 = new Photo();
+				photo1.Encoding = PhotoEncoding.JPEG;
+				photo1.PhotoURL = "www.google/images";
+				photo1.Type = PhotoType.URL;
+				_vcard.Pictures.Add(photo1);
 
 				var request = System.Net.WebRequest.Create("https://jpeg.org/images/jpeg-logo-plain.png");
 				System.Net.WebResponse response = request.GetResponse();
@@ -141,35 +198,35 @@ namespace vCardLib.Tests
 				photo2.Picture = new System.Drawing.Bitmap(responseStream);
 				_vcard.Pictures.Add(photo2);
 
-                Hobby hobby = new Hobby();
-                hobby.Activity = "Watching Hobbits";
-                hobby.Level = Level.Medium;
-                _vcard.Hobbies.Add(hobby);
-                Interest interest = new Interest();
-                interest.Activity = "Watching Hobbits";
-                interest.Level = Level.Medium;
-                _vcard.Interests.Add(interest);
-                Expertise expertise = new Expertise();
-                expertise.Area = "Watching Hobbits";
-                expertise.Level = Level.Medium;
-                _vcard.Expertises.Add(expertise);
+				Hobby hobby = new Hobby();
+				hobby.Activity = "Watching Hobbits";
+				hobby.Level = Level.Medium;
+				_vcard.Hobbies.Add(hobby);
+				Interest interest = new Interest();
+				interest.Activity = "Watching Hobbits";
+				interest.Level = Level.Medium;
+				_vcard.Interests.Add(interest);
+				Expertise expertise = new Expertise();
+				expertise.Area = "Watching Hobbits";
+				expertise.Level = Level.Medium;
+				_vcard.Expertises.Add(expertise);
 
-                _vcard.Save(filePath, WriteOptions.Overwrite, Encoding.BigEndianUnicode);
-            });
+				_vcard.Save(filePath, WriteOptions.Overwrite, Encoding.BigEndianUnicode);
+			});
 			Assert.IsTrue(File.Exists(filePath));
-        }
+		}
 
-        [Test]
-        public void SavesV3CardWithoutErrors()
-        {
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+		[Test]
+		public void SavesV3CardWithoutErrors()
+		{
+			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
 			Assert.IsNotNull(_vcard);
 			Assert.DoesNotThrow(delegate {
 				_vcard.Save(filePath, Version.V3, WriteOptions.Overwrite, Encoding.ASCII);
 			});
 			Assert.IsTrue(File.Exists(filePath));
-        }
+		}
 
 		[Test]
 		public void SavesV4CardThrowsException()
@@ -184,9 +241,10 @@ namespace vCardLib.Tests
 		{
 			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
+
 			Assert.DoesNotThrow(delegate
 			{
-				var vcard = Deserializer.FromFile(filePath);
+				Deserializer.FromFile(filePath);
 			});
 		}
 
@@ -197,9 +255,9 @@ namespace vCardLib.Tests
 			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
 			Assert.DoesNotThrow(delegate
 			{
-				var vcard = Deserializer.FromFile(filePath);
+				Deserializer.FromFile(filePath);
 			});
 		}
-    }
+	}
 }
 

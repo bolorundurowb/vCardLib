@@ -13,7 +13,7 @@ public partial class UI: Gtk.Window
 	{
 		get {
 			if (store == null) {
-				store = new NodeStore (typeof(Node));
+				store = new NodeStore (typeof( Gtk.Node ) );
 			}
 			return store;
 		}
@@ -82,7 +82,7 @@ public partial class UI: Gtk.Window
 		        vCardCollection collection = Deserializer.FromFile(ofd_select_vcard.Filename);
 		        foreach (vCard vcard in collection)
 		        {
-		            Node node = new Node();
+		            var node = new vCardLibUI.Models.Node();
 		            node.FullName = vcard.FormattedName;
 		            node.EmailAddress = vcard.EmailAddresses.Count > 0 ? vcard.EmailAddresses[0].Email.Address : "";
 		            node.PhoneNumber1 = vcard.PhoneNumbers.Count > 0 ? vcard.PhoneNumbers[0].Number : "";
@@ -120,9 +120,9 @@ public partial class UI: Gtk.Window
 
 	protected void txt_search_TextChanged(object sender, EventArgs e)
 	{
-		NodeStore searchStore = new NodeStore (typeof(Node));
+		NodeStore searchStore = new NodeStore (typeof(Gtk.Node));
 		string searchQuery = txt_search.Buffer.Text;
-		foreach (Node node in Store) {
+		foreach ( vCardLibUI.Models.Node node in Store) {
 			if (node.EmailAddress.Contains (searchQuery) ||
 			    node.FullName.Contains (searchQuery) ||
 			    node.PhoneNumber1.Contains (searchQuery) ||

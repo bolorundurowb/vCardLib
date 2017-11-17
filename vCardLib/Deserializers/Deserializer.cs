@@ -98,6 +98,7 @@ namespace vCardLib.Deserializers
                 BirthPlace = ParseBirthPlace(),
                 DeathPlace = ParseDeathPlace(),
                 FamilyName = ParseFamilyName(),
+				FormattedName = ParseFormattedName(),
                 Geo = ParseGeo(),
                 Gender = ParseGender(),
                 GivenName = ParseGivenName(),
@@ -277,6 +278,12 @@ namespace vCardLib.Deserializers
                 return  names[0];
             return String.Empty;
         }
+
+		private static string ParseFormattedName()
+		{
+			string nString = _contactDetails.FirstOrDefault( s => s.StartsWith( "FN:" ) );
+			return nString?.Replace( "FN:", "" );
+		}
 
         /// <summary>
         /// Gets the given name from the details array
