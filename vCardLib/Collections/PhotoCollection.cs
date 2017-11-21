@@ -6,7 +6,7 @@ namespace vCardLib.Collections
     /// <summary>
     /// Collection class to hold all contact photos
     /// </summary>
-    public class PhotoCollection : System.Collections.CollectionBase
+    public sealed class PhotoCollection : System.Collections.CollectionBase, IDisposable
     {
         /// <summary>
         /// Method to add photo to the photo collection
@@ -26,12 +26,12 @@ namespace vCardLib.Collections
             List.Remove(photo);
         }
 
-        /// <summary>
-        /// Indexer to enable index access to the collection
-        /// </summary>
-        /// <param name="index">zero based index of the object to be returned</param>
-        /// <returns>a Photo object at the specified index</returns>
-        public Photo this[int index]
+		/// <summary>
+		/// Indexer to enable index access to the collection
+		/// </summary>
+		/// <param name="index">zero based index of the object to be returned</param>
+		/// <returns>a Photo object at the specified index</returns>
+		public Photo this[int index]
         {
             get
             {
@@ -46,5 +46,16 @@ namespace vCardLib.Collections
                 List[index] = value;
             }
         }
-    }
+
+		#region IDisposable Support
+		public void Dispose()
+		{
+			foreach ( Photo photo in List )
+			{
+				photo.Dispose();
+			}
+
+		}
+		#endregion
+	}
 }

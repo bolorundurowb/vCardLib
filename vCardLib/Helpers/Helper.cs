@@ -87,12 +87,8 @@ namespace vCardLib.Helpers
             try
             {
                 byte[] imageBytes = Convert.FromBase64String(base64String);
-                Bitmap bmp;
-                using (var ms = new MemoryStream(imageBytes))
-                {
-					bmp = (Bitmap)Image.FromStream(ms);
-                }
-                return bmp;
+                var ms = new MemoryStream( imageBytes );
+                    return (Bitmap)Image.FromStream(ms);
             }
             catch (Exception)
             {

@@ -14,7 +14,7 @@ namespace vCardLib
 	/// <summary>
 	/// Class to store the various vCard contact details
 	/// </summary>
-	public class vCard
+	public class vCard : IDisposable
 	{
 		/// <summary>
 		/// The version of the vcf file
@@ -257,5 +257,29 @@ namespace vCardLib
 
 			return proposedName;
 		}
+
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
+
+		protected virtual void Dispose( bool disposing )
+		{
+			if ( !disposedValue )
+			{
+				if ( disposing )
+				{
+					if ( Pictures != null )
+						Pictures.Dispose();
+				}
+
+				disposedValue = true;
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+		#endregion
 	}
 }

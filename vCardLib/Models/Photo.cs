@@ -26,7 +26,7 @@ namespace vCardLib.Models
     /// <summary>
     /// Class to hold images embedded in the vCard 
     /// </summary>
-    public class Photo
+    public class Photo : IDisposable
     {
         /// <summary>
         /// The image
@@ -64,5 +64,28 @@ namespace vCardLib.Models
             string base64String = Convert.ToBase64String(imageBytes);
             return base64String;
         }
+
+        #region IDisposable Support
+        private bool isDisposed = false;
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( !isDisposed )
+            {
+                if ( disposing )
+                {
+                    if ( Picture != null )
+                        Picture.Dispose();
+                }
+
+                isDisposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

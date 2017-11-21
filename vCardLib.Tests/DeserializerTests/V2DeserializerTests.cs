@@ -13,17 +13,21 @@ namespace vCardLib.Tests.DeserializerTests
         public void ParseTest()
         {
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
             string filePath = Path.Combine(assemblyFolder, "v2.vcf");
-            StreamReader streamReader = Helper.GetStreamReaderFromFile(filePath);
+			StreamReader streamReader = Helper.GetStreamReaderFromFile(filePath);
             string contactsString = Helper.GetStringFromStreamReader(streamReader);
             string[] contacts = Helper.GetContactsArrayFromString(contactsString);
             vCard vcard = null;
             Assert.DoesNotThrow(delegate
             {
-                vcard = V2Deserializer.Parse(contacts, vcard);
+				foreach ( var contact in contacts )
+				{
+					var details = Helper.GetContactDetailsArrayFromString( contact );
+					vcard = V2Deserializer.Parse( details, vcard );
+					Assert.IsNotNull( vcard );
+				}
             });
-            Assert.IsNotNull(vcard);
-            //TODO: More assertions to check data integrity should be added
         }
     }
 }

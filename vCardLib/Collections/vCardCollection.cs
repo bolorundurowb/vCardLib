@@ -9,7 +9,7 @@ namespace vCardLib.Collections
     /// <summary>
     /// Collection class to hold all vCard objects extracted
     /// </summary>
-    public class vCardCollection : System.Collections.CollectionBase
+    public class vCardCollection : System.Collections.CollectionBase, IDisposable
     {
         /// <summary>
         /// Method to add a new vCard to the collection
@@ -64,5 +64,31 @@ namespace vCardLib.Collections
         {
             return Serializer.Serialize(this, filePath, version, writeOptions, encoding);
         }
-    }
+
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
+
+		protected virtual void Dispose( bool disposing )
+		{
+			if ( !disposedValue )
+			{
+				if ( disposing )
+				{
+					foreach ( vCard card in List )
+					{
+						card.Dispose();
+					}
+				}
+
+				disposedValue = true;
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose( true );
+			GC.SuppressFinalize(this);
+		}
+		#endregion
+	}
 }

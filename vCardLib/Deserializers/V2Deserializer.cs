@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using vCardLib.Collections;
 using vCardLib.Helpers;
 using vCardLib.Models;
@@ -44,7 +45,9 @@ namespace vCardLib.Deserializers
         {
             PhoneNumberCollection phoneNumberCollection = new PhoneNumberCollection();
 
-            var telStrings = _contactDetails.Where(s => s.StartsWith("TEL"));
+            var telStrings = _contactDetails
+								.Where(s => s.StartsWith("TEL;"));
+
             foreach(string telString in telStrings)
             {
                 string phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
@@ -197,7 +200,17 @@ namespace vCardLib.Deserializers
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
-                else
+				else if ( phoneString.StartsWith( "X-Custom" ) )
+				{
+					phoneString = phoneString.Replace( "X-Custom:", "" );
+					PhoneNumber phoneNumber = new PhoneNumber
+					{
+						Number = phoneString,
+						Type = PhoneNumberType.None
+					};
+					phoneNumberCollection.Add( phoneNumber );
+				}
+				else
                 {
                     PhoneNumber phoneNumber = new PhoneNumber
                     {
@@ -293,6 +306,9 @@ namespace vCardLib.Deserializers
                     }
                     else
                     {
+						if ( emailString.Contains(":") )
+							emailString = emailString.Split( ':' )[1];
+
                         EmailAddress emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
@@ -514,27 +530,22 @@ namespace vCardLib.Deserializers
                 }
                 else if (photoStr.Contains("JPEG") && photoStr.Contains("ENCODING=BASE64"))
                 {
-                    string photoString = "";
-                    int photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
-                    while (true)
+                    string photoString = photoStr;
+                    int photoStrIndex = Array.IndexOf(_contactDetails, photoStr) + 1;
+					var line = "";
+
+					while ( (line = _contactDetails[photoStrIndex++]) != String.Empty && photoStrIndex < _contactDetails.Length )
                     {
-                        if (photoStrIndex < _contactDetails.Length)
-                        {
-                            photoString += _contactDetails[photoStrIndex];
-                            photoStrIndex++;
-                            if (photoStrIndex < _contactDetails.Length && _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
-                                break;
-                        }
-                        else
-                        {
-                            break;
-                        }
+						if ( !line.StartsWith( " " ) )
+							break;
+
+						photoString += line.Trim();
                     }
-                    photoString = photoString.Trim();
-                    photoString = photoString.Replace("PHOTO;", "");
-                    photoString = photoString.Replace("JPEG", "");
-                    photoString = photoString.Replace("ENCODING=BASE64", "");
-                    photoString = photoString.Trim(';', ':');
+                    photoString = photoString
+									.Trim()
+									.Replace("PHOTO;", "")
+									.Replace("JPEG:", "")
+									.Replace("ENCODING=BASE64;", "");
 
                     photo.Encoding = PhotoEncoding.JPEG;
                     photo.Picture = Helper.GetImageFromBase64String(photoString);
