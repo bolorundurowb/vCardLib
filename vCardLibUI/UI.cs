@@ -27,29 +27,39 @@ public partial class UI: Window
 		//
 		dgv_contacts.NodeStore = Store;
 		//
-		TreeViewColumn fullNameCol = new TreeViewColumn("Full Name", new CellRendererText(), "text", 0);
-		fullNameCol.Resizable = true;
-		fullNameCol.Expand = true;
-		fullNameCol.MinWidth = 150;
-		fullNameCol.Sizing = TreeViewColumnSizing.Autosize;
+		TreeViewColumn fullNameCol = new TreeViewColumn("Full Name", new CellRendererText(), "text", 0)
+		{
+			Resizable = true,
+			Expand = true,
+			MinWidth = 150,
+			Sizing = TreeViewColumnSizing.Autosize
+		};
 		//
-		TreeViewColumn emailCol = new TreeViewColumn("Email", new CellRendererText(), "text", 1);
-		emailCol.Resizable = true;
-		emailCol.Expand = true;
-		emailCol.MinWidth = 150;
-		emailCol.Sizing = TreeViewColumnSizing.Autosize;
+		TreeViewColumn emailCol = new TreeViewColumn("Email", new CellRendererText(), "text", 1)
+		{
+			Resizable = true,
+			Expand = true,
+			MinWidth = 150,
+			Sizing = TreeViewColumnSizing.Autosize
+		};
 		//
-		TreeViewColumn phoneOneCol = new TreeViewColumn("Phone Number One", new CellRendererText(), "text", 2);
-		phoneOneCol.Resizable = true;
-		phoneOneCol.Expand = true;
-		phoneOneCol.MinWidth = 150;
-		phoneOneCol.Sizing = TreeViewColumnSizing.Autosize;
+		TreeViewColumn phoneOneCol =
+			new TreeViewColumn("Phone Number One", new CellRendererText(), "text", 2)
+			{
+				Resizable = true,
+				Expand = true,
+				MinWidth = 150,
+				Sizing = TreeViewColumnSizing.Autosize
+			};
 		//
-		TreeViewColumn phoneTwoCol = new TreeViewColumn("Phone Number Two", new CellRendererText(), "text", 3);
-		phoneTwoCol.Resizable = true;
-		phoneTwoCol.Expand = true;
-		phoneTwoCol.MinWidth = 150;
-		phoneTwoCol.Sizing = TreeViewColumnSizing.Autosize;
+		TreeViewColumn phoneTwoCol =
+			new TreeViewColumn("Phone Number Two", new CellRendererText(), "text", 3)
+			{
+				Resizable = true,
+				Expand = true,
+				MinWidth = 150,
+				Sizing = TreeViewColumnSizing.Autosize
+			};
 		//
 		dgv_contacts.AppendColumn(fullNameCol);
 		dgv_contacts.AppendColumn(emailCol);
