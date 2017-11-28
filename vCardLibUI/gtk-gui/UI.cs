@@ -105,7 +105,7 @@ public partial class UI
 		this.DefaultWidth = 666;
 		this.DefaultHeight = 432;
 		this.Show();
-		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
-		this.ofd_select_vcard.SelectionChanged += new global::System.EventHandler(this.OnOfdSelectVcardSelectionChanged);
+		this.DeleteEvent += this.OnDeleteEvent;
+		this.ofd_select_vcard.SelectionChanged += this.OnOfdSelectVcardSelectionChanged;
 	}
 }

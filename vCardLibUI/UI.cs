@@ -23,7 +23,7 @@ public partial class UI: Gtk.Window
 	{
 		Build ();
 		//Bind a text changed event handler for the search box
-		txt_search.Buffer.Changed += new EventHandler(txt_search_TextChanged);
+		txt_search.Buffer.Changed += txt_search_TextChanged;
 		//
 		dgv_contacts.NodeStore = Store;
 		//
