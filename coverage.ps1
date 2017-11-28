@@ -1,3 +1,3 @@
-.\tools\OpenCover.4.6.519\tools\OpenCover.Console.exe "-register:user" "-filter:+[vCardLib*]* -[vCardLib.Tests*]*" "-target:.\tools\NUnit.ConsoleRunner.3.4.1\tools\nunit3-console.exe" "-targetargs: .\vCardLib.Tests\bin\Debug\vCardLib.Tests.dll"
+.\tools\OpenCover.4.6.519\tools\OpenCover.Console.exe "-register:user" "-filter:+[vCardLib*]* -[vCardLib.Tests*]*" "-target:.\tools\NUnit.ConsoleRunner.3.4.1\tools\nunit3-console.exe" "-targetargs: .\vCardLib.Tests\bin\Debug\netcoreapp2.0\vCardLib.Tests.dll"
 .\tools\ReportGenerator.2.4.5.0\tools\ReportGenerator.exe "-reports:results.xml" "-targetdir:.\coverage"
 .\tools\coveralls.net.0.7.0\tools\csmacnz.Coveralls.exe --opencover -i .\results.xml

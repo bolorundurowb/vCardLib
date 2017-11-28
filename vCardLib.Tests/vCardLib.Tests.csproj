@@ -1,96 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{34B428BD-CF5B-4034-AC3A-36CEB98B7306}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>vCardLib.Tests</RootNamespace>
-    <AssemblyName>vCardLib.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="Microsoft.NETCore.App" Version="2.0.3" />
+    <PackageReference Include="NUnit" Version="3.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectionTests\AddressCollectionTests.cs" />
-    <Compile Include="CollectionTests\EmailAddressCollectionTests.cs" />
-    <Compile Include="CollectionTests\ExpertiseCollectionTests.cs" />
-    <Compile Include="CollectionTests\HobbyCollectionTests.cs" />
-    <Compile Include="CollectionTests\InterestCollectionTests.cs" />
-    <Compile Include="CollectionTests\PhoneNumberCollectionTests.cs" />
-    <Compile Include="CollectionTests\PhotoCollectionTests.cs" />
-    <Compile Include="CollectionTests\vCardCollectionTests.cs" />
-    <Compile Include="DeserializerTests\DeserializerTests.cs" />
-    <Compile Include="DeserializerTests\V2DeserializerTests.cs" />
-    <Compile Include="DeserializerTests\V3DeserializerTests.cs" />
-    <Compile Include="DeserializerTests\V4DeserializerTests.cs" />
-    <Compile Include="HelperTests\EnumTests.cs" />
-    <Compile Include="HelperTests\HelperTests.cs" />
-    <Compile Include="ModelTests\AddressTests.cs" />
-    <Compile Include="ModelTests\EmailAddressTests.cs" />
-    <Compile Include="ModelTests\ExpertiseTests.cs" />
-    <Compile Include="ModelTests\GeoTests.cs" />
-    <Compile Include="ModelTests\HobbyTests.cs" />
-    <Compile Include="ModelTests\InterestTests.cs" />
-    <Compile Include="ModelTests\PhoneNumberTests.cs" />
-    <Compile Include="ModelTests\PhotoTests.cs" />
-    <Compile Include="SerializerTests\SerializerTests.cs" />
-    <Compile Include="SerializerTests\V3SerializerTests.cs" />
-    <Compile Include="vCardTests.cs" />
-    <Compile Include="SerializerTests\V4SerializerTests.cs" />
+    <ProjectReference Include="..\vCardLib\vCardLib.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="invalid.vcf">
+    <None Update="invalid.vcf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="unsupported.vcf">
+    <None Update="unsupported.vcf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="v3.vcf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="v2.vcf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="v2.vcf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="v3.vcf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\vCardLib\vCardLib.csproj">
-      <Project>{1C234BC6-282E-455F-A46F-A472575DAECE}</Project>
-      <Name>vCardLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SerializerTests\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="SerializerTests\V2SerializerTests.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
