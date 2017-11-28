@@ -8,11 +8,11 @@ namespace Stetic
 
 		internal static void Initialize(Gtk.Widget iconRenderer)
 		{
-			if ((Stetic.Gui.initialized == false))
+			if ((initialized == false))
 			{
-				Stetic.Gui.initialized = true;
-				global::Gtk.IconFactory w1 = new global::Gtk.IconFactory();
-				global::Gtk.IconSet w2 = new global::Gtk.IconSet(new global::Gdk.Pixbuf(global::System.IO.Path.Combine(global::System.AppDomain.CurrentDomain.BaseDirectory, "./vcard.jpg")));
+				initialized = true;
+				Gtk.IconFactory w1 = new Gtk.IconFactory();
+				Gtk.IconSet w2 = new Gtk.IconSet(new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./vcard.jpg")));
 				w1.Add("app-icon", w2);
 				w1.AddDefault();
 			}
@@ -23,7 +23,7 @@ namespace Stetic
 	{
 		public static Gtk.ActionGroup GetActionGroup(System.Type type)
 		{
-			return Stetic.ActionGroups.GetActionGroup(type.FullName);
+			return GetActionGroup(type.FullName);
 		}
 
 		public static Gtk.ActionGroup GetActionGroup(string name)

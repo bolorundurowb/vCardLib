@@ -6,7 +6,7 @@ using vCardLib.Collections;
 using vCardLibUI.Models;
 using vCardLib.Deserializers;
 
-public partial class UI: Gtk.Window
+public partial class UI: Window
 {
 	private NodeStore store;
 	private NodeStore Store
@@ -19,7 +19,7 @@ public partial class UI: Gtk.Window
 		}
 	}
 
-	public UI () : base (Gtk.WindowType.Toplevel)
+	public UI () : base (WindowType.Toplevel)
 	{
 		Build ();
 		//Bind a text changed event handler for the search box
@@ -27,25 +27,25 @@ public partial class UI: Gtk.Window
 		//
 		dgv_contacts.NodeStore = Store;
 		//
-		TreeViewColumn fullNameCol = new TreeViewColumn("Full Name", new Gtk.CellRendererText(), "text", 0);
+		TreeViewColumn fullNameCol = new TreeViewColumn("Full Name", new CellRendererText(), "text", 0);
 		fullNameCol.Resizable = true;
 		fullNameCol.Expand = true;
 		fullNameCol.MinWidth = 150;
 		fullNameCol.Sizing = TreeViewColumnSizing.Autosize;
 		//
-		TreeViewColumn emailCol = new TreeViewColumn("Email", new Gtk.CellRendererText(), "text", 1);
+		TreeViewColumn emailCol = new TreeViewColumn("Email", new CellRendererText(), "text", 1);
 		emailCol.Resizable = true;
 		emailCol.Expand = true;
 		emailCol.MinWidth = 150;
 		emailCol.Sizing = TreeViewColumnSizing.Autosize;
 		//
-		TreeViewColumn phoneOneCol = new TreeViewColumn("Phone Number One", new Gtk.CellRendererText(), "text", 2);
+		TreeViewColumn phoneOneCol = new TreeViewColumn("Phone Number One", new CellRendererText(), "text", 2);
 		phoneOneCol.Resizable = true;
 		phoneOneCol.Expand = true;
 		phoneOneCol.MinWidth = 150;
 		phoneOneCol.Sizing = TreeViewColumnSizing.Autosize;
 		//
-		TreeViewColumn phoneTwoCol = new TreeViewColumn("Phone Number Two", new Gtk.CellRendererText(), "text", 3);
+		TreeViewColumn phoneTwoCol = new TreeViewColumn("Phone Number Two", new CellRendererText(), "text", 3);
 		phoneTwoCol.Resizable = true;
 		phoneTwoCol.Expand = true;
 		phoneTwoCol.MinWidth = 150;

@@ -3,109 +3,109 @@
 
 public partial class UI
 {
-	private global::Gtk.VBox vbox1;
+	private Gtk.VBox vbox1;
 
-	private global::Gtk.HBox hbox1;
+	private Gtk.HBox hbox1;
 
-	private global::Gtk.Label label2;
+	private Gtk.Label label2;
 
-	private global::Gtk.FileChooserButton ofd_select_vcard;
+	private Gtk.FileChooserButton ofd_select_vcard;
 
-	private global::Gtk.HBox hbox2;
+	private Gtk.HBox hbox2;
 
-	private global::Gtk.Label label4;
+	private Gtk.Label label4;
 
-	private global::Gtk.TextView txt_search;
+	private Gtk.TextView txt_search;
 
-	private global::Gtk.ScrolledWindow GtkScrolledWindow;
+	private Gtk.ScrolledWindow GtkScrolledWindow;
 
-	private global::Gtk.NodeView dgv_contacts;
+	private Gtk.NodeView dgv_contacts;
 
 	protected virtual void Build()
 	{
-		global::Stetic.Gui.Initialize(this);
+		Stetic.Gui.Initialize(this);
 		// Widget UI
-		this.Name = "UI";
-		this.Title = global::Mono.Unix.Catalog.GetString("vCardLib UI 1.4");
-		this.Icon = new global::Gdk.Pixbuf(global::System.IO.Path.Combine(global::System.AppDomain.CurrentDomain.BaseDirectory, "./vcard.jpg"));
-		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
-		this.Gravity = ((global::Gdk.Gravity)(5));
+		Name = "UI";
+		Title = Mono.Unix.Catalog.GetString("vCardLib UI 1.4");
+		Icon = new Gdk.Pixbuf(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "./vcard.jpg"));
+		WindowPosition = ((Gtk.WindowPosition)(4));
+		Gravity = ((Gdk.Gravity)(5));
 		// Container child UI.Gtk.Container+ContainerChild
-		this.vbox1 = new global::Gtk.VBox();
-		this.vbox1.Name = "vbox1";
-		this.vbox1.Spacing = 6;
+		vbox1 = new Gtk.VBox();
+		vbox1.Name = "vbox1";
+		vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.hbox1 = new global::Gtk.HBox();
-		this.hbox1.Name = "hbox1";
-		this.hbox1.Spacing = 6;
+		hbox1 = new Gtk.HBox();
+		hbox1.Name = "hbox1";
+		hbox1.Spacing = 6;
 		// Container child hbox1.Gtk.Box+BoxChild
-		this.label2 = new global::Gtk.Label();
-		this.label2.Name = "label2";
-		this.label2.LabelProp = global::Mono.Unix.Catalog.GetString("File Path:");
-		this.hbox1.Add(this.label2);
-		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.label2]));
+		label2 = new Gtk.Label();
+		label2.Name = "label2";
+		label2.LabelProp = Mono.Unix.Catalog.GetString("File Path:");
+		hbox1.Add(label2);
+		Gtk.Box.BoxChild w1 = ((Gtk.Box.BoxChild)(hbox1[label2]));
 		w1.Position = 0;
 		w1.Expand = false;
 		w1.Fill = false;
 		// Container child hbox1.Gtk.Box+BoxChild
-		this.ofd_select_vcard = new global::Gtk.FileChooserButton(global::Mono.Unix.Catalog.GetString("Select a File"), ((global::Gtk.FileChooserAction)(0)));
-		this.ofd_select_vcard.Name = "ofd_select_vcard";
-		this.hbox1.Add(this.ofd_select_vcard);
-		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.ofd_select_vcard]));
-		w2.PackType = ((global::Gtk.PackType)(1));
+		ofd_select_vcard = new Gtk.FileChooserButton(Mono.Unix.Catalog.GetString("Select a File"), ((Gtk.FileChooserAction)(0)));
+		ofd_select_vcard.Name = "ofd_select_vcard";
+		hbox1.Add(ofd_select_vcard);
+		Gtk.Box.BoxChild w2 = ((Gtk.Box.BoxChild)(hbox1[ofd_select_vcard]));
+		w2.PackType = ((Gtk.PackType)(1));
 		w2.Position = 1;
-		this.vbox1.Add(this.hbox1);
-		global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox1]));
+		vbox1.Add(hbox1);
+		Gtk.Box.BoxChild w3 = ((Gtk.Box.BoxChild)(vbox1[hbox1]));
 		w3.Position = 0;
 		w3.Expand = false;
 		w3.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.hbox2 = new global::Gtk.HBox();
-		this.hbox2.Name = "hbox2";
-		this.hbox2.Spacing = 6;
+		hbox2 = new Gtk.HBox();
+		hbox2.Name = "hbox2";
+		hbox2.Spacing = 6;
 		// Container child hbox2.Gtk.Box+BoxChild
-		this.label4 = new global::Gtk.Label();
-		this.label4.Name = "label4";
-		this.label4.LabelProp = global::Mono.Unix.Catalog.GetString("Search:");
-		this.hbox2.Add(this.label4);
-		global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.label4]));
+		label4 = new Gtk.Label();
+		label4.Name = "label4";
+		label4.LabelProp = Mono.Unix.Catalog.GetString("Search:");
+		hbox2.Add(label4);
+		Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(hbox2[label4]));
 		w4.Position = 0;
 		w4.Expand = false;
 		w4.Fill = false;
 		// Container child hbox2.Gtk.Box+BoxChild
-		this.txt_search = new global::Gtk.TextView();
-		this.txt_search.CanFocus = true;
-		this.txt_search.Name = "txt_search";
-		this.txt_search.AcceptsTab = false;
-		this.hbox2.Add(this.txt_search);
-		global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.hbox2[this.txt_search]));
+		txt_search = new Gtk.TextView();
+		txt_search.CanFocus = true;
+		txt_search.Name = "txt_search";
+		txt_search.AcceptsTab = false;
+		hbox2.Add(txt_search);
+		Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(hbox2[txt_search]));
 		w5.Position = 1;
-		this.vbox1.Add(this.hbox2);
-		global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.hbox2]));
+		vbox1.Add(hbox2);
+		Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(vbox1[hbox2]));
 		w6.Position = 1;
 		w6.Expand = false;
 		w6.Fill = false;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.GtkScrolledWindow = new global::Gtk.ScrolledWindow();
-		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
-		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
+		GtkScrolledWindow = new Gtk.ScrolledWindow();
+		GtkScrolledWindow.Name = "GtkScrolledWindow";
+		GtkScrolledWindow.ShadowType = ((Gtk.ShadowType)(1));
 		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-		this.dgv_contacts = new global::Gtk.NodeView();
-		this.dgv_contacts.CanFocus = true;
-		this.dgv_contacts.Name = "dgv_contacts";
-		this.GtkScrolledWindow.Add(this.dgv_contacts);
-		this.vbox1.Add(this.GtkScrolledWindow);
-		global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.GtkScrolledWindow]));
+		dgv_contacts = new Gtk.NodeView();
+		dgv_contacts.CanFocus = true;
+		dgv_contacts.Name = "dgv_contacts";
+		GtkScrolledWindow.Add(dgv_contacts);
+		vbox1.Add(GtkScrolledWindow);
+		Gtk.Box.BoxChild w8 = ((Gtk.Box.BoxChild)(vbox1[GtkScrolledWindow]));
 		w8.Position = 2;
-		this.Add(this.vbox1);
-		if ((this.Child != null))
+		Add(vbox1);
+		if ((Child != null))
 		{
-			this.Child.ShowAll();
+			Child.ShowAll();
 		}
-		this.DefaultWidth = 666;
-		this.DefaultHeight = 432;
-		this.Show();
-		this.DeleteEvent += this.OnDeleteEvent;
-		this.ofd_select_vcard.SelectionChanged += this.OnOfdSelectVcardSelectionChanged;
+		DefaultWidth = 666;
+		DefaultHeight = 432;
+		Show();
+		DeleteEvent += OnDeleteEvent;
+		ofd_select_vcard.SelectionChanged += OnOfdSelectVcardSelectionChanged;
 	}
 }
