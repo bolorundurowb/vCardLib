@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <Version>2.2.3</Version>
+    <Version>2.2.4</Version>
     <Copyright>Copyright 2017</Copyright>
     <PackageReleaseNotes>Move the library to NET Standard 2</PackageReleaseNotes>
     <Authors>Bolorunduro Winner-Timothy</Authors>
@@ -14,6 +14,6 @@
     <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
+    <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131"/>
   </ItemGroup>
 </Project>

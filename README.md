@@ -1,14 +1,5 @@
-# This project contains two sub projects
-
-[![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/vCardLib/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/vCardLib?branch=master)  [![Book session on Codementor](https://cdn.codementor.io/badges/book_session_github.svg)](https://www.codementor.io/bolorundurowb?utm_source=github&utm_medium=button&utm_term=bolorundurowb&utm_campaign=github)
-
-## vCardLibUI
- [![Download vCardLibUI](https://img.shields.io/sourceforge/dt/vcf-reader.svg)](https://sourceforge.net/projects/vcf-reader/files/latest/download) [![License: MIT](https://img.shields.io/badge/License-GPLv3-yellow.svg)]()   [![NET 4.5](https://img.shields.io/badge/net45-ff66b6.svg)]()
-
-This tool was developed because I recently lost my android phone but was blessed to have created a VCF backup of all my contacts. vCardLibUI loads contacts from a vCard (VCF) file into a table which allows sorting and case insensitive searching. The table shows the surname, the first name, one email address and two phone numbers
-
-## vCardLib
-[![NuGet Badge](https://buildstats.info/nuget/vcardlib.dll)](https://www.nuget.org/packages/vCardLib.dll) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  [![NET Standard](https://img.shields.io/badge/netstandard-2.0-ff66b6.svg)]()
+# vCardLib
+[![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/vCardLib/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/vCardLib?branch=master)    [![NET Standard](https://img.shields.io/badge/netstandard-2.0-ff66b6.svg)]() [![Book session on Codementor](https://cdn.codementor.io/badges/book_session_github.svg)](https://www.codementor.io/bolorundurowb?utm_source=github&utm_medium=button&utm_term=bolorundurowb&utm_campaign=github) [![NuGet Badge](https://buildstats.info/nuget/vcardlib.dll)](https://www.nuget.org/packages/vCardLib.dll) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Update: v2.2.0 introduced breaking changes. Details of these changes are on the [documentation site](http://bolorundurowb.github.io/vCardLib/)**
 
