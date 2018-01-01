@@ -18,11 +18,6 @@ platform: Any CPU
 
 configuration: Debug
 
-build:
-  parallel: true
-  project: vCardLib.sln
-  verbosity: minimal
-
 before_build:
   - cmd: dotnet restore
 
