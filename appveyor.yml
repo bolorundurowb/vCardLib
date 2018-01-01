@@ -11,6 +11,8 @@ clone_folder: c:\projects\
 environment:
   COVERALLS_REPO_TOKEN:
     secure: 5xIkb6RiiVnvka4l9AKKGHwKl86XcJcyE
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 platform: Any CPU
 
@@ -21,15 +23,8 @@ build:
   project: vCardLib.sln
   verbosity: minimal
 
-install:
-  - nuget restore "vCardLib.sln"
-  - if not exist gtk-sharp-2.12.38.msi appveyor DownloadFile http://download.xamarin.com/GTKforWindows/Windows/gtk-sharp-2.12.38.msi 
-  - msiexec /i gtk-sharp-2.12.38.msi /qn /norestart
+before_build:
+  - cmd: dotnet restore
 
 test_script:
-  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory tools
-  - nuget install OpenCover -Version 4.6.519 -OutputDirectory tools
-  - nuget install coveralls.net -Version 0.7.0 -OutputDirectory tools
-  - nuget install ReportGenerator -Version 2.4.5.0 -OutputDirectory tools
-  - cd C:\projects\
   - ps: .\coverage.ps1 
