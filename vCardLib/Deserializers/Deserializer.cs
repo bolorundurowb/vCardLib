@@ -98,6 +98,7 @@ namespace vCardLib.Deserializers
                 BirthPlace = ParseBirthPlace(),
                 DeathPlace = ParseDeathPlace(),
                 FamilyName = ParseFamilyName(),
+                FormattedName = ParseFormattedName(),
                 Geo = ParseGeo(),
                 Gender = ParseGender(),
                 GivenName = ParseGivenName(),
@@ -263,6 +264,17 @@ namespace vCardLib.Deserializers
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Gets the family name from the details array
+        /// </summary>
+        /// <returns>A string representing the family name or an empty string</returns>
+        private static string ParseFormattedName()
+        {
+            var fnString = _contactDetails.FirstOrDefault(s => s.StartsWith("FN:"));
+            var formattedName = fnString?.Replace("FN:", "");
+            return formattedName;
         }
 
         /// <summary>
