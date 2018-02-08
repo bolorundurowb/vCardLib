@@ -16,7 +16,7 @@ namespace vCardLib.Serializers
         /// <returns>A string representing  the serialized properties of the vcard</returns>
         public static string Serialize(vCard vcard)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             foreach(PhoneNumber phoneNumber in vcard.PhoneNumbers)
             {
                 stringBuilder.Append(Environment.NewLine);

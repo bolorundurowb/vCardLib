@@ -16,7 +16,7 @@ namespace vCardLib.Tests.DeserializerTests
         [Test]
         public void FromFileTest()
         {
-            string filePath = Path.Combine(assemblyFolder, "v2.vcf");
+            var filePath = Path.Combine(assemblyFolder, "v2.vcf");
             vCardCollection collection = null;
             Assert.DoesNotThrow(delegate
             {
@@ -28,7 +28,7 @@ namespace vCardLib.Tests.DeserializerTests
         [Test]
         public void FromStreamReaderTest()
         {
-            string filePath = Path.Combine(assemblyFolder, "v2.vcf");
+            var filePath = Path.Combine(assemblyFolder, "v2.vcf");
             StreamReader streamReader = null;
             Assert.DoesNotThrow(delegate
             {
@@ -56,7 +56,7 @@ namespace vCardLib.Tests.DeserializerTests
         [Test]
         public void GetVcardFromDetailsValidDataTest()
         {
-            string[] details = new[]
+            var details = new[]
             {
                 "VERSION:2.1"
             };

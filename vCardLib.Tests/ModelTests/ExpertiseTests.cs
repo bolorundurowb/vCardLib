@@ -13,7 +13,7 @@ namespace vCardLib.Tests.ModelTests
 		public void ExpertiseIsStable()
 		{
 			Assert.DoesNotThrow(delegate {
-			    Expertise expertise = new Expertise
+			    var expertise = new Expertise
 			    {
 			        Area = "Engineering",
 			        Level = Level.High

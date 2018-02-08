@@ -10,7 +10,7 @@ namespace vCardLib.Tests.ModelTests
 		public void AddressIsStable()
 		{
 			Assert.DoesNotThrow(delegate {
-			    Address address = new Address
+			    var address = new Address
 			    {
 			        Location = "Yaba Street",
 			        Type = AddressType.Domestic

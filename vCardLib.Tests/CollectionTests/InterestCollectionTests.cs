@@ -15,8 +15,8 @@ namespace vCardLib.Tests.CollectionTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				Interest interest = new Interest();
-				InterestCollection interestCollection = new InterestCollection();
+				var interest = new Interest();
+				var interestCollection = new InterestCollection();
 				interestCollection.Add(interest);
 				interest = interestCollection[0];
 				interestCollection[0] = interest;
@@ -27,7 +27,7 @@ namespace vCardLib.Tests.CollectionTests
 		[Test]
 		public void InsertAndRemoveNonExistentIndices()
 		{
-			InterestCollection interestCollection = new InterestCollection();
+			var interestCollection = new InterestCollection();
 			Assert.Throws<IndexOutOfRangeException>(delegate
 			{
 				var interest_ = interestCollection[0];

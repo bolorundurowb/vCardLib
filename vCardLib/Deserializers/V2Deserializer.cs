@@ -42,16 +42,16 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="PhoneNumberCollection"/></returns>
         private static PhoneNumberCollection ParseTelephoneNumbers()
         {
-            PhoneNumberCollection phoneNumberCollection = new PhoneNumberCollection();
+            var phoneNumberCollection = new PhoneNumberCollection();
 
             var telStrings = _contactDetails.Where(s => s.StartsWith("TEL"));
-            foreach(string telString in telStrings)
+            foreach(var telString in telStrings)
             {
-                string phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
+                var phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
                 //Remove multiple typing
                 if (phoneString.Contains(";"))
                 {
-                    int index = phoneString.LastIndexOf(";");
+                    var index = phoneString.LastIndexOf(";");
                     phoneString = phoneString.Remove(0, index + 1);
                 }
 
@@ -60,7 +60,7 @@ namespace vCardLib.Deserializers
                 {
                     phoneString = phoneString.Replace(";VOICE", "");
                     phoneString = phoneString.Replace("CELL:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Cell
@@ -71,7 +71,7 @@ namespace vCardLib.Deserializers
                 {
                     phoneString = phoneString.Replace(";VOICE", "");
                     phoneString = phoneString.Replace("HOME:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Home
@@ -82,7 +82,7 @@ namespace vCardLib.Deserializers
                 {
                     phoneString = phoneString.Replace(";VOICE", "");
                     phoneString = phoneString.Replace("WORK:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Work
@@ -92,7 +92,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("VOICE:"))
                 {
                     phoneString = phoneString.Replace("VOICE:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Voice
@@ -102,7 +102,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("FAX"))
                 {
                     phoneString = phoneString.Replace("FAX:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Fax
@@ -112,7 +112,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("TEXTPHONE"))
                 {
                     phoneString = phoneString.Replace("TEXTPHONE:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Fax
@@ -122,7 +122,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("TEXT"))
                 {
                     phoneString = phoneString.Replace("TEXT:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber();
+                    var phoneNumber = new PhoneNumber();
                     phoneNumber.Number = phoneString;
                     phoneNumber.Type = PhoneNumberType.Text;
                     phoneNumberCollection.Add(phoneNumber);
@@ -130,7 +130,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("VIDEO"))
                 {
                     phoneString = phoneString.Replace("VIDEO:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Video
@@ -140,7 +140,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("PAGER"))
                 {
                     phoneString = phoneString.Replace("PAGER:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Pager
@@ -150,7 +150,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("MAIN-NUMBER"))
                 {
                     phoneString = phoneString.Replace("MAIN-NUMBER:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Fax
@@ -160,7 +160,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("BBS"))
                 {
                     phoneString = phoneString.Replace("BBS:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Pager
@@ -170,7 +170,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("CAR"))
                 {
                     phoneString = phoneString.Replace("CAR:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Pager
@@ -180,7 +180,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("MODEM"))
                 {
                     phoneString = phoneString.Replace("MODEM:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Pager
@@ -190,7 +190,7 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("ISDN"))
                 {
                     phoneString = phoneString.Replace("ISDN:", "");
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.Pager
@@ -199,7 +199,7 @@ namespace vCardLib.Deserializers
                 }
                 else
                 {
-                    PhoneNumber phoneNumber = new PhoneNumber
+                    var phoneNumber = new PhoneNumber
                     {
                         Number = phoneString,
                         Type = PhoneNumberType.None
@@ -216,14 +216,14 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="EmailAddressCollection"/></returns>
         private static EmailAddressCollection ParseEmailAddresses()
         {
-            EmailAddressCollection emailAddressCollection = new EmailAddressCollection();
+            var emailAddressCollection = new EmailAddressCollection();
 
             var emailStrings = _contactDetails.Where(s => s.StartsWith("EMAIL"));
-            foreach (string email in emailStrings)
+            foreach (var email in emailStrings)
             {
                 try
                 {
-                    string emailString = email.Replace("EMAIL;", "").Replace("EMAIL:", "");
+                    var emailString = email.Replace("EMAIL;", "").Replace("EMAIL:", "");
                     //Remove multiple typing
                     if (emailString.Contains(";"))
                     {
@@ -234,7 +234,7 @@ namespace vCardLib.Deserializers
                     if (emailString.StartsWith("INTERNET:"))
                     {
                         emailString = emailString.Replace("INTERNET:", "");
-                        EmailAddress emailAddress = new EmailAddress
+                        var emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
                             Type = EmailType.Internet
@@ -244,7 +244,7 @@ namespace vCardLib.Deserializers
                     else if (emailString.StartsWith("HOME:"))
                     {
                         emailString = emailString.Replace("HOME:", "");
-                        EmailAddress emailAddress = new EmailAddress
+                        var emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
                             Type = EmailType.Home
@@ -254,7 +254,7 @@ namespace vCardLib.Deserializers
                     else if (emailString.StartsWith("WORK:"))
                     {
                         emailString = emailString.Replace("WORK:", "");
-                        EmailAddress emailAddress = new EmailAddress
+                        var emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
                             Type = EmailType.Work
@@ -264,7 +264,7 @@ namespace vCardLib.Deserializers
                     else if (emailString.StartsWith("AOL:") || emailString.StartsWith("aol:"))
                     {
                         emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
-                        EmailAddress emailAddress = new EmailAddress
+                        var emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
                             Type = EmailType.AOL
@@ -274,7 +274,7 @@ namespace vCardLib.Deserializers
                     else if (emailString.StartsWith("APPLELINK:") || emailString.StartsWith("applelink:"))
                     {
                         emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
-                        EmailAddress emailAddress = new EmailAddress
+                        var emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
                             Type = EmailType.Applelink
@@ -284,7 +284,7 @@ namespace vCardLib.Deserializers
                     else if (emailString.StartsWith("IBMMAIL:") || emailString.StartsWith("ibmmail:"))
                     {
                         emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
-                        EmailAddress emailAddress = new EmailAddress
+                        var emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
                             Type = EmailType.Work
@@ -293,7 +293,7 @@ namespace vCardLib.Deserializers
                     }
                     else
                     {
-                        EmailAddress emailAddress = new EmailAddress
+                        var emailAddress = new EmailAddress
                         {
                             Email = new MailAddress(emailString),
                             Type = EmailType.None
@@ -312,15 +312,15 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="AddressCollection"/></returns>
         private static AddressCollection ParseAddresses()
         {
-            AddressCollection addressCollection = new AddressCollection();
+            var addressCollection = new AddressCollection();
             var addressStrings = _contactDetails.Where(s => s.StartsWith("ADR"));
-            foreach(string addressStr in addressStrings)
+            foreach(var addressStr in addressStrings)
             {
-                string addressString = addressStr.Replace("ADR;", "").Replace("ADR:", "");
+                var addressString = addressStr.Replace("ADR;", "").Replace("ADR:", "");
                 if (addressString.StartsWith("HOME:"))
                 {
                     addressString = addressString.Replace("HOME:", "");
-                    Address address = new Address
+                    var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
                         Type = AddressType.Home
@@ -330,7 +330,7 @@ namespace vCardLib.Deserializers
                 else if (addressString.StartsWith("WORK:"))
                 {
                     addressString = addressString.Replace("WORK:", "");
-                    Address address = new Address
+                    var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
                         Type = AddressType.Work
@@ -340,7 +340,7 @@ namespace vCardLib.Deserializers
                 else if (addressString.StartsWith("DOM:") || addressString.StartsWith("dom:"))
                 {
                     addressString = addressString.Replace("DOM:", "").Replace("dom:", "");
-                    Address address = new Address
+                    var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
                         Type = AddressType.Domestic
@@ -350,7 +350,7 @@ namespace vCardLib.Deserializers
                 else if (addressString.StartsWith("INTL:") || addressString.StartsWith("intl:"))
                 {
                     addressString = addressString.Replace("INTL:", "").Replace("intl:", "");
-                    Address address = new Address
+                    var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
                         Type = AddressType.International
@@ -360,7 +360,7 @@ namespace vCardLib.Deserializers
                 else if (addressString.StartsWith("PARCEL:") || addressString.StartsWith("parcel:"))
                 {
                     addressString = addressString.Replace("PARCEL:", "").Replace("parcel:", "");
-                    Address address = new Address
+                    var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
                         Type = AddressType.Parcel
@@ -370,7 +370,7 @@ namespace vCardLib.Deserializers
                 else if (addressString.StartsWith("POSTAL:") || addressString.StartsWith("postal:"))
                 {
                     addressString = addressString.Replace("POSTAL:", "").Replace("postal:", "");
-                    Address address = new Address
+                    var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
                         Type = AddressType.Postal
@@ -379,7 +379,7 @@ namespace vCardLib.Deserializers
                 }
                 else
                 {
-                    Address address = new Address
+                    var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
                         Type = AddressType.None
@@ -396,12 +396,12 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="HobbyCollection"/></returns>
         private static HobbyCollection ParseHobbies()
         {
-            HobbyCollection hobbyCollection = new HobbyCollection();
+            var hobbyCollection = new HobbyCollection();
             var hobbyStrings = _contactDetails.Where(s => s.StartsWith("HOBBY;"));
-            foreach(string hobbyStr in hobbyStrings)
+            foreach(var hobbyStr in hobbyStrings)
             {
-                string hobbyString = hobbyStr.Replace("HOBBY;", "");
-                Hobby hobby = new Hobby();
+                var hobbyString = hobbyStr.Replace("HOBBY;", "");
+                var hobby = new Hobby();
                 if (hobbyString.StartsWith("HIGH") || hobbyString.StartsWith("high"))
                 {
                     hobby.Level = Level.High;
@@ -430,13 +430,13 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="ExpertiseCollection"/></returns>
         private static ExpertiseCollection ParseExpertises()
         {
-            ExpertiseCollection expertiseCollection = new ExpertiseCollection();
+            var expertiseCollection = new ExpertiseCollection();
             var expertiseStrings = _contactDetails.Where(s => s.StartsWith("EXPERTISE;"));
-            foreach (string expertiseStr in expertiseStrings)
+            foreach (var expertiseStr in expertiseStrings)
             {
-                string expertiseString = expertiseStr.Replace("EXPERTISE;", "");
+                var expertiseString = expertiseStr.Replace("EXPERTISE;", "");
                 expertiseString = expertiseString.Replace("LEVEL=", "");
-                Expertise expertise = new Expertise();
+                var expertise = new Expertise();
                 if (expertiseString.StartsWith("HIGH") || expertiseString.StartsWith("high"))
                 {
                     expertise.Level = Level.High;
@@ -465,13 +465,13 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="InterestCollection"/></returns>
         private static InterestCollection ParseInterests()
         {
-            InterestCollection interestCollection = new InterestCollection();
+            var interestCollection = new InterestCollection();
             var interestStrings = _contactDetails.Where(s => s.StartsWith("INTEREST;"));
-            foreach (string interestStr in interestStrings)
+            foreach (var interestStr in interestStrings)
             {
-                string interestString = interestStr.Replace("INTEREST;", "");
+                var interestString = interestStr.Replace("INTEREST;", "");
                 interestString = interestString.Replace("LEVEL=", "");
-                Interest interest = new Interest();
+                var interest = new Interest();
                 if (interestString.StartsWith("HIGH") || interestString.StartsWith("high"))
                 {
                     interest.Level = Level.High;
@@ -500,11 +500,11 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="PhotoCollection"/></returns>
         private static PhotoCollection ParsePhotos()
         {
-            PhotoCollection photoCollection = new PhotoCollection();
+            var photoCollection = new PhotoCollection();
             var photoStrings = _contactDetails.Where(s => s.StartsWith("PHOTO;"));
-            foreach(string photoStr in photoStrings)
+            foreach(var photoStr in photoStrings)
             {
-                Photo photo = new Photo();
+                var photo = new Photo();
                 if (photoStr.Replace("PHOTO;", "").StartsWith("JPEG:"))
                 {
                     photo.PhotoURL = photoStr.Replace("PHOTO;JPEG:", "").Trim();
@@ -514,8 +514,8 @@ namespace vCardLib.Deserializers
                 }
                 else if (photoStr.Contains("JPEG") && photoStr.Contains("ENCODING=BASE64"))
                 {
-                    string photoString = "";
-                    int photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
+                    var photoString = "";
+                    var photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
                     while (true)
                     {
                         if (photoStrIndex < _contactDetails.Length)

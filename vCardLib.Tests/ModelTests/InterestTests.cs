@@ -14,7 +14,7 @@ namespace vCardLib.Tests.ModelTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-			    Interest interest = new Interest
+			    var interest = new Interest
 			    {
 			        Activity = "Tennis",
 			        Level = Level.High

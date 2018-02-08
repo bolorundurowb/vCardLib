@@ -50,7 +50,7 @@ namespace vCardLib.Serializers
             {
                 try
                 {
-					string vcfString = Serialize(vcard, Version.V2);
+					var vcfString = Serialize(vcard, Version.V2);
                     File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
@@ -63,7 +63,7 @@ namespace vCardLib.Serializers
             {
                 try
                 {
-					string vcfString = Serialize(vcard, Version.V3);
+					var vcfString = Serialize(vcard, Version.V3);
                     File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
@@ -152,7 +152,7 @@ namespace vCardLib.Serializers
 
         private static string Serialize(vCard vcard, Version version)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.Append("BEGIN:VCARD" + Environment.NewLine);
             stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
             stringBuilder.Append("N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine);
