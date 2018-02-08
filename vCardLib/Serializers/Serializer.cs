@@ -169,8 +169,9 @@ namespace vCardLib.Serializers
             var stringBuilder = new StringBuilder();
             stringBuilder.Append("BEGIN:VCARD" + Environment.NewLine);
             stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
-            stringBuilder.Append("N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" +
-                                 vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine);
+            stringBuilder.Append(
+                $"N:{vcard.FamilyName};{vcard.GivenName};{vcard.MiddleName};{vcard.Prefix};{vcard.Suffix}{Environment.NewLine}"
+            );
             stringBuilder.Append("FN:" + vcard.FormattedName + Environment.NewLine);
             if (!string.IsNullOrEmpty(vcard.Organization))
             {

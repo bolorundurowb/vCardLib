@@ -12,7 +12,7 @@ namespace vCardLib.Deserializers
     /// <summary>
     /// The entry class for all deserializer tasks
     /// </summary>
-    public class Deserializer
+    public static class Deserializer
     {
         private static string[] _contactDetails;
 
@@ -37,13 +37,14 @@ namespace vCardLib.Deserializers
             var collection = new vCardCollection();
             var contactsString = Helper.GetStringFromStreamReader(streamReader);
             var contacts = Helper.GetContactsArrayFromString(contactsString);
-            foreach(var contact in contacts)
+            foreach (var contact in contacts)
             {
                 var contactDetails = Helper.GetContactDetailsArrayFromString(contact);
                 if (contactDetails.Length <= 0) continue;
                 var details = GetVcardFromDetails(contactDetails);
                 collection.Add(details);
             }
+
             return collection;
         }
 
@@ -56,15 +57,17 @@ namespace vCardLib.Deserializers
         /// <exception cref="InvalidOperationException">When  no version is stated</exception>
         public static vCard GetVcardFromDetails(string[] contactDetails)
         {
-			if (contactDetails == null || contactDetails.Length == 0)
-			{
-				throw new InvalidDataException("the details cannot be null or empty");
-			}
+            if (contactDetails == null || contactDetails.Length == 0)
+            {
+                throw new InvalidDataException("the details cannot be null or empty");
+            }
+
             var versionString = contactDetails.FirstOrDefault(s => s.StartsWith("VERSION:"));
             if (versionString == null)
             {
                 throw new InvalidOperationException("details do not contain a specification for 'Version'.");
             }
+
             var version = float.Parse(versionString.Replace("VERSION:", "").Trim());
             vCard vcard = null;
             if (version.Equals(2f) || version.Equals(2.1f))
@@ -79,6 +82,7 @@ namespace vCardLib.Deserializers
             {
                 vcard = Deserialize(contactDetails, Version.V4);
             }
+
             return vcard;
         }
 
@@ -150,6 +154,7 @@ namespace vCardLib.Deserializers
                 if (contactKindString == "DEVICE")
                     return ContactType.Device;
             }
+
             return ContactType.Individual;
         }
 
@@ -176,6 +181,7 @@ namespace vCardLib.Deserializers
             {
                 return titleString.Replace("TITLE:", "").Trim();
             }
+
             return string.Empty;
         }
 
@@ -238,6 +244,7 @@ namespace vCardLib.Deserializers
             {
                 return deathplaceString.Replace("DEATHPLACE:", "").Trim();
             }
+
             return String.Empty;
         }
 
@@ -263,6 +270,7 @@ namespace vCardLib.Deserializers
                     return birthday;
                 }
             }
+
             return null;
         }
 
@@ -284,9 +292,9 @@ namespace vCardLib.Deserializers
         private static string ParseFamilyName()
         {
             var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] { ";" }, StringSplitOptions.None);
+            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 0)
-                return  names[0];
+                return names[0];
             return String.Empty;
         }
 
@@ -297,9 +305,9 @@ namespace vCardLib.Deserializers
         private static string ParseGivenName()
         {
             var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] { ";" }, StringSplitOptions.None);
+            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 1)
-                return  names[1];
+                return names[1];
             return String.Empty;
         }
 
@@ -310,9 +318,9 @@ namespace vCardLib.Deserializers
         private static string ParseMiddleName()
         {
             var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] { ";" }, StringSplitOptions.None);
+            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 2)
-                return  names[2];
+                return names[2];
             return String.Empty;
         }
 
@@ -323,9 +331,9 @@ namespace vCardLib.Deserializers
         private static string ParsePrefix()
         {
             var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] { ";" }, StringSplitOptions.None);
+            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 3)
-                return  names[3];
+                return names[3];
             return String.Empty;
         }
 
@@ -336,9 +344,9 @@ namespace vCardLib.Deserializers
         private static string ParseSuffix()
         {
             var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] { ";" }, StringSplitOptions.None);
+            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 4)
-                return  names[4];
+                return names[4];
             return String.Empty;
         }
 
@@ -382,6 +390,7 @@ namespace vCardLib.Deserializers
                     return GenderType.Female;
                 return GenderType.Other;
             }
+
             return GenderType.None;
         }
 
@@ -396,6 +405,7 @@ namespace vCardLib.Deserializers
             {
                 return xSkypeDisplayNumberString.Replace("X-SKYPE-DISPLAYNAME:", "");
             }
+
             return String.Empty;
         }
 
@@ -410,6 +420,7 @@ namespace vCardLib.Deserializers
             {
                 return xSkypePstnString.Replace("X-SKYPE-PSTNNUMBER:", "");
             }
+
             return String.Empty;
         }
 
@@ -435,6 +446,7 @@ namespace vCardLib.Deserializers
                     return revision;
                 }
             }
+
             return null;
         }
 
@@ -464,6 +476,7 @@ namespace vCardLib.Deserializers
                     }
                 }
             }
+
             return null;
         }
     }
