@@ -110,6 +110,7 @@ namespace vCardLib.Deserializers
                 Language = ParseLanguage(),
                 MiddleName = ParseMiddleName(),
                 NickName = ParseNickname(),
+                Note = ParseNote(),
                 Organization = ParseOrganization(),
                 Prefix = ParsePrefix(),
                 Revision = ParseRevision(),
