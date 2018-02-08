@@ -15,8 +15,8 @@ namespace vCardLib.Tests.CollectionTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				PhoneNumber phoneNumber = new PhoneNumber();
-				PhoneNumberCollection phoneNumberCollection = new PhoneNumberCollection();
+				var phoneNumber = new PhoneNumber();
+				var phoneNumberCollection = new PhoneNumberCollection();
 				phoneNumberCollection.Add(phoneNumber);
 				phoneNumber = phoneNumberCollection[0];
 				phoneNumberCollection[0] = phoneNumber;
@@ -27,7 +27,7 @@ namespace vCardLib.Tests.CollectionTests
 		[Test]
 		public void InsertAndRemoveNonExistentIndices()
 		{
-			PhoneNumberCollection phoneNumberCollection = new PhoneNumberCollection();
+			var phoneNumberCollection = new PhoneNumberCollection();
 			Assert.Throws<IndexOutOfRangeException>(delegate
 			{
 				var phoneNumber_ = phoneNumberCollection[0];

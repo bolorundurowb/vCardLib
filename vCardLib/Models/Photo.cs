@@ -58,10 +58,10 @@ namespace vCardLib.Models
             {
                 return "";
             }
-            MemoryStream stream = new MemoryStream();
+            var stream = new MemoryStream();
             Picture.Save(stream, ImageFormat.Bmp);
-            byte[] imageBytes = stream.ToArray();
-            string base64String = Convert.ToBase64String(imageBytes);
+            var imageBytes = stream.ToArray();
+            var base64String = Convert.ToBase64String(imageBytes);
             return base64String;
         }
     }

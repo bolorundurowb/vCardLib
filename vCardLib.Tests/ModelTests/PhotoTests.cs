@@ -9,7 +9,7 @@ namespace vCardLib.Tests.ModelTests
 		[Test]
 		public void WhenPictureIsNull()
 		{
-			Photo photo = new Photo();
+			var photo = new Photo();
 			photo.Type = PhotoType.URL;
 			photo.Encoding = PhotoEncoding.GIF;
 			photo.PhotoURL = "http://google.com/test.gif";
@@ -22,10 +22,10 @@ namespace vCardLib.Tests.ModelTests
 		public void WhenPictureIsNotNull()
 		{
 			var request = System.Net.WebRequest.Create("https://jpeg.org/images/jpeg-logo-plain.png");
-            System.Net.WebResponse response = request.GetResponse();
-            System.IO.Stream responseStream = response.GetResponseStream();
+            var response = request.GetResponse();
+            var responseStream = response.GetResponseStream();
 
-            Photo photo = new Photo();
+            var photo = new Photo();
 			photo.Type = PhotoType.Image;
 			photo.Encoding = PhotoEncoding.JPEG;
 			photo.Picture = new System.Drawing.Bitmap(responseStream);

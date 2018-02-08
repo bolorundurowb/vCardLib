@@ -15,8 +15,8 @@ namespace vCardLib.Tests.CollectionTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				Hobby hobby = new Hobby();
-			    HobbyCollection hobbyCollection = new HobbyCollection {hobby};
+				var hobby = new Hobby();
+			    var hobbyCollection = new HobbyCollection {hobby};
 			    hobby = hobbyCollection[0];
 				hobbyCollection[0] = hobby;
 				hobbyCollection.Remove(hobby);
@@ -26,7 +26,7 @@ namespace vCardLib.Tests.CollectionTests
 		[Test]
 		public void InsertAndRemoveNonExistentIndices()
 		{
-			HobbyCollection hobbyCollection = new HobbyCollection();
+			var hobbyCollection = new HobbyCollection();
 			Assert.Throws<IndexOutOfRangeException>(delegate
 			{
 				var hobby_ = hobbyCollection[0];

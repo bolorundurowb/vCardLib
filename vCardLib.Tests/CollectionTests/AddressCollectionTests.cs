@@ -13,8 +13,8 @@ namespace vCardLib.Tests.CollectionTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				Address address = new Address();
-				AddressCollection addressCollection = new AddressCollection();
+				var address = new Address();
+				var addressCollection = new AddressCollection();
 				addressCollection.Add(address);
 				address = addressCollection[0];
 				addressCollection[0] = address;
@@ -25,7 +25,7 @@ namespace vCardLib.Tests.CollectionTests
 		[Test]
 		public void InsertAndRemoveNonExistentIndices()
 		{
-			AddressCollection addressCollection = new AddressCollection();
+			var addressCollection = new AddressCollection();
 			Assert.Throws<IndexOutOfRangeException>(delegate
 			{
 				var address_ = addressCollection[0];

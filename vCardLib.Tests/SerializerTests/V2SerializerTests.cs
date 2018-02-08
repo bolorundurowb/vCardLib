@@ -10,10 +10,10 @@ namespace vCardLib.Tests.SerializerTests
         [Test]
         public void SerializeTest()
         {
-            string vcardString = String.Empty;
+            var vcardString = String.Empty;
             Assert.DoesNotThrow(delegate
             {
-                vCard vcard = new vCard();
+                var vcard = new vCard();
                 vcardString = V2Serializer.Serialize(vcard);
             });
             Assert.IsEmpty(vcardString);

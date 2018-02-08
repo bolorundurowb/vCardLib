@@ -12,8 +12,8 @@ namespace vCardLib.Tests.CollectionTests
         public void InsertAndRemove()
         {
             Assert.DoesNotThrow(delegate {
-                Photo photo = new Photo();
-                PhotoCollection photoCollection = new PhotoCollection();
+                var photo = new Photo();
+                var photoCollection = new PhotoCollection();
                 photoCollection.Add(photo);
                 photoCollection[0] = photo;
                 photo = photoCollection[0];
@@ -24,7 +24,7 @@ namespace vCardLib.Tests.CollectionTests
         [Test]
         public void InsertAndRemoveNonExistentIndices()
         {
-            PhotoCollection photoCollection = new PhotoCollection();
+            var photoCollection = new PhotoCollection();
             Assert.Throws<IndexOutOfRangeException>(delegate
             {
                 var photo_ = photoCollection[0];

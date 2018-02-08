@@ -27,9 +27,9 @@ namespace vCardLib.Tests.HelperTests
 				Helper.GetStreamReaderFromFile(filePath); 
 			});
 			
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			filePath = Path.Combine(assemblyFolder, "invalid.vcf");
-			StreamReader streamReader = Helper.GetStreamReaderFromFile(filePath);
+			var streamReader = Helper.GetStreamReaderFromFile(filePath);
 			Assert.IsNotNull(streamReader);
 		}
 
@@ -40,8 +40,8 @@ namespace vCardLib.Tests.HelperTests
 			Assert.Throws<ArgumentNullException>(delegate {
 				Helper.GetStringFromStreamReader(streamReader);
 			});
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "invalid.vcf");
 			streamReader = Helper.GetStreamReaderFromFile(filePath);
 			string vcardString = null;
 			Assert.DoesNotThrow(delegate {
@@ -54,7 +54,7 @@ namespace vCardLib.Tests.HelperTests
 		[Test]
 		public void GetContactsArrayFromStringTest()
 		{
-			string contactsString = "   ";
+			var contactsString = "   ";
 			Assert.Throws<ArgumentException>(delegate {
 				Helper.GetContactsArrayFromString(contactsString);
 			});
@@ -74,8 +74,8 @@ namespace vCardLib.Tests.HelperTests
 		[Test]
 		public void GetContactDetailsArrayFromStringTest()
 		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			var streamReader = Helper.GetStreamReaderFromFile(filePath);
 			var vcardString = Helper.GetStringFromStreamReader(streamReader);
 			var contacts = Helper.GetContactsArrayFromString(vcardString);

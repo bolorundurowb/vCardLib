@@ -24,7 +24,7 @@ namespace vCardLib.Helpers
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("The specified file at the filepath does not exist");
 
-            Encoding encoding = GetEncoding(filePath);
+            var encoding = GetEncoding(filePath);
             return new StreamReader(filePath, encoding);
         }
 
@@ -86,7 +86,7 @@ namespace vCardLib.Helpers
         {
             try
             {
-                byte[] imageBytes = Convert.FromBase64String(base64String);
+                var imageBytes = Convert.FromBase64String(base64String);
                 Bitmap bmp;
                 using (var ms = new MemoryStream(imageBytes))
                 {

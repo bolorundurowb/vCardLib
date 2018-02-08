@@ -18,8 +18,8 @@ namespace vCardLib.Tests.CollectionTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				vCard vcard = new vCard();
-				vCardCollection vcardCollection = new vCardCollection();
+				var vcard = new vCard();
+				var vcardCollection = new vCardCollection();
 				vcardCollection.Add(vcard);
 				vcardCollection[0] = vcard;
 				vcard = vcardCollection[0];
@@ -30,7 +30,7 @@ namespace vCardLib.Tests.CollectionTests
 		[Test]
 		public void InsertAndRemoveNonExistentIndices()
 		{
-			vCardCollection vcardCollection = new vCardCollection();
+			var vcardCollection = new vCardCollection();
 			Assert.Throws<IndexOutOfRangeException>(delegate
 			{
 				var vcard_ = vcardCollection[0];
@@ -48,8 +48,8 @@ namespace vCardLib.Tests.CollectionTests
 			if (File.Exists("vcardcollection1.vcf"))
 				File.Delete("vcardcollection1.vcf");
 			
-			vCardCollection vcardCollection = new vCardCollection();
-		    vCard vcard = new vCard {Version = Version.V2};
+			var vcardCollection = new vCardCollection();
+		    var vcard = new vCard {Version = Version.V2};
 		    vcardCollection.Add(vcard);
 			Assert.DoesNotThrow(delegate
 			{
@@ -82,8 +82,8 @@ namespace vCardLib.Tests.CollectionTests
 			if (File.Exists("vcardcollection2.vcf"))
 				File.Delete("vcardcollection2.vcf");
 			
-			vCardCollection vcardCollection = new vCardCollection();
-		    vCard vcard = new vCard {Version = Version.V2};
+			var vcardCollection = new vCardCollection();
+		    var vcard = new vCard {Version = Version.V2};
 			vcardCollection.Add(vcard);
 			
 		    Assert.DoesNotThrow(delegate

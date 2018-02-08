@@ -59,8 +59,8 @@ namespace vCardLib.Tests
 		[Test]
 		public void ReadsCardsWithoutErrors()
 		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "v2.vcf");
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "v2.vcf");
 			vCardCollection collection = null;
 			Assert.DoesNotThrow(delegate {
 				collection = vCard.FromFile(filePath);
@@ -80,8 +80,8 @@ namespace vCardLib.Tests
 		public void DoesNotOverwriteExceptInstructed()
 		{
 			Assert.IsNotNull(_vcard);
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "invalid.vcf");
 			Assert.Throws<InvalidOperationException>(delegate {
 				_vcard.Save(filePath);
 			});
@@ -90,66 +90,66 @@ namespace vCardLib.Tests
         [Test]
         public void SavesV2CardWithoutErrors()
         {
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "newv2.vcf");
 			Assert.IsNotNull(_vcard);
             Assert.DoesNotThrow(delegate
             {
                 _vcard.GivenName = "Forrest";
                 _vcard.FamilyName = "Gump";
-                PhoneNumber num1 = new PhoneNumber();
+                var num1 = new PhoneNumber();
                 num1.Number = "(111) 555-1212";
 				num1.Type = PhoneNumberType.None;
                 _vcard.PhoneNumbers.Add(num1);
-                PhoneNumber num2 = new PhoneNumber();
+                var num2 = new PhoneNumber();
                 num2.Number = "(404) 555-1212";
                 num2.Type = PhoneNumberType.Home;
                 _vcard.PhoneNumbers.Add(num2);
-				PhoneNumber num3 = new PhoneNumber();
+				var num3 = new PhoneNumber();
 				num3.Number = "(404) 555-1212";
 				num3.Type = PhoneNumberType.MainNumber;
 				_vcard.PhoneNumbers.Add(num3);
-                EmailAddress email1 = new EmailAddress();
+                var email1 = new EmailAddress();
                 email1.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
                 email1.Type = EmailType.None;
                 _vcard.EmailAddresses.Add(email1);
-				EmailAddress email2 = new EmailAddress();
+				var email2 = new EmailAddress();
 				email2.Email = new System.Net.Mail.MailAddress("forrestgump@example.com");
 				email2.Type = EmailType.Internet;
 				_vcard.EmailAddresses.Add(email2);
-                Address address1 = new Address();
+                var address1 = new Address();
                 address1.Location = "Sabo, Yaba";
 				address1.Type = AddressType.None;
                 _vcard.Addresses.Add(address1);
-				Address address2 = new Address();
+				var address2 = new Address();
 				address2.Location = "Sabo, Yaba";
 				address2.Type = AddressType.Work;
 				_vcard.Addresses.Add(address2);
-                Photo photo1 = new Photo();
+                var photo1 = new Photo();
                 photo1.Encoding = PhotoEncoding.JPEG;
                 photo1.PhotoURL = "www.google/images";
                 photo1.Type = PhotoType.URL;
                 _vcard.Pictures.Add(photo1);
 
 				var request = System.Net.WebRequest.Create("https://jpeg.org/images/jpeg-logo-plain.png");
-				System.Net.WebResponse response = request.GetResponse();
-				Stream responseStream = response.GetResponseStream();
+				var response = request.GetResponse();
+				var responseStream = response.GetResponseStream();
 
-				Photo photo2 = new Photo();
+				var photo2 = new Photo();
 				photo2.Type = PhotoType.Image;
 				photo2.Encoding = PhotoEncoding.JPEG;
 				photo2.Picture = new System.Drawing.Bitmap(responseStream);
 				_vcard.Pictures.Add(photo2);
 
-                Hobby hobby = new Hobby();
+                var hobby = new Hobby();
                 hobby.Activity = "Watching Hobbits";
                 hobby.Level = Level.Medium;
                 _vcard.Hobbies.Add(hobby);
-                Interest interest = new Interest();
+                var interest = new Interest();
                 interest.Activity = "Watching Hobbits";
                 interest.Level = Level.Medium;
                 _vcard.Interests.Add(interest);
-                Expertise expertise = new Expertise();
+                var expertise = new Expertise();
                 expertise.Area = "Watching Hobbits";
                 expertise.Level = Level.Medium;
                 _vcard.Expertises.Add(expertise);
@@ -162,8 +162,8 @@ namespace vCardLib.Tests
         [Test]
         public void SavesV3CardWithoutErrors()
         {
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
+            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "newv3.vcf");
 			Assert.IsNotNull(_vcard);
 			Assert.DoesNotThrow(delegate {
 				_vcard.Save(filePath, Version.V3, WriteOptions.Overwrite, Encoding.ASCII);
@@ -182,8 +182,8 @@ namespace vCardLib.Tests
 		[Test]
 		public void Read_Saved_Vcard()
 		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "newv3.vcf");
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "newv3.vcf");
 			Assert.DoesNotThrow(delegate
 			{
 				var vcard = Deserializer.FromFile(filePath);
@@ -193,8 +193,8 @@ namespace vCardLib.Tests
 		[Test]
 		public void Read_Non_UTF8_Vcard()
 		{
-			string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			string filePath = Path.Combine(assemblyFolder, "newv2.vcf");
+			var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var filePath = Path.Combine(assemblyFolder, "newv2.vcf");
 			Assert.DoesNotThrow(delegate
 			{
 				var vcard = Deserializer.FromFile(filePath);

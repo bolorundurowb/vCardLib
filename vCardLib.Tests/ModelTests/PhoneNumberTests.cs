@@ -13,7 +13,7 @@ namespace vCardLib.Tests.ModelTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				PhoneNumber phoneNumber = new PhoneNumber();
+				var phoneNumber = new PhoneNumber();
 				phoneNumber.Number = "089089893333";
 				phoneNumber.Type = PhoneNumberType.BBS;
 				phoneNumber.Type = PhoneNumberType.Cell;

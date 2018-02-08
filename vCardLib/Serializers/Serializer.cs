@@ -23,13 +23,14 @@ namespace vCardLib.Serializers
         /// <returns>A value stating if the serialization was successful or not</returns>
         /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
         /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
-        public static bool Serialize(vCard vcard, string filePath, Version version, WriteOptions options = WriteOptions.ThrowError, Encoding encoding = null)
+        public static bool Serialize(vCard vcard, string filePath, Version version,
+            WriteOptions options = WriteOptions.ThrowError, Encoding encoding = null)
         {
             if (encoding == null)
             {
                 encoding = Encoding.Unicode;
             }
-            
+
             if (options == WriteOptions.ThrowError)
             {
                 if (File.Exists(filePath))
@@ -42,15 +43,17 @@ namespace vCardLib.Serializers
                     );
                 }
             }
+
             if (vcard == null)
             {
                 throw new ArgumentNullException("The vcard cannot be null.");
             }
+
             if (version == Version.V2)
             {
                 try
                 {
-					string vcfString = Serialize(vcard, Version.V2);
+                    var vcfString = Serialize(vcard, Version.V2);
                     File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
@@ -63,7 +66,7 @@ namespace vCardLib.Serializers
             {
                 try
                 {
-					string vcfString = Serialize(vcard, Version.V3);
+                    var vcfString = Serialize(vcard, Version.V3);
                     File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
@@ -74,10 +77,12 @@ namespace vCardLib.Serializers
             }
             else if (version == Version.V4)
             {
-				//TODO: once support has been implemented, enable writing capabilities
-				/*string vcfString = */Serialize(vcard, Version.V4);
-				//File.WriteAllText(filePath, vcfString)
+                //TODO: once support has been implemented, enable writing capabilities
+                /*string vcfString = */
+                Serialize(vcard, Version.V4);
+                //File.WriteAllText(filePath, vcfString)
             }
+
             return true;
         }
 
@@ -92,14 +97,14 @@ namespace vCardLib.Serializers
         /// <returns>A value stating if the serialization was successful or not</returns>
         /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
         /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
-        public static bool Serialize(vCardCollection vcardCollection, string filePath, Version version, 
+        public static bool Serialize(vCardCollection vcardCollection, string filePath, Version version,
             WriteOptions options = WriteOptions.ThrowError, Encoding encoding = null)
-        { 
+        {
             if (encoding == null)
             {
                 encoding = Encoding.Unicode;
             }
-            
+
             if (options == WriteOptions.ThrowError)
             {
                 if (File.Exists(filePath))
@@ -112,35 +117,44 @@ namespace vCardLib.Serializers
                     );
                 }
             }
+
             if (vcardCollection == null)
             {
                 throw new ArgumentNullException("The vcard collection cannot be null.");
             }
-            var vcardCollectionString = "";
-            if (version == Version.V2)
+
+            var vcardCollectionString = new StringBuilder();
+            switch (version)
             {
-                foreach(vCard vcard in vcardCollection)
-                {
-                    vcardCollectionString += Serialize(vcard, Version.V2);
-                }
+                case Version.V2:
+                    foreach (vCard vcard in vcardCollection)
+                    {
+                        vcardCollectionString.Append(Serialize(vcard, Version.V2));
+                        vcardCollectionString.Append(Environment.NewLine);
+                    }
+
+                    break;
+                case Version.V3:
+                    foreach (vCard vcard in vcardCollection)
+                    {
+                        vcardCollectionString.Append(Serialize(vcard, Version.V3));
+                        vcardCollectionString.Append(Environment.NewLine);
+                    }
+
+                    break;
+                default:
+                    foreach (vCard vcard in vcardCollection)
+                    {
+                        vcardCollectionString.Append(Serialize(vcard, Version.V4));
+                        vcardCollectionString.Append(Environment.NewLine);
+                    }
+
+                    break;
             }
-            else if (version == Version.V3)
-            {
-                foreach (vCard vcard in vcardCollection)
-                {
-                    vcardCollectionString += Serialize(vcard, Version.V3);
-                }
-            }
-            else
-            {
-                foreach (vCard vcard in vcardCollection)
-                {
-                    vcardCollectionString += Serialize(vcard, Version.V4);
-                }
-            }
+
             try
             {
-                File.WriteAllText(filePath, vcardCollectionString, encoding);
+                File.WriteAllText(filePath, vcardCollectionString.ToString(), encoding);
                 return true;
             }
             catch (Exception e)
@@ -152,55 +166,68 @@ namespace vCardLib.Serializers
 
         private static string Serialize(vCard vcard, Version version)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
             stringBuilder.Append("BEGIN:VCARD" + Environment.NewLine);
             stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
-            stringBuilder.Append("N:" + vcard.FamilyName + ";" + vcard.GivenName + ";" + vcard.MiddleName + ";" + vcard.Prefix + ";" + vcard.Suffix + Environment.NewLine);
+            stringBuilder.Append(
+                $"N:{vcard.FamilyName};{vcard.GivenName};{vcard.MiddleName};{vcard.Prefix};{vcard.Suffix}{Environment.NewLine}"
+            );
             stringBuilder.Append("FN:" + vcard.FormattedName + Environment.NewLine);
             if (!string.IsNullOrEmpty(vcard.Organization))
             {
                 stringBuilder.Append("ORG:" + vcard.Organization + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.Title))
             {
                 stringBuilder.Append("TITLE:" + vcard.Title + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.Url))
             {
                 stringBuilder.Append("URL:" + vcard.Url + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.NickName))
             {
                 stringBuilder.Append("NICKNAME:" + vcard.NickName + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.Language))
             {
                 stringBuilder.Append("LANG:" + vcard.Language + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.BirthPlace))
             {
                 stringBuilder.Append("BIRTHPLACE:" + vcard.BirthPlace + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.DeathPlace))
             {
                 stringBuilder.Append("DEATHPLACE:" + vcard.DeathPlace + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.TimeZone))
             {
                 stringBuilder.Append("TZ:" + vcard.TimeZone + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.Note))
             {
                 stringBuilder.Append("NOTE:" + vcard.Note);
             }
+
             if (!string.IsNullOrEmpty(vcard.XSkypeDisplayName))
             {
                 stringBuilder.Append("X-SKYPE-DISPLAYNAME:" + vcard.XSkypeDisplayName + Environment.NewLine);
             }
+
             if (!string.IsNullOrEmpty(vcard.XSkypePstnNumber))
             {
                 stringBuilder.Append("X-SKYPE-PSTNNUMBER:" + vcard.XSkypePstnNumber + Environment.NewLine);
             }
+
             stringBuilder.Append("KIND:" + vcard.Kind.ToString().ToUpper() + Environment.NewLine);
             stringBuilder.Append("GENDER:" + vcard.Gender.ToString().ToUpper() + Environment.NewLine);
 
@@ -208,10 +235,12 @@ namespace vCardLib.Serializers
             {
                 stringBuilder.Append("GEO:" + vcard.Geo.Longitude + ";" + vcard.Geo.Latitude);
             }
+
             if (vcard.BirthDay != null)
             {
                 var birthDay = (DateTime) vcard.BirthDay;
-                stringBuilder.Append("BDAY:" + birthDay.Year + birthDay.Month.ToString("00") + birthDay.Day.ToString("00"));
+                stringBuilder.Append("BDAY:" + birthDay.Year + birthDay.Month.ToString("00") +
+                                     birthDay.Day.ToString("00"));
             }
 
             if (version == Version.V2)
@@ -229,6 +258,7 @@ namespace vCardLib.Serializers
                 stringBuilder.Append("VERSION:4.0" + Environment.NewLine);
                 stringBuilder.Append(V4Serializer.Serialize(vcard));
             }
+
             stringBuilder.Append(Environment.NewLine);
             stringBuilder.Append("END:VCARD");
             return stringBuilder.ToString();

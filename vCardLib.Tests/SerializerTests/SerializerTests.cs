@@ -17,7 +17,7 @@ namespace vCardLib.Tests.SerializerTests
         [Test]
         public void SerializeVcardTest()
         {
-            string filePath = Path.Combine(assemblyFolder, "v3.vcf");
+            var filePath = Path.Combine(assemblyFolder, "v3.vcf");
             vCard vcard = null;
             Assert.Throws<InvalidOperationException>(delegate
             {
@@ -79,7 +79,7 @@ namespace vCardLib.Tests.SerializerTests
         public void SerializeVcardErrorTest()
         {
             string filePath = null;
-            vCard vcard = new vCard();
+            var vcard = new vCard();
             filePath = null;
             Assert.DoesNotThrow(delegate
             {
@@ -100,7 +100,7 @@ namespace vCardLib.Tests.SerializerTests
         [Test]
         public void SerializeVcardCollectionTest()
         {
-            string filePath = Path.Combine(assemblyFolder, "invalid.vcf");
+            var filePath = Path.Combine(assemblyFolder, "invalid.vcf");
             vCardCollection vcardCollection = null;
             Assert.Throws<InvalidOperationException>(delegate
             {
@@ -138,7 +138,7 @@ namespace vCardLib.Tests.SerializerTests
         public void SerializeVcardCollectionErrorTest()
         {
             string filePath = null;
-            vCardCollection vcardCollection  = new vCardCollection();
+            var vcardCollection  = new vCardCollection();
             Assert.DoesNotThrow(delegate
             {
                 Serializer.Serialize(vcardCollection, filePath, Version.V2);

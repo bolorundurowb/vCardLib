@@ -13,8 +13,8 @@ namespace vCardLib.Tests.CollectionTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				EmailAddress emailAddress = new EmailAddress();
-				EmailAddressCollection emailCollection = new EmailAddressCollection();
+				var emailAddress = new EmailAddress();
+				var emailCollection = new EmailAddressCollection();
 				emailCollection.Add(emailAddress);
 				emailCollection[0] = emailAddress;
 				emailAddress = emailCollection[0];
@@ -25,7 +25,7 @@ namespace vCardLib.Tests.CollectionTests
 		[Test]
 		public void InsertAndRemoveNonExistentIndices()
 		{
-			EmailAddressCollection emailCollection = new EmailAddressCollection();
+			var emailCollection = new EmailAddressCollection();
 			Assert.Throws<IndexOutOfRangeException>(delegate {
 				var email_ = emailCollection[0];
 			});

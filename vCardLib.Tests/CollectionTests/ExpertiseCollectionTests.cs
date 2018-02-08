@@ -15,8 +15,8 @@ namespace vCardLib.Tests.CollectionTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				Expertise expertise = new Expertise();
-				ExpertiseCollection expertiseCollection = new ExpertiseCollection();
+				var expertise = new Expertise();
+				var expertiseCollection = new ExpertiseCollection();
 				expertiseCollection.Add(expertise);
 				expertise = expertiseCollection[0];
 				expertiseCollection[0] = expertise;
@@ -27,7 +27,7 @@ namespace vCardLib.Tests.CollectionTests
 		[Test]
 		public void InsertAndRemoveNonExistentIndices()
 		{
-			ExpertiseCollection expertiseCollection = new ExpertiseCollection();
+			var expertiseCollection = new ExpertiseCollection();
 			Assert.Throws<IndexOutOfRangeException>(delegate
 			{
 				var expertise_ = expertiseCollection[0];

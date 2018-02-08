@@ -12,11 +12,11 @@ namespace vCardLib.Tests.DeserializerTests
         [Test]
         public void ParseTest()
         {
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePath = Path.Combine(assemblyFolder, "v3.vcf");
-            StreamReader streamReader = Helper.GetStreamReaderFromFile(filePath);
-            string contactsString = Helper.GetStringFromStreamReader(streamReader);
-            string[] contacts = Helper.GetContactsArrayFromString(contactsString);
+            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var filePath = Path.Combine(assemblyFolder, "v3.vcf");
+            var streamReader = Helper.GetStreamReaderFromFile(filePath);
+            var contactsString = Helper.GetStringFromStreamReader(streamReader);
+            var contacts = Helper.GetContactsArrayFromString(contactsString);
             vCard vcard = null;
             Assert.DoesNotThrow(delegate
             {
