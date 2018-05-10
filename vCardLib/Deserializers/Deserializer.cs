@@ -68,7 +68,7 @@ namespace vCardLib.Deserializers
                 throw new InvalidOperationException("details do not contain a specification for 'Version'.");
             }
 
-            var version = float.Parse(versionString.Replace("VERSION:", "").Trim());
+            var version = float.Parse(versionString.Replace("VERSION:", "").Trim(), CultureInfo.InvariantCulture);
             vCard vcard = null;
             if (version.Equals(2f) || version.Equals(2.1f))
             {
