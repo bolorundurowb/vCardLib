@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using vCardLib.Models;
 
 namespace vCardLib.Collections
@@ -6,24 +7,24 @@ namespace vCardLib.Collections
     /// <summary>
     /// Collection class to hold all contact addresses
     /// </summary>
-    public class AddressCollection : System.Collections.CollectionBase
+    public class AddressCollection : CollectionBase
     {
         /// <summary>
         /// Add an address to the collection
         /// </summary>
-        /// <param name="Address">An address</param>
-        public void Add(Address Address)
+        /// <param name="address">An address</param>
+        public void Add(Address address)
         {
-            List.Add(Address);
+            List.Add(address);
         }
 
         /// <summary>
         /// Method to remove an Address from the Address collection
         /// </summary>
-        /// <param name="Address">Address object to be removed</param>
-        public void Remove(Address Address)
+        /// <param name="address">Address object to be removed</param>
+        public void Remove(Address address)
         {
-            List.Remove(Address);
+            List.Remove(address);
         }
 
         /// <summary>
@@ -36,16 +37,22 @@ namespace vCardLib.Collections
             get
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (Address)List[index];
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                return (Address) List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                List[index] = value;
             }
         }
     }
