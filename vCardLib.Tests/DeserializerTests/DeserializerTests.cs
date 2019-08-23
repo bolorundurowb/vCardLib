@@ -82,7 +82,6 @@ namespace vCardLib.Tests.DeserializerTests
             {
                 "VERSION:4.0"
             };
-            vcard = null;
             Assert.Throws<NotImplementedException>(delegate
             {
                 vcard = Deserializer.GetVcardFromDetails(details);
