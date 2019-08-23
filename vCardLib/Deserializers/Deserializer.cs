@@ -14,6 +14,12 @@ namespace vCardLib.Deserializers
     /// </summary>
     public static class Deserializer
     {
+        private static string[] _supportedFields = {
+            "BEGIN", "VERSION", "N", "FN", "ORG", "TITLE", "PHOTO", "TEL", "ADR", "EMAIL", "REV", "TZ", "KIND", "URL",
+            "LANG", "NICKNAME", "BIRTHPLACE", "DEATHPLACE", "BDAY", "NOTE", "GENDER", "X-SKYPE-DISPLAYNAME",
+            "X-SKYPE-PSTNNUMBER", "GEO", "HOBBY", "EXPERTISE", "INTEREST", "END"
+        };
+
         private static string[] _contactDetails;
 
         /// <summary>
@@ -125,6 +131,7 @@ namespace vCardLib.Deserializers
                 XSkypeDisplayName = ParseXSkypeDisplayName(),
                 XSkypePstnNumber = ParseXSkypePstnNumber()
             };
+
             switch (version)
             {
                 case Version.V2:
@@ -250,7 +257,7 @@ namespace vCardLib.Deserializers
                 return deathplaceString.Replace("DEATHPLACE:", "").Trim();
             }
 
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -267,8 +274,8 @@ namespace vCardLib.Deserializers
                     .Replace("-", "")
                     .Trim();
                 DateTime birthday;
-                var format = "yyyyMMdd";
-                var dateTimeStyle = DateTimeStyles.None;
+                const string format = "yyyyMMdd";
+                const DateTimeStyles dateTimeStyle = DateTimeStyles.None;
                 IFormatProvider provider = new CultureInfo("en-US", true);
                 if (DateTime.TryParseExact(bdayString, format, provider, dateTimeStyle, out birthday))
                 {
@@ -300,7 +307,7 @@ namespace vCardLib.Deserializers
             var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 0)
                 return names[0];
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -313,7 +320,7 @@ namespace vCardLib.Deserializers
             var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 1)
                 return names[1];
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -326,7 +333,7 @@ namespace vCardLib.Deserializers
             var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 2)
                 return names[2];
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -339,7 +346,7 @@ namespace vCardLib.Deserializers
             var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 3)
                 return names[3];
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -352,7 +359,7 @@ namespace vCardLib.Deserializers
             var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
             if (names?.Length > 4)
                 return names[4];
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -364,7 +371,7 @@ namespace vCardLib.Deserializers
             var tzString = _contactDetails.FirstOrDefault(s => s.StartsWith("TZ"));
             if (tzString != null)
                 return tzString.Replace("TZ:", "").Trim();
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -376,7 +383,7 @@ namespace vCardLib.Deserializers
             var noteString = _contactDetails.FirstOrDefault(s => s.StartsWith("NOTE"));
             if (noteString != null)
                 return noteString.Replace("NOTE:", "").Trim();
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -411,7 +418,7 @@ namespace vCardLib.Deserializers
                 return xSkypeDisplayNumberString.Replace("X-SKYPE-DISPLAYNAME:", "");
             }
 
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>
@@ -426,7 +433,7 @@ namespace vCardLib.Deserializers
                 return xSkypePstnString.Replace("X-SKYPE-PSTNNUMBER:", "");
             }
 
-            return String.Empty;
+            return string.Empty;
         }
 
         /// <summary>

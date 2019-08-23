@@ -189,6 +189,7 @@ namespace vCardLib
             Interests = new InterestCollection();
             Hobbies = new HobbyCollection();
             Expertises = new ExpertiseCollection();
+            CustomFields = new List<KeyValuePair<string, string>>();
 			//Set the default vCard version as 2.1
 			Version = Version.V2;
 
