@@ -175,7 +175,7 @@ namespace vCardLib
         /// <summary>
         /// All other fields not defined in the spec
         /// </summary>
-        public IEnumerable<KeyValuePair<string, string>> CustomFields { get; set; }
+        public List<KeyValuePair<string, string>> CustomFields { get; set; }
 
         /// <summary>
         /// Default constructor, it initializes the collections in the vCard object

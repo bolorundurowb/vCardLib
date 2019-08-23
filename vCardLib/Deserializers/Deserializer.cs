@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using vCardLib.Collections;
+using vCardLib.Extensions;
 using vCardLib.Helpers;
 using vCardLib.Models;
 using Version = vCardLib.Helpers.Version;
@@ -14,8 +16,9 @@ namespace vCardLib.Deserializers
     /// </summary>
     public static class Deserializer
     {
-        private static string[] _supportedFields = {
-            "BEGIN", "VERSION", "N", "FN", "ORG", "TITLE", "PHOTO", "TEL", "ADR", "EMAIL", "REV", "TZ", "KIND", "URL",
+        private static string[] _supportedFields =
+        {
+            "BEGIN", "VERSION", "N:", "FN:", "ORG", "TITLE", "PHOTO", "TEL", "ADR", "EMAIL", "REV", "TZ", "KIND", "URL",
             "LANG", "NICKNAME", "BIRTHPLACE", "DEATHPLACE", "BDAY", "NOTE", "GENDER", "X-SKYPE-DISPLAYNAME",
             "X-SKYPE-PSTNNUMBER", "GEO", "HOBBY", "EXPERTISE", "INTEREST", "END"
         };
@@ -132,14 +135,35 @@ namespace vCardLib.Deserializers
                 XSkypePstnNumber = ParseXSkypePstnNumber()
             };
 
+            vcard.CustomFields = vcard.CustomFields ?? new List<KeyValuePair<string, string>>();
+            foreach (var contactDetail in _contactDetails)
+            {
+                if (_supportedFields.Any(x => contactDetail.StartsWith(x)))
+                {
+                    continue;
+                }
+
+                var contactDetailParts = contactDetail.Split(':');
+                if (contactDetailParts.Length <= 1)
+                {
+                    continue;
+                }
+
+                var entry = new KeyValuePair<string, string>(contactDetailParts[0],
+                    string.Join("", contactDetailParts.Slice(1)));
+                vcard.CustomFields.Add(entry);
+            }
+
             switch (version)
             {
                 case Version.V2:
                     return V2Deserializer.Parse(contactDetails, vcard);
                 case Version.V3:
                     return V3Deserializer.Parse(contactDetails, vcard);
-                default:
+                case Version.V4:
                     return V4Deserializer.Parse(contactDetails, vcard);
+                default:
+                    throw new ArgumentException($"The version {version} is not supported.");
             }
         }
 
