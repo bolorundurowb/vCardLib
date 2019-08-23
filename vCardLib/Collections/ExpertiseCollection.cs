@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using vCardLib.Models;
 
 namespace vCardLib.Collections
@@ -6,7 +7,7 @@ namespace vCardLib.Collections
     /// <summary>
     /// Collection class to hold all contact expertises
     /// </summary>
-    public class ExpertiseCollection : System.Collections.CollectionBase
+    public class ExpertiseCollection : CollectionBase
     {
         /// <summary>
         /// Method to add expertise to the expertise collection
@@ -36,16 +37,22 @@ namespace vCardLib.Collections
             get
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (Expertise)List[index];
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                return (Expertise) List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                List[index] = value;
             }
         }
     }
