@@ -36,13 +36,21 @@ namespace vCardLib.Collections
             get
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                return (PhoneNumber)List[index];
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                return (PhoneNumber) List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
                 List[index] = value;
             }
         }
