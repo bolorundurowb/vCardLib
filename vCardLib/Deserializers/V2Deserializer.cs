@@ -7,7 +7,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserializers
 {
-    public class V2Deserializer
+    public static class V2Deserializer
     {
         private static string[] _contactDetails;
 
@@ -24,6 +24,7 @@ namespace vCardLib.Deserializers
             {
                 vcard = new vCard();
             }
+
             vcard.Addresses = ParseAddresses();
             vcard.EmailAddresses = ParseEmailAddresses();
             vcard.Expertises = ParseExpertises();
@@ -35,7 +36,6 @@ namespace vCardLib.Deserializers
         }
 
 
-
         /// <summary>
         /// Gets the phone numbers from the details array
         /// </summary>
@@ -45,7 +45,7 @@ namespace vCardLib.Deserializers
             var phoneNumberCollection = new PhoneNumberCollection();
 
             var telStrings = _contactDetails.Where(s => s.StartsWith("TEL"));
-            foreach(var telString in telStrings)
+            foreach (var telString in telStrings)
             {
                 var phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
                 //Remove multiple typing
@@ -207,6 +207,7 @@ namespace vCardLib.Deserializers
                     phoneNumberCollection.Add(phoneNumber);
                 }
             }
+
             return phoneNumberCollection;
         }
 
@@ -301,8 +302,11 @@ namespace vCardLib.Deserializers
                         emailAddressCollection.Add(emailAddress);
                     }
                 }
-                catch (FormatException) { }
+                catch (FormatException)
+                {
+                }
             }
+
             return emailAddressCollection;
         }
 
@@ -314,7 +318,7 @@ namespace vCardLib.Deserializers
         {
             var addressCollection = new AddressCollection();
             var addressStrings = _contactDetails.Where(s => s.StartsWith("ADR"));
-            foreach(var addressStr in addressStrings)
+            foreach (var addressStr in addressStrings)
             {
                 var addressString = addressStr.Replace("ADR;", "").Replace("ADR:", "");
                 if (addressString.StartsWith("HOME:"))
@@ -387,6 +391,7 @@ namespace vCardLib.Deserializers
                     addressCollection.Add(address);
                 }
             }
+
             return addressCollection;
         }
 
@@ -398,7 +403,7 @@ namespace vCardLib.Deserializers
         {
             var hobbyCollection = new HobbyCollection();
             var hobbyStrings = _contactDetails.Where(s => s.StartsWith("HOBBY;"));
-            foreach(var hobbyStr in hobbyStrings)
+            foreach (var hobbyStr in hobbyStrings)
             {
                 var hobbyString = hobbyStr.Replace("HOBBY;", "");
                 var hobby = new Hobby();
@@ -421,6 +426,7 @@ namespace vCardLib.Deserializers
                     hobbyCollection.Add(hobby);
                 }
             }
+
             return hobbyCollection;
         }
 
@@ -456,6 +462,7 @@ namespace vCardLib.Deserializers
                     expertiseCollection.Add(expertise);
                 }
             }
+
             return expertiseCollection;
         }
 
@@ -488,9 +495,10 @@ namespace vCardLib.Deserializers
                 {
                     interest.Level = Level.Low;
                     interest.Activity = interestString.Replace("LOW:", "").Replace("low:", "").Trim();
-                   interestCollection.Add(interest);
+                    interestCollection.Add(interest);
                 }
             }
+
             return interestCollection;
         }
 
@@ -502,7 +510,7 @@ namespace vCardLib.Deserializers
         {
             var photoCollection = new PhotoCollection();
             var photoStrings = _contactDetails.Where(s => s.StartsWith("PHOTO;"));
-            foreach(var photoStr in photoStrings)
+            foreach (var photoStr in photoStrings)
             {
                 var photo = new Photo();
                 if (photoStr.Replace("PHOTO;", "").StartsWith("JPEG:"))
@@ -522,7 +530,8 @@ namespace vCardLib.Deserializers
                         {
                             photoString += _contactDetails[photoStrIndex];
                             photoStrIndex++;
-                            if (photoStrIndex < _contactDetails.Length && _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
+                            if (photoStrIndex < _contactDetails.Length &&
+                                _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
                                 break;
                         }
                         else
@@ -530,6 +539,7 @@ namespace vCardLib.Deserializers
                             break;
                         }
                     }
+
                     photoString = photoString.Trim();
                     photoString = photoString.Replace("PHOTO;", "");
                     photoString = photoString.Replace("JPEG", "");
@@ -550,6 +560,7 @@ namespace vCardLib.Deserializers
                     photoCollection.Add(photo);
                 }
             }
+
             return photoCollection;
         }
     }

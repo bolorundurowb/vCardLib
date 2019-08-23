@@ -9,6 +9,7 @@ namespace vCardLib.Collections
     /// <summary>
     /// Collection class to hold all vCard objects extracted
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public class vCardCollection : System.Collections.CollectionBase
     {
         /// <summary>
@@ -39,13 +40,21 @@ namespace vCardLib.Collections
             get
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                return (vCard)List[index];
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                return (vCard) List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
                 List[index] = value;
             }
         }
@@ -60,7 +69,8 @@ namespace vCardLib.Collections
         /// <exception cref="InvalidOperationException">The file already exists</exception>
         /// <exception cref="NotImplementedException">version 4 files are not yet supported</exception>
         /// <exception cref="ArgumentException">The vcard version is invalid</exception>
-        public bool Save(string filePath, Version version, WriteOptions writeOptions = WriteOptions.ThrowError, Encoding encoding = null)
+        public bool Save(string filePath, Version version, WriteOptions writeOptions = WriteOptions.ThrowError,
+            Encoding encoding = null)
         {
             return Serializer.Serialize(this, filePath, version, writeOptions, encoding);
         }

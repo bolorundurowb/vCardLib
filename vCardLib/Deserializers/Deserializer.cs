@@ -68,7 +68,11 @@ namespace vCardLib.Deserializers
                 throw new InvalidOperationException("details do not contain a specification for 'Version'.");
             }
 
-            var version = float.Parse(versionString.Replace("VERSION:", "").Trim());
+            var decimalSeparator = CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator;
+            var version = float.Parse(versionString
+                .Replace("VERSION:", "")
+                .Trim()
+                .Replace(".", decimalSeparator));
             vCard vcard = null;
             if (version.Equals(2f) || version.Equals(2.1f))
             {
@@ -464,15 +468,11 @@ namespace vCardLib.Deserializers
                 var geoParts = geoString.Split(';');
                 if (geoParts.Length == 2)
                 {
-                    double longitude;
-                    var longSuccess = double.TryParse(geoParts[0], out longitude);
-                    double latitude;
-                    var latSuccess = double.TryParse(geoParts[1], out latitude);
+                    var longSuccess = double.TryParse(geoParts[0], out _);
+                    var latSuccess = double.TryParse(geoParts[1], out var latitude);
                     if (longSuccess && latSuccess)
                     {
-                        var geo = new Geo();
-                        geo.Latitude = latitude;
-                        geo.Longitude = latitude;
+                        var geo = new Geo {Latitude = latitude, Longitude = latitude};
                         return geo;
                     }
                 }
