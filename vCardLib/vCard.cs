@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using vCardLib.Collections;
@@ -170,6 +171,11 @@ namespace vCardLib
         /// The contact's interests
         /// </summary>
         public InterestCollection Interests { get; set; }
+        
+        /// <summary>
+        /// All other fields not defined in the spec
+        /// </summary>
+        public IEnumerable<KeyValuePair<string, string>> CustomFields { get; set; }
 
         /// <summary>
         /// Default constructor, it initializes the collections in the vCard object
