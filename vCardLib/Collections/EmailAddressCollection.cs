@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using vCardLib.Models;
 
 namespace vCardLib.Collections
@@ -6,7 +7,7 @@ namespace vCardLib.Collections
     /// <summary>
     /// Collection class to hold all contact emailAddresss
     /// </summary>
-    public class EmailAddressCollection : System.Collections.CollectionBase
+    public class EmailAddressCollection : CollectionBase
     {
         /// <summary>
         /// Method to add emailAddress to the emailAddress collection
@@ -36,16 +37,22 @@ namespace vCardLib.Collections
             get
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    return (EmailAddress)List[index];
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                return (EmailAddress) List[index];
             }
             set
             {
                 if (index < 0 || index >= List.Count)
-                    throw new IndexOutOfRangeException("Index cannot be " + index + " because collection does not contain as many elements");
-                else
-                    List[index] = value;
+                {
+                    throw new IndexOutOfRangeException("Index cannot be " + index +
+                                                       " because collection does not contain as many elements");
+                }
+
+                List[index] = value;
             }
         }
     }
