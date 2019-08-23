@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:2.1
+item1.ADR;type=WORK;type=pref:;;1 Infinite Loop;Cupertino;CA;95014;United States
+item1.X-ABADR:us
+item2.URL;type=pref:http://www.apple.com
+item2.X-ABLabel:_$!<HomePage>!$_
+X-ABShowAs:COMPANY
+END:VCARD

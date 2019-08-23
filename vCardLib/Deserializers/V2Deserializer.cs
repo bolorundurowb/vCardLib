@@ -51,7 +51,7 @@ namespace vCardLib.Deserializers
                 //Remove multiple typing
                 if (phoneString.Contains(";"))
                 {
-                    var index = phoneString.LastIndexOf(";");
+                    var index = phoneString.LastIndexOf(";", StringComparison.Ordinal);
                     phoneString = phoneString.Remove(0, index + 1);
                 }
 

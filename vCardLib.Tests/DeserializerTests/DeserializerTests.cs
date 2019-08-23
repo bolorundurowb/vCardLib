@@ -82,11 +82,24 @@ namespace vCardLib.Tests.DeserializerTests
             {
                 "VERSION:4.0"
             };
-            vcard = null;
             Assert.Throws<NotImplementedException>(delegate
             {
                 vcard = Deserializer.GetVcardFromDetails(details);
             });
+        }
+
+        [Test]
+        public void DeserializeCardWithCustomFields()
+        {
+            var filePath = Path.Combine(assemblyFolder, "custom-fields.vcf");
+            vCardCollection collection = null;
+            Assert.DoesNotThrow(delegate
+            {
+                collection = Deserializer.FromFile(filePath);
+            });
+            Assert.AreEqual(1, collection.Count);
+            var vcard = collection[0];
+            Assert.AreEqual(vcard.CustomFields.Count, 5);
         }
     }
 }
