@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-      <Version>2.2.5</Version>
-    <Copyright>Copyright 2017</Copyright>
-      <PackageReleaseNotes>Fix bugs</PackageReleaseNotes>
-    <Authors>Bolorunduro Winner-Timothy</Authors>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageId>vCardLib.dll</PackageId>
-    <Description>vCardLib is a .NET library to help developers read either single or multiple contacts from a single vcf file or StreamReader.</Description>
-    <PackageIconUrl>http://www.iconarchive.com/download/i48687/custom-icon-design/pretty-office-2/contact.ico</PackageIconUrl>
-    <PackageProjectUrl>https://bolorundurowb.github.io/vCardLib/</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/bolorundurowb/vCardLib/blob/master/LICENSE</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131"/>
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0</TargetFrameworks>
+        <Version>2.2.6</Version>
+        <Copyright>Copyright 2019</Copyright>
+        <PackageReleaseNotes>Fix bugs</PackageReleaseNotes>
+        <Authors>Bolorunduro Winner-Timothy</Authors>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageId>vCardLib.dll</PackageId>
+        <Description>vCardLib is a .NET library to help developers read either single or multiple contacts from a single vcf file or StreamReader.</Description>
+        <PackageIconUrl>http://www.iconarchive.com/download/i48687/custom-icon-design/pretty-office-2/contact.ico</PackageIconUrl>
+        <PackageProjectUrl>https://bolorundurowb.github.io/vCardLib/</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/bolorundurowb/vCardLib/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131"/>
+    </ItemGroup>
 </Project>
