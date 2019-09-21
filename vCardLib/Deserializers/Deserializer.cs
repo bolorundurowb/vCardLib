@@ -129,8 +129,6 @@ namespace vCardLib.Deserializers
                 TimeZone = ParseTimeZone(),
                 Title = ParseTitle(),
                 Url = ParseUrl(),
-                XSkypeDisplayName = ParseXSkypeDisplayName(),
-                XSkypePstnNumber = ParseXSkypePstnNumber()
             };
 
             vcard.CustomFields = vcard.CustomFields ?? new List<KeyValuePair<string, string>>();

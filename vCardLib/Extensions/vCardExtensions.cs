@@ -9,28 +9,35 @@ namespace vCardLib.Extensions
     // ReSharper disable once InconsistentNaming
     public static class vCardExtensions
     {
+        private static readonly V2Serializer _v2Serializer = new V2Serializer();
+        private static readonly V3Serializer _v3Serializer = new V3Serializer();
+        private static readonly V4Serializer _v4Serializer = new V4Serializer();
+        
         public static void Save(this vCard This, string path, Encoding encoding = null, vCardVersion? version = null, OverWriteOptions overWriteOptions = OverWriteOptions.Proceed)
         {
-            Serializer serializer;
+            string contents;
 
             switch (version ?? This.Version)
             {
                 case vCardVersion.V2:
-                    serializer = new V2Serializer();
+                    contents = _v2Serializer.Serialize(This);
                     break;
                 case vCardVersion.V3:
-                    serializer = new V3Serializer();
+                    contents = _v3Serializer.Serialize(This);
                     break;
                 default:
-                    serializer = new V4Serializer();
+                    contents = _v4Serializer.Serialize(This);
                     break;
             }
 
-            var contents = serializer.Serialize(This);
-
             if (File.Exists(path) && overWriteOptions == OverWriteOptions.Throw)
             {
-                throw new InvalidOperationException("A file already exists at the provided path.");
+                throw new InvalidOperationException(
+                    "A file with the given filePath exists."
+                    + " If you want to overwrite the file,"
+                    + " then call this method and pass the "
+                    + "optional overwrite option"
+                );
             }
 
             File.WriteAllText(path, contents, encoding ?? Encoding.UTF8);

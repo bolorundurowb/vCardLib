@@ -8,6 +8,7 @@ namespace vCardLib
     /// <summary>
     /// Class to store the various vCard contact details
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public class vCard
     {
         /// <summary>
@@ -174,6 +175,7 @@ namespace vCardLib
             Hobbies = new List<Hobby>();
             Expertises = new List<Expertise>();
             CustomFields = new List<KeyValuePair<string, string>>();
+            Revision = DateTime.UtcNow;
         }
     }
 }

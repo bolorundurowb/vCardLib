@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using vCardLib.Models;
 
 namespace vCardLib.Serializers
@@ -7,86 +6,93 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Handles the serialization of version 3 cards
     /// </summary>
-    public class V3Serializer : Serializer
+    internal class V3Serializer : Serializer
     {
         /// <summary>
         /// Converts the vCard properties to a string
         /// </summary>
         /// <param name="vcard">The vcard object to be serialized</param>
         /// <returns>A string representing  the serialized properties of the vcard</returns>
-        public static string Serialize(vCard vcard)
+        public  string Serialize(vCard vcard)
         {
-            var stringBuilder = new StringBuilder();
-            foreach(PhoneNumber phoneNumber in vcard.PhoneNumbers)
+            base.SerializeSharedProperties(vcard);
+            foreach (PhoneNumber phoneNumber in vcard.PhoneNumbers)
             {
-                stringBuilder.Append(Environment.NewLine);
+                StringBuilder.Append(Environment.NewLine);
                 if (phoneNumber.Type == PhoneNumberType.None)
                 {
-                    stringBuilder.Append("TEL:" + phoneNumber.Number);
+                    StringBuilder.Append("TEL:" + phoneNumber.Number);
                 }
                 else if (phoneNumber.Type == PhoneNumberType.MainNumber)
                 {
-                    stringBuilder.Append("TEL);TYPE=MAIN-NUMBER:" + phoneNumber.Number);
+                    StringBuilder.Append("TEL);TYPE=MAIN-NUMBER:" + phoneNumber.Number);
                 }
                 else
                 {
-                    stringBuilder.Append("TEL);TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number);
+                    StringBuilder.Append("TEL);TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number);
                 }
             }
-            foreach(EmailAddress email in vcard.EmailAddresses)
+
+            foreach (EmailAddress email in vcard.EmailAddresses)
             {
-                stringBuilder.Append(Environment.NewLine);
+                StringBuilder.Append(Environment.NewLine);
                 if (email.Type == EmailType.None)
                 {
-                    stringBuilder.Append("EMAIL:" + email.Email.Address);
+                    StringBuilder.Append("EMAIL:" + email.Email.Address);
                 }
                 else
                 {
-                    stringBuilder.Append("EMAIL);TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email.Address);
+                    StringBuilder.Append("EMAIL);TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email.Address);
                 }
             }
-            foreach(Address address in vcard.Addresses)
+
+            foreach (Address address in vcard.Addresses)
             {
-                stringBuilder.Append(Environment.NewLine);
+                StringBuilder.Append(Environment.NewLine);
                 if (address.Type == AddressType.None)
                 {
-                    stringBuilder.Append("ADR:" + address.Location);
+                    StringBuilder.Append("ADR:" + address.Location);
                 }
                 else
                 {
-                    stringBuilder.Append("ADR);TYPE=" + address.Type.ToString().ToUpper() + ":" + address.Location);
+                    StringBuilder.Append("ADR);TYPE=" + address.Type.ToString().ToUpper() + ":" + address.Location);
                 }
             }
-            foreach(Photo photo in vcard.Pictures)
+
+            foreach (Photo photo in vcard.Pictures)
             {
-                stringBuilder.Append(Environment.NewLine);
-                stringBuilder.Append("PHOTO);TYPE=" + photo.Encoding);
+                StringBuilder.Append(Environment.NewLine);
+                StringBuilder.Append("PHOTO);TYPE=" + photo.Encoding);
                 switch (photo.Type)
                 {
                     case PhotoType.URL:
-                        stringBuilder.Append(");VALUE=URI:" + photo.PhotoURL);
+                        StringBuilder.Append(");VALUE=URI:" + photo.PhotoURL);
                         break;
                     case PhotoType.Image:
-                        stringBuilder.Append(");ENCODING=b:" + photo.ToBase64String());
+                        StringBuilder.Append(");ENCODING=b:" + photo.ToBase64String());
                         break;
                 }
             }
-            foreach(Expertise expertise in vcard.Expertises)
+
+            foreach (Expertise expertise in vcard.Expertises)
             {
-                stringBuilder.Append(Environment.NewLine);
-                stringBuilder.Append("EXPERTISE);LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area);
+                StringBuilder.Append(Environment.NewLine);
+                StringBuilder.Append("EXPERTISE);LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area);
             }
-            foreach(Hobby hobby in vcard.Hobbies)
+
+            foreach (Hobby hobby in vcard.Hobbies)
             {
-                stringBuilder.Append(Environment.NewLine);
-                stringBuilder.Append("HOBBY);LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity);
+                StringBuilder.Append(Environment.NewLine);
+                StringBuilder.Append("HOBBY);LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity);
             }
-            foreach(Interest interest in vcard.Interests)
+
+            foreach (Interest interest in vcard.Interests)
             {
-                stringBuilder.Append(Environment.NewLine);
-                stringBuilder.Append("INTEREST);LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity);
+                StringBuilder.Append(Environment.NewLine);
+                StringBuilder.Append("INTEREST);LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity);
             }
-            return stringBuilder.ToString();
+
+            return StringBuilder.ToString();
         }
     }
 }
