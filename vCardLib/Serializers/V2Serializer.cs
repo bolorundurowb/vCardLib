@@ -9,91 +9,82 @@ namespace vCardLib.Serializers
     /// </summary>
     internal class V2Serializer : Serializer
     {
-        /// <summary>
-        /// Converts the vCard properties to a string
-        /// </summary>
-        /// <param name="vcard">The vcard object to be serialized</param>
-        /// <returns>A string representing the vcard properties</returns>
-        public  string Serialize(vCard vcard)
+        protected override void AddVersionedFields()
         {
-            base.SerializeCardStart();
-            base.SerializeSharedProperties(vcard);
-            foreach (PhoneNumber phoneNumber in vcard.PhoneNumbers)
+            foreach (var phoneNumber in _vCard.PhoneNumbers)
             {
-                StringBuilder.Append(Environment.NewLine);
+                _stringBuilder.Append(Environment.NewLine);
                 if (phoneNumber.Type == PhoneNumberType.None)
                 {
-                    StringBuilder.Append("TEL:" + phoneNumber.Number);
+                    _stringBuilder.Append("TEL:" + phoneNumber.Number);
                 }
                 else if (phoneNumber.Type == PhoneNumberType.MainNumber)
                 {
-                    StringBuilder.Append("TEL;MAIN-NUMBER:" + phoneNumber.Number);
+                    _stringBuilder.Append("TEL;MAIN-NUMBER:" + phoneNumber.Number);
                 }
                 else
                 {
-                    StringBuilder.Append("TEL;" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number);
+                    _stringBuilder.Append("TEL;" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number);
                 }
             }
 
-            foreach (EmailAddress email in vcard.EmailAddresses)
+            foreach (var email in _vCard.EmailAddresses)
             {
-                StringBuilder.Append(Environment.NewLine);
+                _stringBuilder.Append(Environment.NewLine);
                 if (email.Type == EmailType.None)
                 {
-                    StringBuilder.Append("EMAIL:" + email.Email.Address);
+                    _stringBuilder.Append("EMAIL:" + email.Email.Address);
                 }
                 else
                 {
-                    StringBuilder.Append("EMAIL;" + email.Type.ToString().ToUpper() + ":" + email.Email.Address);
+                    _stringBuilder.Append("EMAIL;" + email.Type.ToString().ToUpper() + ":" + email.Email.Address);
                 }
             }
 
-            foreach (Address address in vcard.Addresses)
+            foreach (var address in _vCard.Addresses)
             {
-                StringBuilder.Append(Environment.NewLine);
+                _stringBuilder.Append(Environment.NewLine);
                 if (address.Type == AddressType.None)
                 {
-                    StringBuilder.Append("ADR:" + address.Location);
+                    _stringBuilder.Append("ADR:" + address.Location);
                 }
                 else
                 {
-                    StringBuilder.Append("ADR;" + address.Type.ToString().ToUpper() + ":" + address.Location);
+                    _stringBuilder.Append("ADR;" + address.Type.ToString().ToUpper() + ":" + address.Location);
                 }
             }
 
-            foreach (Photo photo in vcard.Pictures)
+            foreach (var photo in _vCard.Pictures)
             {
-                StringBuilder.Append(Environment.NewLine);
-                StringBuilder.Append("PHOTO;" + photo.Encoding);
+                _stringBuilder.Append(Environment.NewLine);
+                _stringBuilder.Append("PHOTO;" + photo.Encoding);
                 if (photo.Type == PhotoType.URL)
                 {
-                    StringBuilder.Append(":" + photo.PhotoURL);
+                    _stringBuilder.Append(":" + photo.PhotoURL);
                 }
                 else if (photo.Type == PhotoType.Image)
                 {
-                    StringBuilder.Append(";ENCODING=BASE64:" + photo.ToBase64String());
+                    _stringBuilder.Append(";ENCODING=BASE64:" + photo.ToBase64String());
                 }
             }
 
-            foreach (Expertise expertise in vcard.Expertises)
+            foreach (var expertise in _vCard.Expertises)
             {
-                StringBuilder.Append(Environment.NewLine);
-                StringBuilder.Append("EXPERTISE;LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area);
+                _stringBuilder.Append(Environment.NewLine);
+                _stringBuilder.Append("EXPERTISE;LEVEL=" + expertise.Level.ToString().ToLower() + ":" + expertise.Area);
             }
 
-            foreach (Hobby hobby in vcard.Hobbies)
+            foreach (var hobby in _vCard.Hobbies)
             {
-                StringBuilder.Append(Environment.NewLine);
-                StringBuilder.Append("HOBBY;LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity);
+                _stringBuilder.Append(Environment.NewLine);
+                _stringBuilder.Append("HOBBY;LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity);
             }
 
-            foreach (Interest interest in vcard.Interests)
+            foreach (var interest in _vCard.Interests)
             {
-                StringBuilder.Append(Environment.NewLine);
-                StringBuilder.Append("INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity);
+                _stringBuilder.Append(Environment.NewLine);
+                _stringBuilder.Append("INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity);
             }
-SerializeCardEnd();
-            return StringBuilder.ToString();
         }
     }
 }
