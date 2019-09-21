@@ -34,8 +34,8 @@ namespace vCardLib.Tests.HelperTests
 		public void WriteOptionsAreStable()
 		{
 			Assert.DoesNotThrow(delegate {
-				var writeOption = WriteOptions.Overwrite;
-				writeOption = WriteOptions.ThrowError;
+				var writeOption = OverWriteOptions.Overwrite;
+				writeOption = OverWriteOptions.ThrowError;
 			});
 		}
 	}

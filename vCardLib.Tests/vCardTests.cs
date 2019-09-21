@@ -51,7 +51,7 @@ namespace vCardLib.Tests
 				};
 				_vcard.XSkypeDisplayName = "Forrest J Gump";
 				_vcard.XSkypePstnNumber = "23949490044";
-				_vcard.Version = VcardVersion.V2;
+				_vcard.Version = vCardVersion.V2;
 			});
 		}
 
@@ -153,7 +153,7 @@ namespace vCardLib.Tests
                 expertise.Level = Level.Medium;
                 _vcard.Expertises.Add(expertise);
 
-                _vcard.Save(filePath, WriteOptions.Overwrite, Encoding.BigEndianUnicode);
+                _vcard.Save(filePath, OverWriteOptions.Overwrite, Encoding.BigEndianUnicode);
             });
 			Assert.IsTrue(File.Exists(filePath));
         }
@@ -165,7 +165,7 @@ namespace vCardLib.Tests
 			var filePath = Path.Combine(assemblyFolder, "newv3.vcf");
 			Assert.IsNotNull(_vcard);
 			Assert.DoesNotThrow(delegate {
-				_vcard.Save(filePath, VcardVersion.V3, WriteOptions.Overwrite, Encoding.ASCII);
+				_vcard.Save(filePath, vCardVersion.V3, OverWriteOptions.Overwrite, Encoding.ASCII);
 			});
 			Assert.IsTrue(File.Exists(filePath));
         }
@@ -174,7 +174,7 @@ namespace vCardLib.Tests
 		public void SavesV4CardThrowsException()
 		{
 			Assert.Throws<NotImplementedException> (delegate {
-				_vcard.Save ("", VcardVersion.V4, WriteOptions.Overwrite);
+				_vcard.Save ("", vCardVersion.V4, OverWriteOptions.Overwrite);
 			});
 		}
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using vCardLib.Collections;
 using vCardLib.Extensions;
 using vCardLib.Helpers;
 using vCardLib.Models;
@@ -84,15 +83,15 @@ namespace vCardLib.Deserializers
             vCard vcard = null;
             if (version.Equals(2f) || version.Equals(2.1f))
             {
-                vcard = Deserialize(contactDetails, VcardVersion.V2);
+                vcard = Deserialize(contactDetails, vCardVersion.V2);
             }
             else if (version.Equals(3f))
             {
-                vcard = Deserialize(contactDetails, VcardVersion.V3);
+                vcard = Deserialize(contactDetails, vCardVersion.V3);
             }
             else if (version.Equals(4.0f))
             {
-                vcard = Deserialize(contactDetails, VcardVersion.V4);
+                vcard = Deserialize(contactDetails, vCardVersion.V4);
             }
 
             return vcard;
@@ -104,7 +103,7 @@ namespace vCardLib.Deserializers
         /// <param name="contactDetails">A string array of the contact details</param>
         /// <param name="version">The version to be deserialized from</param>
         /// <returns>A <see cref="vCard"/> comtaining the contacts details</returns>
-        private static vCard Deserialize(string[] contactDetails, VcardVersion version)
+        private static vCard Deserialize(string[] contactDetails, vCardVersion version)
         {
             _contactDetails = contactDetails;
             var vcard = new vCard
@@ -155,11 +154,11 @@ namespace vCardLib.Deserializers
 
             switch (version)
             {
-                case VcardVersion.V2:
+                case vCardVersion.V2:
                     return V2Deserializer.Parse(contactDetails, vcard);
-                case VcardVersion.V3:
+                case vCardVersion.V3:
                     return V3Deserializer.Parse(contactDetails, vcard);
-                case VcardVersion.V4:
+                case vCardVersion.V4:
                     return V4Deserializer.Parse(contactDetails, vcard);
                 default:
                     throw new ArgumentException($"The version {version} is not supported.");

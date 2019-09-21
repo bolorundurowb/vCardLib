@@ -65,7 +65,7 @@ namespace vCardLib.Tests.DeserializerTests
             {
                 vcard = Deserializer.GetVcardFromDetails(details);
             });
-            Assert.AreEqual(Helpers.VcardVersion.V2, vcard.Version);
+            Assert.AreEqual(Helpers.vCardVersion.V2, vcard.Version);
 
             details = new[]
             {
@@ -76,7 +76,7 @@ namespace vCardLib.Tests.DeserializerTests
             {
                 vcard = Deserializer.GetVcardFromDetails(details);
             });
-            Assert.AreEqual(Helpers.VcardVersion.V3, vcard.Version);
+            Assert.AreEqual(Helpers.vCardVersion.V3, vcard.Version);
 
             details = new[]
             {

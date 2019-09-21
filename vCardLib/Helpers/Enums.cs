@@ -27,16 +27,17 @@
     /// <summary>
     /// Available write options
     /// </summary>
-    public enum WriteOptions
+    public enum OverWriteOptions
     {
-        Overwrite,
-        ThrowError
+        Proceed,
+        Throw
     }
 
     /// <summary>
     /// vCard version
     /// </summary>
-    public enum VcardVersion
+    // ReSharper disable once InconsistentNaming
+    public enum vCardVersion
     {
         V2,
         V3,

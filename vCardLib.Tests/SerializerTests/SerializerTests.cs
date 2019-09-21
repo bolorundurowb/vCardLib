@@ -20,11 +20,11 @@ namespace vCardLib.Tests.SerializerTests
             vCard vcard = null;
             Assert.Throws<InvalidOperationException>(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V3);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V3);
             });
             Assert.Throws<ArgumentNullException>(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V3, WriteOptions.Overwrite);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V3, OverWriteOptions.Overwrite);
             });
 
             vcard = new vCard();
@@ -52,25 +52,25 @@ namespace vCardLib.Tests.SerializerTests
             vcard.Title = "Mr";
             vcard.Url = "http://google.com";
             vcard.Note = "Hello World";
-            vcard.Version = VcardVersion.V2;
+            vcard.Version = vCardVersion.V2;
             filePath = Path.Combine(assemblyFolder, "testV2.vcf");
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V2);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V2);
             });
             FileAssert.Exists(filePath);
 
             filePath = Path.Combine(assemblyFolder, "testV3.vcf");
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V3);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V3);
             });
             FileAssert.Exists(filePath);
 
             filePath = Path.Combine(assemblyFolder, "testV4.vcf");
             Assert.Throws<NotImplementedException>(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V4);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V4);
             });
         }
 
@@ -82,17 +82,17 @@ namespace vCardLib.Tests.SerializerTests
             filePath = null;
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V2);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V2);
             });
 
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V3);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V3);
             });
 
             Assert.Throws<NotImplementedException>(delegate
             {
-                Serializer.Serialize(vcard, filePath, VcardVersion.V4);
+                Serializer.Serialize(vcard, filePath, vCardVersion.V4);
             });
         }
 
@@ -103,25 +103,25 @@ namespace vCardLib.Tests.SerializerTests
             vCardCollection vcardCollection = null;
             Assert.Throws<InvalidOperationException>(delegate
             {
-                Serializer.Serialize(vcardCollection, filePath, VcardVersion.V3);
+                Serializer.Serialize(vcardCollection, filePath, vCardVersion.V3);
             });
             Assert.Throws<ArgumentNullException>(delegate
             {
-                Serializer.Serialize(vcardCollection, filePath, VcardVersion.V3, WriteOptions.Overwrite);
+                Serializer.Serialize(vcardCollection, filePath, vCardVersion.V3, OverWriteOptions.Overwrite);
             });
 
             vcardCollection = new vCardCollection();
             filePath = Path.Combine(assemblyFolder, "testV2collection.vcf");
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcardCollection, filePath, VcardVersion.V2);
+                Serializer.Serialize(vcardCollection, filePath, vCardVersion.V2);
             });
             FileAssert.Exists(filePath);
 
             filePath = Path.Combine(assemblyFolder, "testV3collection.vcf");
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcardCollection, filePath, VcardVersion.V3);
+                Serializer.Serialize(vcardCollection, filePath, vCardVersion.V3);
             });
             FileAssert.Exists(filePath);
 
@@ -129,7 +129,7 @@ namespace vCardLib.Tests.SerializerTests
             vcardCollection.Add(new vCard());
             Assert.Throws<NotImplementedException>(delegate
             {
-                Serializer.Serialize(vcardCollection, filePath, VcardVersion.V4);
+                Serializer.Serialize(vcardCollection, filePath, vCardVersion.V4);
             });
         }
 
@@ -140,12 +140,12 @@ namespace vCardLib.Tests.SerializerTests
             var vcardCollection  = new vCardCollection();
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcardCollection, filePath, VcardVersion.V2);
+                Serializer.Serialize(vcardCollection, filePath, vCardVersion.V2);
             });
 
             Assert.DoesNotThrow(delegate
             {
-                Serializer.Serialize(vcardCollection, filePath, VcardVersion.V3);
+                Serializer.Serialize(vcardCollection, filePath, vCardVersion.V3);
             });
         }
     }

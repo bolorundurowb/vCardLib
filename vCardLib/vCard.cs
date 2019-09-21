@@ -13,7 +13,7 @@ namespace vCardLib
         /// <summary>
         /// The version of the vcf file
         /// </summary>
-        public VcardVersion Version { get; set; }
+        public vCardVersion Version { get; set; }
 
         /// <summary>
         /// The Family name or Surname of the contact
