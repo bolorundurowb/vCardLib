@@ -9,6 +9,13 @@ namespace vCardLib.Serializers
     internal abstract class Serializer
     {
         internal StringBuilder StringBuilder;
+        
+        
+        internal void SerializeCardStart()
+        {
+            StringBuilder = new StringBuilder();
+            StringBuilder.Append("BEGIN:VCARD").AppendLine();
+        }
 
         /// <summary>
         /// Writes a vcard object to a file
@@ -16,8 +23,6 @@ namespace vCardLib.Serializers
         /// <param name="vcard">The vcard object to be written</param>
         internal void SerializeSharedProperties(vCard vcard)
         {
-            StringBuilder = new StringBuilder();
-            StringBuilder.Append("BEGIN:VCARD" + Environment.NewLine);
             StringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
             StringBuilder.Append(
                 $"N:{vcard.FamilyName};{vcard.GivenName};{vcard.MiddleName};{vcard.Prefix};{vcard.Suffix}{Environment.NewLine}"
@@ -82,6 +87,11 @@ namespace vCardLib.Serializers
                 StringBuilder.Append("BDAY:" + birthDay.Year + birthDay.Month.ToString("00") +
                                      birthDay.Day.ToString("00"));
             }
+        }
+
+        internal void SerializeCardEnd()
+        {
+            StringBuilder.Append("END:VCARD").AppendLine();
         }
     }
 }

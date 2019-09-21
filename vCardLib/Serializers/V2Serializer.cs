@@ -16,6 +16,7 @@ namespace vCardLib.Serializers
         /// <returns>A string representing the vcard properties</returns>
         public  string Serialize(vCard vcard)
         {
+            base.SerializeCardStart();
             base.SerializeSharedProperties(vcard);
             foreach (PhoneNumber phoneNumber in vcard.PhoneNumbers)
             {
@@ -91,7 +92,7 @@ namespace vCardLib.Serializers
                 StringBuilder.Append(Environment.NewLine);
                 StringBuilder.Append("INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" + interest.Activity);
             }
-
+SerializeCardEnd();
             return StringBuilder.ToString();
         }
     }
