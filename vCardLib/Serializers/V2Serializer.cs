@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib.Serializers

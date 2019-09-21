@@ -1,4 +1,5 @@
 ﻿using System;
+using vCardLib.Models;
 
 namespace vCardLib.Deserializers
 {

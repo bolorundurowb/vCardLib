@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
 
@@ -20,9 +19,14 @@ namespace vCardLib.Utils
         public static StreamReader GetStreamReaderFromFile(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
+            {
                 throw new ArgumentNullException("The filepath supplied is null or empty");
+            }
+
             if (!File.Exists(filePath))
+            {
                 throw new FileNotFoundException("The specified file at the filepath does not exist");
+            }
 
             var encoding = GetEncoding(filePath);
             return new StreamReader(filePath, encoding);
@@ -75,29 +79,6 @@ namespace vCardLib.Utils
             contactString = contactString.Replace("PREF,", "").Replace("pref,", "");
             contactString = contactString.Replace(",PREF", "").Replace(",pref", "");
             return contactString.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        /// <summary>
-        /// Converts a base 64 string to an image
-        /// </summary>
-        /// <param name="base64String">properly encoded base 64 string</param>
-        /// <returns>A bitmap object or null if the string is invalid</returns>
-        public static Bitmap GetImageFromBase64String(string base64String)
-        {
-            try
-            {
-                var imageBytes = Convert.FromBase64String(base64String);
-                Bitmap bmp;
-                using (var ms = new MemoryStream(imageBytes))
-                {
-					bmp = (Bitmap)Image.FromStream(ms);
-                }
-                return bmp;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
         }
         
         /// <summary>

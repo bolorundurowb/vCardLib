@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using vCardLib.Models;
 
 namespace vCardLib.Serializers
 {
@@ -39,7 +40,7 @@ namespace vCardLib.Serializers
 
         private void AddCardEnd()
         {
-            _stringBuilder.Append("END:VCARD").AppendLine();
+            _stringBuilder.Append("END:VCARD");
         }
 
         private void AddSharedFields()

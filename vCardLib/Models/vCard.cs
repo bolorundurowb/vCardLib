@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using vCardLib.Enums;
-using vCardLib.Models;
 
-namespace vCardLib
+namespace vCardLib.Models
 {
     /// <summary>
     /// Class to store the various vCard contact details

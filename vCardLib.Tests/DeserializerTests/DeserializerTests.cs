@@ -5,6 +5,7 @@ using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Deserializers;
 using vCardLib.Enums;
+using vCardLib.Models;
 using vCardLib.Utils;
 
 namespace vCardLib.Tests.DeserializerTests

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using vCardLib.Enums;
+using vCardLib.Models;
 using vCardLib.Serializers;
 
 namespace vCardLib.Extensions

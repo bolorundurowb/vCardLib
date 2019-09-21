@@ -4,6 +4,7 @@ using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Enums;
+using vCardLib.Models;
 using vCardLib.Serializers;
 
 namespace vCardLib.Tests.SerializerTests

@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using vCardLib.Models;
 using vCardLib.Serializers;
 
 namespace vCardLib.Tests.SerializerTests

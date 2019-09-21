@@ -2,6 +2,7 @@
 using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Deserializers;
+using vCardLib.Models;
 using vCardLib.Utils;
 
 namespace vCardLib.Tests.DeserializerTests
