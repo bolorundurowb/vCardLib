@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Net.Mail;
 using vCardLib.Collections;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 using vCardLib.Models;
+using vCardLib.Utils;
 
 namespace vCardLib.Deserializers
 {

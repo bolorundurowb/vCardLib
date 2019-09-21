@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 using vCardLib.Serializers;
 
 namespace vCardLib.Extensions

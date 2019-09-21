@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 
 namespace vCardLib.Tests.HelperTests
 {

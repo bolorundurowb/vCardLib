@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 
-namespace vCardLib.Helpers
+namespace vCardLib.Utils
 {
     /// <summary>
     /// Class to holder all suppoting methods

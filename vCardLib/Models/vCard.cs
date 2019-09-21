@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib

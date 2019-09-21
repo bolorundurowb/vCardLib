@@ -4,7 +4,8 @@ using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Collections;
 using vCardLib.Deserializers;
-using vCardLib.Helpers;
+using vCardLib.Enums;
+using vCardLib.Utils;
 
 namespace vCardLib.Tests.DeserializerTests
 {
@@ -65,7 +66,7 @@ namespace vCardLib.Tests.DeserializerTests
             {
                 vcard = Deserializer.GetVcardFromDetails(details);
             });
-            Assert.AreEqual(Helpers.vCardVersion.V2, vcard.Version);
+            Assert.AreEqual(vCardVersion.V2, vcard.Version);
 
             details = new[]
             {
@@ -76,7 +77,7 @@ namespace vCardLib.Tests.DeserializerTests
             {
                 vcard = Deserializer.GetVcardFromDetails(details);
             });
-            Assert.AreEqual(Helpers.vCardVersion.V3, vcard.Version);
+            Assert.AreEqual(vCardVersion.V3, vcard.Version);
 
             details = new[]
             {

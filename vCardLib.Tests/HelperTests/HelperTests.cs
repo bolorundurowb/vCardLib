@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using NUnit.Framework;
-using vCardLib.Helpers;
+using vCardLib.Utils;
 
 namespace vCardLib.Tests.HelperTests
 {

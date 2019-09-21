@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using vCardLib.Enums;
 using vCardLib.Extensions;
-using vCardLib.Helpers;
 using vCardLib.Models;
+using vCardLib.Utils;
 
 namespace vCardLib.Deserializers
 {

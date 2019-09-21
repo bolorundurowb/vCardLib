@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Collections;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 using vCardLib.Serializers;
 
 namespace vCardLib.Tests.SerializerTests

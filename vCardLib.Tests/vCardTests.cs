@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using vCardLib.Collections;
 using vCardLib.Deserializers;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib.Tests

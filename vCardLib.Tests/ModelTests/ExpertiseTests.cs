@@ -1,7 +1,7 @@
 ﻿// Created by Bolorunduro Winner-Timothy on  11/18/2016 at 10:51 AM
 
 using NUnit.Framework;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib.Tests.ModelTests
