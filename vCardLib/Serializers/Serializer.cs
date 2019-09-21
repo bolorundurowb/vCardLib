@@ -3,14 +3,13 @@ using System.IO;
 using System.Text;
 using vCardLib.Collections;
 using vCardLib.Helpers;
-using Version = vCardLib.Helpers.Version;
 
 namespace vCardLib.Serializers
 {
     /// <summary>
     /// Entry point for serializing vCard objects
     /// </summary>
-    public class Serializer
+    public abstract class Serializer
     {
         /// <summary>
         /// Writes a vcard object to a file
@@ -23,7 +22,7 @@ namespace vCardLib.Serializers
         /// <returns>A value stating if the serialization was successful or not</returns>
         /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
         /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
-        public static bool Serialize(vCard vcard, string filePath, Version version,
+        public static bool Serialize(vCard vcard, string filePath, VcardVersion version,
             WriteOptions options = WriteOptions.ThrowError, Encoding encoding = null)
         {
             if (encoding == null)
@@ -49,11 +48,11 @@ namespace vCardLib.Serializers
                 throw new ArgumentNullException("The vcard cannot be null.");
             }
 
-            if (version == Version.V2)
+            if (version == VcardVersion.V2)
             {
                 try
                 {
-                    var vcfString = Serialize(vcard, Version.V2);
+                    var vcfString = Serialize(vcard, VcardVersion.V2);
                     File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
@@ -62,11 +61,11 @@ namespace vCardLib.Serializers
                     return false;
                 }
             }
-            else if (version == Version.V3)
+            else if (version == VcardVersion.V3)
             {
                 try
                 {
-                    var vcfString = Serialize(vcard, Version.V3);
+                    var vcfString = Serialize(vcard, VcardVersion.V3);
                     File.WriteAllText(filePath, vcfString, encoding);
                 }
                 catch (Exception e)
@@ -75,11 +74,11 @@ namespace vCardLib.Serializers
                     return false;
                 }
             }
-            else if (version == Version.V4)
+            else if (version == VcardVersion.V4)
             {
                 //TODO: once support has been implemented, enable writing capabilities
                 /*string vcfString = */
-                Serialize(vcard, Version.V4);
+                Serialize(vcard, VcardVersion.V4);
                 //File.WriteAllText(filePath, vcfString)
             }
 
@@ -97,7 +96,7 @@ namespace vCardLib.Serializers
         /// <returns>A value stating if the serialization was successful or not</returns>
         /// <exception cref="InvalidOperationException">Thrown when the file path exists and the overwrite option is not invoked</exception>
         /// <exception cref="ArgumentNullException">Thrown when the vcard supplied is null</exception>
-        public static bool Serialize(vCardCollection vcardCollection, string filePath, Version version,
+        public static bool Serialize(vCardCollection vcardCollection, string filePath, VcardVersion version,
             WriteOptions options = WriteOptions.ThrowError, Encoding encoding = null)
         {
             if (encoding == null)
@@ -126,18 +125,18 @@ namespace vCardLib.Serializers
             var vcardCollectionString = new StringBuilder();
             switch (version)
             {
-                case Version.V2:
+                case VcardVersion.V2:
                     foreach (vCard vcard in vcardCollection)
                     {
-                        vcardCollectionString.Append(Serialize(vcard, Version.V2));
+                        vcardCollectionString.Append(Serialize(vcard, VcardVersion.V2));
                         vcardCollectionString.Append(Environment.NewLine);
                     }
 
                     break;
-                case Version.V3:
+                case VcardVersion.V3:
                     foreach (vCard vcard in vcardCollection)
                     {
-                        vcardCollectionString.Append(Serialize(vcard, Version.V3));
+                        vcardCollectionString.Append(Serialize(vcard, VcardVersion.V3));
                         vcardCollectionString.Append(Environment.NewLine);
                     }
 
@@ -145,7 +144,7 @@ namespace vCardLib.Serializers
                 default:
                     foreach (vCard vcard in vcardCollection)
                     {
-                        vcardCollectionString.Append(Serialize(vcard, Version.V4));
+                        vcardCollectionString.Append(Serialize(vcard, VcardVersion.V4));
                         vcardCollectionString.Append(Environment.NewLine);
                     }
 
@@ -164,7 +163,7 @@ namespace vCardLib.Serializers
             }
         }
 
-        private static string Serialize(vCard vcard, Version version)
+        private static string Serialize(vCard vcard, VcardVersion version)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.Append("BEGIN:VCARD" + Environment.NewLine);
@@ -243,12 +242,12 @@ namespace vCardLib.Serializers
                                      birthDay.Day.ToString("00"));
             }
 
-            if (version == Version.V2)
+            if (version == VcardVersion.V2)
             {
                 stringBuilder.Append("VERSION:2.1" + Environment.NewLine);
                 stringBuilder.Append(V2Serializer.Serialize(vcard));
             }
-            else if (version == Version.V3)
+            else if (version == VcardVersion.V3)
             {
                 stringBuilder.Append("VERSION:3.0" + Environment.NewLine);
                 stringBuilder.Append(V3Serializer.Serialize(vcard));

@@ -36,7 +36,7 @@
     /// <summary>
     /// vCard version
     /// </summary>
-    public enum Version
+    public enum VcardVersion
     {
         V2,
         V3,

@@ -7,7 +7,7 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Handles the serialization of version 2 cards
     /// </summary>
-    public class V2Serializer
+    public class V2Serializer : Serializer
     {
         /// <summary>
         /// Converts the vCard properties to a string

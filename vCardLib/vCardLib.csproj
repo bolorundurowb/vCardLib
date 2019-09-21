@@ -16,6 +16,7 @@
         <Title>vCardLib</Title>
         <RepositoryType>git</RepositoryType>
         <PackageTags>vcard, vcardlib</PackageTags>
+        <PackageVersion>3.0.0</PackageVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />

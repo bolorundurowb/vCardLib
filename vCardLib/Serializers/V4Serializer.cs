@@ -5,7 +5,7 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Handles the serialization of version 4 cards
     /// </summary>
-    public class V4Serializer
+    public class V4Serializer : Serializer
     {
         /// <summary>
         /// Converts the vCard properties to a string
