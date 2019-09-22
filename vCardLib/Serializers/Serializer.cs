@@ -110,10 +110,5 @@ namespace vCardLib.Serializers
                                       birthDay.Day.ToString("00"));
             }
         }
-
-        internal void SerializeCardEnd()
-        {
-            _stringBuilder.Append("END:VCARD").AppendLine();
-        }
     }
 }

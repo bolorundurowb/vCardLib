@@ -29,7 +29,10 @@ namespace vCardLib.Utils
             }
 
             var encoding = GetEncoding(filePath);
-            return new StreamReader(filePath, encoding);
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                return new StreamReader(stream, encoding);
+            }
         }
 
         /// <summary>
@@ -44,6 +47,7 @@ namespace vCardLib.Utils
             {
                 throw new ArgumentNullException("The input stream reader cannot be null");
             }
+
             return streamReader.ReadToEnd();
         }
 
@@ -60,12 +64,14 @@ namespace vCardLib.Utils
             {
                 throw new ArgumentException("string cannot be null, empty or composed of only whitespace characters");
             }
+
             if (!(contactsString.Contains("BEGIN:VCARD") && contactsString.Contains("END:VCARD")))
             {
                 throw new InvalidOperationException("The vcard file does not seem to be a valid vcard file");
             }
+
             contactsString = contactsString.Replace("BEGIN:VCARD", "");
-            return contactsString.Split(new[] { "END:VCARD" }, StringSplitOptions.RemoveEmptyEntries);
+            return contactsString.Split(new[] {"END:VCARD"}, StringSplitOptions.RemoveEmptyEntries);
         }
 
         /// <summary>
@@ -78,9 +84,9 @@ namespace vCardLib.Utils
             contactString = contactString.Replace("PREF;", "").Replace("pref;", "");
             contactString = contactString.Replace("PREF,", "").Replace("pref,", "");
             contactString = contactString.Replace(",PREF", "").Replace(",pref", "");
-            return contactString.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return contactString.Split(new[] {"\n", "\r\n"}, StringSplitOptions.RemoveEmptyEntries);
         }
-        
+
         /// <summary>
         /// Determines a text file's encoding by analyzing its byte order mark (BOM).
         /// Defaults to ASCII when detection of the text file's endianness fails.
@@ -102,10 +108,11 @@ namespace vCardLib.Utils
             {
                 return Encoding.UTF8;
             }
+
             if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode;
             if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode;
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
-            
+
             return Encoding.ASCII;
         }
     }

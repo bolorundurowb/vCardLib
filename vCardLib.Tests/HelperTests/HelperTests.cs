@@ -86,16 +86,5 @@ namespace vCardLib.Tests.HelperTests
 			Assert.IsNotNull(contactDetails);
 			Assert.IsTrue(contactDetails.Length > 0);
 		}
-
-		[Test]
-		public void GetImageFromBase64String()
-		{
-			string base64String = null;
-			var image = Helper.GetImageFromBase64String(base64String);
-			Assert.IsNull(image);
-			base64String = @"R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==";
-			image = Helper.GetImageFromBase64String(base64String);
-			//Assert.IsNotNull(image);
-		}
 	}
 }

@@ -33,11 +33,11 @@ namespace vCardLib.Serializers
                 _stringBuilder.Append(Environment.NewLine);
                 if (email.Type == EmailType.None)
                 {
-                    _stringBuilder.Append("EMAIL:" + email.Email.Address);
+                    _stringBuilder.Append("EMAIL:" + email.Email);
                 }
                 else
                 {
-                    _stringBuilder.Append("EMAIL);TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email.Address);
+                    _stringBuilder.Append("EMAIL);TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email);
                 }
             }
 
