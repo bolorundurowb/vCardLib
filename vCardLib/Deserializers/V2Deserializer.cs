@@ -521,25 +521,7 @@ namespace vCardLib.Deserializers
                 }
                 else if (photoStr.Contains("JPEG") && photoStr.Contains("ENCODING=BASE64"))
                 {
-                    var photoString = "";
-                    var photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
-                    while (true)
-                    {
-                        if (photoStrIndex < _contactDetails.Length)
-                        {
-                            photoString += _contactDetails[photoStrIndex];
-                            photoStrIndex++;
-                            if (photoStrIndex < _contactDetails.Length &&
-                                _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
-                                break;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                    photoString = photoString.Trim();
+                    var photoString = photoStr.Trim();
                     photoString = photoString.Replace("PHOTO;", "");
                     photoString = photoString.Replace("JPEG", "");
                     photoString = photoString.Replace("ENCODING=BASE64", "");

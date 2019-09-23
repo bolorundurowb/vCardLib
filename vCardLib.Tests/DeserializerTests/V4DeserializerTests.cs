@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using NUnit.Framework;
 using vCardLib.Deserializers;
 using vCardLib.Models;

@@ -29,10 +29,8 @@ namespace vCardLib.Utils
             }
 
             var encoding = GetEncoding(filePath);
-            using (var stream = new FileStream(filePath, FileMode.Open))
-            {
-                return new StreamReader(stream, encoding);
-            }
+            var stream = new FileStream(filePath, FileMode.Open);
+            return new StreamReader(stream, encoding);
         }
 
         /// <summary>
@@ -48,7 +46,10 @@ namespace vCardLib.Utils
                 throw new ArgumentNullException("The input stream reader cannot be null");
             }
 
-            return streamReader.ReadToEnd();
+            using (streamReader)
+            {
+                return streamReader.ReadToEnd();
+            }
         }
 
         /// <summary>

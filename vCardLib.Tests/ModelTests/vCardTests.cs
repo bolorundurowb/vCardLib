@@ -4,7 +4,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using NUnit.Framework;
-using vCardLib.Deserializers;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
@@ -15,6 +14,7 @@ namespace vCardLib.Tests.ModelTests
     public class vCardTests
     {
         readonly vCard _vcard = new vCard();
+        string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         [Test]
         public void GenerateValidVcard()
@@ -79,15 +79,13 @@ namespace vCardLib.Tests.ModelTests
         public void DoesNotOverwriteExceptInstructed()
         {
             Assert.IsNotNull(_vcard);
-            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var filePath = Path.Combine(assemblyFolder, "invalid.vcf");
-            Assert.Throws<InvalidOperationException>(delegate { _vcard.Save(filePath); });
+            Assert.Throws<InvalidOperationException>(delegate { _vcard.Save(filePath, overWriteOptions: OverWriteOptions.Throw); });
         }
 
         [Test]
         public void SavesV2CardWithoutErrors()
         {
-            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var filePath = Path.Combine(assemblyFolder, "newv2.vcf");
             Assert.IsNotNull(_vcard);
             Assert.DoesNotThrow(delegate
@@ -155,7 +153,6 @@ namespace vCardLib.Tests.ModelTests
         [Test]
         public void SavesV3CardWithoutErrors()
         {
-            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var filePath = Path.Combine(assemblyFolder, "newv3.vcf");
             Assert.IsNotNull(_vcard);
             Assert.DoesNotThrow(delegate { _vcard.Save(filePath, Encoding.ASCII, vCardVersion.V3); });
@@ -166,28 +163,6 @@ namespace vCardLib.Tests.ModelTests
         public void SavesV4CardThrowsException()
         {
             Assert.Throws<NotImplementedException>(delegate { _vcard.Save("", version: vCardVersion.V4); });
-        }
-
-        [Test]
-        public void Read_Saved_Vcard()
-        {
-            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var filePath = Path.Combine(assemblyFolder, "newv3.vcf");
-            Assert.DoesNotThrow(delegate
-            {
-                var vcard = Deserializer.FromFile(filePath);
-            });
-        }
-
-        [Test]
-        public void Read_Non_UTF8_Vcard()
-        {
-            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var filePath = Path.Combine(assemblyFolder, "newv2.vcf");
-            Assert.DoesNotThrow(delegate
-            {
-                var vcard = Deserializer.FromFile(filePath);
-            });
         }
     }
 }
