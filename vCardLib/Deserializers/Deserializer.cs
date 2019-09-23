@@ -29,7 +29,7 @@ namespace vCardLib.Deserializers
         /// </summary>
         /// <param name="filePath">Path to the vcf or vcard file</param>
         /// <returns>A <see cref="vCardCollection"/></returns>
-        public static vCardCollection FromFile(string filePath)
+        public static List<vCard> FromFile(string filePath)
         {
             var streamReader = Helper.GetStreamReaderFromFile(filePath);
             return FromStreamReader(streamReader);
@@ -40,9 +40,9 @@ namespace vCardLib.Deserializers
         /// </summary>
         /// <param name="streamReader"><see cref="StreamReader"/> containing a vcard(s)</param>
         /// <returns>A <see cref="vCardCollection"/></returns>
-        public static vCardCollection FromStreamReader(StreamReader streamReader)
+        public static List<vCard> FromStreamReader(StreamReader streamReader)
         {
-            var collection = new vCardCollection();
+            var collection = new List<vCard>();
             var contactsString = Helper.GetStringFromStreamReader(streamReader);
             var contacts = Helper.GetContactsArrayFromString(contactsString);
             foreach (var contact in contacts)
@@ -297,7 +297,7 @@ namespace vCardLib.Deserializers
                 DateTime birthday;
                 const string format = "yyyyMMdd";
                 const DateTimeStyles dateTimeStyle = DateTimeStyles.None;
-                IFormatProvider provider = new CultureInfo("en-US", true);
+                IFormatProvider provider = new CultureInfo("en-US");
                 if (DateTime.TryParseExact(bdayString, format, provider, dateTimeStyle, out birthday))
                 {
                     return birthday;
@@ -473,7 +473,7 @@ namespace vCardLib.Deserializers
                 DateTime revision;
                 var format = "yyyyMMddTHHmmssZ";
                 var dateTimeStyle = DateTimeStyles.None;
-                IFormatProvider provider = new CultureInfo("en-US", true);
+                IFormatProvider provider = new CultureInfo("en-US");
                 if (DateTime.TryParseExact(revisionString, format, provider, dateTimeStyle, out revision))
                 {
                     return revision;

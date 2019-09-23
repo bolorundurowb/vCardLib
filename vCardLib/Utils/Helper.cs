@@ -5,7 +5,7 @@ using System.Text;
 namespace vCardLib.Utils
 {
     /// <summary>
-    /// Class to holder all suppoting methods
+    /// Class to hold all supporting methods
     /// </summary>
     public class Helper
     {
