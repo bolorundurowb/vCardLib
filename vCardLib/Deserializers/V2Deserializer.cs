@@ -38,7 +38,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the phone numbers from the details array
         /// </summary>
-        /// <returns>A <see cref="PhoneNumberCollection"/></returns>
+        /// <returns>A <see cref="List<PhoneNumber>"/></returns>
         private static List<PhoneNumber> ParseTelephoneNumbers()
         {
             var phoneNumberCollection = new List<PhoneNumber>();
@@ -213,10 +213,10 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the email address from the details array
         /// </summary>
-        /// <returns>A <see cref="EmailAddressCollection"/></returns>
+        /// <returns>A <see cref="List<EmailAddress>"/></returns>
         private static List<EmailAddress> ParseEmailAddresses()
         {
-            var emailAddressCollection = new List<EmailAddress>();
+            var emailAddresses = new List<EmailAddress>();
 
             var emailStrings = _contactDetails.Where(s => s.StartsWith("EMAIL"));
             foreach (var email in emailStrings)
@@ -239,7 +239,7 @@ namespace vCardLib.Deserializers
                             Email = emailString,
                             Type = EmailType.Internet
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("HOME:"))
                     {
@@ -249,7 +249,7 @@ namespace vCardLib.Deserializers
                             Email = emailString,
                             Type = EmailType.Home
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("WORK:"))
                     {
@@ -259,7 +259,7 @@ namespace vCardLib.Deserializers
                             Email = emailString,
                             Type = EmailType.Work
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("AOL:") || emailString.StartsWith("aol:"))
                     {
@@ -269,7 +269,7 @@ namespace vCardLib.Deserializers
                             Email = emailString,
                             Type = EmailType.AOL
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("APPLELINK:") || emailString.StartsWith("applelink:"))
                     {
@@ -279,7 +279,7 @@ namespace vCardLib.Deserializers
                             Email = emailString,
                             Type = EmailType.Applelink
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("IBMMAIL:") || emailString.StartsWith("ibmmail:"))
                     {
@@ -289,7 +289,7 @@ namespace vCardLib.Deserializers
                             Email = emailString,
                             Type = EmailType.Work
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else
                     {
@@ -298,7 +298,7 @@ namespace vCardLib.Deserializers
                             Email = emailString,
                             Type = EmailType.None
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                 }
                 catch (FormatException)
@@ -306,13 +306,13 @@ namespace vCardLib.Deserializers
                 }
             }
 
-            return emailAddressCollection;
+            return emailAddresses;
         }
 
         /// <summary>
         /// Gets the addresses from the details array
         /// </summary>
-        /// <returns>A <see cref="AddressCollection"/></returns>
+        /// <returns>A <see cref="List<Address>"/></returns>
         private static List<Address> ParseAddresses()
         {
             var addressCollection = new List<Address>();
@@ -397,7 +397,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the hobbies from the details array
         /// </summary>
-        /// <returns>A <see cref="HobbyCollection"/></returns>
+        /// <returns>A <see cref="List<Hobby>"/></returns>
         private static List<Hobby> ParseHobbies()
         {
             var hobbyCollection = new List<Hobby>();
@@ -432,7 +432,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the expertises from the details array
         /// </summary>
-        /// <returns>A <see cref="ExpertiseCollection"/></returns>
+        /// <returns>A <see cref="List<Expertise>"/></returns>
         private static List<Expertise> ParseExpertises()
         {
             var expertiseCollection = new List<Expertise>();
@@ -468,7 +468,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the interests from the details array
         /// </summary>
-        /// <returns>A <see cref="InterestCollection"/></returns>
+        /// <returns>A <see cref="List<Interest>"/></returns>
         private static List<Interest> ParseInterests()
         {
             var interestCollection = new List<Interest>();
@@ -504,7 +504,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the photos from the details array
         /// </summary>
-        /// <returns>A <see cref="PhotoCollection"/></returns>
+        /// <returns>A <see cref="List<Photo>"/></returns>
         private static List<Photo> ParsePhotos()
         {
             var photoCollection = new List<Photo>();
