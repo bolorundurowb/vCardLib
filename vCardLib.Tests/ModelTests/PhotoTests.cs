@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using System.Threading.Tasks;
+using NUnit.Framework;
+using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib.Tests.ModelTests
@@ -9,28 +12,35 @@ namespace vCardLib.Tests.ModelTests
 		[Test]
 		public void WhenPictureIsNull()
 		{
-			var photo = new Photo();
-			photo.Type = PhotoType.URL;
-			photo.Encoding = PhotoEncoding.GIF;
-			photo.PhotoURL = "http://google.com/test.gif";
-			photo.Picture = null;
+			var photo = new Photo {
+				Type = PhotoType.URL,
+				Encoding = PhotoEncoding.GIF,
+				PhotoURL = "http://google.com/test.gif",
+				Picture = null};
 
 			Assert.AreEqual("", photo.ToBase64String());
 		}
 
 		[Test]
-		public void WhenPictureIsNotNull()
+		public async Task WhenPictureIsNotNull()
 		{
 			var request = System.Net.WebRequest.Create("https://jpeg.org/images/jpeg-logo-plain.png");
-            var response = request.GetResponse();
+            var response = await request.GetResponseAsync();
             var responseStream = response.GetResponseStream();
 
-            var photo = new Photo();
-			photo.Type = PhotoType.Image;
-			photo.Encoding = PhotoEncoding.JPEG;
-			photo.Picture = new System.Drawing.Bitmap(responseStream);
+            var photo = new Photo
+            {
+	            Type = PhotoType.Image,
+	            Encoding = PhotoEncoding.JPEG
+            };
 
-			Assert.DoesNotThrow(delegate { photo.ToBase64String(); });
+            using (var memoryStream = new MemoryStream())
+            {
+	            await responseStream.CopyToAsync(memoryStream);
+	            photo.Picture = memoryStream.ToArray();
+            }
+
+            Assert.DoesNotThrow(delegate { photo.ToBase64String(); });
 			Assert.Greater(photo.ToBase64String().Length, 0);
 		}
 	}

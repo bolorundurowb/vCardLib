@@ -1,28 +1,9 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
+using vCardLib.Enums;
 
 namespace vCardLib.Models
 {
-    /// <summary>
-    /// Supported ecnoding types
-    /// </summary>
-    public enum PhotoEncoding
-    {
-        JPEG,
-        GIF
-    }
-
-    /// <summary>
-    /// Support image format types
-    /// </summary>
-    public enum PhotoType
-    {
-        Image,
-        URL
-    }
-
     /// <summary>
     /// Class to hold images embedded in the vCard 
     /// </summary>
@@ -31,7 +12,7 @@ namespace vCardLib.Models
         /// <summary>
         /// The image
         /// </summary>
-        public Bitmap Picture { get; set; }
+        public byte[] Picture { get; set; }
 
         /// <summary>
         /// The image type
@@ -54,14 +35,12 @@ namespace vCardLib.Models
         /// <returns>An empty string  if the picture is null or a base 64 representation of the image</returns>
         public string ToBase64String()
         {
-            if(Picture == null)
+            if (Picture == null)
             {
                 return "";
             }
-            var stream = new MemoryStream();
-            Picture.Save(stream, ImageFormat.Bmp);
-            var imageBytes = stream.ToArray();
-            var base64String = Convert.ToBase64String(imageBytes);
+
+            var base64String = Convert.ToBase64String(Picture);
             return base64String;
         }
     }

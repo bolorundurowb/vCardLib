@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 
 namespace vCardLib.Tests.HelperTests
 {
@@ -34,8 +34,8 @@ namespace vCardLib.Tests.HelperTests
 		public void WriteOptionsAreStable()
 		{
 			Assert.DoesNotThrow(delegate {
-				var writeOption = WriteOptions.Overwrite;
-				writeOption = WriteOptions.ThrowError;
+				var writeOption = OverWriteOptions.Proceed;
+				writeOption = OverWriteOptions.Throw;
 			});
 		}
 	}

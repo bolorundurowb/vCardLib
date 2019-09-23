@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using vCardLib.Collections;
+using vCardLib.Enums;
 using vCardLib.Extensions;
-using vCardLib.Helpers;
 using vCardLib.Models;
-using Version = vCardLib.Helpers.Version;
+using vCardLib.Utils;
 
 namespace vCardLib.Deserializers
 {
@@ -16,7 +15,7 @@ namespace vCardLib.Deserializers
     /// </summary>
     public static class Deserializer
     {
-        private static string[] _supportedFields =
+        private static readonly string[] SupportedFields =
         {
             "BEGIN", "VERSION", "N:", "FN:", "ORG", "TITLE", "PHOTO", "TEL", "ADR", "EMAIL", "REV", "TZ", "KIND", "URL",
             "LANG", "NICKNAME", "BIRTHPLACE", "DEATHPLACE", "BDAY", "NOTE", "GENDER", "X-SKYPE-DISPLAYNAME",
@@ -30,7 +29,7 @@ namespace vCardLib.Deserializers
         /// </summary>
         /// <param name="filePath">Path to the vcf or vcard file</param>
         /// <returns>A <see cref="vCardCollection"/></returns>
-        public static vCardCollection FromFile(string filePath)
+        public static List<vCard> FromFile(string filePath)
         {
             var streamReader = Helper.GetStreamReaderFromFile(filePath);
             return FromStreamReader(streamReader);
@@ -41,9 +40,9 @@ namespace vCardLib.Deserializers
         /// </summary>
         /// <param name="streamReader"><see cref="StreamReader"/> containing a vcard(s)</param>
         /// <returns>A <see cref="vCardCollection"/></returns>
-        public static vCardCollection FromStreamReader(StreamReader streamReader)
+        public static List<vCard> FromStreamReader(StreamReader streamReader)
         {
-            var collection = new vCardCollection();
+            var collection = new List<vCard>();
             var contactsString = Helper.GetStringFromStreamReader(streamReader);
             var contacts = Helper.GetContactsArrayFromString(contactsString);
             foreach (var contact in contacts)
@@ -85,15 +84,15 @@ namespace vCardLib.Deserializers
             vCard vcard = null;
             if (version.Equals(2f) || version.Equals(2.1f))
             {
-                vcard = Deserialize(contactDetails, Version.V2);
+                vcard = Deserialize(contactDetails, vCardVersion.V2);
             }
             else if (version.Equals(3f))
             {
-                vcard = Deserialize(contactDetails, Version.V3);
+                vcard = Deserialize(contactDetails, vCardVersion.V3);
             }
             else if (version.Equals(4.0f))
             {
-                vcard = Deserialize(contactDetails, Version.V4);
+                vcard = Deserialize(contactDetails, vCardVersion.V4);
             }
 
             return vcard;
@@ -105,7 +104,7 @@ namespace vCardLib.Deserializers
         /// <param name="contactDetails">A string array of the contact details</param>
         /// <param name="version">The version to be deserialized from</param>
         /// <returns>A <see cref="vCard"/> comtaining the contacts details</returns>
-        private static vCard Deserialize(string[] contactDetails, Version version)
+        private static vCard Deserialize(string[] contactDetails, vCardVersion version)
         {
             _contactDetails = contactDetails;
             var vcard = new vCard
@@ -131,14 +130,12 @@ namespace vCardLib.Deserializers
                 TimeZone = ParseTimeZone(),
                 Title = ParseTitle(),
                 Url = ParseUrl(),
-                XSkypeDisplayName = ParseXSkypeDisplayName(),
-                XSkypePstnNumber = ParseXSkypePstnNumber()
             };
 
             vcard.CustomFields = vcard.CustomFields ?? new List<KeyValuePair<string, string>>();
             foreach (var contactDetail in _contactDetails)
             {
-                if (_supportedFields.Any(x => contactDetail.StartsWith(x)))
+                if (SupportedFields.Any(x => contactDetail.StartsWith(x)))
                 {
                     continue;
                 }
@@ -156,11 +153,11 @@ namespace vCardLib.Deserializers
 
             switch (version)
             {
-                case Version.V2:
+                case vCardVersion.V2:
                     return V2Deserializer.Parse(contactDetails, vcard);
-                case Version.V3:
+                case vCardVersion.V3:
                     return V3Deserializer.Parse(contactDetails, vcard);
-                case Version.V4:
+                case vCardVersion.V4:
                     return V4Deserializer.Parse(contactDetails, vcard);
                 default:
                     throw new ArgumentException($"The version {version} is not supported.");
@@ -300,7 +297,7 @@ namespace vCardLib.Deserializers
                 DateTime birthday;
                 const string format = "yyyyMMdd";
                 const DateTimeStyles dateTimeStyle = DateTimeStyles.None;
-                IFormatProvider provider = new CultureInfo("en-US", true);
+                IFormatProvider provider = new CultureInfo("en-US");
                 if (DateTime.TryParseExact(bdayString, format, provider, dateTimeStyle, out birthday))
                 {
                     return birthday;
@@ -476,7 +473,7 @@ namespace vCardLib.Deserializers
                 DateTime revision;
                 var format = "yyyyMMddTHHmmssZ";
                 var dateTimeStyle = DateTimeStyles.None;
-                IFormatProvider provider = new CultureInfo("en-US", true);
+                IFormatProvider provider = new CultureInfo("en-US");
                 if (DateTime.TryParseExact(revisionString, format, provider, dateTimeStyle, out revision))
                 {
                     return revision;

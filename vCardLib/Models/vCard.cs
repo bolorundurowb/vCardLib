@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using vCardLib.Collections;
-using vCardLib.Deserializers;
-using vCardLib.Helpers;
-using vCardLib.Models;
-using vCardLib.Serializers;
-using Version = vCardLib.Helpers.Version;
+using vCardLib.Enums;
 
-namespace vCardLib
+namespace vCardLib.Models
 {
     /// <summary>
     /// Class to store the various vCard contact details
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     public class vCard
     {
         /// <summary>
         /// The version of the vcf file
         /// </summary>
-        public Version Version { get; set; }
+        public vCardVersion Version { get; set; }
 
         /// <summary>
         /// The Family name or Surname of the contact
@@ -128,50 +122,40 @@ namespace vCardLib
         public DateTime? Revision { get; set; }
 
         /// <summary>
-        /// The contacts skype PSTN number
-        /// </summary>
-        public string XSkypePstnNumber { get; set; }
-
-        /// <summary>
-        /// The contacts skype display name
-        /// </summary>
-        public string XSkypeDisplayName { get; set; }
-
-        /// <summary>
         /// A collection of phone numbers associated with the contact
         /// </summary>
-        public PhoneNumberCollection PhoneNumbers { get; set; }
+        public List<PhoneNumber> PhoneNumbers { get; set; }
 
         /// <summary>
         /// A collection of email addresses associated with the contact
         /// </summary>
-        public EmailAddressCollection EmailAddresses { get; set; }
+        public List<EmailAddress> EmailAddresses { get; set; }
 
         /// <summary>
         /// A collection of photos associated with the contact
         /// </summary>
-        public PhotoCollection Pictures { get; set; }
+        public List<Photo> Pictures { get; set; }
 
         /// <summary>
         /// The contact's addresses
         /// </summary>
-        public AddressCollection Addresses { get; set; }
+        public List<Address> Addresses { get; set; }
 
         /// <summary>
         /// The contact'c areas of expertise
         /// </summary>
-        public ExpertiseCollection Expertises { get; set; }
+        public List<Expertise> Expertises { get; set; }
 
         /// <summary>
         /// The contact's hobbies
         /// </summary>
-        public HobbyCollection Hobbies { get; set; }
+        public List<Hobby> Hobbies { get; set; }
 
         /// <summary>
         /// The contact's interests
         /// </summary>
-        public InterestCollection Interests { get; set; }
-        
+        public List<Interest> Interests { get; set; }
+
         /// <summary>
         /// All other fields not defined in the spec
         /// </summary>
@@ -182,64 +166,15 @@ namespace vCardLib
         /// </summary>
         public vCard()
         {
-            PhoneNumbers = new PhoneNumberCollection();
-            EmailAddresses = new EmailAddressCollection();
-            Pictures = new PhotoCollection();
-            Addresses = new AddressCollection();
-            Interests = new InterestCollection();
-            Hobbies = new HobbyCollection();
-            Expertises = new ExpertiseCollection();
+            PhoneNumbers = new List<PhoneNumber>();
+            EmailAddresses = new List<EmailAddress>();
+            Pictures = new List<Photo>();
+            Addresses = new List<Address>();
+            Interests = new List<Interest>();
+            Hobbies = new List<Hobby>();
+            Expertises = new List<Expertise>();
             CustomFields = new List<KeyValuePair<string, string>>();
-			//Set the default vCard version as 2.1
-			Version = Version.V2;
-
-        }
-
-        /// <summary>
-        /// Method to read in a vcf file, and extract all contact information into a vCardCollection
-        /// </summary>
-        /// <param name="filepath">Path to the vcf file</param>
-        /// <returns>A collection of vCard objects, each with a contacts' full details</returns>
-        [Obsolete("This method is now obsolete, use Deserializer.FromFile instead")]
-        public static vCardCollection FromFile(string filepath)
-        {
-            return Deserializer.FromFile(filepath);
-        }
-
-        /// <summary>
-        /// Method to read in a vcf file and extract all contents to a vCardColllection
-        /// </summary>
-        /// <param name="streamReader">A stream reader containing the vcard details</param>
-        /// <returns>A collection of vCard objects, each with a contacts' full details</returns>
-        [Obsolete("This method is now obsolete, use Deserializer.FromStreamReader instead")]
-        public static vCardCollection FromStreamReader(StreamReader streamReader)
-        {
-            return Deserializer.FromStreamReader(streamReader);
-        }
-
-        /// <summary>
-        /// Save a vcard object to a vcf file
-        /// </summary>
-        /// <param name="filePath">Path to file to save to</param>
-        /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
-        /// <param name="encoding">The file encoding to use</param>
-        /// <returns>A boolean value stating whether the save option was successful or not</returns>
-        public bool Save(string filePath, WriteOptions writeOption = WriteOptions.ThrowError, Encoding encoding = null)
-        {
-            return Save(filePath, Version, writeOption, encoding);
-        }
-
-        /// <summary>
-        /// Save a vcard object to a vcf file
-        /// </summary>
-        /// <param name="filePath">Path to file to save to</param>
-        /// <param name="version">Set the save version</param>
-        /// <param name="writeOption">Option to determine if the method would overwrite the file or throw an error</param>
-        /// <param name="encoding">The file encoding to use</param>
-        /// <returns>A boolean value stating whether the save option was successful or not</returns>
-        public bool Save(string filePath, Version version, WriteOptions writeOption = WriteOptions.ThrowError, Encoding encoding = null)
-        {
-            return Serializer.Serialize(this, filePath, version, writeOption, encoding);
+            Revision = DateTime.UtcNow;
         }
     }
 }

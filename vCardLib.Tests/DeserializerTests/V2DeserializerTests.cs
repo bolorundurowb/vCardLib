@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿﻿using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Deserializers;
-using vCardLib.Helpers;
+using vCardLib.Models;
+using vCardLib.Utils;
 
 namespace vCardLib.Tests.DeserializerTests
 {

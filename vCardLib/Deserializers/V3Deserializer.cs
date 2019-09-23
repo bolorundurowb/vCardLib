@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using vCardLib.Collections;
-using vCardLib.Helpers;
+using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib.Deserializers
@@ -38,10 +37,10 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the phone numbers from the details array
         /// </summary>
-        /// <returns>A <see cref="PhoneNumberCollection"/></returns>
-        private static PhoneNumberCollection ParseTelephoneNumbers()
+        /// <returns>A <see cref="List`PhoneNumber"/></returns>
+        private static List<PhoneNumber> ParseTelephoneNumbers()
         {
-            var phoneNumberCollection = new PhoneNumberCollection();
+            var phoneNumberCollection = new List<PhoneNumber>();
 
             var telStrings = _contactDetails.Where(s => s.StartsWith("TEL"));
             foreach (var telString in telStrings)
@@ -50,13 +49,13 @@ namespace vCardLib.Deserializers
                 phoneString = phoneString.Replace("TYPE=", "");
                 if (phoneString.Contains(";"))
                 {
-                    var index = phoneString.LastIndexOf(";");
+                    var index = phoneString.LastIndexOf(";", StringComparison.Ordinal);
                     phoneString = phoneString.Remove(0, index + 1);
                 }
 
                 if (phoneString.Contains(","))
                 {
-                    var index = phoneString.LastIndexOf(",");
+                    var index = phoneString.LastIndexOf(",", StringComparison.Ordinal);
                     phoneString = phoneString.Remove(0, index + 1);
                 }
 
@@ -218,10 +217,10 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the email address from the details array
         /// </summary>
-        /// <returns>A <see cref="EmailAddressCollection"/></returns>
-        private static EmailAddressCollection ParseEmailAddresses()
+        /// <returns>A <see cref="List`EmailAddress"/></returns>
+        private static List<EmailAddress> ParseEmailAddresses()
         {
-            var emailAddressCollection = new EmailAddressCollection();
+            var emailAddresses = new List<EmailAddress>();
 
             var emailStrings = _contactDetails.Where(s => s.StartsWith("EMAIL"));
             foreach (var email in emailStrings)
@@ -246,69 +245,69 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("INTERNET:", "").Replace("internet:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = new MailAddress(emailString),
+                            Email = emailString,
                             Type = EmailType.Internet
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("HOME:") || emailString.StartsWith("home:"))
                     {
                         emailString = emailString.Replace("HOME:", "").Replace("home:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = new MailAddress(emailString),
+                            Email = emailString,
                             Type = EmailType.Home
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("WORK:") || emailString.StartsWith("work:"))
                     {
                         emailString = emailString.Replace("WORK:", "").Replace("work:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = new MailAddress(emailString),
+                            Email = emailString,
                             Type = EmailType.Work
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("AOL:") || emailString.StartsWith("aol:"))
                     {
                         emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = new MailAddress(emailString),
+                            Email = emailString,
                             Type = EmailType.AOL
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("APPLELINK:") || emailString.StartsWith("applelink:"))
                     {
                         emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = new MailAddress(emailString),
+                            Email = emailString,
                             Type = EmailType.Applelink
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else if (emailString.StartsWith("IBMMAIL:") || emailString.StartsWith("ibmmail:"))
                     {
                         emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = new MailAddress(emailString),
+                            Email = emailString,
                             Type = EmailType.Work
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                     else
                     {
                         var emailAddress = new EmailAddress
                         {
-                            Email = new MailAddress(emailString),
+                            Email = emailString,
                             Type = EmailType.None
                         };
-                        emailAddressCollection.Add(emailAddress);
+                        emailAddresses.Add(emailAddress);
                     }
                 }
                 catch (FormatException)
@@ -316,16 +315,16 @@ namespace vCardLib.Deserializers
                 }
             }
 
-            return emailAddressCollection;
+            return emailAddresses;
         }
 
         /// <summary>
         /// Gets the addresses from the details array
         /// </summary>
-        /// <returns>A <see cref="AddressCollection"/></returns>
-        private static AddressCollection ParseAddresses()
+        /// <returns>A <see cref="List`Address"/></returns>
+        private static List<Address> ParseAddresses()
         {
-            var addressCollection = new AddressCollection();
+            var addressCollection = new List<Address>();
             var addressStrings = _contactDetails.Where(s => s.StartsWith("ADR"));
             foreach (var addressStr in addressStrings)
             {
@@ -334,7 +333,7 @@ namespace vCardLib.Deserializers
                 //Remove multiple typing
                 if (addressString.Contains(","))
                 {
-                    var index = addressString.LastIndexOf(",");
+                    var index = addressString.LastIndexOf(",", StringComparison.Ordinal);
                     addressString = addressString.Remove(0, index + 1);
                 }
 
@@ -416,10 +415,10 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the hobbies from the details array
         /// </summary>
-        /// <returns>A <see cref="HobbyCollection"/></returns>
-        private static HobbyCollection ParseHobbies()
+        /// <returns>A <see cref="List`Hobby"/></returns>
+        private static List<Hobby> ParseHobbies()
         {
-            var hobbyCollection = new HobbyCollection();
+            var hobbyCollection = new List<Hobby>();
             var hobbyStrings = _contactDetails.Where(s => s.StartsWith("HOBBY;"));
             foreach (var hobbyStr in hobbyStrings)
             {
@@ -452,10 +451,10 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the expertises from the details array
         /// </summary>
-        /// <returns>A <see cref="ExpertiseCollection"/></returns>
-        private static ExpertiseCollection ParseExpertises()
+        /// <returns>A <see cref="List`Expertise"/></returns>
+        private static List<Expertise> ParseExpertises()
         {
-            var expertiseCollection = new ExpertiseCollection();
+            var expertiseCollection = new List<Expertise>();
             var expertiseStrings = _contactDetails.Where(s => s.StartsWith("EXPERTISE;"));
             foreach (var expertiseStr in expertiseStrings)
             {
@@ -488,10 +487,10 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the interests from the details array
         /// </summary>
-        /// <returns>A <see cref="InterestCollection"/></returns>
-        private static InterestCollection ParseInterests()
+        /// <returns>A <see cref="List`Interest"/></returns>
+        private static List<Interest> ParseInterests()
         {
-            var interestCollection = new InterestCollection();
+            var interestCollection = new List<Interest>();
             var interestStrings = _contactDetails.Where(s => s.StartsWith("INTEREST;"));
             foreach (var interestStr in interestStrings)
             {
@@ -524,10 +523,10 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the photos from the details array
         /// </summary>
-        /// <returns>A <see cref="PhotoCollection"/></returns>
-        private static PhotoCollection ParsePhotos()
+        /// <returns>A <see cref="List`Photo"/></returns>
+        private static List<Photo> ParsePhotos()
         {
-            var photoCollection = new PhotoCollection();
+            var photoCollection = new List<Photo>();
             var photoStrings = _contactDetails.Where(s => s.StartsWith("PHOTO;"));
             foreach (var photoStr in photoStrings)
             {
@@ -582,7 +581,7 @@ namespace vCardLib.Deserializers
                             var photo = new Photo
                             {
                                 Encoding = PhotoEncoding.JPEG,
-                                Picture = Helper.GetImageFromBase64String(photoString),
+                                Picture = Convert.FromBase64String(photoString),
                                 Type = PhotoType.Image
                             };
                             photoCollection.Add(photo);

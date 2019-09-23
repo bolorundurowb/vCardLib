@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
 
-namespace vCardLib.Helpers
+namespace vCardLib.Utils
 {
     /// <summary>
-    /// Class to holder all suppoting methods
+    /// Class to hold all supporting methods
     /// </summary>
     public class Helper
     {
@@ -20,12 +19,18 @@ namespace vCardLib.Helpers
         public static StreamReader GetStreamReaderFromFile(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
+            {
                 throw new ArgumentNullException("The filepath supplied is null or empty");
+            }
+
             if (!File.Exists(filePath))
+            {
                 throw new FileNotFoundException("The specified file at the filepath does not exist");
+            }
 
             var encoding = GetEncoding(filePath);
-            return new StreamReader(filePath, encoding);
+            var stream = new FileStream(filePath, FileMode.Open);
+            return new StreamReader(stream, encoding);
         }
 
         /// <summary>
@@ -40,7 +45,11 @@ namespace vCardLib.Helpers
             {
                 throw new ArgumentNullException("The input stream reader cannot be null");
             }
-            return streamReader.ReadToEnd();
+
+            using (streamReader)
+            {
+                return streamReader.ReadToEnd();
+            }
         }
 
         /// <summary>
@@ -56,12 +65,14 @@ namespace vCardLib.Helpers
             {
                 throw new ArgumentException("string cannot be null, empty or composed of only whitespace characters");
             }
+
             if (!(contactsString.Contains("BEGIN:VCARD") && contactsString.Contains("END:VCARD")))
             {
                 throw new InvalidOperationException("The vcard file does not seem to be a valid vcard file");
             }
+
             contactsString = contactsString.Replace("BEGIN:VCARD", "");
-            return contactsString.Split(new[] { "END:VCARD" }, StringSplitOptions.RemoveEmptyEntries);
+            return contactsString.Split(new[] {"END:VCARD"}, StringSplitOptions.RemoveEmptyEntries);
         }
 
         /// <summary>
@@ -74,32 +85,9 @@ namespace vCardLib.Helpers
             contactString = contactString.Replace("PREF;", "").Replace("pref;", "");
             contactString = contactString.Replace("PREF,", "").Replace("pref,", "");
             contactString = contactString.Replace(",PREF", "").Replace(",pref", "");
-            return contactString.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            return contactString.Split(new[] {"\n", "\r\n"}, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        /// <summary>
-        /// Converts a base 64 string to an image
-        /// </summary>
-        /// <param name="base64String">properly encoded base 64 string</param>
-        /// <returns>A bitmap object or null if the string is invalid</returns>
-        public static Bitmap GetImageFromBase64String(string base64String)
-        {
-            try
-            {
-                var imageBytes = Convert.FromBase64String(base64String);
-                Bitmap bmp;
-                using (var ms = new MemoryStream(imageBytes))
-                {
-					bmp = (Bitmap)Image.FromStream(ms);
-                }
-                return bmp;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-        
         /// <summary>
         /// Determines a text file's encoding by analyzing its byte order mark (BOM).
         /// Defaults to ASCII when detection of the text file's endianness fails.
@@ -121,10 +109,11 @@ namespace vCardLib.Helpers
             {
                 return Encoding.UTF8;
             }
+
             if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode;
             if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode;
             if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
-            
+
             return Encoding.ASCII;
         }
     }
