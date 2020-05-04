@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using vCardLib.Enums;
+using vCardLib.Serializers;
 
 namespace vCardLib.Models
 {
@@ -175,6 +176,30 @@ namespace vCardLib.Models
             Expertises = new List<Expertise>();
             CustomFields = new List<KeyValuePair<string, string>>();
             Revision = DateTime.UtcNow;
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return ToString(null);
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <param name="version">vCard version</param>
+        /// <returns>A string that represents the current object.</returns>
+        public string ToString(vCardVersion? version)
+        {
+            switch (version ?? Version)
+            {
+                case vCardVersion.V2:
+                    return new V2Serializer().Serialize(this);
+                case vCardVersion.V3:
+                    return new V3Serializer().Serialize(this);
+                default:
+                    return new V4Serializer().Serialize(this);
+            }
         }
     }
 }
