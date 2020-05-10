@@ -40,7 +40,7 @@ namespace vCardLib.Serializers
 
         private void AddCardEnd()
         {
-            _stringBuilder.Append("END:VCARD");
+            _stringBuilder.AppendLine().Append("END:VCARD");
         }
 
         private void AddSharedFields()
