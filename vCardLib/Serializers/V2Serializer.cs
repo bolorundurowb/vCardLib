@@ -7,7 +7,7 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Handles the serialization of version 2 cards
     /// </summary>
-    internal class V2Serializer : Serializer
+    internal class V2Serializer : BaseSerializer
     {
         protected override void AddVersionedFields()
         {

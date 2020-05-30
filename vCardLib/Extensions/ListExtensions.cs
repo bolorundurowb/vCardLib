@@ -31,18 +31,18 @@ namespace vCardLib.Extensions
             else
             {
                 var selectedVersion = version ?? This.First().Version;
-                Serializer serializer;
+                BaseSerializer baseSerializer;
 
                 switch (selectedVersion)
                 {
                     case vCardVersion.V2:
-                        serializer = new V2Serializer();
+                        baseSerializer = new V2Serializer();
                         break;
                     case vCardVersion.V3:
-                        serializer = new V3Serializer();
+                        baseSerializer = new V3Serializer();
                         break;
                     case vCardVersion.V4:
-                        serializer = new V4Serializer();
+                        baseSerializer = new V4Serializer();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -50,7 +50,7 @@ namespace vCardLib.Extensions
 
                 foreach (var vCard in This)
                 {
-                    stringBuilder.Append(serializer.Serialize(vCard)).AppendLine();
+                    stringBuilder.Append(baseSerializer.Serialize(vCard)).AppendLine();
                 }
 
                 var contents = stringBuilder.ToString();

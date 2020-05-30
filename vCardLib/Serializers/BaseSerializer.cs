@@ -8,7 +8,7 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Class holding shared logic
     /// </summary>
-    internal abstract class Serializer
+    internal abstract class BaseSerializer
     {
         protected void AddCardStart(StringBuilder stringBuilder)
         {
