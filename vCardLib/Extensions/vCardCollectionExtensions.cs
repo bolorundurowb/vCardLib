@@ -4,16 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using vCardLib.Enums;
+using vCardLib.Interfaces;
 using vCardLib.Models;
 using vCardLib.Serializers;
 
 namespace vCardLib.Extensions
 {
-    public static class ListExtensions
+    public static class vCardCollectionExtensions
     {
-        public static void Save(this List<vCard> This, string path, Encoding encoding = null, vCardVersion? version = null, OverWriteOptions overWriteOptions = OverWriteOptions.Proceed)
+        public static void Save(this List<vCard> cards, string path, Encoding encoding = null, vCardVersion? version = null, OverWriteOptions overWriteOptions = OverWriteOptions.Proceed)
         {
-            var stringBuilder = new StringBuilder();
             if (File.Exists(path) && overWriteOptions == OverWriteOptions.Throw)
             {
                 throw new InvalidOperationException(
@@ -24,14 +24,14 @@ namespace vCardLib.Extensions
                 );
             }
 
-            if (!This.Any())
+            if (!cards.Any())
             {
-                File.WriteAllText(path, String.Empty, encoding ?? Encoding.UTF8);
+                File.WriteAllText(path, string.Empty, encoding ?? Encoding.UTF8);
             }
             else
             {
-                var selectedVersion = version ?? This.First().Version;
-                Serializer serializer;
+                var selectedVersion = version ?? cards.First().Version;
+                ISerializer serializer;
 
                 switch (selectedVersion)
                 {
@@ -48,12 +48,7 @@ namespace vCardLib.Extensions
                         throw new ArgumentOutOfRangeException();
                 }
 
-                foreach (var vCard in This)
-                {
-                    stringBuilder.Append(serializer.Serialize(vCard)).AppendLine();
-                }
-
-                var contents = stringBuilder.ToString();
+                var contents = serializer.Serialize(cards);
                 File.WriteAllText(path, contents, encoding ?? Encoding.UTF8);
             }
         }
