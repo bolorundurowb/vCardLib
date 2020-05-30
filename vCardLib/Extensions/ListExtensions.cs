@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using vCardLib.Enums;
+using vCardLib.Interfaces;
 using vCardLib.Models;
 using vCardLib.Serializers;
 
@@ -26,34 +27,29 @@ namespace vCardLib.Extensions
 
             if (!This.Any())
             {
-                File.WriteAllText(path, String.Empty, encoding ?? Encoding.UTF8);
+                File.WriteAllText(path, string.Empty, encoding ?? Encoding.UTF8);
             }
             else
             {
                 var selectedVersion = version ?? This.First().Version;
-                BaseSerializer baseSerializer;
+                ISerializer serializer;
 
                 switch (selectedVersion)
                 {
                     case vCardVersion.V2:
-                        baseSerializer = new V2Serializer();
+                        serializer = new V2Serializer();
                         break;
                     case vCardVersion.V3:
-                        baseSerializer = new V3Serializer();
+                        serializer = new V3Serializer();
                         break;
                     case vCardVersion.V4:
-                        baseSerializer = new V4Serializer();
+                        serializer = new V4Serializer();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
 
-                foreach (var vCard in This)
-                {
-                    stringBuilder.Append(baseSerializer.Serialize(vCard)).AppendLine();
-                }
-
-                var contents = stringBuilder.ToString();
+                var contents = serializer.Serialize(This);
                 File.WriteAllText(path, contents, encoding ?? Encoding.UTF8);
             }
         }

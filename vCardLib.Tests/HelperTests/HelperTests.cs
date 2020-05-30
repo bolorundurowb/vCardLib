@@ -18,7 +18,7 @@ namespace vCardLib.Tests.HelperTests
         {
             string filePath = null;
             Assert.Throws<ArgumentNullException>(delegate { Helper.GetStreamReaderFromFile(filePath); });
-            filePath = String.Empty;
+            filePath = string.Empty;
             Assert.Throws<ArgumentNullException>(delegate { Helper.GetStreamReaderFromFile(filePath); });
             filePath = @"C:\Test.vcf";
             Assert.Throws<FileNotFoundException>(delegate { Helper.GetStreamReaderFromFile(filePath); });
