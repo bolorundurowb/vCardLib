@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib.Interfaces
@@ -9,7 +8,9 @@ namespace vCardLib.Interfaces
     {
         string Serialize(vCard vCard);
         
-        string Serialize(IEnumerable<vCard> vCardCollection, vCardVersion? version = null);
+        string Serialize(IEnumerable<vCard> vCardCollection);
+
+        void AddVersion(StringBuilder stringBuilder);
         
         void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers);
 

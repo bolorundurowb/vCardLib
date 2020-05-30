@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using vCardLib.Enums;
 using vCardLib.Interfaces;
 using vCardLib.Models;
 
@@ -17,9 +16,14 @@ namespace vCardLib.Serializers
             throw new NotImplementedException();
         }
 
-        public string Serialize(IEnumerable<vCard> vCardCollection, vCardVersion? version = null)
+        public string Serialize(IEnumerable<vCard> vCardCollection)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddVersion(StringBuilder stringBuilder)
+        {
+            stringBuilder.AppendLine("VERSION:4.0");
         }
 
         public void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers)

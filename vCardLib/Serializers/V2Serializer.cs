@@ -16,6 +16,7 @@ namespace vCardLib.Serializers
         {
             // add fields in order
             AddCardStart(stringBuilder);
+            AddVersion(stringBuilder);
             AddRevision(stringBuilder);
             AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.MiddleName, vCard.Prefix, vCard.Suffix);
             AddFormattedName(stringBuilder, vCard.FormattedName);
@@ -54,7 +55,12 @@ namespace vCardLib.Serializers
             return stringBuilder.ToString();
         }
 
-        public string Serialize(IEnumerable<vCard> vCardCollection, vCardVersion? version = null)
+        public void AddVersion(StringBuilder stringBuilder)
+        {
+            stringBuilder.AppendLine("VERSION:2.1");
+        }
+
+        public string Serialize(IEnumerable<vCard> vCardCollection)
         {
             if (vCardCollection == null)
             {
