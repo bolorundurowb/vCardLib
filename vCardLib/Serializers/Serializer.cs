@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using vCardLib.Enums;
 using vCardLib.Models;
 
 namespace vCardLib.Serializers
@@ -31,16 +32,6 @@ namespace vCardLib.Serializers
             AddCardEnd();
 
             return _stringBuilder.ToString();
-        }
-
-        private void AddCardStart()
-        {
-            _stringBuilder.Append("BEGIN:VCARD").AppendLine();
-        }
-
-        private void AddCardEnd()
-        {
-            _stringBuilder.Append("END:VCARD");
         }
 
         private void AddSharedFields()
@@ -95,15 +86,24 @@ namespace vCardLib.Serializers
 
             if (_vCard.Geo != null)
             {
-                _stringBuilder.Append("GEO:" + _vCard.Geo.Longitude + ";" + _vCard.Geo.Latitude);
+                
             }
 
             if (_vCard.BirthDay != null)
             {
                 var birthDay = (DateTime) _vCard.BirthDay;
-                _stringBuilder.Append("BDAY:" + birthDay.Year + birthDay.Month.ToString("00") +
-                                      birthDay.Day.ToString("00"));
+                _
             }
+        }
+
+        protected void AddCardStart(StringBuilder stringBuilder)
+        {
+            stringBuilder.AppendLine("BEGIN:VCARD");
+        }
+
+        protected void AddCardEnd(StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("END:VCARD");
         }
 
         protected void AddRevision(StringBuilder stringBuilder)
@@ -134,8 +134,67 @@ namespace vCardLib.Serializers
             stringBuilder.AppendLine($"TITLE:{title}");
         }
 
-        protected void AddName(StringBuilder stringBuilder)
+        protected void AddUrl(StringBuilder stringBuilder, string url)
         {
+            stringBuilder.AppendLine($"URL:{url}");
+        }
+
+        protected void AddNickName(StringBuilder stringBuilder, string nickName)
+        {
+            stringBuilder.AppendLine($"NICKNAME:{nickName}");
+        }
+
+        protected void AddLanguage(StringBuilder stringBuilder, string language)
+        {
+            stringBuilder.AppendLine($"LANG:{language}");
+        }
+
+        protected void AddBirthPlace(StringBuilder stringBuilder, string birthPlace)
+        {
+            stringBuilder.AppendLine($"BIRTHPLACE:{birthPlace}");
+        }
+
+        protected void AddDeathPlace(StringBuilder stringBuilder, string deathPlace)
+        {
+            stringBuilder.AppendLine($"DEATHPLACE:{deathPlace}");
+        }
+
+        protected void AddTimeZone(StringBuilder stringBuilder, string timeZone)
+        {
+            stringBuilder.AppendLine($"TZ:{timeZone}");
+        }
+
+        protected void AddNote(StringBuilder stringBuilder, string note)
+        {
+            stringBuilder.AppendLine($"NOTE:{note}");
+        }
+
+        protected void AddContactKind(StringBuilder stringBuilder, ContactType contactType)
+        {
+            stringBuilder.AppendLine($"KIND:{contactType.ToString()}");
+        }
+
+        protected void AddGender(StringBuilder stringBuilder, GenderType genderType)
+        {
+            stringBuilder.AppendLine($"GENDER:{genderType.ToString()}");
+        }
+
+        protected void AddGeo(StringBuilder stringBuilder, Geo geo)
+        {
+            if (geo != null)
+            {
+                stringBuilder.Append("GEO:" + geo.Longitude + ";" + geo.Latitude);
+            }
+        }
+
+        protected void AddName(StringBuilder stringBuilder, DateTime? birthDay)
+        {
+            if (birthDay.HasValue)
+            {
+                var bDay = birthDay.Value;
+                stringBuilder.Append("BDAY:" + bDay.Year + bDay.Month.ToString("00") +
+                                     bDay.Day.ToString("00"));
+            }
         }
     }
 }
