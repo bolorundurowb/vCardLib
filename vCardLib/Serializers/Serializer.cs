@@ -86,7 +86,6 @@ namespace vCardLib.Serializers
 
             if (_vCard.Geo != null)
             {
-                
             }
 
             if (_vCard.BirthDay != null)
@@ -121,52 +120,82 @@ namespace vCardLib.Serializers
 
         protected void AddFormattedName(StringBuilder stringBuilder, string formattedName)
         {
-            stringBuilder.AppendLine($"FN:{formattedName}");
+            if (!string.IsNullOrWhiteSpace(formattedName))
+            {
+                stringBuilder.AppendLine($"FN:{formattedName}");
+            }
         }
 
         protected void AddOrganization(StringBuilder stringBuilder, string organization)
         {
-            stringBuilder.AppendLine($"ORG:{organization}");
+            if (!string.IsNullOrWhiteSpace(organization))
+            {
+                stringBuilder.AppendLine($"ORG:{organization}");
+            }
         }
 
         protected void AddTitle(StringBuilder stringBuilder, string title)
         {
-            stringBuilder.AppendLine($"TITLE:{title}");
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                stringBuilder.AppendLine($"TITLE:{title}");
+            }
         }
 
         protected void AddUrl(StringBuilder stringBuilder, string url)
         {
-            stringBuilder.AppendLine($"URL:{url}");
+            if (!string.IsNullOrWhiteSpace(url))
+            {
+                stringBuilder.AppendLine($"URL:{url}");
+            }
         }
 
         protected void AddNickName(StringBuilder stringBuilder, string nickName)
         {
-            stringBuilder.AppendLine($"NICKNAME:{nickName}");
+            if (!string.IsNullOrWhiteSpace(nickName))
+            {
+                stringBuilder.AppendLine($"NICKNAME:{nickName}");
+            }
         }
 
         protected void AddLanguage(StringBuilder stringBuilder, string language)
         {
-            stringBuilder.AppendLine($"LANG:{language}");
+            if (!string.IsNullOrWhiteSpace(language))
+            {
+                stringBuilder.AppendLine($"LANG:{language}");
+            }
         }
 
         protected void AddBirthPlace(StringBuilder stringBuilder, string birthPlace)
         {
-            stringBuilder.AppendLine($"BIRTHPLACE:{birthPlace}");
+            if (!string.IsNullOrWhiteSpace(birthPlace))
+            {
+                stringBuilder.AppendLine($"BIRTHPLACE:{birthPlace}");
+            }
         }
 
         protected void AddDeathPlace(StringBuilder stringBuilder, string deathPlace)
         {
-            stringBuilder.AppendLine($"DEATHPLACE:{deathPlace}");
+            if (!string.IsNullOrWhiteSpace(deathPlace))
+            {
+                stringBuilder.AppendLine($"DEATHPLACE:{deathPlace}");
+            }
         }
 
         protected void AddTimeZone(StringBuilder stringBuilder, string timeZone)
         {
-            stringBuilder.AppendLine($"TZ:{timeZone}");
+            if (!string.IsNullOrWhiteSpace(timeZone))
+            {
+                stringBuilder.AppendLine($"TZ:{timeZone}");
+            }
         }
 
         protected void AddNote(StringBuilder stringBuilder, string note)
         {
-            stringBuilder.AppendLine($"NOTE:{note}");
+            if (!string.IsNullOrWhiteSpace(note))
+            {
+                stringBuilder.AppendLine($"NOTE:{note}");
+            }
         }
 
         protected void AddContactKind(StringBuilder stringBuilder, ContactType contactType)
