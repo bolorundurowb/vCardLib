@@ -9,9 +9,9 @@ namespace vCardLib.Extensions
     // ReSharper disable once InconsistentNaming
     public static class vCardExtensions
     {
-        public static void Save(this vCard This, string path, Encoding encoding = null, vCardVersion? version = null, OverWriteOptions overWriteOptions = OverWriteOptions.Proceed)
+        public static void Save(this vCard card, string path, Encoding encoding = null, vCardVersion? version = null, OverWriteOptions overWriteOptions = OverWriteOptions.Proceed)
         {
-            string contents = This.ToString(version ?? This.Version);
+            var contents = card.ToString(version ?? card.Version);
 
             if (File.Exists(path) && overWriteOptions == OverWriteOptions.Throw)
             {
