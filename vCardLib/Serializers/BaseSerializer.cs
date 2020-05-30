@@ -131,7 +131,7 @@ namespace vCardLib.Serializers
             }
         }
 
-        protected void AddName(StringBuilder stringBuilder, DateTime? birthDay)
+        protected void AddBirthday(StringBuilder stringBuilder, DateTime? birthDay)
         {
             if (birthDay.HasValue)
             {
