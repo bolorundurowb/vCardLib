@@ -6,6 +6,10 @@ namespace vCardLib.Interfaces
 {
     public interface ISerializer
     {
+        string Serialize(vCard vCard);
+        
+        string Serialize(IEnumerable<vCard> vCardCollection);
+        
         void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers);
 
         void AddEmailAddresses(StringBuilder stringBuilder, IEnumerable<EmailAddress> emailAddresses);
