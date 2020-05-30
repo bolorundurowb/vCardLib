@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using vCardLib.Models;
 
 namespace vCardLib.Interfaces
 {
     public interface ISerializer
     {
-        string AddPhoneNumbers(IEnumerable<PhoneNumber> phoneNumbers);
+        void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers);
 
-        string AddEmailAddresses(IEnumerable<EmailAddress> emailAddresses);
+        void AddEmailAddresses(StringBuilder stringBuilder, IEnumerable<EmailAddress> emailAddresses);
 
-        string AddAddresses(IEnumerable<Address> addresses);
+        void AddAddresses(StringBuilder stringBuilder, IEnumerable<Address> addresses);
 
-        string AddPhotos(IEnumerable<Photo> photos);
+        void AddPhotos(StringBuilder stringBuilder, IEnumerable<Photo> photos);
 
-        string AddExpertises(IEnumerable<Expertise> expertises);
+        void AddExpertises(StringBuilder stringBuilder, IEnumerable<Expertise> expertises);
 
-        string AddHobbies(IEnumerable<Hobby> hobbies);
+        void AddHobbies(StringBuilder stringBuilder, IEnumerable<Hobby> hobbies);
 
-        string AddInterests(IEnumerable<Interest> interests);
+        void AddInterests(StringBuilder stringBuilder, IEnumerable<Interest> interests);
     }
 }

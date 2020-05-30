@@ -17,7 +17,7 @@ namespace vCardLib.Serializers
         {
             _stringBuilder = new StringBuilder();
             _vCard = vCard;
-            
+
             // add card start
             AddCardStart();
 
@@ -45,11 +45,6 @@ namespace vCardLib.Serializers
 
         private void AddSharedFields()
         {
-            _stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
-            _stringBuilder.Append(
-                $"N:{_vCard.FamilyName};{_vCard.GivenName};{_vCard.MiddleName};{_vCard.Prefix};{_vCard.Suffix}{Environment.NewLine}"
-            );
-            _stringBuilder.Append("FN:" + _vCard.FormattedName + Environment.NewLine);
             if (!string.IsNullOrEmpty(_vCard.Organization))
             {
                 _stringBuilder.Append("ORG:" + _vCard.Organization + Environment.NewLine);
@@ -109,6 +104,38 @@ namespace vCardLib.Serializers
                 _stringBuilder.Append("BDAY:" + birthDay.Year + birthDay.Month.ToString("00") +
                                       birthDay.Day.ToString("00"));
             }
+        }
+
+        protected void AddRevision(StringBuilder stringBuilder)
+        {
+            stringBuilder.AppendLine($"REV:{DateTime.Now:yyyyMMddTHHmmssZ}");
+        }
+
+        protected void AddName(StringBuilder stringBuilder, string familyName, string givenName, string middleName,
+            string prefix, string suffix)
+        {
+            stringBuilder.AppendLine(
+                $"N:{familyName};{givenName};{middleName};{prefix};{suffix}"
+            );
+        }
+
+        protected void AddFormattedName(StringBuilder stringBuilder, string formattedName)
+        {
+            stringBuilder.AppendLine($"FN:{formattedName}");
+        }
+
+        protected void AddOrganization(StringBuilder stringBuilder, string organization)
+        {
+            stringBuilder.AppendLine($"ORG:{organization}");
+        }
+
+        protected void AddTitle(StringBuilder stringBuilder, string title)
+        {
+            stringBuilder.AppendLine($"TITLE:{title}");
+        }
+
+        protected void AddName(StringBuilder stringBuilder)
+        {
         }
     }
 }
