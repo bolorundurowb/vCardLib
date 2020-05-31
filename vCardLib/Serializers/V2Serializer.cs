@@ -55,11 +55,6 @@ namespace vCardLib.Serializers
             return stringBuilder.ToString();
         }
 
-        public void AddVersion(StringBuilder stringBuilder)
-        {
-            stringBuilder.AppendLine("VERSION:2.1");
-        }
-
         public string Serialize(IEnumerable<vCard> vCardCollection)
         {
             if (vCardCollection == null)
@@ -79,6 +74,11 @@ namespace vCardLib.Serializers
             }
 
             return stringBuilder.ToString();
+        }
+
+        public void AddVersion(StringBuilder stringBuilder)
+        {
+            stringBuilder.AppendLine("VERSION:2.1");
         }
 
         public void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers)
