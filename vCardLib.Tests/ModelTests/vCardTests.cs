@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Enums;
 using vCardLib.Models;
@@ -12,7 +10,6 @@ namespace vCardLib.Tests.ModelTests
     public class vCardTests
     {
         readonly vCard _vcard = new vCard();
-        string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         [Test]
         public void GenerateValidVcard()
