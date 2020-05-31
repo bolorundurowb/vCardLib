@@ -1,14 +1,10 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using vCardLib.Deserializers;
-using vCardLib.Enums;
-using vCardLib.Models;
-using vCardLib.Utils;
 
-namespace vCardLib.Tests.DeserializerTests
+namespace vCardLib.Tests
 {
     [TestFixture]
     public class DeserializerTests
@@ -16,68 +12,69 @@ namespace vCardLib.Tests.DeserializerTests
         string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         [Test]
-        public void FromFileTest()
+        public void ShouldSucceedWithV2File()
         {
             var filePath = Path.Combine(assemblyFolder, "v2.vcf");
-            List<vCard> collection = null;
-            Assert.DoesNotThrow(delegate { collection = Deserializer.FromFile(filePath); });
-            Assert.AreEqual(1, collection.Count);
+            var cards = Deserializer.FromFile(filePath);
+            Assert.AreEqual(1, cards.Count);
         }
 
         [Test]
-        public void FromStreamTest()
+        public void ShouldSucceedWithV3File()
+        {
+            var filePath = Path.Combine(assemblyFolder, "v3.vcf");
+            var cards = Deserializer.FromFile(filePath);
+            Assert.AreEqual(1, cards.Count);
+        }
+
+        [Test]
+        public void ShouldThrowWithV4File()
+        {
+            var filePath = Path.Combine(assemblyFolder, "v4.vcf");
+            Assert.Throws<InvalidDataException>(delegate { Deserializer.FromFile(filePath); });
+        }
+
+        [Test]
+        public void ShouldThrowWithInvalidFile()
+        {
+            var filePath = Path.Combine(assemblyFolder, "invalid.vcf");
+            Assert.Throws<InvalidDataException>(delegate { Deserializer.FromFile(filePath); });
+        }
+
+        [Test]
+        public void ShouldSucceedWithStream()
         {
             var filePath = Path.Combine(assemblyFolder, "v2.vcf");
-            StreamReader streamReader = null;
-            Assert.DoesNotThrow(delegate { streamReader = Helpers.GetStreamReaderFromFile(filePath); });
-            Assert.IsNotNull(streamReader);
-            List<vCard> collection = null;
-            Assert.DoesNotThrow(delegate { collection = Deserializer.FromStreamReader(streamReader); });
-            Assert.AreEqual(1, collection.Count);
+            var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            var cards = Deserializer.FromStream(stream);
+            Assert.AreEqual(1, cards.Count);
         }
 
         [Test]
-        public void GetVcardFromDetailsNullTest()
+        public void ShouldSucceedWithStringContent()
         {
-            string[] details = null;
-            Assert.Throws<InvalidDataException>(delegate { Deserializer.GetVcardFromDetails(details); });
-        }
+            var details = @"
+BEGIN:VCARD
+VERSION:2.1
+FN:James Doe
+END:VCARD
+";
+            var cards = Deserializer.FromString(details);
+            Assert.AreEqual(1, cards.Count);
 
-        [Test]
-        public void GetVcardFromDetailsValidDataTest()
-        {
-            var details = new[]
-            {
-                "VERSION:2.1"
-            };
-            vCard vcard = null;
-            Assert.DoesNotThrow(delegate { vcard = Deserializer.GetVcardFromDetails(details); });
-            Assert.AreEqual(vCardVersion.V2, vcard.Version);
-
-            details = new[]
-            {
-                "VERSION:3.0"
-            };
-            vcard = null;
-            Assert.DoesNotThrow(delegate { vcard = Deserializer.GetVcardFromDetails(details); });
-            Assert.AreEqual(vCardVersion.V3, vcard.Version);
-
-            details = new[]
-            {
-                "VERSION:4.0"
-            };
-            Assert.Throws<NotImplementedException>(delegate { vcard = Deserializer.GetVcardFromDetails(details); });
+            var card = cards.First();
+            Assert.AreEqual("James Doe", card.FormattedName);
         }
 
         [Test]
         public void DeserializeCardWithCustomFields()
         {
             var filePath = Path.Combine(assemblyFolder, "custom-fields.vcf");
-            List<vCard> collection = null;
-            Assert.DoesNotThrow(delegate { collection = Deserializer.FromFile(filePath); });
-            Assert.AreEqual(1, collection.Count);
-            var vcard = collection[0];
-            Assert.AreEqual(vcard.CustomFields.Count, 5);
+            var cards = Deserializer.FromFile(filePath);
+            Assert.AreEqual(1, cards.Count);
+
+            var card = cards.First();
+            Assert.AreEqual(5, card.CustomFields.Count);
         }
     }
 }
