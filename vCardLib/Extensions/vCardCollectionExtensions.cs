@@ -36,7 +36,7 @@ namespace vCardLib.Extensions
                 switch (selectedVersion)
                 {
                     case vCardVersion.V2:
-                        serializer = new V2Serializer();
+                        serializer = new v2Serializer();
                         break;
                     case vCardVersion.V3:
                         serializer = new V3Serializer();

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using vCardLib.Enums;
 using vCardLib.Models;
@@ -8,8 +10,72 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Class holding shared logic
     /// </summary>
-    internal abstract class BaseSerializer
+    public abstract class BaseSerializer
     {
+        private void WriteCardToBuilder(StringBuilder stringBuilder, vCard vCard)
+        {
+            // add fields in order
+            AddCardStart(stringBuilder);
+            AddVersion(stringBuilder);
+            AddRevision(stringBuilder);
+            AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.MiddleName, vCard.Prefix, vCard.Suffix);
+            AddFormattedName(stringBuilder, vCard.FormattedName);
+            AddOrganization(stringBuilder, vCard.Organization);
+            AddTitle(stringBuilder, vCard.Title);
+            AddUrl(stringBuilder, vCard.Url);
+            AddNickName(stringBuilder, vCard.NickName);
+            AddLanguage(stringBuilder, vCard.Language);
+            AddBirthPlace(stringBuilder, vCard.BirthPlace);
+            AddDeathPlace(stringBuilder, vCard.DeathPlace);
+            AddTimeZone(stringBuilder, vCard.TimeZone);
+            AddNote(stringBuilder, vCard.Note);
+            AddContactKind(stringBuilder, vCard.Kind);
+            AddGender(stringBuilder, vCard.Gender);
+            AddGeo(stringBuilder, vCard.Geo);
+            AddBirthday(stringBuilder, vCard.BirthDay);
+            AddPhoneNumbers(stringBuilder, vCard.PhoneNumbers);
+            AddEmailAddresses(stringBuilder, vCard.EmailAddresses);
+            AddAddresses(stringBuilder, vCard.Addresses);
+            AddPhotos(stringBuilder, vCard.Pictures);
+            AddExpertises(stringBuilder, vCard.Expertises);
+            AddHobbies(stringBuilder, vCard.Hobbies);
+            AddInterests(stringBuilder, vCard.Interests);
+            AddCardEnd(stringBuilder);
+        }
+
+        public string Serialize(vCard vCard)
+        {
+            if (vCard == null)
+            {
+                return string.Empty;
+            }
+
+            var stringBuilder = new StringBuilder();
+            WriteCardToBuilder(stringBuilder, vCard);
+            return stringBuilder.ToString();
+        }
+
+        public string Serialize(IEnumerable<vCard> vCardCollection)
+        {
+            if (vCardCollection == null)
+            {
+                return string.Empty;
+            }
+
+            if (!vCardCollection.Any())
+            {
+                return string.Empty;
+            }
+
+            var stringBuilder = new StringBuilder();
+            foreach (var vCard in vCardCollection)
+            {
+                WriteCardToBuilder(stringBuilder, vCard);
+            }
+
+            return stringBuilder.ToString();
+        }
+        
         protected void AddCardStart(StringBuilder stringBuilder)
         {
             stringBuilder.AppendLine("BEGIN:VCARD");
@@ -140,5 +206,22 @@ namespace vCardLib.Serializers
                                      bDay.Day.ToString("00"));
             }
         }
+
+        protected abstract void AddVersion(StringBuilder stringBuilder);
+
+        protected abstract void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers);
+
+        protected abstract void AddEmailAddresses(StringBuilder stringBuilder,
+            IEnumerable<EmailAddress> emailAddresses);
+
+        protected abstract void AddAddresses(StringBuilder stringBuilder, IEnumerable<Address> addresses);
+
+        protected abstract void AddPhotos(StringBuilder stringBuilder, IEnumerable<Photo> photos);
+
+        protected abstract void AddExpertises(StringBuilder stringBuilder, IEnumerable<Expertise> expertises);
+
+        protected abstract void AddHobbies(StringBuilder stringBuilder, IEnumerable<Hobby> hobbies);
+
+        protected abstract void AddInterests(StringBuilder stringBuilder, IEnumerable<Interest> interests);
     }
 }
