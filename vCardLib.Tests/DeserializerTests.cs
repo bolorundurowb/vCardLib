@@ -25,7 +25,7 @@ namespace vCardLib.Tests.DeserializerTests
         }
 
         [Test]
-        public void FromStreamReaderTest()
+        public void FromStreamTest()
         {
             var filePath = Path.Combine(assemblyFolder, "v2.vcf");
             StreamReader streamReader = null;

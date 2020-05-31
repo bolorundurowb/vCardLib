@@ -103,6 +103,7 @@ namespace vCardLib.Deserializers
         {
             var card = new vCard
             {
+                Version = ParseVersion(),
                 BirthDay = ParseBirthDay(contactDetails),
                 BirthPlace = ParseBirthPlace(contactDetails),
                 DeathPlace = ParseDeathPlace(contactDetails),
@@ -483,6 +484,8 @@ namespace vCardLib.Deserializers
 
             return null;
         }
+
+        protected abstract vCardVersion ParseVersion();
 
         protected abstract List<Address> ParseAddresses(string[] contactDetails);
 

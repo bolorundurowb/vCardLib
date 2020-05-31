@@ -9,6 +9,11 @@ namespace vCardLib.Deserializers
     // ReSharper disable once InconsistentNaming
     public class v3Deserializer : Deserializer
     {
+        protected override vCardVersion ParseVersion()
+        {
+            return vCardVersion.V3;
+        }
+
         protected override List<Address> ParseAddresses(string[] contactDetails)
         {
             var addressCollection = new List<Address>();
