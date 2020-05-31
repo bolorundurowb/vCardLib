@@ -8,7 +8,7 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Handles the serialization of version 4 cards
     /// </summary>
-    internal class v4Serializer : BaseSerializer
+    internal class v4Serializer : Serializer
     {
         protected override void AddVersion(StringBuilder stringBuilder)
         {

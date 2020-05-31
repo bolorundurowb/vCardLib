@@ -11,40 +11,60 @@ namespace vCardLib.Serializers
     /// <summary>
     /// Class holding shared logic
     /// </summary>
-    public abstract class BaseSerializer
+    public abstract class Serializer
     {
-        private void WriteCardToBuilder(StringBuilder stringBuilder, vCard vCard)
+        private static void WriteCardToBuilder(StringBuilder stringBuilder, vCard vCard)
         {
+            Serializer serializer;
+
+            if (vCard.Version == vCardVersion.V2)
+            {
+                serializer = new v2Serializer();
+            }
+            else if (vCard.Version == vCardVersion.V3)
+            {
+                serializer = new v3Serializer();
+            }
+            else if (vCard.Version == vCardVersion.V4)
+            {
+                serializer = new v4Serializer();
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+
             // add fields in order
-            AddCardStart(stringBuilder);
-            AddVersion(stringBuilder);
-            AddRevision(stringBuilder);
-            AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.MiddleName, vCard.Prefix, vCard.Suffix);
-            AddFormattedName(stringBuilder, vCard.FormattedName);
-            AddOrganization(stringBuilder, vCard.Organization);
-            AddTitle(stringBuilder, vCard.Title);
-            AddUrl(stringBuilder, vCard.Url);
-            AddNickName(stringBuilder, vCard.NickName);
-            AddLanguage(stringBuilder, vCard.Language);
-            AddBirthPlace(stringBuilder, vCard.BirthPlace);
-            AddDeathPlace(stringBuilder, vCard.DeathPlace);
-            AddTimeZone(stringBuilder, vCard.TimeZone);
-            AddNote(stringBuilder, vCard.Note);
-            AddContactKind(stringBuilder, vCard.Kind);
-            AddGender(stringBuilder, vCard.Gender);
-            AddGeo(stringBuilder, vCard.Geo);
-            AddBirthday(stringBuilder, vCard.BirthDay);
-            AddPhoneNumbers(stringBuilder, vCard.PhoneNumbers);
-            AddEmailAddresses(stringBuilder, vCard.EmailAddresses);
-            AddAddresses(stringBuilder, vCard.Addresses);
-            AddPhotos(stringBuilder, vCard.Pictures);
-            AddExpertises(stringBuilder, vCard.Expertises);
-            AddHobbies(stringBuilder, vCard.Hobbies);
-            AddInterests(stringBuilder, vCard.Interests);
-            AddCardEnd(stringBuilder);
+            serializer.AddCardStart(stringBuilder);
+            serializer.AddVersion(stringBuilder);
+            serializer.AddRevision(stringBuilder);
+            serializer.AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.MiddleName, vCard.Prefix,
+                vCard.Suffix);
+            serializer.AddFormattedName(stringBuilder, vCard.FormattedName);
+            serializer.AddOrganization(stringBuilder, vCard.Organization);
+            serializer.AddTitle(stringBuilder, vCard.Title);
+            serializer.AddUrl(stringBuilder, vCard.Url);
+            serializer.AddNickName(stringBuilder, vCard.NickName);
+            serializer.AddLanguage(stringBuilder, vCard.Language);
+            serializer.AddBirthPlace(stringBuilder, vCard.BirthPlace);
+            serializer.AddDeathPlace(stringBuilder, vCard.DeathPlace);
+            serializer.AddTimeZone(stringBuilder, vCard.TimeZone);
+            serializer.AddNote(stringBuilder, vCard.Note);
+            serializer.AddContactKind(stringBuilder, vCard.Kind);
+            serializer.AddGender(stringBuilder, vCard.Gender);
+            serializer.AddGeo(stringBuilder, vCard.Geo);
+            serializer.AddBirthday(stringBuilder, vCard.BirthDay);
+            serializer.AddPhoneNumbers(stringBuilder, vCard.PhoneNumbers);
+            serializer.AddEmailAddresses(stringBuilder, vCard.EmailAddresses);
+            serializer.AddAddresses(stringBuilder, vCard.Addresses);
+            serializer.AddPhotos(stringBuilder, vCard.Pictures);
+            serializer.AddExpertises(stringBuilder, vCard.Expertises);
+            serializer.AddHobbies(stringBuilder, vCard.Hobbies);
+            serializer.AddInterests(stringBuilder, vCard.Interests);
+            serializer.AddCardEnd(stringBuilder);
         }
 
-        public string Serialize(vCard vCard)
+        public static string Serialize(vCard vCard)
         {
             if (vCard == null)
             {
@@ -56,7 +76,7 @@ namespace vCardLib.Serializers
             return stringBuilder.ToString();
         }
 
-        public string Serialize(IEnumerable<vCard> vCardCollection)
+        public static string Serialize(IEnumerable<vCard> vCardCollection)
         {
             if (vCardCollection == null)
             {
@@ -76,7 +96,7 @@ namespace vCardLib.Serializers
 
             return stringBuilder.ToString();
         }
-        
+
         protected void AddCardStart(StringBuilder stringBuilder)
         {
             stringBuilder.AppendLine(Constants.StartToken);
@@ -194,7 +214,7 @@ namespace vCardLib.Serializers
         {
             if (geo != null)
             {
-                stringBuilder.Append("GEO:" + geo.Longitude + ";" + geo.Latitude);
+                stringBuilder.AppendLine("GEO:" + geo.Longitude + ";" + geo.Latitude);
             }
         }
 
@@ -203,7 +223,7 @@ namespace vCardLib.Serializers
             if (birthDay.HasValue)
             {
                 var bDay = birthDay.Value;
-                stringBuilder.Append("BDAY:" + bDay.Year + bDay.Month.ToString("00") +
+                stringBuilder.AppendLine("BDAY:" + bDay.Year + bDay.Month.ToString("00") +
                                      bDay.Day.ToString("00"));
             }
         }

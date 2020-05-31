@@ -9,7 +9,7 @@ namespace vCardLib.Serializers
     /// Handles the serialization of version 3 cards
     /// </summary>
     // ReSharper disable once InconsistentNaming
-    public sealed class v3Serializer : BaseSerializer
+    public sealed class v3Serializer : Serializer
     {
         protected override void AddVersion(StringBuilder stringBuilder)
         {

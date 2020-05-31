@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
@@ -31,14 +32,14 @@ namespace vCardLib.Tests
         public void ShouldThrowWithV4File()
         {
             var filePath = Path.Combine(assemblyFolder, "v4.vcf");
-            Assert.Throws<InvalidDataException>(delegate { Deserializer.FromFile(filePath); });
+            Assert.Throws<NotImplementedException>(delegate { Deserializer.FromFile(filePath); });
         }
 
         [Test]
         public void ShouldThrowWithInvalidFile()
         {
             var filePath = Path.Combine(assemblyFolder, "invalid.vcf");
-            Assert.Throws<InvalidDataException>(delegate { Deserializer.FromFile(filePath); });
+            Assert.Throws<InvalidOperationException>(delegate { Deserializer.FromFile(filePath); });
         }
 
         [Test]
