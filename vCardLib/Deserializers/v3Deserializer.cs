@@ -9,41 +9,101 @@ namespace vCardLib.Deserializers
     // ReSharper disable once InconsistentNaming
     public class v3Deserializer : Deserializer
     {
-        private static string[] _contactDetails;
-
-        /// <summary>
-        /// Parse the text representing the vCard object
-        /// </summary>
-        /// <param name="contactDetailStrings">An array of the vcard properties as strings</param>
-        /// <param name="vcard">A partial vcard</param>
-        /// <returns>A version 3 vcard object</returns>
-        public static vCard Parse(string[] contactDetailStrings, vCard vcard)
+        protected override List<Address> ParseAddresses(string[] contactDetails)
         {
-            _contactDetails = contactDetailStrings;
-            if (vcard == null)
+            var addressCollection = new List<Address>();
+            var addressStrings = contactDetails.Where(s => s.StartsWith("ADR"));
+            foreach (var addressStr in addressStrings)
             {
-                vcard = new vCard();
+                var addressString = addressStr.Replace("ADR;", "").Replace("ADR:", "");
+                addressString = addressString.Replace("TYPE=", "");
+                //Remove multiple typing
+                if (addressString.Contains(","))
+                {
+                    var index = addressString.LastIndexOf(",", StringComparison.Ordinal);
+                    addressString = addressString.Remove(0, index + 1);
+                }
+
+                //Logic
+                if (addressString.StartsWith("HOME:") || addressString.StartsWith("home:"))
+                {
+                    addressString = addressString.Replace("HOME:", "").Replace("home:", "");
+                    var address = new Address
+                    {
+                        Location = addressString.Replace(";", " "),
+                        Type = AddressType.Home
+                    };
+                    addressCollection.Add(address);
+                }
+                else if (addressString.StartsWith("WORK:") || addressString.StartsWith("work:"))
+                {
+                    addressString = addressString.Replace("WORK:", "").Replace("work:", "");
+                    var address = new Address
+                    {
+                        Location = addressString.Replace(";", " "),
+                        Type = AddressType.Work
+                    };
+                    addressCollection.Add(address);
+                }
+                else if (addressString.StartsWith("DOM:") || addressString.StartsWith("dom:"))
+                {
+                    addressString = addressString.Replace("DOM:", "").Replace("dom:", "");
+                    var address = new Address
+                    {
+                        Location = addressString.Replace(";", " "),
+                        Type = AddressType.Domestic
+                    };
+                    addressCollection.Add(address);
+                }
+                else if (addressString.StartsWith("INTL:") || addressString.StartsWith("intl:"))
+                {
+                    addressString = addressString.Replace("INTL:", "").Replace("intl:", "");
+                    var address = new Address
+                    {
+                        Location = addressString.Replace(";", " "),
+                        Type = AddressType.International
+                    };
+                    addressCollection.Add(address);
+                }
+                else if (addressString.StartsWith("PARCEL:") || addressString.StartsWith("parcel:"))
+                {
+                    addressString = addressString.Replace("PARCEL:", "").Replace("parcel:", "");
+                    var address = new Address
+                    {
+                        Location = addressString.Replace(";", " "),
+                        Type = AddressType.Parcel
+                    };
+                    addressCollection.Add(address);
+                }
+                else if (addressString.StartsWith("POSTAL:") || addressString.StartsWith("postal:"))
+                {
+                    addressString = addressString.Replace("POSTAL:", "").Replace("postal:", "");
+                    var address = new Address
+                    {
+                        Location = addressString.Replace(";", " "),
+                        Type = AddressType.Postal
+                    };
+                    addressCollection.Add(address);
+                }
+                else
+                {
+                    var address = new Address
+                    {
+                        Location = addressString.Replace(";", " "),
+                        Type = AddressType.None
+                    };
+                    addressCollection.Add(address);
+                }
             }
 
-            vcard.Addresses = ParseAddresses();
-            vcard.EmailAddresses = ParseEmailAddresses();
-            vcard.Expertises = ParseExpertises();
-            vcard.Hobbies = ParseHobbies();
-            vcard.Interests = ParseInterests();
-            vcard.PhoneNumbers = ParseTelephoneNumbers();
-            vcard.Pictures = ParsePhotos();
-            return vcard;
+            return addressCollection;
         }
 
-        /// <summary>
-        /// Gets the phone numbers from the details array
-        /// </summary>
-        /// <returns>A <see cref="List`PhoneNumber"/></returns>
-        private static List<PhoneNumber> ParseTelephoneNumbers()
+        protected override List<PhoneNumber> ParsePhoneNumbers(string[] contactDetails)
         {
             var phoneNumberCollection = new List<PhoneNumber>();
 
-            var telStrings = _contactDetails.Where(s => s.StartsWith("TEL"));
+            var telStrings = contactDetails.Where(s => s.StartsWith("TEL"));
             foreach (var telString in telStrings)
             {
                 var phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
@@ -215,15 +275,11 @@ namespace vCardLib.Deserializers
             return phoneNumberCollection;
         }
 
-        /// <summary>
-        /// Gets the email address from the details array
-        /// </summary>
-        /// <returns>A <see cref="List`EmailAddress"/></returns>
-        private static List<EmailAddress> ParseEmailAddresses()
+        protected override List<EmailAddress> ParseEmailAddresses(string[] contactDetails)
         {
             var emailAddresses = new List<EmailAddress>();
 
-            var emailStrings = _contactDetails.Where(s => s.StartsWith("EMAIL"));
+            var emailStrings = contactDetails.Where(s => s.StartsWith("EMAIL"));
             foreach (var email in emailStrings)
             {
                 try
@@ -319,108 +375,10 @@ namespace vCardLib.Deserializers
             return emailAddresses;
         }
 
-        /// <summary>
-        /// Gets the addresses from the details array
-        /// </summary>
-        /// <returns>A <see cref="List`Address"/></returns>
-        private static List<Address> ParseAddresses()
-        {
-            var addressCollection = new List<Address>();
-            var addressStrings = _contactDetails.Where(s => s.StartsWith("ADR"));
-            foreach (var addressStr in addressStrings)
-            {
-                var addressString = addressStr.Replace("ADR;", "").Replace("ADR:", "");
-                addressString = addressString.Replace("TYPE=", "");
-                //Remove multiple typing
-                if (addressString.Contains(","))
-                {
-                    var index = addressString.LastIndexOf(",", StringComparison.Ordinal);
-                    addressString = addressString.Remove(0, index + 1);
-                }
-
-                //Logic
-                if (addressString.StartsWith("HOME:") || addressString.StartsWith("home:"))
-                {
-                    addressString = addressString.Replace("HOME:", "").Replace("home:", "");
-                    var address = new Address
-                    {
-                        Location = addressString.Replace(";", " "),
-                        Type = AddressType.Home
-                    };
-                    addressCollection.Add(address);
-                }
-                else if (addressString.StartsWith("WORK:") || addressString.StartsWith("work:"))
-                {
-                    addressString = addressString.Replace("WORK:", "").Replace("work:", "");
-                    var address = new Address
-                    {
-                        Location = addressString.Replace(";", " "),
-                        Type = AddressType.Work
-                    };
-                    addressCollection.Add(address);
-                }
-                else if (addressString.StartsWith("DOM:") || addressString.StartsWith("dom:"))
-                {
-                    addressString = addressString.Replace("DOM:", "").Replace("dom:", "");
-                    var address = new Address
-                    {
-                        Location = addressString.Replace(";", " "),
-                        Type = AddressType.Domestic
-                    };
-                    addressCollection.Add(address);
-                }
-                else if (addressString.StartsWith("INTL:") || addressString.StartsWith("intl:"))
-                {
-                    addressString = addressString.Replace("INTL:", "").Replace("intl:", "");
-                    var address = new Address
-                    {
-                        Location = addressString.Replace(";", " "),
-                        Type = AddressType.International
-                    };
-                    addressCollection.Add(address);
-                }
-                else if (addressString.StartsWith("PARCEL:") || addressString.StartsWith("parcel:"))
-                {
-                    addressString = addressString.Replace("PARCEL:", "").Replace("parcel:", "");
-                    var address = new Address
-                    {
-                        Location = addressString.Replace(";", " "),
-                        Type = AddressType.Parcel
-                    };
-                    addressCollection.Add(address);
-                }
-                else if (addressString.StartsWith("POSTAL:") || addressString.StartsWith("postal:"))
-                {
-                    addressString = addressString.Replace("POSTAL:", "").Replace("postal:", "");
-                    var address = new Address
-                    {
-                        Location = addressString.Replace(";", " "),
-                        Type = AddressType.Postal
-                    };
-                    addressCollection.Add(address);
-                }
-                else
-                {
-                    var address = new Address
-                    {
-                        Location = addressString.Replace(";", " "),
-                        Type = AddressType.None
-                    };
-                    addressCollection.Add(address);
-                }
-            }
-
-            return addressCollection;
-        }
-
-        /// <summary>
-        /// Gets the hobbies from the details array
-        /// </summary>
-        /// <returns>A <see cref="List`Hobby"/></returns>
-        private static List<Hobby> ParseHobbies()
+        protected override List<Hobby> ParseHobbies(string[] contactDetails)
         {
             var hobbyCollection = new List<Hobby>();
-            var hobbyStrings = _contactDetails.Where(s => s.StartsWith("HOBBY;"));
+            var hobbyStrings = contactDetails.Where(s => s.StartsWith("HOBBY;"));
             foreach (var hobbyStr in hobbyStrings)
             {
                 var hobbyString = hobbyStr.Replace("HOBBY;", "");
@@ -449,14 +407,10 @@ namespace vCardLib.Deserializers
             return hobbyCollection;
         }
 
-        /// <summary>
-        /// Gets the expertises from the details array
-        /// </summary>
-        /// <returns>A <see cref="List`Expertise"/></returns>
-        private static List<Expertise> ParseExpertises()
+        protected override List<Expertise> ParseExpertises(string[] contactDetails)
         {
             var expertiseCollection = new List<Expertise>();
-            var expertiseStrings = _contactDetails.Where(s => s.StartsWith("EXPERTISE;"));
+            var expertiseStrings = contactDetails.Where(s => s.StartsWith("EXPERTISE;"));
             foreach (var expertiseStr in expertiseStrings)
             {
                 var expertiseString = expertiseStr.Replace("EXPERTISE;", "");
@@ -485,14 +439,10 @@ namespace vCardLib.Deserializers
             return expertiseCollection;
         }
 
-        /// <summary>
-        /// Gets the interests from the details array
-        /// </summary>
-        /// <returns>A <see cref="List`Interest"/></returns>
-        private static List<Interest> ParseInterests()
+        protected override List<Interest> ParseInterests(string[] contactDetails)
         {
             var interestCollection = new List<Interest>();
-            var interestStrings = _contactDetails.Where(s => s.StartsWith("INTEREST;"));
+            var interestStrings = contactDetails.Where(s => s.StartsWith("INTEREST;"));
             foreach (var interestStr in interestStrings)
             {
                 var interestString = interestStr.Replace("INTEREST;", "");
@@ -521,14 +471,10 @@ namespace vCardLib.Deserializers
             return interestCollection;
         }
 
-        /// <summary>
-        /// Gets the photos from the details array
-        /// </summary>
-        /// <returns>A <see cref="List`Photo"/></returns>
-        private static List<Photo> ParsePhotos()
+        protected override List<Photo> ParsePhotos(string[] contactDetails)
         {
             var photoCollection = new List<Photo>();
-            var photoStrings = _contactDetails.Where(s => s.StartsWith("PHOTO;"));
+            var photoStrings = contactDetails.Where(s => s.StartsWith("PHOTO;"));
             foreach (var photoStr in photoStrings)
             {
                 var photoString = photoStr.Replace("PHOTO;", "");
@@ -553,15 +499,15 @@ namespace vCardLib.Deserializers
                     }
                     else if (photoString.Contains("ENCODING=b"))
                     {
-                        var photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
+                        var photoStrIndex = Array.IndexOf(contactDetails, photoStr);
                         while (true)
                         {
-                            if (photoStrIndex < _contactDetails.Length)
+                            if (photoStrIndex < contactDetails.Length)
                             {
-                                photoString += _contactDetails[photoStrIndex];
+                                photoString += contactDetails[photoStrIndex];
                                 photoStrIndex++;
-                                if (photoStrIndex < _contactDetails.Length &&
-                                    _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
+                                if (photoStrIndex < contactDetails.Length &&
+                                    contactDetails[photoStrIndex].StartsWith("PHOTO;"))
                                     break;
                             }
                             else
