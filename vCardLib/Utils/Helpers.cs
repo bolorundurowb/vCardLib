@@ -11,13 +11,13 @@ namespace vCardLib.Utils
     /// </summary>
     public class Helpers
     {
-        public static string[][] GetContactsFromFile(string filePath)
+        internal static string[][] GetContactsFromFile(string filePath)
         {
             var stream = new FileStream(filePath, FileMode.Open);
             return GetContactsFromStream(stream);
         }
 
-        public static string[][] GetContactsFromStream(Stream stream)
+        internal static string[][] GetContactsFromStream(Stream stream)
         {
             var encoding = GetEncoding(stream);
             using (var reader = new StreamReader(stream, encoding))
@@ -27,7 +27,7 @@ namespace vCardLib.Utils
             }
         }
 
-        public static string[][] GetContactsFromString(string contents)
+        internal static string[][] GetContactsFromString(string contents)
         {
             var response = new List<string[]>();
             var contacts = GetIndividualContacts(contents);
@@ -41,14 +41,7 @@ namespace vCardLib.Utils
                 .ToArray();
         }
 
-        /// <summary>
-        /// Splits a single contact string into individual contact strings
-        /// </summary>
-        /// <param name="allContacts">A string representation of the vcard</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException">The input is null or empty</exception>
-        /// <exception cref="InvalidOperationException">The string does not start and end with appropriate tags</exception>
-        private static string[] GetIndividualContacts(string allContacts)
+        private static IEnumerable<string> GetIndividualContacts(string allContacts)
         {
             if (string.IsNullOrWhiteSpace(allContacts))
             {
@@ -66,11 +59,6 @@ namespace vCardLib.Utils
             }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        /// <summary>
-        /// Sanitizes input and splits a single contact string intoits constituent parts
-        /// </summary>
-        /// <param name="contact">A string containing the contact details</param>
-        /// <returns>A string array of details, one per line</returns>
         private static string[] ExtractContactDetails(string contact)
         {
             var normalizedContact = contact
@@ -87,12 +75,6 @@ namespace vCardLib.Utils
             }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        /// <summary>
-        /// Determines a text file's encoding by analyzing its byte order mark (BOM).
-        /// Defaults to ASCII when detection of the text file's endianness fails.
-        /// </summary>
-        /// <param name="filename">The text file to analyze.</param>
-        /// <returns>The detected encoding.</returns>
         private static Encoding GetEncoding(Stream stream)
         {
             // Read the BOM

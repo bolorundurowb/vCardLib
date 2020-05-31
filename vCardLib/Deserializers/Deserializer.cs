@@ -15,11 +15,11 @@ namespace vCardLib.Deserializers
     /// </summary>
     public abstract class Deserializer
     {
-        protected readonly string[] SupportedFields =
+        private readonly string[] _supportedFields =
         {
             "BEGIN", "VERSION", "N:", "FN:", "ORG", "TITLE", "PHOTO", "TEL", "ADR", "EMAIL", "REV", "TZ", "KIND", "URL",
-            "LANG", "NICKNAME", "BIRTHPLACE", "DEATHPLACE", "BDAY", "NOTE", "GENDER", "X-SKYPE-DISPLAYNAME",
-            "X-SKYPE-PSTNNUMBER", "GEO", "HOBBY", "EXPERTISE", "INTEREST", "END"
+            "LANG", "NICKNAME", "BIRTHPLACE", "DEATHPLACE", "BDAY", "NOTE", "GENDER", "GEO", "HOBBY", "EXPERTISE",
+            "INTEREST", "END"
         };
 
         /// <summary>
@@ -62,13 +62,6 @@ namespace vCardLib.Deserializers
                 .ToList();
         }
 
-        /// <summary>
-        /// Creates a vcard object from an array of properties
-        /// </summary>
-        /// <param name="contact">A string array of vcard properties</param>
-        /// <returns>A <see cref="vCard"/> object</returns>
-        /// <exception cref="InvalidDataException">When the array is null or empty</exception>
-        /// <exception cref="InvalidOperationException">When  no version is stated</exception>
         private static vCard GetCardFromContact(string[] contact)
         {
             var versionString = contact
@@ -106,11 +99,6 @@ namespace vCardLib.Deserializers
             return deserializer.Deserialize(contact);
         }
 
-        /// <summary>
-        /// Central point from which all deserializing starts
-        /// </summary>
-        /// <param name="contactDetails">A string array of the contact details</param>
-        /// <returns>A <see cref="vCard"/> containing the contacts details</returns>
         protected vCard Deserialize(string[] contactDetails)
         {
             var card = new vCard
@@ -147,7 +135,7 @@ namespace vCardLib.Deserializers
             card.CustomFields = card.CustomFields ?? new List<KeyValuePair<string, string>>();
             foreach (var contactDetail in contactDetails)
             {
-                if (SupportedFields.Any(x => contactDetail.StartsWith(x)))
+                if (_supportedFields.Any(x => contactDetail.StartsWith(x)))
                 {
                     continue;
                 }
@@ -166,10 +154,6 @@ namespace vCardLib.Deserializers
             return card;
         }
 
-        /// <summary>
-        /// Gets the contact kind from the details array
-        /// </summary>
-        /// <returns>A <see cref="ContactType"/></returns>
         protected ContactType ParseKind(string[] contactDetails)
         {
             var contactKindString = contactDetails.FirstOrDefault(s => s.StartsWith("KIND:"));
@@ -501,17 +485,17 @@ namespace vCardLib.Deserializers
         }
 
         protected abstract List<Address> ParseAddresses(string[] contactDetails);
-        
+
         protected abstract List<PhoneNumber> ParsePhoneNumbers(string[] contactDetails);
-        
+
         protected abstract List<EmailAddress> ParseEmailAddresses(string[] contactDetails);
-        
+
         protected abstract List<Hobby> ParseHobbies(string[] contactDetails);
-        
+
         protected abstract List<Expertise> ParseExpertises(string[] contactDetails);
-        
+
         protected abstract List<Interest> ParseInterests(string[] contactDetails);
-        
+
         protected abstract List<Photo> ParsePhotos(string[] contactDetails);
     }
 }

@@ -1,21 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
 using vCardLib.Models;
 
 namespace vCardLib.Deserializers
 {
     // ReSharper disable once InconsistentNaming
-    public class v4Deserializer
+    public class v4Deserializer : Deserializer
     {
-        /// <summary>
-        /// Parse the text representing the vCard object
-        /// </summary>
-        /// <param name="contactDetailStrings">An array of the vcard properties as strings</param>
-        /// <param name="vcard">A partial vcard</param>
-        /// <returns>A version 4 vcard object</returns>
-        /// <exception cref="NotImplementedException">This method is not implemented yet</exception>
-        public static vCard Parse(string[] contactDetailStrings, vCard vcard)
+        protected override List<Address> ParseAddresses(string[] contactDetails)
         {
-            throw new NotImplementedException("Sorry, support for vcard 4.0 hasn't been implemented");
+            throw new NotImplementedException();
+        }
+
+        protected override List<PhoneNumber> ParsePhoneNumbers(string[] contactDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override List<EmailAddress> ParseEmailAddresses(string[] contactDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override List<Hobby> ParseHobbies(string[] contactDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override List<Expertise> ParseExpertises(string[] contactDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override List<Interest> ParseInterests(string[] contactDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override List<Photo> ParsePhotos(string[] contactDetails)
+        {
+            throw new NotImplementedException();
         }
     }
 }
