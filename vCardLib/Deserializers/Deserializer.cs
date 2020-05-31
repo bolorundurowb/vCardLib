@@ -154,11 +154,11 @@ namespace vCardLib.Deserializers
             switch (version)
             {
                 case vCardVersion.V2:
-                    return V2Deserializer.Parse(contactDetails, vcard);
+                    return v2Deserializer.Parse(contactDetails, vcard);
                 case vCardVersion.V3:
-                    return V3Deserializer.Parse(contactDetails, vcard);
+                    return v3Deserializer.Parse(contactDetails, vcard);
                 case vCardVersion.V4:
-                    return V4Deserializer.Parse(contactDetails, vcard);
+                    return v4Deserializer.Parse(contactDetails, vcard);
                 default:
                     throw new ArgumentException($"The version {version} is not supported.");
             }

@@ -6,7 +6,8 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserializers
 {
-    public static class V2Deserializer
+    // ReSharper disable once InconsistentNaming
+    public static class v3Deserializer
     {
         private static string[] _contactDetails;
 
@@ -15,7 +16,7 @@ namespace vCardLib.Deserializers
         /// </summary>
         /// <param name="contactDetailStrings">An array of the vcard properties as strings</param>
         /// <param name="vcard">A partial vcard</param>
-        /// <returns>A version 2 vcard object</returns>
+        /// <returns>A version 3 vcard object</returns>
         public static vCard Parse(string[] contactDetailStrings, vCard vcard)
         {
             _contactDetails = contactDetailStrings;
@@ -34,11 +35,10 @@ namespace vCardLib.Deserializers
             return vcard;
         }
 
-
         /// <summary>
         /// Gets the phone numbers from the details array
         /// </summary>
-        /// <returns>A <see cref="List<PhoneNumber>"/></returns>
+        /// <returns>A <see cref="List`PhoneNumber"/></returns>
         private static List<PhoneNumber> ParseTelephoneNumbers()
         {
             var phoneNumberCollection = new List<PhoneNumber>();
@@ -47,28 +47,31 @@ namespace vCardLib.Deserializers
             foreach (var telString in telStrings)
             {
                 var phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
-                //Remove multiple typing
+                phoneString = phoneString.Replace("TYPE=", "");
                 if (phoneString.Contains(";"))
                 {
                     var index = phoneString.LastIndexOf(";", StringComparison.Ordinal);
                     phoneString = phoneString.Remove(0, index + 1);
                 }
 
-                //Logic
+                if (phoneString.Contains(","))
+                {
+                    var index = phoneString.LastIndexOf(",", StringComparison.Ordinal);
+                    phoneString = phoneString.Remove(0, index + 1);
+                }
+
                 if (phoneString.StartsWith("CELL"))
                 {
-                    phoneString = phoneString.Replace(";VOICE", "");
+                    phoneString = phoneString.Replace(",VOICE", "");
                     phoneString = phoneString.Replace("CELL:", "");
-                    var phoneNumber = new PhoneNumber
-                    {
-                        Number = phoneString,
-                        Type = PhoneNumberType.Cell
-                    };
+                    var phoneNumber = new PhoneNumber();
+                    phoneNumber.Number = phoneString;
+                    phoneNumber.Type = PhoneNumberType.Cell;
                     phoneNumberCollection.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("HOME"))
                 {
-                    phoneString = phoneString.Replace(";VOICE", "");
+                    phoneString = phoneString.Replace(",VOICE", "");
                     phoneString = phoneString.Replace("HOME:", "");
                     var phoneNumber = new PhoneNumber
                     {
@@ -79,7 +82,7 @@ namespace vCardLib.Deserializers
                 }
                 else if (phoneString.StartsWith("WORK"))
                 {
-                    phoneString = phoneString.Replace(";VOICE", "");
+                    phoneString = phoneString.Replace(",VOICE", "");
                     phoneString = phoneString.Replace("WORK:", "");
                     var phoneNumber = new PhoneNumber
                     {
@@ -121,9 +124,11 @@ namespace vCardLib.Deserializers
                 else if (phoneString.StartsWith("TEXT"))
                 {
                     phoneString = phoneString.Replace("TEXT:", "");
-                    var phoneNumber = new PhoneNumber();
-                    phoneNumber.Number = phoneString;
-                    phoneNumber.Type = PhoneNumberType.Text;
+                    var phoneNumber = new PhoneNumber
+                    {
+                        Number = phoneString,
+                        Type = PhoneNumberType.Text
+                    };
                     phoneNumberCollection.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("VIDEO"))
@@ -213,7 +218,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the email address from the details array
         /// </summary>
-        /// <returns>A <see cref="List<EmailAddress>"/></returns>
+        /// <returns>A <see cref="List`EmailAddress"/></returns>
         private static List<EmailAddress> ParseEmailAddresses()
         {
             var emailAddresses = new List<EmailAddress>();
@@ -224,16 +229,21 @@ namespace vCardLib.Deserializers
                 try
                 {
                     var emailString = email.Replace("EMAIL;", "").Replace("EMAIL:", "");
-                    //Remove multiple typing
+                    emailString = emailString.Replace("TYPE=", "");
                     if (emailString.Contains(";"))
                     {
                         emailString = emailString.Replace(";", "");
                     }
 
-                    //Logic
-                    if (emailString.StartsWith("INTERNET:"))
+                    if (emailString.Contains(","))
                     {
-                        emailString = emailString.Replace("INTERNET:", "");
+                        var index = emailString.LastIndexOf(",");
+                        emailString = emailString.Remove(0, index + 1);
+                    }
+
+                    if (emailString.StartsWith("INTERNET:") || emailString.StartsWith("internet:"))
+                    {
+                        emailString = emailString.Replace("INTERNET:", "").Replace("internet:", "");
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
@@ -241,9 +251,9 @@ namespace vCardLib.Deserializers
                         };
                         emailAddresses.Add(emailAddress);
                     }
-                    else if (emailString.StartsWith("HOME:"))
+                    else if (emailString.StartsWith("HOME:") || emailString.StartsWith("home:"))
                     {
-                        emailString = emailString.Replace("HOME:", "");
+                        emailString = emailString.Replace("HOME:", "").Replace("home:", "");
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
@@ -251,9 +261,9 @@ namespace vCardLib.Deserializers
                         };
                         emailAddresses.Add(emailAddress);
                     }
-                    else if (emailString.StartsWith("WORK:"))
+                    else if (emailString.StartsWith("WORK:") || emailString.StartsWith("work:"))
                     {
-                        emailString = emailString.Replace("WORK:", "");
+                        emailString = emailString.Replace("WORK:", "").Replace("work:", "");
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
@@ -312,7 +322,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the addresses from the details array
         /// </summary>
-        /// <returns>A <see cref="List<Address>"/></returns>
+        /// <returns>A <see cref="List`Address"/></returns>
         private static List<Address> ParseAddresses()
         {
             var addressCollection = new List<Address>();
@@ -320,9 +330,18 @@ namespace vCardLib.Deserializers
             foreach (var addressStr in addressStrings)
             {
                 var addressString = addressStr.Replace("ADR;", "").Replace("ADR:", "");
-                if (addressString.StartsWith("HOME:"))
+                addressString = addressString.Replace("TYPE=", "");
+                //Remove multiple typing
+                if (addressString.Contains(","))
                 {
-                    addressString = addressString.Replace("HOME:", "");
+                    var index = addressString.LastIndexOf(",", StringComparison.Ordinal);
+                    addressString = addressString.Remove(0, index + 1);
+                }
+
+                //Logic
+                if (addressString.StartsWith("HOME:") || addressString.StartsWith("home:"))
+                {
+                    addressString = addressString.Replace("HOME:", "").Replace("home:", "");
                     var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
@@ -330,9 +349,9 @@ namespace vCardLib.Deserializers
                     };
                     addressCollection.Add(address);
                 }
-                else if (addressString.StartsWith("WORK:"))
+                else if (addressString.StartsWith("WORK:") || addressString.StartsWith("work:"))
                 {
-                    addressString = addressString.Replace("WORK:", "");
+                    addressString = addressString.Replace("WORK:", "").Replace("work:", "");
                     var address = new Address
                     {
                         Location = addressString.Replace(";", " "),
@@ -397,7 +416,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the hobbies from the details array
         /// </summary>
-        /// <returns>A <see cref="List<Hobby>"/></returns>
+        /// <returns>A <see cref="List`Hobby"/></returns>
         private static List<Hobby> ParseHobbies()
         {
             var hobbyCollection = new List<Hobby>();
@@ -405,6 +424,7 @@ namespace vCardLib.Deserializers
             foreach (var hobbyStr in hobbyStrings)
             {
                 var hobbyString = hobbyStr.Replace("HOBBY;", "");
+                hobbyString = hobbyString.Replace("LEVEL=", "");
                 var hobby = new Hobby();
                 if (hobbyString.StartsWith("HIGH") || hobbyString.StartsWith("high"))
                 {
@@ -432,7 +452,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the expertises from the details array
         /// </summary>
-        /// <returns>A <see cref="List<Expertise>"/></returns>
+        /// <returns>A <see cref="List`Expertise"/></returns>
         private static List<Expertise> ParseExpertises()
         {
             var expertiseCollection = new List<Expertise>();
@@ -468,7 +488,7 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the interests from the details array
         /// </summary>
-        /// <returns>A <see cref="List<Interest>"/></returns>
+        /// <returns>A <see cref="List`Interest"/></returns>
         private static List<Interest> ParseInterests()
         {
             var interestCollection = new List<Interest>();
@@ -504,41 +524,96 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Gets the photos from the details array
         /// </summary>
-        /// <returns>A <see cref="List<Photo>"/></returns>
+        /// <returns>A <see cref="List`Photo"/></returns>
         private static List<Photo> ParsePhotos()
         {
             var photoCollection = new List<Photo>();
             var photoStrings = _contactDetails.Where(s => s.StartsWith("PHOTO;"));
             foreach (var photoStr in photoStrings)
             {
-                var photo = new Photo();
-                if (photoStr.Replace("PHOTO;", "").StartsWith("JPEG:"))
+                var photoString = photoStr.Replace("PHOTO;", "");
+                if (photoString.Contains("TYPE=JPEG") || photoString.Contains("TYPE=jpeg"))
                 {
-                    photo.PhotoURL = photoStr.Replace("PHOTO;JPEG:", "").Trim();
-                    photo.Encoding = PhotoEncoding.JPEG;
-                    photo.Type = PhotoType.URL;
-                    photoCollection.Add(photo);
-                }
-                else if (photoStr.Contains("JPEG") && photoStr.Contains("ENCODING=BASE64"))
-                {
-                    var photoString = photoStr.Trim();
-                    photoString = photoString.Replace("PHOTO;", "");
-                    photoString = photoString.Replace("JPEG", "");
-                    photoString = photoString.Replace("ENCODING=BASE64", "");
-                    photoString = photoString.Trim(';', ':');
+                    photoString = photoString
+                        .Replace("TYPE=JPEG", "")
+                        .Replace("TYPE=jpeg:", "")
+                        .Trim();
+                    if (photoString.Contains("VALUE=URI") || photoString.Contains("VALUE=uri"))
+                    {
+                        var photo = new Photo
+                        {
+                            PhotoURL = photoString
+                                .Replace("VALUE=URI", "")
+                                .Replace("VALUE=uri", "")
+                                .Trim(';', ':'),
+                            Encoding = PhotoEncoding.JPEG,
+                            Type = PhotoType.URL
+                        };
+                        photoCollection.Add(photo);
+                    }
+                    else if (photoString.Contains("ENCODING=b"))
+                    {
+                        var photoStrIndex = Array.IndexOf(_contactDetails, photoStr);
+                        while (true)
+                        {
+                            if (photoStrIndex < _contactDetails.Length)
+                            {
+                                photoString += _contactDetails[photoStrIndex];
+                                photoStrIndex++;
+                                if (photoStrIndex < _contactDetails.Length &&
+                                    _contactDetails[photoStrIndex].StartsWith("PHOTO;"))
+                                    break;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
 
-                    photo.Encoding = PhotoEncoding.JPEG;
-                    photo.Picture = Convert.FromBase64String(photoString);
-                    photo.Type = PhotoType.Image;
-                    photoCollection.Add(photo);
+                        photoString = photoString
+                            .Replace("PHOTO;", "")
+                            .Replace("JPEG", "")
+                            .Replace("jpeg", "")
+                            .Replace("ENCODING=b", "")
+                            .Trim(';', ':')
+                            .Trim();
+                        try
+                        {
+                            var photo = new Photo
+                            {
+                                Encoding = PhotoEncoding.JPEG,
+                                Picture = Convert.FromBase64String(photoString),
+                                Type = PhotoType.Image
+                            };
+                            photoCollection.Add(photo);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                            //TODO: send error to logger
+                        }
+                    }
                 }
-
-                else if (photoStr.Replace("PHOTO;", "").StartsWith("GIF:"))
+                else if (photoString.Contains("TYPE=GIF") || photoString.Contains("TYPE=gif"))
                 {
-                    photo.PhotoURL = photoStr.Replace("PHOTO;GIF:", "").Trim();
-                    photo.Encoding = PhotoEncoding.GIF;
-                    photo.Type = PhotoType.URL;
-                    photoCollection.Add(photo);
+                    photoString = photoString
+                        .Replace("TYPE=URI", "")
+                        .Replace("TYPE=uri", "")
+                        .Trim();
+                    if (photoString.Contains("VALUE=URI") || photoString.Contains("VALUE=uri"))
+                    {
+                        var photo = new Photo
+                        {
+                            PhotoURL = photoString
+                                .Replace("VALUE=URI", "")
+                                .Replace("VALUE=uri", "")
+                                .Trim(';', ':')
+                                .Trim(),
+                            Encoding = PhotoEncoding.GIF,
+                            Type = PhotoType.URL
+                        };
+                        photoCollection.Add(photo);
+                    }
                 }
             }
 

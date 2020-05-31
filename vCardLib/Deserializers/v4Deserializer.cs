@@ -3,7 +3,8 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserializers
 {
-    public static class V4Deserializer
+    // ReSharper disable once InconsistentNaming
+    public static class v4Deserializer
     {
         /// <summary>
         /// Parse the text representing the vCard object
