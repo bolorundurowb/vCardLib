@@ -7,7 +7,7 @@ using vCardLib.Models;
 namespace vCardLib.Deserializers
 {
     // ReSharper disable once InconsistentNaming
-    public static class v3Deserializer
+    public class v3Deserializer
     {
         private static string[] _contactDetails;
 

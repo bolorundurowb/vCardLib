@@ -13,7 +13,7 @@ namespace vCardLib.Deserializers
     /// <summary>
     /// The entry class for all deserializer tasks
     /// </summary>
-    public class Deserializer
+    public abstract class Deserializer
     {
         protected readonly string[] SupportedFields =
         {
@@ -26,48 +26,52 @@ namespace vCardLib.Deserializers
         /// Retrieves a vcard collection object from a given vcard file
         /// </summary>
         /// <param name="filePath">Path to the vcf or vcard file</param>
-        /// <returns>A <see cref="vCardCollection"/></returns>
+        /// <returns>A <see cref="List<vCard>"/></returns>
         public static List<vCard> FromFile(string filePath)
         {
-            var streamReader = Helpers.GetStreamReaderFromFile(filePath);
-            return FromStreamReader(streamReader);
+            var contacts = Helpers.GetContactsFromFile(filePath);
+            return CreateCardsFromContacts(contacts);
         }
 
         /// <summary>
         /// Retrieves a vcard
         /// </summary>
-        /// <param name="streamReader"><see cref="StreamReader"/> containing a vcard(s)</param>
-        /// <returns>A <see cref="vCardCollection"/></returns>
-        public static List<vCard> FromStreamReader(StreamReader streamReader)
+        /// <param name="stream"><see cref="Stream"/> containing a vcard(s)</param>
+        /// <returns>A <see cref="List<vCard>"/></returns>
+        public static List<vCard> FromStream(Stream stream)
         {
-            var collection = new List<vCard>();
-            var contactsString = Helpers.GetStringFromStreamReader(streamReader);
-            var contacts = Helpers.GetContactsArrayFromString(contactsString);
-            foreach (var contact in contacts)
-            {
-                var contactDetails = Helpers.GetContactDetailsArrayFromString(contact);
-                if (contactDetails.Length <= 0) continue;
-                var details = GetVcardFromDetails(contactDetails);
-                collection.Add(details);
-            }
-
-            return collection;
-        }
-
-        protected List<vCard> CreateCardsFromContacts(string[][] contacts)
-        {
+            var contacts = Helpers.GetContactsFromStream(stream);
+            return CreateCardsFromContacts(contacts);
         }
 
         /// <summary>
-        /// Creates a vcard object from an array of vcard properties
+        /// Retrieves a vcard
         /// </summary>
-        /// <param name="contactDetails">A string array of vcard properties</param>
+        /// <param name="contents">A string containing a vcard(s)</param>
+        /// <returns>A <see cref="List<vCard>"/></returns>
+        public static List<vCard> FromString(string contents)
+        {
+            var contacts = Helpers.GetContactsFromString(contents);
+            return CreateCardsFromContacts(contacts);
+        }
+
+        private static List<vCard> CreateCardsFromContacts(IEnumerable<string[]> contacts)
+        {
+            return contacts
+                .Select(GetCardFromContact)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Creates a vcard object from an array of properties
+        /// </summary>
+        /// <param name="contact">A string array of vcard properties</param>
         /// <returns>A <see cref="vCard"/> object</returns>
         /// <exception cref="InvalidDataException">When the array is null or empty</exception>
         /// <exception cref="InvalidOperationException">When  no version is stated</exception>
-        private static vCard GetVcardFromDetails(string[] contactDetails)
+        private static vCard GetCardFromContact(string[] contact)
         {
-            var versionString = contactDetails
+            var versionString = contact
                 .FirstOrDefault(s => s.StartsWith("VERSION:"));
 
             if (versionString == null)
@@ -99,41 +103,48 @@ namespace vCardLib.Deserializers
                 throw new NotSupportedException();
             }
 
-            return deserializer.Deserialize(contactDetails);
+            return deserializer.Deserialize(contact);
         }
 
         /// <summary>
         /// Central point from which all deserializing starts
         /// </summary>
         /// <param name="contactDetails">A string array of the contact details</param>
-        /// <returns>A <see cref="vCard"/> comtaining the contacts details</returns>
+        /// <returns>A <see cref="vCard"/> containing the contacts details</returns>
         protected vCard Deserialize(string[] contactDetails)
         {
-            var vcard = new vCard
+            var card = new vCard
             {
-                BirthDay = ParseBirthDay(),
-                BirthPlace = ParseBirthPlace(),
-                DeathPlace = ParseDeathPlace(),
-                FamilyName = ParseFamilyName(),
-                FormattedName = ParseFormattedName(),
-                Geo = ParseGeo(),
-                Gender = ParseGender(),
-                GivenName = ParseGivenName(),
-                Kind = ParseKind(),
-                Language = ParseLanguage(),
-                MiddleName = ParseMiddleName(),
-                NickName = ParseNickname(),
-                Note = ParseNote(),
-                Organization = ParseOrganization(),
-                Prefix = ParsePrefix(),
-                Revision = ParseRevision(),
-                Suffix = ParseSuffix(),
-                TimeZone = ParseTimeZone(),
-                Title = ParseTitle(),
-                Url = ParseUrl()
+                BirthDay = ParseBirthDay(contactDetails),
+                BirthPlace = ParseBirthPlace(contactDetails),
+                DeathPlace = ParseDeathPlace(contactDetails),
+                FamilyName = ParseFamilyName(contactDetails),
+                FormattedName = ParseFormattedName(contactDetails),
+                Geo = ParseGeo(contactDetails),
+                Gender = ParseGender(contactDetails),
+                GivenName = ParseGivenName(contactDetails),
+                Kind = ParseKind(contactDetails),
+                Language = ParseLanguage(contactDetails),
+                MiddleName = ParseMiddleName(contactDetails),
+                NickName = ParseNickname(contactDetails),
+                Note = ParseNote(contactDetails),
+                Organization = ParseOrganization(contactDetails),
+                Prefix = ParsePrefix(contactDetails),
+                Revision = ParseRevision(contactDetails),
+                Suffix = ParseSuffix(contactDetails),
+                TimeZone = ParseTimeZone(contactDetails),
+                Title = ParseTitle(contactDetails),
+                Url = ParseUrl(contactDetails),
+                Addresses = ParseAddresses(contactDetails),
+                EmailAddresses = ParseEmailAddresses(contactDetails),
+                PhoneNumbers = ParsePhoneNumbers(contactDetails),
+                Pictures = ParsePhotos(contactDetails),
+                Hobbies = ParseHobbies(contactDetails),
+                Expertises = ParseExpertises(contactDetails),
+                Interests = ParseInterests(contactDetails)
             };
 
-            vcard.CustomFields = vcard.CustomFields ?? new List<KeyValuePair<string, string>>();
+            card.CustomFields = card.CustomFields ?? new List<KeyValuePair<string, string>>();
             foreach (var contactDetail in contactDetails)
             {
                 if (SupportedFields.Any(x => contactDetail.StartsWith(x)))
@@ -149,8 +160,10 @@ namespace vCardLib.Deserializers
 
                 var entry = new KeyValuePair<string, string>(contactDetailParts[0],
                     string.Join("", contactDetailParts.Slice(1)));
-                vcard.CustomFields.Add(entry);
+                card.CustomFields.Add(entry);
             }
+
+            return card;
         }
 
         /// <summary>
@@ -486,5 +499,19 @@ namespace vCardLib.Deserializers
 
             return null;
         }
+
+        protected abstract List<Address> ParseAddresses(string[] contactDetails);
+        
+        protected abstract List<PhoneNumber> ParsePhoneNumbers(string[] contactDetails);
+        
+        protected abstract List<EmailAddress> ParseEmailAddresses(string[] contactDetails);
+        
+        protected abstract List<Hobby> ParseHobbies(string[] contactDetails);
+        
+        protected abstract List<Expertise> ParseExpertises(string[] contactDetails);
+        
+        protected abstract List<Interest> ParseInterests(string[] contactDetails);
+        
+        protected abstract List<Photo> ParsePhotos(string[] contactDetails);
     }
 }
