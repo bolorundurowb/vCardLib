@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using vCardLib.Enums;
 using vCardLib.Models;
+using vCardLib.Utils;
 
 namespace vCardLib.Serializers
 {
@@ -78,12 +79,12 @@ namespace vCardLib.Serializers
         
         protected void AddCardStart(StringBuilder stringBuilder)
         {
-            stringBuilder.AppendLine("BEGIN:VCARD");
+            stringBuilder.AppendLine(Constants.StartToken);
         }
 
         protected void AddCardEnd(StringBuilder stringBuilder)
         {
-            stringBuilder.Append("END:VCARD");
+            stringBuilder.Append(Constants.EndToken);
         }
 
         protected void AddRevision(StringBuilder stringBuilder)

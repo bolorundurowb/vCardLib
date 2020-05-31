@@ -13,7 +13,7 @@ namespace vCardLib.Deserializers
     /// <summary>
     /// The entry class for all deserializer tasks
     /// </summary>
-    public static class Deserializer
+    public class Deserializer
     {
         private static readonly string[] SupportedFields =
         {
@@ -31,7 +31,7 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="vCardCollection"/></returns>
         public static List<vCard> FromFile(string filePath)
         {
-            var streamReader = Helper.GetStreamReaderFromFile(filePath);
+            var streamReader = Helpers.GetStreamReaderFromFile(filePath);
             return FromStreamReader(streamReader);
         }
 
@@ -43,11 +43,11 @@ namespace vCardLib.Deserializers
         public static List<vCard> FromStreamReader(StreamReader streamReader)
         {
             var collection = new List<vCard>();
-            var contactsString = Helper.GetStringFromStreamReader(streamReader);
-            var contacts = Helper.GetContactsArrayFromString(contactsString);
+            var contactsString = Helpers.GetStringFromStreamReader(streamReader);
+            var contacts = Helpers.GetContactsArrayFromString(contactsString);
             foreach (var contact in contacts)
             {
-                var contactDetails = Helper.GetContactDetailsArrayFromString(contact);
+                var contactDetails = Helpers.GetContactDetailsArrayFromString(contact);
                 if (contactDetails.Length <= 0) continue;
                 var details = GetVcardFromDetails(contactDetails);
                 collection.Add(details);

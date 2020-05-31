@@ -15,9 +15,9 @@ namespace vCardLib.Tests.DeserializerTests
         {
             var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var filePath = Path.Combine(assemblyFolder, "v2.vcf");
-            var streamReader = Helper.GetStreamReaderFromFile(filePath);
-            var contactsString = Helper.GetStringFromStreamReader(streamReader);
-            var contacts = Helper.GetContactsArrayFromString(contactsString);
+            var streamReader = Helpers.GetStreamReaderFromFile(filePath);
+            var contactsString = Helpers.GetStringFromStreamReader(streamReader);
+            var contacts = Helpers.GetContactsArrayFromString(contactsString);
             vCard vcard = null;
             Assert.DoesNotThrow(delegate
             {

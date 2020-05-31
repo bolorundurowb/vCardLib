@@ -29,7 +29,7 @@ namespace vCardLib.Tests.DeserializerTests
         {
             var filePath = Path.Combine(assemblyFolder, "v2.vcf");
             StreamReader streamReader = null;
-            Assert.DoesNotThrow(delegate { streamReader = Helper.GetStreamReaderFromFile(filePath); });
+            Assert.DoesNotThrow(delegate { streamReader = Helpers.GetStreamReaderFromFile(filePath); });
             Assert.IsNotNull(streamReader);
             List<vCard> collection = null;
             Assert.DoesNotThrow(delegate { collection = Deserializer.FromStreamReader(streamReader); });
