@@ -39,7 +39,7 @@ namespace vCardLib.Extensions
                         serializer = new v2Serializer();
                         break;
                     case vCardVersion.V3:
-                        serializer = new V3Serializer();
+                        serializer = new v3Serializer();
                         break;
                     case vCardVersion.V4:
                         serializer = new V4Serializer();
