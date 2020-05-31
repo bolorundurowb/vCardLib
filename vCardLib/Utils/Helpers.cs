@@ -23,17 +23,22 @@ namespace vCardLib.Utils
             using (var reader = new StreamReader(stream, encoding))
             {
                 var contents = reader.ReadToEnd();
-                var response = new List<string[]>();
-                var contacts = GetIndividualContacts(contents);
-                foreach (var contact in contacts)
-                {
-                    response.Add(ExtractContactDetails(contact));
-                }
-
-                return response
-                    .Where(x => x.Length > 0)
-                    .ToArray();
+                return GetContactsFromString(contents);
             }
+        }
+
+        public static string[][] GetContactsFromString(string contents)
+        {
+            var response = new List<string[]>();
+            var contacts = GetIndividualContacts(contents);
+            foreach (var contact in contacts)
+            {
+                response.Add(ExtractContactDetails(contact));
+            }
+
+            return response
+                .Where(x => x.Length > 0)
+                .ToArray();
         }
 
         /// <summary>

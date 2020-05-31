@@ -15,14 +15,12 @@ namespace vCardLib.Deserializers
     /// </summary>
     public class Deserializer
     {
-        private static readonly string[] SupportedFields =
+        protected readonly string[] SupportedFields =
         {
             "BEGIN", "VERSION", "N:", "FN:", "ORG", "TITLE", "PHOTO", "TEL", "ADR", "EMAIL", "REV", "TZ", "KIND", "URL",
             "LANG", "NICKNAME", "BIRTHPLACE", "DEATHPLACE", "BDAY", "NOTE", "GENDER", "X-SKYPE-DISPLAYNAME",
             "X-SKYPE-PSTNNUMBER", "GEO", "HOBBY", "EXPERTISE", "INTEREST", "END"
         };
-
-        private static string[] _contactDetails;
 
         /// <summary>
         /// Retrieves a vcard collection object from a given vcard file
@@ -56,6 +54,10 @@ namespace vCardLib.Deserializers
             return collection;
         }
 
+        protected List<vCard> CreateCardsFromContacts(string[][] contacts)
+        {
+        }
+
         /// <summary>
         /// Creates a vcard object from an array of vcard properties
         /// </summary>
@@ -63,17 +65,14 @@ namespace vCardLib.Deserializers
         /// <returns>A <see cref="vCard"/> object</returns>
         /// <exception cref="InvalidDataException">When the array is null or empty</exception>
         /// <exception cref="InvalidOperationException">When  no version is stated</exception>
-        public static vCard GetVcardFromDetails(string[] contactDetails)
+        private static vCard GetVcardFromDetails(string[] contactDetails)
         {
-            if (contactDetails == null || contactDetails.Length == 0)
-            {
-                throw new InvalidDataException("the details cannot be null or empty");
-            }
+            var versionString = contactDetails
+                .FirstOrDefault(s => s.StartsWith("VERSION:"));
 
-            var versionString = contactDetails.FirstOrDefault(s => s.StartsWith("VERSION:"));
             if (versionString == null)
             {
-                throw new InvalidOperationException("details do not contain a specification for 'Version'.");
+                throw new InvalidOperationException("Details do not contain a specification for 'Version'.");
             }
 
             var decimalSeparator = CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator;
@@ -81,35 +80,37 @@ namespace vCardLib.Deserializers
                 .Replace("VERSION:", "")
                 .Trim()
                 .Replace(".", decimalSeparator));
-            vCard vcard = null;
-            if (version.Equals(2f) || version.Equals(2.1f))
+
+            Deserializer deserializer;
+            if (version >= 2f && version < 3f)
             {
-                vcard = Deserialize(contactDetails, vCardVersion.V2);
+                deserializer = new v2Deserializer();
             }
-            else if (version.Equals(3f))
+            else if (version >= 3f && version < 4f)
             {
-                vcard = Deserialize(contactDetails, vCardVersion.V3);
+                deserializer = new v3Deserializer();
             }
             else if (version.Equals(4.0f))
             {
-                vcard = Deserialize(contactDetails, vCardVersion.V4);
+                deserializer = new v4Deserializer();
+            }
+            else
+            {
+                throw new NotSupportedException();
             }
 
-            return vcard;
+            return deserializer.Deserialize(contactDetails);
         }
 
         /// <summary>
         /// Central point from which all deserializing starts
         /// </summary>
         /// <param name="contactDetails">A string array of the contact details</param>
-        /// <param name="version">The version to be deserialized from</param>
         /// <returns>A <see cref="vCard"/> comtaining the contacts details</returns>
-        private static vCard Deserialize(string[] contactDetails, vCardVersion version)
+        protected vCard Deserialize(string[] contactDetails)
         {
-            _contactDetails = contactDetails;
             var vcard = new vCard
             {
-                Version = version,
                 BirthDay = ParseBirthDay(),
                 BirthPlace = ParseBirthPlace(),
                 DeathPlace = ParseDeathPlace(),
@@ -133,7 +134,7 @@ namespace vCardLib.Deserializers
             };
 
             vcard.CustomFields = vcard.CustomFields ?? new List<KeyValuePair<string, string>>();
-            foreach (var contactDetail in _contactDetails)
+            foreach (var contactDetail in contactDetails)
             {
                 if (SupportedFields.Any(x => contactDetail.StartsWith(x)))
                 {
@@ -150,27 +151,15 @@ namespace vCardLib.Deserializers
                     string.Join("", contactDetailParts.Slice(1)));
                 vcard.CustomFields.Add(entry);
             }
-
-            switch (version)
-            {
-                case vCardVersion.V2:
-                    return v2Deserializer.Parse(contactDetails, vcard);
-                case vCardVersion.V3:
-                    return v3Deserializer.Parse(contactDetails, vcard);
-                case vCardVersion.V4:
-                    return v4Deserializer.Parse(contactDetails, vcard);
-                default:
-                    throw new ArgumentException($"The version {version} is not supported.");
-            }
         }
 
         /// <summary>
         /// Gets the contact kind from the details array
         /// </summary>
         /// <returns>A <see cref="ContactType"/></returns>
-        private static ContactType ParseKind()
+        protected ContactType ParseKind(string[] contactDetails)
         {
-            var contactKindString = _contactDetails.FirstOrDefault(s => s.StartsWith("KIND:"));
+            var contactKindString = contactDetails.FirstOrDefault(s => s.StartsWith("KIND:"));
             if (contactKindString != null)
             {
                 contactKindString = contactKindString.Replace("KIND:", "").Trim();
@@ -195,9 +184,9 @@ namespace vCardLib.Deserializers
         /// Gets the url from the details array
         /// </summary>
         /// <returns>A string representing the url or an empty string</returns>
-        private static string ParseUrl()
+        protected string ParseUrl(string[] contactDetails)
         {
-            var urlString = _contactDetails.FirstOrDefault(s => s.StartsWith("URL:"));
+            var urlString = contactDetails.FirstOrDefault(s => s.StartsWith("URL:"));
             if (urlString != null)
                 return urlString.Replace("URL:", "").Trim();
             return string.Empty;
@@ -207,9 +196,9 @@ namespace vCardLib.Deserializers
         /// Gets the title from the details array
         /// </summary>
         /// <returns>A string representing the title or an empty string</returns>
-        private static string ParseTitle()
+        protected string ParseTitle(string[] contactDetails)
         {
-            var titleString = _contactDetails.FirstOrDefault(s => s.StartsWith("TITLE:"));
+            var titleString = contactDetails.FirstOrDefault(s => s.StartsWith("TITLE:"));
             if (titleString != null)
             {
                 return titleString.Replace("TITLE:", "").Trim();
@@ -222,9 +211,9 @@ namespace vCardLib.Deserializers
         /// Gets the organization from the details array
         /// </summary>
         /// <returns>A string representing the organization or an empty string</returns>
-        private static string ParseOrganization()
+        protected string ParseOrganization(string[] contactDetails)
         {
-            var orgString = _contactDetails.FirstOrDefault(s => s.StartsWith("ORG:"));
+            var orgString = contactDetails.FirstOrDefault(s => s.StartsWith("ORG:"));
             if (orgString != null)
                 return orgString.Replace("ORG:", "").Trim();
             return string.Empty;
@@ -234,9 +223,9 @@ namespace vCardLib.Deserializers
         /// Gets the language from the details array
         /// </summary>
         /// <returns>A string representing the language or an empty string</returns>
-        private static string ParseLanguage()
+        protected string ParseLanguage(string[] contactDetails)
         {
-            var langString = _contactDetails.FirstOrDefault(s => s.StartsWith("LANG:"));
+            var langString = contactDetails.FirstOrDefault(s => s.StartsWith("LANG:"));
             if (langString != null)
                 return langString.Replace("LANG:", "").Trim();
             return string.Empty;
@@ -246,9 +235,9 @@ namespace vCardLib.Deserializers
         /// Gets the nickname from the details array
         /// </summary>
         /// <returns>A string representing the nickname or an empty string</returns>
-        private static string ParseNickname()
+        protected string ParseNickname(string[] contactDetails)
         {
-            var nicknameString = _contactDetails.FirstOrDefault(s => s.StartsWith("NICKNAME:"));
+            var nicknameString = contactDetails.FirstOrDefault(s => s.StartsWith("NICKNAME:"));
             if (nicknameString != null)
                 return nicknameString.Replace("NICKNAME:", "").Trim();
             return string.Empty;
@@ -258,9 +247,9 @@ namespace vCardLib.Deserializers
         /// Gets the birth place from the details array
         /// </summary>
         /// <returns>A string representing the birth place or an empty string</returns>
-        private static string ParseBirthPlace()
+        protected string ParseBirthPlace(string[] contactDetails)
         {
-            var birthplaceString = _contactDetails.FirstOrDefault(s => s.StartsWith("BIRTHPLACE:"));
+            var birthplaceString = contactDetails.FirstOrDefault(s => s.StartsWith("BIRTHPLACE:"));
             if (birthplaceString != null)
                 return birthplaceString.Replace("BIRTHPLACE:", "").Trim();
             return string.Empty;
@@ -270,9 +259,9 @@ namespace vCardLib.Deserializers
         /// Gets the death place from the details array
         /// </summary>
         /// <returns>A string representing the death place or an empty string</returns>
-        private static string ParseDeathPlace()
+        protected string ParseDeathPlace(string[] contactDetails)
         {
-            var deathplaceString = _contactDetails.FirstOrDefault(s => s.StartsWith("DEATHPLACE:"));
+            var deathplaceString = contactDetails.FirstOrDefault(s => s.StartsWith("DEATHPLACE:"));
             if (deathplaceString != null)
             {
                 return deathplaceString.Replace("DEATHPLACE:", "").Trim();
@@ -285,9 +274,9 @@ namespace vCardLib.Deserializers
         /// Gets the birthday from the details array
         /// </summary>
         /// <returns>A date time object representing the birthday or null</returns>
-        private static DateTime? ParseBirthDay()
+        protected DateTime? ParseBirthDay(string[] contactDetails)
         {
-            var bdayString = _contactDetails.FirstOrDefault(s => s.StartsWith("BDAY:"));
+            var bdayString = contactDetails.FirstOrDefault(s => s.StartsWith("BDAY:"));
             if (bdayString != null)
             {
                 bdayString = bdayString
@@ -311,9 +300,9 @@ namespace vCardLib.Deserializers
         /// Gets the family name from the details array
         /// </summary>
         /// <returns>A string representing the family name or an empty string</returns>
-        private static string ParseFormattedName()
+        protected string ParseFormattedName(string[] contactDetails)
         {
-            var fnString = _contactDetails.FirstOrDefault(s => s.StartsWith("FN:"));
+            var fnString = contactDetails.FirstOrDefault(s => s.StartsWith("FN:"));
             var formattedName = fnString?.Replace("FN:", "");
             return formattedName;
         }
@@ -322,10 +311,13 @@ namespace vCardLib.Deserializers
         /// Gets the family name from the details array
         /// </summary>
         /// <returns>A string representing the family name or an empty string</returns>
-        private static string ParseFamilyName()
+        protected string ParseFamilyName(string[] contactDetails)
         {
-            var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
+            var nString = contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
+            var names = nString?.Replace("N:", "").Split(new[]
+            {
+                ";"
+            }, StringSplitOptions.None);
             if (names?.Length > 0)
                 return names[0];
             return string.Empty;
@@ -335,10 +327,13 @@ namespace vCardLib.Deserializers
         /// Gets the given name from the details array
         /// </summary>
         /// <returns>A string representing the given name or an empty string</returns>
-        private static string ParseGivenName()
+        protected string ParseGivenName(string[] contactDetails)
         {
-            var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
+            var nString = contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
+            var names = nString?.Replace("N:", "").Split(new[]
+            {
+                ";"
+            }, StringSplitOptions.None);
             if (names?.Length > 1)
                 return names[1];
             return string.Empty;
@@ -348,10 +343,13 @@ namespace vCardLib.Deserializers
         /// Gets the middle name from the details array
         /// </summary>
         /// <returns>A string representing the middle name or an empty string</returns>
-        private static string ParseMiddleName()
+        protected string ParseMiddleName(string[] contactDetails)
         {
-            var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
+            var nString = contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
+            var names = nString?.Replace("N:", "").Split(new[]
+            {
+                ";"
+            }, StringSplitOptions.None);
             if (names?.Length > 2)
                 return names[2];
             return string.Empty;
@@ -361,10 +359,13 @@ namespace vCardLib.Deserializers
         /// Gets the prefix from the details array
         /// </summary>
         /// <returns>A string representing the prefix or an empty string</returns>
-        private static string ParsePrefix()
+        protected string ParsePrefix(string[] contactDetails)
         {
-            var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
+            var nString = contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
+            var names = nString?.Replace("N:", "").Split(new[]
+            {
+                ";"
+            }, StringSplitOptions.None);
             if (names?.Length > 3)
                 return names[3];
             return string.Empty;
@@ -374,10 +375,13 @@ namespace vCardLib.Deserializers
         /// Gets the suffix from the details array
         /// </summary>
         /// <returns>A string representing the suffix or an empty string</returns>
-        private static string ParseSuffix()
+        protected string ParseSuffix(string[] contactDetails)
         {
-            var nString = _contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
-            var names = nString?.Replace("N:", "").Split(new[] {";"}, StringSplitOptions.None);
+            var nString = contactDetails.FirstOrDefault(s => s.StartsWith("N:"));
+            var names = nString?.Replace("N:", "").Split(new[]
+            {
+                ";"
+            }, StringSplitOptions.None);
             if (names?.Length > 4)
                 return names[4];
             return string.Empty;
@@ -387,9 +391,9 @@ namespace vCardLib.Deserializers
         /// Gets the time zone from the details array
         /// </summary>
         /// <returns>A string representing the time zone or an empty string</returns>
-        private static string ParseTimeZone()
+        protected string ParseTimeZone(string[] contactDetails)
         {
-            var tzString = _contactDetails.FirstOrDefault(s => s.StartsWith("TZ"));
+            var tzString = contactDetails.FirstOrDefault(s => s.StartsWith("TZ"));
             if (tzString != null)
                 return tzString.Replace("TZ:", "").Trim();
             return string.Empty;
@@ -399,9 +403,9 @@ namespace vCardLib.Deserializers
         /// Gets the time zone from the details array
         /// </summary>
         /// <returns>A string representing the time zone or an empty string</returns>
-        private static string ParseNote()
+        protected string ParseNote(string[] contactDetails)
         {
-            var noteString = _contactDetails.FirstOrDefault(s => s.StartsWith("NOTE"));
+            var noteString = contactDetails.FirstOrDefault(s => s.StartsWith("NOTE"));
             if (noteString != null)
                 return noteString.Replace("NOTE:", "").Trim();
             return string.Empty;
@@ -411,9 +415,9 @@ namespace vCardLib.Deserializers
         /// Gets the gender from the details array
         /// </summary>
         /// <returns>A <see cref="GenderType"/> representing the gender</returns>
-        private static GenderType ParseGender()
+        protected GenderType ParseGender(string[] contactDetails)
         {
-            var genderString = _contactDetails.FirstOrDefault(s => s.StartsWith("GENDER:"));
+            var genderString = contactDetails.FirstOrDefault(s => s.StartsWith("GENDER:"));
             if (genderString != null)
             {
                 genderString = genderString.Replace("GENDER:", "").Trim();
@@ -431,9 +435,9 @@ namespace vCardLib.Deserializers
         /// Gets the revision of this vcard
         /// </summary>
         /// <returns>A date time object or null</returns>
-        private static DateTime? ParseRevision()
+        protected DateTime? ParseRevision(string[] contactDetails)
         {
-            var revisionString = _contactDetails.FirstOrDefault(x => x.StartsWith("REV"));
+            var revisionString = contactDetails.FirstOrDefault(x => x.StartsWith("REV"));
             if (revisionString != null)
             {
                 revisionString = revisionString
@@ -457,9 +461,9 @@ namespace vCardLib.Deserializers
         /// Gets the location from the details array
         /// </summary>
         /// <returns>A <see cref="Geo"/> stating the longitude and latitude or null</returns>
-        private static Geo ParseGeo()
+        protected Geo ParseGeo(string[] contactDetails)
         {
-            var geoString = _contactDetails.FirstOrDefault(x => x.StartsWith("GEO"));
+            var geoString = contactDetails.FirstOrDefault(x => x.StartsWith("GEO"));
             if (geoString != null)
             {
                 geoString = geoString.Replace("GEO:", "");
@@ -470,7 +474,11 @@ namespace vCardLib.Deserializers
                     var latSuccess = double.TryParse(geoParts[1], out var latitude);
                     if (longSuccess && latSuccess)
                     {
-                        var geo = new Geo {Latitude = latitude, Longitude = latitude};
+                        var geo = new Geo
+                        {
+                            Latitude = latitude,
+                            Longitude = latitude
+                        };
                         return geo;
                     }
                 }
