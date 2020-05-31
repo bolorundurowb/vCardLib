@@ -9,7 +9,7 @@ namespace vCardLib.Utils
     /// <summary>
     /// Class to hold all supporting methods
     /// </summary>
-    public class Helpers
+    public static class Helpers
     {
         internal static string[][] GetContactsFromFile(string filePath)
         {
