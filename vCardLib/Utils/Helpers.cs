@@ -79,10 +79,10 @@ namespace vCardLib.Utils
         {
             // Read the BOM
             var bom = new byte[4];
-            using (var file = new FileStream(filename, FileMode.Open, FileAccess.Read))
-            {
-                file.Read(bom, 0, 4);
-            }
+            stream.Read(bom, 0, 4);
+            
+            // reset the stream
+            stream.Position = 0;
 
             // Analyze the BOM
             if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76) return Encoding.UTF7;
