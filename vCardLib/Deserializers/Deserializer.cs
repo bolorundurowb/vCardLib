@@ -129,7 +129,7 @@ namespace vCardLib.Deserializers
                 Suffix = ParseSuffix(),
                 TimeZone = ParseTimeZone(),
                 Title = ParseTitle(),
-                Url = ParseUrl(),
+                Url = ParseUrl()
             };
 
             vcard.CustomFields = vcard.CustomFields ?? new List<KeyValuePair<string, string>>();
@@ -425,36 +425,6 @@ namespace vCardLib.Deserializers
             }
 
             return GenderType.None;
-        }
-
-        /// <summary>
-        /// Gets the Skype display name
-        /// </summary>
-        /// <returns>A string with the skype display name or an empty string</returns>
-        private static string ParseXSkypeDisplayName()
-        {
-            var xSkypeDisplayNumberString = _contactDetails.FirstOrDefault(x => x.StartsWith("X-SKYPE-DISPLAYNAME"));
-            if (xSkypeDisplayNumberString != null)
-            {
-                return xSkypeDisplayNumberString.Replace("X-SKYPE-DISPLAYNAME:", "");
-            }
-
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the Skype PSTN number
-        /// </summary>
-        /// <returns>A string with the skype PSTN number or an empty string</returns>
-        private static string ParseXSkypePstnNumber()
-        {
-            var xSkypePstnString = _contactDetails.FirstOrDefault(x => x.StartsWith("X-SKYPE-PSTNNUMBER"));
-            if (xSkypePstnString != null)
-            {
-                return xSkypePstnString.Replace("X-SKYPE-PSTNNUMBER:", "");
-            }
-
-            return string.Empty;
         }
 
         /// <summary>
