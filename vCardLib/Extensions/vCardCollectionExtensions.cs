@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using vCardLib.Enums;
-using vCardLib.Interfaces;
 using vCardLib.Models;
 using vCardLib.Serializers;
 
@@ -31,7 +30,7 @@ namespace vCardLib.Extensions
             else
             {
                 var selectedVersion = version ?? cards.First().Version;
-                ISerializer serializer;
+                BaseSerializer serializer;
 
                 switch (selectedVersion)
                 {
@@ -42,7 +41,7 @@ namespace vCardLib.Extensions
                         serializer = new v3Serializer();
                         break;
                     case vCardVersion.V4:
-                        serializer = new V4Serializer();
+                        serializer = new v4Serializer();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
