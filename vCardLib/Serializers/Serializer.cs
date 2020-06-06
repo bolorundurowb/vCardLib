@@ -17,7 +17,7 @@ namespace vCardLib.Serializers
         {
             _stringBuilder = new StringBuilder();
             _vCard = vCard;
-            
+
             // add card start
             AddCardStart();
 
@@ -45,69 +45,87 @@ namespace vCardLib.Serializers
 
         private void AddSharedFields()
         {
-            _stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ") + Environment.NewLine);
+            _stringBuilder.Append("REV:" + DateTime.Now.ToString("yyyyMMddTHHmmssZ"))
+                .Append(Environment.NewLine);
+
             _stringBuilder.Append(
                 $"N:{_vCard.FamilyName};{_vCard.GivenName};{_vCard.MiddleName};{_vCard.Prefix};{_vCard.Suffix}{Environment.NewLine}"
             );
-            _stringBuilder.Append("FN:" + _vCard.FormattedName + Environment.NewLine);
+
+            _stringBuilder.Append("FN:" + _vCard.FormattedName)
+                .Append(Environment.NewLine);
+
             if (!string.IsNullOrEmpty(_vCard.Organization))
             {
-                _stringBuilder.Append("ORG:" + _vCard.Organization + Environment.NewLine);
+                _stringBuilder.Append("ORG:" + _vCard.Organization)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.Title))
             {
-                _stringBuilder.Append("TITLE:" + _vCard.Title + Environment.NewLine);
+                _stringBuilder.Append("TITLE:" + _vCard.Title)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.Url))
             {
-                _stringBuilder.Append("URL:" + _vCard.Url + Environment.NewLine);
+                _stringBuilder.Append("URL:" + _vCard.Url)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.NickName))
             {
-                _stringBuilder.Append("NICKNAME:" + _vCard.NickName + Environment.NewLine);
+                _stringBuilder.Append("NICKNAME:" + _vCard.NickName)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.Language))
             {
-                _stringBuilder.Append("LANG:" + _vCard.Language + Environment.NewLine);
+                _stringBuilder.Append("LANG:" + _vCard.Language)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.BirthPlace))
             {
-                _stringBuilder.Append("BIRTHPLACE:" + _vCard.BirthPlace + Environment.NewLine);
+                _stringBuilder.Append("BIRTHPLACE:" + _vCard.BirthPlace)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.DeathPlace))
             {
-                _stringBuilder.Append("DEATHPLACE:" + _vCard.DeathPlace + Environment.NewLine);
+                _stringBuilder.Append("DEATHPLACE:" + _vCard.DeathPlace)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.TimeZone))
             {
-                _stringBuilder.Append("TZ:" + _vCard.TimeZone + Environment.NewLine);
+                _stringBuilder.Append("TZ:" + _vCard.TimeZone)
+                    .Append(Environment.NewLine);
             }
 
             if (!string.IsNullOrEmpty(_vCard.Note))
             {
-                _stringBuilder.Append("NOTE:" + _vCard.Note);
+                _stringBuilder.Append("NOTE:" + _vCard.Note)
+                    .Append(Environment.NewLine);
             }
 
-            _stringBuilder.Append("KIND:" + _vCard.Kind.ToString().ToUpper() + Environment.NewLine);
-            _stringBuilder.Append("GENDER:" + _vCard.Gender.ToString().ToUpper() + Environment.NewLine);
+            _stringBuilder.Append("KIND:" + _vCard.Kind.ToString().ToUpper())
+                .Append(Environment.NewLine);
+            
+            _stringBuilder.Append("GENDER:" + _vCard.Gender.ToString().ToUpper())
+                .Append(Environment.NewLine);
 
             if (_vCard.Geo != null)
             {
                 _stringBuilder.Append("GEO:" + _vCard.Geo.Longitude + ";" + _vCard.Geo.Latitude);
             }
 
-            if (_vCard.BirthDay != null)
+            if (_vCard.BirthDay.HasValue)
             {
-                var birthDay = (DateTime) _vCard.BirthDay;
-                _stringBuilder.Append("BDAY:" + birthDay.Year + birthDay.Month.ToString("00") +
-                                      birthDay.Day.ToString("00"));
+                _stringBuilder
+                    .Append("BDAY:")
+                    .Append(_vCard.BirthDay.Value.ToString("yyyyMMdd"))
+                    .Append(Environment.NewLine);
             }
         }
     }
