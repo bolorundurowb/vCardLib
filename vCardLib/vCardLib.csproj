@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Version>3.0.0</Version>
-        <Copyright>Copyright 2019</Copyright>
-        <PackageReleaseNotes>rework the serialization logic for vcards</PackageReleaseNotes>
+        <Copyright>Copyright 2020</Copyright>
+        <PackageReleaseNotes>update serilazation and deserialization</PackageReleaseNotes>
         <Authors>Bolorunduro Winner-Timothy</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>
@@ -16,6 +16,6 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>vcard, vcardlib</PackageTags>
         <PackageVersion>3.0.0</PackageVersion>
-        <TargetFramework>netstandard1.3</TargetFramework>
+        <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     </PropertyGroup>
 </Project>

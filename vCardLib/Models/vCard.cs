@@ -194,11 +194,11 @@ namespace vCardLib.Models
             switch (version ?? Version)
             {
                 case vCardVersion.V2:
-                    return new V2Serializer().Serialize(this);
+                    return  v2Serializer.Serialize(this);
                 case vCardVersion.V3:
-                    return new V3Serializer().Serialize(this);
+                    return v3Serializer.Serialize(this);
                 default:
-                    return new V4Serializer().Serialize(this);
+                    return v4Serializer.Serialize(this);
             }
         }
     }
