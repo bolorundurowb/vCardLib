@@ -129,9 +129,11 @@ namespace vCardLib.Deserializers
                 {
                     phoneString = phoneString.Replace(",VOICE", "");
                     phoneString = phoneString.Replace("CELL:", "");
-                    var phoneNumber = new PhoneNumber();
-                    phoneNumber.Number = phoneString;
-                    phoneNumber.Type = PhoneNumberType.Cell;
+                    var phoneNumber = new PhoneNumber
+                    {
+                        Number = phoneString, 
+                        Type = PhoneNumberType.Cell
+                    };
                     phoneNumberCollection.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("HOME"))
@@ -298,7 +300,7 @@ namespace vCardLib.Deserializers
 
                     if (emailString.Contains(","))
                     {
-                        var index = emailString.LastIndexOf(",");
+                        var index = emailString.LastIndexOf(",", StringComparison.Ordinal);
                         emailString = emailString.Remove(0, index + 1);
                     }
 

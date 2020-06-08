@@ -29,14 +29,10 @@ namespace vCardLib.Utils
 
         internal static string[][] GetContactsFromString(string contents)
         {
-            var response = new List<string[]>();
             var contacts = GetIndividualContacts(contents);
-            foreach (var contact in contacts)
-            {
-                response.Add(ExtractContactDetails(contact));
-            }
 
-            return response
+            return contacts
+                .Select(ExtractContactDetails)
                 .Where(x => x.Length > 0)
                 .ToArray();
         }
@@ -71,7 +67,8 @@ namespace vCardLib.Utils
 
             return normalizedContact.Split(new[]
             {
-                "\n", "\r\n"
+                "\n", 
+                "\r\n"
             }, StringSplitOptions.RemoveEmptyEntries);
         }
 
@@ -80,7 +77,7 @@ namespace vCardLib.Utils
             // Read the BOM
             var bom = new byte[4];
             stream.Read(bom, 0, 4);
-            
+
             // reset the stream
             stream.Position = 0;
 
