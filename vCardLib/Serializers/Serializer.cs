@@ -17,21 +17,19 @@ namespace vCardLib.Serializers
         {
             Serializer serializer;
 
-            if (vCard.Version == vCardVersion.V2)
+            switch (vCard.Version)
             {
-                serializer = new v2Serializer();
-            }
-            else if (vCard.Version == vCardVersion.V3)
-            {
-                serializer = new v3Serializer();
-            }
-            else if (vCard.Version == vCardVersion.V4)
-            {
-                serializer = new v4Serializer();
-            }
-            else
-            {
-                throw new InvalidOperationException();
+                case vCardVersion.V2:
+                    serializer = new v2Serializer();
+                    break;
+                case vCardVersion.V3:
+                    serializer = new v3Serializer();
+                    break;
+                case vCardVersion.V4:
+                    serializer = new v4Serializer();
+                    break;
+                default:
+                    throw new InvalidOperationException();
             }
 
             // add fields in order
@@ -226,7 +224,7 @@ namespace vCardLib.Serializers
             {
                 stringBuilder
                     .Append("BDAY:")
-                    .Append(birthDay.Value.ToString("yyyyMMdd"));
+                    .Append(birthDay.Value.ToString("yyyy-MM-dd"));
             }
         }
 

@@ -259,10 +259,10 @@ namespace vCardLib.Deserializers
         /// <returns>A string representing the death place or an empty string</returns>
         protected string ParseDeathPlace(string[] contactDetails)
         {
-            var deathplaceString = contactDetails.FirstOrDefault(s => s.StartsWith("DEATHPLACE:"));
-            if (deathplaceString != null)
+            var deathPlaceString = contactDetails.FirstOrDefault(s => s.StartsWith("DEATHPLACE:"));
+            if (deathPlaceString != null)
             {
-                return deathplaceString.Replace("DEATHPLACE:", "").Trim();
+                return deathPlaceString.Replace("DEATHPLACE:", "").Trim();
             }
 
             return string.Empty;
@@ -442,11 +442,10 @@ namespace vCardLib.Deserializers
                     .Replace("REV:", "")
                     .Replace("-", "")
                     .Trim();
-                DateTime revision;
                 var format = "yyyyMMddTHHmmssZ";
                 var dateTimeStyle = DateTimeStyles.None;
                 IFormatProvider provider = new CultureInfo("en-US");
-                if (DateTime.TryParseExact(revisionString, format, provider, dateTimeStyle, out revision))
+                if (DateTime.TryParseExact(revisionString, format, provider, dateTimeStyle, out var revision))
                 {
                     return revision;
                 }
