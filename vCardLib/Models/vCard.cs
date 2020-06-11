@@ -181,7 +181,7 @@ namespace vCardLib.Models
         /// <inheritdoc/>
         public override string ToString()
         {
-            return ToString(null);
+            return Serializer.Serialize(this);
         }
 
         /// <summary>
@@ -189,17 +189,11 @@ namespace vCardLib.Models
         /// </summary>
         /// <param name="version">vCard version</param>
         /// <returns>A string that represents the current object.</returns>
-        public string ToString(vCardVersion? version)
+        public string ToString(vCardVersion version)
         {
-            switch (version ?? Version)
-            {
-                case vCardVersion.V2:
-                    return v2Serializer.Serialize(this);
-                case vCardVersion.V3:
-                    return v3Serializer.Serialize(this);
-                default:
-                    return v4Serializer.Serialize(this);
-            }
+            var clone = this;
+            clone.Version = version;
+            return Serializer.Serialize(this);
         }
     }
 }
