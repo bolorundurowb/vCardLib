@@ -223,8 +223,7 @@ namespace vCardLib.Serializers
             if (birthDay.HasValue)
             {
                 stringBuilder
-                    .AppendLine("BDAY:")
-                    .Append(birthDay.Value.ToString("yyyy-MM-dd"));
+                    .AppendLine($"BDAY:{birthDay.Value:yyyy-MM-dd}");
             }
         }
 
