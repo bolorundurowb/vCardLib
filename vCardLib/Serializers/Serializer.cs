@@ -103,7 +103,6 @@ namespace vCardLib.Serializers
         protected void AddCardEnd(StringBuilder stringBuilder)
         {
             stringBuilder
-                .AppendLine()
                 .Append(Constants.EndToken);
         }
 
