@@ -17,18 +17,4 @@
 		/// <value>The type.</value>
         public AddressType Type { get; set; }
     }
-
-	/// <summary>
-	/// Address type.
-	/// </summary>
-    public enum AddressType
-    {
-        Work,
-        Home,
-        Domestic,
-        International,
-        Postal,
-        Parcel,
-        None
-    }
 }

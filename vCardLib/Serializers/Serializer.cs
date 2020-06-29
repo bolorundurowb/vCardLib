@@ -17,21 +17,19 @@ namespace vCardLib.Serializers
         {
             Serializer serializer;
 
-            if (vCard.Version == vCardVersion.V2)
+            switch (vCard.Version)
             {
-                serializer = new v2Serializer();
-            }
-            else if (vCard.Version == vCardVersion.V3)
-            {
-                serializer = new v3Serializer();
-            }
-            else if (vCard.Version == vCardVersion.V4)
-            {
-                serializer = new v4Serializer();
-            }
-            else
-            {
-                throw new InvalidOperationException();
+                case vCardVersion.V2:
+                    serializer = new v2Serializer();
+                    break;
+                case vCardVersion.V3:
+                    serializer = new v3Serializer();
+                    break;
+                case vCardVersion.V4:
+                    serializer = new v4Serializer();
+                    break;
+                default:
+                    throw new InvalidOperationException();
             }
 
             // add fields in order
@@ -104,7 +102,8 @@ namespace vCardLib.Serializers
 
         protected void AddCardEnd(StringBuilder stringBuilder)
         {
-            stringBuilder.Append(Constants.EndToken);
+            stringBuilder
+                .Append(Constants.EndToken);
         }
 
         protected void AddRevision(StringBuilder stringBuilder)
@@ -222,9 +221,8 @@ namespace vCardLib.Serializers
         {
             if (birthDay.HasValue)
             {
-                var bDay = birthDay.Value;
-                stringBuilder.AppendLine("BDAY:" + bDay.Year + bDay.Month.ToString("00") +
-                                     bDay.Day.ToString("00"));
+                stringBuilder
+                    .AppendLine($"BDAY:{birthDay.Value:yyyy-MM-dd}");
             }
         }
 
