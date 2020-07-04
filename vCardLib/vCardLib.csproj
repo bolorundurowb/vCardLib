@@ -2,7 +2,8 @@
     <PropertyGroup>
         <Version>3.0.1</Version>
         <Copyright>Copyright 2020</Copyright>
-        <PackageReleaseNotes>update serilazation and deserialization</PackageReleaseNotes>
+        <PackageReleaseNotes>- add in mewer deserializer methods
+- improve serialization</PackageReleaseNotes>
         <Authors>Bolorunduro Winner-Timothy</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>
@@ -15,7 +16,7 @@
         <Title>vCardLib</Title>
         <RepositoryType>git</RepositoryType>
         <PackageTags>vcard, vcardlib</PackageTags>
-        <PackageVersion>3.0.0</PackageVersion>
+        <PackageVersion>3.0.1</PackageVersion>
         <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     </PropertyGroup>
 </Project>
