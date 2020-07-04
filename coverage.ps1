@@ -1,1 +1,0 @@
-Write-Host "Update when there is reporting for core"
