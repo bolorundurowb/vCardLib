@@ -3,7 +3,7 @@
 
 Documentation can be found at [documentation site](http://bolorundurowb.github.io/vCardLib/)
 
-This is the library that powers the VCF Reader. Unlike all other vCard libraries for .NET that I found, this library supports reading multiple contacts from a single vcf file and returns the contact objects in a vCardCollection. The library currently **supports only vCard version 2.1 and 3.0** (a curated list of properties supported can be seen on the documentation site).
+T this library supports reading multiple contacts from a single vcf file, a stream or a contact string and returns the contact objects in a List. The library currently **supports only vCard version 2.1 and 3.0** (a curated list of properties supported can be seen on the documentation site).
 
 #### How to use the library:
 
@@ -30,18 +30,29 @@ In your class you call the static method 'FromFile' and pass a string containing
 ```csharp
 string filePath = //path to vcf file;
 
-vCardCollection contacts = Deserializer.FromFile(filePath);
+var contacts = Deserializer.FromFile(filePath);
 ```
- Or pass a  StreamReader object to it:
+
+ Or read your contacts from a `Stream`:
+ 
  ```csharp
-StreamReader sr = //generate a streamreader somehow;
-vCardCollection contacts = Deserializer.FromStreamReader(sr);
+var stream = //generate a stream somehow;
+var contacts = Deserializer.FromStream(stream);
  ```
 
-Iterate over the collection and pick the vCard objects:
+ Or read your contacts from a `string`:
+ 
+ ```csharp
+var contactDetails = @"BEGIN:VCARD
+N:John;Doe;;;
+END:VCARD";
+var contacts = Deserializer.FromString(contactDetails);
+ ```
+
+Iterate over the contact collection and pick the vCard objects:
 
 ```csharp
-foreach(vCard contact in contacts)
+foreach(var contact in contacts)
 {
   Console.WriteLine(contact.FormattedName);
 }
