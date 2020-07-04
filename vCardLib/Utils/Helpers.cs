@@ -11,13 +11,13 @@ namespace vCardLib.Utils
     /// </summary>
     public static class Helpers
     {
-        internal static string[][] GetContactsFromFile(string filePath)
+        internal static IEnumerable<string[]> GetContactsFromFile(string filePath)
         {
             var stream = new FileStream(filePath, FileMode.Open);
             return GetContactsFromStream(stream);
         }
 
-        internal static string[][] GetContactsFromStream(Stream stream)
+        internal static IEnumerable<string[]> GetContactsFromStream(Stream stream)
         {
             var encoding = GetEncoding(stream);
             using (var reader = new StreamReader(stream, encoding))
@@ -28,20 +28,19 @@ namespace vCardLib.Utils
         }
 
         [Obsolete("Use GetContactsFromStream(stream) instead.")]
-        internal static string[][] GetContactsFromStreamReader(StreamReader streamReader)
+        internal static IEnumerable<string[]> GetContactsFromStreamReader(StreamReader streamReader)
         {
             var contents = streamReader.ReadToEnd();
             return GetContactsFromString(contents);
         }
 
-        internal static string[][] GetContactsFromString(string contents)
+        internal static IEnumerable<string[]> GetContactsFromString(string contents)
         {
             var contacts = GetIndividualContacts(contents);
 
             return contacts
                 .Select(ExtractContactDetails)
-                .Where(x => x.Length > 0)
-                .ToArray();
+                .Where(x => x.Length > 0);
         }
 
         private static IEnumerable<string> GetIndividualContacts(string allContacts)
@@ -74,8 +73,7 @@ namespace vCardLib.Utils
 
             return normalizedContact.Split(new[]
             {
-                "\n", 
-                "\r\n"
+                "\n", "\r\n"
             }, StringSplitOptions.RemoveEmptyEntries);
         }
 
