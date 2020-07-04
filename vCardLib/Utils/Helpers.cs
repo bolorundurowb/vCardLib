@@ -27,6 +27,13 @@ namespace vCardLib.Utils
             }
         }
 
+        [Obsolete("Use GetContactsFromStream(stream) instead.")]
+        internal static string[][] GetContactsFromStreamReader(StreamReader streamReader)
+        {
+            var contents = streamReader.ReadToEnd();
+            return GetContactsFromString(contents);
+        }
+
         internal static string[][] GetContactsFromString(string contents)
         {
             var contacts = GetIndividualContacts(contents);

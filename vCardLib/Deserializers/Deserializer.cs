@@ -47,6 +47,18 @@ namespace vCardLib.Deserializers
         /// <summary>
         /// Retrieves a vcard
         /// </summary>
+        /// <param name="reader"><see cref="StreamReader"/> containing a vcard(s)</param>
+        /// <returns>A <see cref="List<vCard>"/></returns>
+        [Obsolete("Use FromStream(stream) instead.")]
+        public static List<vCard> FromStreamReader(StreamReader reader)
+        {
+            var contacts = Helpers.GetContactsFromStreamReader(reader);
+            return CreateCardsFromContacts(contacts);
+        }
+
+        /// <summary>
+        /// Retrieves a vcard
+        /// </summary>
         /// <param name="contents">A string containing a vcard(s)</param>
         /// <returns>A <see cref="List<vCard>"/></returns>
         public static List<vCard> FromString(string contents)
