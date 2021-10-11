@@ -1,22 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <Version>3.0.1</Version>
-        <Copyright>Copyright 2020</Copyright>
-        <PackageReleaseNotes>- add in mewer deserializer methods
-- improve serialization</PackageReleaseNotes>
-        <Authors>Bolorunduro Winner-Timothy</Authors>
-        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageId>vCardLib.dll</PackageId>
-        <Description>vCardLib is a .NET library to help developers read either single or multiple contacts from a single vcf file or StreamReader.</Description>
-        <PackageIconUrl>http://www.iconarchive.com/download/i48687/custom-icon-design/pretty-office-2/contact.ico</PackageIconUrl>
-        <PackageProjectUrl>https://bolorundurowb.github.io/vCardLib/</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/bolorundurowb/vCardLib/blob/master/LICENSE</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>vCardLib</Title>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>vcard, vcardlib</PackageTags>
-        <PackageVersion>3.0.1</PackageVersion>
-        <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-    </PropertyGroup>
+  <PropertyGroup>
+    <Version>3.0.1</Version>
+    <Copyright>© 2017 , Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
+    <PackageReleaseNotes>
+      - fix issues with multiline photos
+    </PackageReleaseNotes>
+    <Authors>Bolorunduro Winner-Timothy</Authors>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageId>vCardLib.dll</PackageId>
+    <Description>vCardLib is a .NET library to help developers read either single or multiple contacts from a single vcf file or StreamReader.</Description>
+    <PackageIconUrl>http://www.iconarchive.com/download/i48687/custom-icon-design/pretty-office-2/contact.ico</PackageIconUrl>
+    <PackageProjectUrl>https://bolorundurowb.github.io/vCardLib/</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/bolorundurowb/vCardLib/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>vCardLib</Title>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>vcard, vcardlib</PackageTags>
+    <PackageVersion>3.0.1</PackageVersion>
+    <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
 </Project>
