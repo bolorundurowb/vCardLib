@@ -509,13 +509,9 @@ namespace vCardLib.Deserializers
                         var photoStrIndex = Array.IndexOf(contactDetails, photoStr);
                         while (true)
                         {
-                            if (photoStrIndex < contactDetails.Length)
+                            if (++photoStrIndex < contactDetails.Length && contactDetails[photoStrIndex].StartsWith("PHOTO;"))
                             {
                                 photoString += contactDetails[photoStrIndex];
-                                photoStrIndex++;
-                                if (photoStrIndex < contactDetails.Length &&
-                                    contactDetails[photoStrIndex].StartsWith("PHOTO;"))
-                                    break;
                             }
                             else
                             {
