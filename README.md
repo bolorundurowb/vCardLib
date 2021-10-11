@@ -58,3 +58,11 @@ foreach(var contact in contacts)
 }
 ```
 complete documentation on [github.io](http://bolorundurowb.github.io/vCardLib/)
+
+
+## Contrbutors
+A huge thank you to these beautiful people
+
+<br/>
+
+[@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar), [@rmja](https://github.com/rmja), [@JeanCollas](https://github.com/JeanCollas)
