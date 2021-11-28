@@ -20,18 +20,18 @@ namespace vCardLib.Serializers
         {
             foreach (var phoneNumber in phoneNumbers)
             {
-                if (phoneNumber.Type == PhoneNumberType.None)
+                switch (phoneNumber.Type)
                 {
-                    stringBuilder.AppendLine("TEL:" + phoneNumber.Number);
-                }
-                else if (phoneNumber.Type == PhoneNumberType.MainNumber)
-                {
-                    stringBuilder.AppendLine("TEL);TYPE=MAIN-NUMBER:" + phoneNumber.Number);
-                }
-                else
-                {
-                    stringBuilder.AppendLine("TEL);TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" +
-                                             phoneNumber.Number);
+                    case PhoneNumberType.None:
+                        stringBuilder.AppendLine("TEL:" + phoneNumber.Number);
+                        break;
+                    case PhoneNumberType.MainNumber:
+                        stringBuilder.AppendLine("TEL);TYPE=MAIN-NUMBER:" + phoneNumber.Number);
+                        break;
+                    default:
+                        stringBuilder.AppendLine("TEL);TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" +
+                                                 phoneNumber.Number);
+                        break;
                 }
             }
         }
