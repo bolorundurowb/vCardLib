@@ -26,10 +26,10 @@ namespace vCardLib.Serializers
                         stringBuilder.AppendLine("TEL:" + phoneNumber.Number);
                         break;
                     case PhoneNumberType.MainNumber:
-                        stringBuilder.AppendLine("TEL);TYPE=MAIN-NUMBER:" + phoneNumber.Number);
+                        stringBuilder.AppendLine("TEL;TYPE=MAIN-NUMBER:" + phoneNumber.Number);
                         break;
                     default:
-                        stringBuilder.AppendLine("TEL);TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" +
+                        stringBuilder.AppendLine("TEL;TYPE=" + phoneNumber.Type.ToString().ToUpper() + ":" +
                                                  phoneNumber.Number);
                         break;
                 }
