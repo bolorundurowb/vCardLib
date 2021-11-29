@@ -46,7 +46,7 @@ namespace vCardLib.Serializers
                 }
                 else
                 {
-                    stringBuilder.AppendLine("EMAIL);TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email);
+                    stringBuilder.AppendLine("EMAIL;TYPE=" + email.Type.ToString().ToUpper() + ":" + email.Email);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace vCardLib.Serializers
                 }
                 else
                 {
-                    stringBuilder.AppendLine("ADR);TYPE=" + address.Type.ToString().ToUpper() + ":" + address.Location);
+                    stringBuilder.AppendLine("ADR;TYPE=" + address.Type.ToString().ToUpper() + ":" + address.Location);
                 }
             }
         }
@@ -74,10 +74,10 @@ namespace vCardLib.Serializers
                 switch (photo.Type)
                 {
                     case PhotoType.URL:
-                        stringBuilder.AppendLine(");VALUE=URI:" + photo.PhotoURL);
+                        stringBuilder.AppendLine(";VALUE=URI:" + photo.PhotoURL);
                         break;
                     case PhotoType.Image:
-                        stringBuilder.AppendLine(");ENCODING=b:" + photo.ToBase64String());
+                        stringBuilder.AppendLine(";ENCODING=b:" + photo.ToBase64String());
                         break;
                 }
             }
@@ -87,7 +87,7 @@ namespace vCardLib.Serializers
         {
             foreach (var expertise in expertises)
             {
-                stringBuilder.AppendLine("EXPERTISE);LEVEL=" + expertise.Level.ToString().ToLower() + ":" +
+                stringBuilder.AppendLine("EXPERTISE;LEVEL=" + expertise.Level.ToString().ToLower() + ":" +
                                          expertise.Area);
             }
         }
@@ -96,7 +96,7 @@ namespace vCardLib.Serializers
         {
             foreach (var hobby in hobbies)
             {
-                stringBuilder.AppendLine("HOBBY);LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity);
+                stringBuilder.AppendLine("HOBBY;LEVEL=" + hobby.Level.ToString().ToLower() + ":" + hobby.Activity);
             }
         }
 
@@ -104,7 +104,7 @@ namespace vCardLib.Serializers
         {
             foreach (var interest in interests)
             {
-                stringBuilder.AppendLine("INTEREST);LEVEL=" + interest.Level.ToString().ToLower() + ":" +
+                stringBuilder.AppendLine("INTEREST;LEVEL=" + interest.Level.ToString().ToLower() + ":" +
                                          interest.Activity);
             }
         }
