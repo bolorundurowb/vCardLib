@@ -1,6 +1,6 @@
 ﻿namespace vCardLib.Constants
 {
-    public class FieldKeyConstants
+    internal class FieldKeyConstants
     {
         public const string StartToken = "BEGIN:VCARD";
 
