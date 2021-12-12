@@ -11,10 +11,15 @@ namespace vCardLib.Models
         /// The email address
         /// </summary>
         public string Email { get; set; }
-        
+
         /// <summary>
         /// The email address type
         /// </summary>
         public EmailType Type { get; set; }
+
+        /// <summary>
+        /// Indicates if this email address is preferred
+        /// </summary>
+        public bool IsPreferred { get; set; }
     }
 }
