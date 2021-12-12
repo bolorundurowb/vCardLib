@@ -10,9 +10,6 @@ namespace vCardLib.Deserializers
     // ReSharper disable once InconsistentNaming
     public class v3Deserializer : Deserializer
     {
-        private const string TypeKey = "TYPE";
-        private const string PreferenceKey = "PREF";
-        
         protected override vCardVersion ParseVersion()
         {
             return vCardVersion.V3;
@@ -135,7 +132,7 @@ namespace vCardLib.Deserializers
                     phoneString = phoneString.Replace("CELL:", "");
                     var phoneNumber = new PhoneNumber
                     {
-                        Number = phoneString, 
+                        Number = phoneString,
                         Type = PhoneNumberType.Cell
                     };
                     phoneNumberCollection.Add(phoneNumber);
@@ -290,7 +287,7 @@ namespace vCardLib.Deserializers
         {
             var emailAddresses = new List<EmailAddress>();
 
-            var emailStrings = contactDetails.Where(s => s.StartsWith("EMAIL"));
+            var emailStrings = contactDetails.Where(s => s.StartsWith(FieldKeyConstants.EmailKey));
             foreach (var email in emailStrings)
             {
                 var emailParts = email.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
@@ -304,13 +301,13 @@ namespace vCardLib.Deserializers
 
                 // parse the type info
                 var typeMetadata = metadata.Where(x =>
-                    x.StartsWith(TypeKey, StringComparison.InvariantCultureIgnoreCase));
+                    x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.InvariantCultureIgnoreCase));
 
                 foreach (var type in typeMetadata)
                     emailAddress.Type |= ParseEmailType(type.Split('=')[1]);
 
                 // parse the email preference
-                var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(PreferenceKey));
+                var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(FieldKeyConstants.PreferenceKey));
                 var prefSplit = preferenceMetadata?.Split('=');
 
                 if (prefSplit?.Length > 1)
@@ -476,7 +473,8 @@ namespace vCardLib.Deserializers
                         var photoStrIndex = Array.IndexOf(contactDetails, photoStr);
                         while (true)
                         {
-                            if (++photoStrIndex < contactDetails.Length && contactDetails[photoStrIndex].StartsWith("PHOTO;"))
+                            if (++photoStrIndex < contactDetails.Length &&
+                                contactDetails[photoStrIndex].StartsWith("PHOTO;"))
                             {
                                 photoString += contactDetails[photoStrIndex];
                             }

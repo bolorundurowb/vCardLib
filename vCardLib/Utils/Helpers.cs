@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using vCardLib.Constants;
 
 namespace vCardLib.Utils
 {
@@ -50,14 +51,14 @@ namespace vCardLib.Utils
                 return new string[0];
             }
 
-            if (!allContacts.Contains(Constants.StartToken) || !allContacts.Contains(Constants.EndToken))
+            if (!allContacts.Contains(FieldKeyConstants.StartToken) || !allContacts.Contains(FieldKeyConstants.EndToken))
             {
                 throw new InvalidOperationException("The vCard contents are invalid.");
             }
 
             return allContacts.Split(new[]
             {
-                Constants.EndToken
+                FieldKeyConstants.EndToken
             }, StringSplitOptions.RemoveEmptyEntries);
         }
 
