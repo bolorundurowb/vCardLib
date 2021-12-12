@@ -46,12 +46,14 @@ ADR;TYPE=DOM:;;42 Plantation St.;Baytown;LA;30314;United States of America
 LABEL;TYPE=WORK,PREF:100 Waters Edge\nBaytown\, LA 30314\nUnited States of America
 LABEL;TYPE=HOME:42 Plantation St.\nBaytown\, LA 30314\nUnited States of America
 EMAIL:forrestgump@example.com
+EMAIL;PREF=2:forrestgump@example.com;
 EMAIL;TYPE=HOME:forrestgump@example.com
 EMAIL;TYPE=INTERNET:forrestgump@example.com
 EMAIL;TYPE=WORK:forrestgump@example.com
 EMAIL;TYPE=APPLELINK:forrestgump@example.com
 EMAIL;TYPE=AOL:forrestgump@example.com
 EMAIL;TYPE=IBMMAIL:forrestgump@example.com
+EMAIL;TYPE=INTERNET;TYPE=HOME:jon@gmail.com
 EXPERTISE;LEVEL=HIGH:Computer Science
 EXPERTISE;LEVEL=MEDIUM:Computer Science
 EXPERTISE;LEVEL=LOW:Computer Science

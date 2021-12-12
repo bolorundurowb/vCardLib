@@ -14,15 +14,15 @@ namespace vCardLib.Tests.ModelTests
             {
                 var emailAddress = new EmailAddress
                 {
-                    Email = "test@test.org",
-                    Type = EmailType.AOL
+                    Value = "test@test.org",
+                    Type = EmailAddressType.Aol
                 };
-                emailAddress.Type = EmailType.Applelink;
-                emailAddress.Type = EmailType.Home;
-                emailAddress.Type = EmailType.IBMMail;
-                emailAddress.Type = EmailType.Internet;
-                emailAddress.Type = EmailType.None;
-                emailAddress.Type = EmailType.Work;
+                emailAddress.Type = EmailAddressType.Applelink;
+                emailAddress.Type = EmailAddressType.Home;
+                emailAddress.Type = EmailAddressType.IbmMail;
+                emailAddress.Type = EmailAddressType.Internet;
+                emailAddress.Type = EmailAddressType.None;
+                emailAddress.Type = EmailAddressType.Work;
             });
         }
     }

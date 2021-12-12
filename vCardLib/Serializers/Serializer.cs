@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Utils;
@@ -97,13 +98,13 @@ namespace vCardLib.Serializers
 
         protected void AddCardStart(StringBuilder stringBuilder)
         {
-            stringBuilder.AppendLine(Constants.StartToken);
+            stringBuilder.AppendLine(FieldKeyConstants.StartToken);
         }
 
         protected void AddCardEnd(StringBuilder stringBuilder)
         {
             stringBuilder
-                .Append(Constants.EndToken);
+                .Append(FieldKeyConstants.EndToken);
         }
 
         protected void AddRevision(StringBuilder stringBuilder)

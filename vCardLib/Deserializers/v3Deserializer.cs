@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Models;
+using vCardLib.Utils;
 
 namespace vCardLib.Deserializers
 {
@@ -131,7 +133,7 @@ namespace vCardLib.Deserializers
                     phoneString = phoneString.Replace("CELL:", "");
                     var phoneNumber = new PhoneNumber
                     {
-                        Number = phoneString, 
+                        Number = phoneString,
                         Type = PhoneNumberType.Cell
                     };
                     phoneNumberCollection.Add(phoneNumber);
@@ -286,97 +288,37 @@ namespace vCardLib.Deserializers
         {
             var emailAddresses = new List<EmailAddress>();
 
-            var emailStrings = contactDetails.Where(s => s.StartsWith("EMAIL"));
+            var emailStrings = contactDetails.Where(s => s.StartsWith(FieldKeyConstants.EmailKey));
             foreach (var email in emailStrings)
             {
-                try
-                {
-                    var emailString = email.Replace("EMAIL;", "").Replace("EMAIL:", "");
-                    emailString = emailString.Replace("TYPE=", "");
-                    if (emailString.Contains(";"))
-                    {
-                        emailString = emailString.Replace(";", "");
-                    }
+                var emailParts = email.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (emailString.Contains(","))
-                    {
-                        var index = emailString.LastIndexOf(",", StringComparison.Ordinal);
-                        emailString = emailString.Remove(0, index + 1);
-                    }
+                if (emailParts.Length < 1)
+                    continue;
 
-                    if (emailString.StartsWith("INTERNET:") || emailString.StartsWith("internet:"))
-                    {
-                        emailString = emailString.Replace("INTERNET:", "").Replace("internet:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Email = emailString,
-                            Type = EmailType.Internet
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("HOME:") || emailString.StartsWith("home:"))
-                    {
-                        emailString = emailString.Replace("HOME:", "").Replace("home:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Email = emailString,
-                            Type = EmailType.Home
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("WORK:") || emailString.StartsWith("work:"))
-                    {
-                        emailString = emailString.Replace("WORK:", "").Replace("work:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Email = emailString,
-                            Type = EmailType.Work
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("AOL:") || emailString.StartsWith("aol:"))
-                    {
-                        emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Email = emailString,
-                            Type = EmailType.AOL
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("APPLELINK:") || emailString.StartsWith("applelink:"))
-                    {
-                        emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Email = emailString,
-                            Type = EmailType.Applelink
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("IBMMAIL:") || emailString.StartsWith("ibmmail:"))
-                    {
-                        emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Email = emailString,
-                            Type = EmailType.Work
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else
-                    {
-                        var emailAddress = new EmailAddress
-                        {
-                            Email = emailString,
-                            Type = EmailType.None
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                }
-                catch (FormatException)
+                var emailAddress = new EmailAddress { Value = emailParts[1] };
+
+                var metadata = emailParts[0].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // parse the type info
+                var typeMetadata = metadata.Where(x =>
+                    x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.OrdinalIgnoreCase));
+
+                foreach (var type in typeMetadata)
+                    emailAddress.Type |= EnumHelpers.ParseEmailType(type.Split('=')[1]);
+
+                // parse the email preference
+                var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(FieldKeyConstants.PreferenceKey));
+                var prefSplit = preferenceMetadata?.Split('=');
+
+                if (prefSplit?.Length > 1)
                 {
+                    int.TryParse(prefSplit[1], out var preference);
+                    if (preference != default)
+                        emailAddress.Preference = preference;
                 }
+
+                emailAddresses.Add(emailAddress);
             }
 
             return emailAddresses;
@@ -509,7 +451,8 @@ namespace vCardLib.Deserializers
                         var photoStrIndex = Array.IndexOf(contactDetails, photoStr);
                         while (true)
                         {
-                            if (++photoStrIndex < contactDetails.Length && contactDetails[photoStrIndex].StartsWith("PHOTO;"))
+                            if (++photoStrIndex < contactDetails.Length &&
+                                contactDetails[photoStrIndex].StartsWith("PHOTO;"))
                             {
                                 photoString += contactDetails[photoStrIndex];
                             }
