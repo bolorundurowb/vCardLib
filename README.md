@@ -1,7 +1,7 @@
 # vCardLib
 [![Build status](https://ci.appveyor.com/api/projects/status/3olgly7hvi6vfnsu?svg=true)](https://ci.appveyor.com/project/BolorunduroWinnerTimothy/vcf-reader)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/vCardLib/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/vCardLib?branch=master)    [![NET Standard](https://img.shields.io/badge/netstandard-2.0-ff66b6.svg)]() [![NuGet Badge](https://buildstats.info/nuget/vcardlib.dll)](https://www.nuget.org/packages/vCardLib.dll) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Documentation can be found at [documentation site](http://bolorundurowb.github.io/vCardLib/)
+This `master` branch contains the latest changes and features (which may be breaking)  to see the last major release (v3) click [here](https://github.com/bolorundurowb/vCardLib/tree/v3)
 
 T this library supports reading multiple contacts from a single vcf file, a stream or a contact string and returns the contact objects in a List. The library currently **supports only vCard version 2.1 and 3.0** (a curated list of properties supported can be seen on the documentation site).
 

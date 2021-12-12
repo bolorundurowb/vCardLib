@@ -16,5 +16,10 @@ namespace vCardLib.Models
         /// The number type
         /// </summary>
         public TelephoneNumberType Type { get; set; }
+
+        /// <summary>
+        /// Indicates the telephone numbers preference level (lower values mean a higher preference)
+        /// </summary>
+        public int? Preference { get; set; }
     }
 }

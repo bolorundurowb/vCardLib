@@ -7,7 +7,9 @@
     public enum vCardVersion
     {
         V2,
+
         V3,
+
         V4
     }
 }

@@ -97,7 +97,7 @@ namespace vCardLib.Deserializers
             return addressCollection;
         }
 
-        protected override List<TelephoneNumber> ParsePhoneNumbers(string[] contactDetails)
+        protected override List<TelephoneNumber> ParsePhoneNumbers(IEnumerable<string> contactDetails)
         {
             var phoneNumberCollection = new List<TelephoneNumber>();
 
@@ -268,7 +268,7 @@ namespace vCardLib.Deserializers
             return phoneNumberCollection;
         }
 
-        protected override List<EmailAddress> ParseEmailAddresses(string[] contactDetails)
+        protected override List<EmailAddress> ParseEmailAddresses(IEnumerable<string> contactDetails)
         {
             var emailAddresses = new List<EmailAddress>();
 

@@ -36,6 +36,8 @@ namespace vCardLib.Enums
 
         Car = 4096,
 
-        ISDN = 8192
+        ISDN = 8192,
+        
+        Pref = 16384
     }
 }

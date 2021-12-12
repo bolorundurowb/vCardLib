@@ -11,5 +11,7 @@
         public const string PreferenceKey = "PREF";
 
         public const string EmailKey = "EMAIL";
+
+        public const string TelKey = "TEL";
     }
 }

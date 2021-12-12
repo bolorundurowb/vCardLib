@@ -106,11 +106,11 @@ namespace vCardLib.Deserializers
             return addressCollection;
         }
 
-        protected override List<TelephoneNumber> ParsePhoneNumbers(string[] contactDetails)
+        protected override List<TelephoneNumber> ParsePhoneNumbers(IEnumerable<string> contactDetails)
         {
-            var phoneNumberCollection = new List<TelephoneNumber>();
+            var phoneNumbers = new List<TelephoneNumber>();
 
-            var telStrings = contactDetails.Where(s => s.StartsWith("TEL"));
+            var telStrings = contactDetails.Where(s => s.StartsWith(FieldKeyConstants.TelKey));
             foreach (var telString in telStrings)
             {
                 var phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
@@ -136,7 +136,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Cell
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("HOME"))
                 {
@@ -147,7 +147,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Home
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("WORK"))
                 {
@@ -158,7 +158,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Work
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("VOICE:"))
                 {
@@ -168,7 +168,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Voice
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("FAX"))
                 {
@@ -178,7 +178,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Fax
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("TEXTPHONE"))
                 {
@@ -188,7 +188,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Fax
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("TEXT"))
                 {
@@ -198,7 +198,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Text
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("VIDEO"))
                 {
@@ -208,7 +208,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Video
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("PAGER"))
                 {
@@ -218,7 +218,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Pager
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("MAIN-NUMBER"))
                 {
@@ -228,7 +228,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Fax
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("BBS"))
                 {
@@ -238,7 +238,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Pager
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("CAR"))
                 {
@@ -248,7 +248,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Pager
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("MODEM"))
                 {
@@ -258,7 +258,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Pager
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("ISDN"))
                 {
@@ -268,7 +268,7 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.Pager
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
                 else
                 {
@@ -277,14 +277,14 @@ namespace vCardLib.Deserializers
                         Value = phoneString,
                         Type = TelephoneNumberType.None
                     };
-                    phoneNumberCollection.Add(phoneNumber);
+                    phoneNumbers.Add(phoneNumber);
                 }
             }
 
-            return phoneNumberCollection;
+            return phoneNumbers;
         }
 
-        protected override List<EmailAddress> ParseEmailAddresses(string[] contactDetails)
+        protected override List<EmailAddress> ParseEmailAddresses(IEnumerable<string> contactDetails)
         {
             var emailAddresses = new List<EmailAddress>();
 
