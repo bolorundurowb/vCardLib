@@ -20,6 +20,8 @@ namespace vCardLib.Enums
 
         Applelink = 16,
 
-        IbmMail = 32
+        IbmMail = 32,
+        
+        Pref = 64
     }
 }

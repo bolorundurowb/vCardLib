@@ -14,23 +14,23 @@ namespace vCardLib.Tests.ModelTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				var phoneNumber = new PhoneNumber();
-				phoneNumber.Number = "089089893333";
-				phoneNumber.Type = PhoneNumberType.BBS;
-				phoneNumber.Type = PhoneNumberType.Cell;
-				phoneNumber.Type = PhoneNumberType.Car;
-				phoneNumber.Type = PhoneNumberType.Fax;
-				phoneNumber.Type = PhoneNumberType.Home;
-				phoneNumber.Type = PhoneNumberType.ISDN;
-				phoneNumber.Type = PhoneNumberType.MainNumber;
-				phoneNumber.Type = PhoneNumberType.Modem;
-				phoneNumber.Type = PhoneNumberType.None;
-				phoneNumber.Type = PhoneNumberType.Pager;
-				phoneNumber.Type = PhoneNumberType.Text;
-				phoneNumber.Type = PhoneNumberType.TextPhone;
-				phoneNumber.Type = PhoneNumberType.Video;
-				phoneNumber.Type = PhoneNumberType.Voice;
-				phoneNumber.Type = PhoneNumberType.Work;
+				var phoneNumber = new TelephoneNumber();
+				phoneNumber.Value = "089089893333";
+				phoneNumber.Type = TelephoneNumberType.BBS;
+				phoneNumber.Type = TelephoneNumberType.Cell;
+				phoneNumber.Type = TelephoneNumberType.Car;
+				phoneNumber.Type = TelephoneNumberType.Fax;
+				phoneNumber.Type = TelephoneNumberType.Home;
+				phoneNumber.Type = TelephoneNumberType.ISDN;
+				phoneNumber.Type = TelephoneNumberType.MainNumber;
+				phoneNumber.Type = TelephoneNumberType.Modem;
+				phoneNumber.Type = TelephoneNumberType.None;
+				phoneNumber.Type = TelephoneNumberType.Pager;
+				phoneNumber.Type = TelephoneNumberType.Text;
+				phoneNumber.Type = TelephoneNumberType.TextPhone;
+				phoneNumber.Type = TelephoneNumberType.Video;
+				phoneNumber.Type = TelephoneNumberType.Voice;
+				phoneNumber.Type = TelephoneNumberType.Work;
 			});
 		}
 	}

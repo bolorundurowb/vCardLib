@@ -18,7 +18,7 @@ namespace vCardLib.Models
         public EmailAddressType Type { get; set; }
 
         /// <summary>
-        /// Indicates the email address is preference level (lower  values mean a higher preference)
+        /// Indicates the email address' preference level (lower  values mean a higher preference)
         /// </summary>
         public int? Preference { get; set; }
     }

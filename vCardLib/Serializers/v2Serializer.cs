@@ -16,20 +16,20 @@ namespace vCardLib.Serializers
             stringBuilder.AppendLine("VERSION:2.1");
         }
 
-        protected override void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers)
+        protected override void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<TelephoneNumber> phoneNumbers)
         {
             foreach (var phoneNumber in phoneNumbers)
             {
                 switch (phoneNumber.Type)
                 {
-                    case PhoneNumberType.None:
-                        stringBuilder.AppendLine("TEL:" + phoneNumber.Number);
+                    case TelephoneNumberType.None:
+                        stringBuilder.AppendLine("TEL:" + phoneNumber.Value);
                         break;
-                    case PhoneNumberType.MainNumber:
-                        stringBuilder.AppendLine("TEL;MAIN-NUMBER:" + phoneNumber.Number);
+                    case TelephoneNumberType.MainNumber:
+                        stringBuilder.AppendLine("TEL;MAIN-NUMBER:" + phoneNumber.Value);
                         break;
                     default:
-                        stringBuilder.AppendLine("TEL;" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Number);
+                        stringBuilder.AppendLine("TEL;" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Value);
                         break;
                 }
             }

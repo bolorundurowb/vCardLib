@@ -15,7 +15,7 @@ namespace vCardLib.Serializers
             throw new NotImplementedException();
         }
 
-        protected override void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers)
+        protected override void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<TelephoneNumber> phoneNumbers)
         {
             throw new NotImplementedException();
         }

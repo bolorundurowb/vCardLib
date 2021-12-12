@@ -3,7 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
+using Shouldly;
 using vCardLib.Deserializers;
+using vCardLib.Enums;
 
 namespace vCardLib.Tests
 {
@@ -17,7 +19,14 @@ namespace vCardLib.Tests
         {
             var filePath = Path.Combine(assemblyFolder, "v2.vcf");
             var cards = Deserializer.FromFile(filePath);
-            Assert.AreEqual(1, cards.Count);
+            cards.Count.ShouldBe(1);
+
+            var card = cards.FirstOrDefault();
+
+            card.ShouldNotBeNull();
+            card.Version.ShouldBe(vCardVersion.V2);
+            card.EmailAddresses.Count.ShouldBe(8);
+            card.PhoneNumbers.Count.ShouldBe(15);
         }
 
         [Test]
@@ -25,7 +34,14 @@ namespace vCardLib.Tests
         {
             var filePath = Path.Combine(assemblyFolder, "v3.vcf");
             var cards = Deserializer.FromFile(filePath);
-            Assert.AreEqual(1, cards.Count);
+            cards.Count.ShouldBe(1);
+
+            var card = cards.FirstOrDefault();
+
+            card.ShouldNotBeNull();
+            card.Version.ShouldBe(vCardVersion.V3);
+            card.EmailAddresses.Count.ShouldBe(9);
+            card.PhoneNumbers.Count.ShouldBe(17);
         }
 
         [Test]

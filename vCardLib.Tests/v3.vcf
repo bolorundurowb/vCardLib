@@ -36,6 +36,8 @@ TEL;TYPE=PAGER:(111) 555-1212
 TEL;TYPE=VIDEO:(404) 555-1212
 TEL;TYPE=ISDN:(111) 555-1212
 TEL;TYPE=BBS:(404) 555-1212
+TEL;VALUE=uri;PREF=1;TYPE="voice,home":tel:+1-555-555-5555;ext=5555
+TEL;VALUE=uri;TYPE=home:tel:+33-01-23-45-67
 ADR:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;TYPE=WORK,PREF:;;100 Waters Edge;Baytown;LA;30314;United States of America
 ADR;TYPE=HOME:;;42 Plantation St.;Baytown;LA;30314;United States of America

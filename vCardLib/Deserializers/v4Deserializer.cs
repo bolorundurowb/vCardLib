@@ -18,12 +18,12 @@ namespace vCardLib.Deserializers
             throw new NotImplementedException();
         }
 
-        protected override List<PhoneNumber> ParsePhoneNumbers(string[] contactDetails)
+        protected override List<TelephoneNumber> ParsePhoneNumbers(IEnumerable<string> contactDetails)
         {
             throw new NotImplementedException();
         }
 
-        protected override List<EmailAddress> ParseEmailAddresses(string[] contactDetails)
+        protected override List<EmailAddress> ParseEmailAddresses(IEnumerable<string> contactDetails)
         {
             throw new NotImplementedException();
         }
