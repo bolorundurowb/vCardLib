@@ -15,7 +15,7 @@ namespace vCardLib.Models
         /// <summary>
         /// The email address type
         /// </summary>
-        public EmailType Type { get; set; }
+        public EmailAddressType Type { get; set; }
 
         /// <summary>
         /// Indicates if this email address is preferred

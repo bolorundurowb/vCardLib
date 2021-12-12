@@ -39,7 +39,7 @@ namespace vCardLib.Serializers
         {
             foreach (var email in emailAddresses)
             {
-                if (email.Type == EmailType.None)
+                if (email.Type == EmailAddressType.None)
                 {
                     stringBuilder.AppendLine("EMAIL:" + email.Email);
                 }

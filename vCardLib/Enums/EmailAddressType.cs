@@ -6,7 +6,7 @@ namespace vCardLib.Enums
     /// Various email address types in a vCard
     /// </summary>
     [Flags]
-    public enum EmailType
+    public enum EmailAddressType
     {
         None = 0,
 

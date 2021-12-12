@@ -289,7 +289,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
-                            Type = EmailType.Internet
+                            Type = EmailAddressType.Internet
                         };
                         emailAddresses.Add(emailAddress);
                     }
@@ -299,7 +299,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
-                            Type = EmailType.Home
+                            Type = EmailAddressType.Home
                         };
                         emailAddresses.Add(emailAddress);
                     }
@@ -309,7 +309,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
-                            Type = EmailType.Work
+                            Type = EmailAddressType.Work
                         };
                         emailAddresses.Add(emailAddress);
                     }
@@ -319,7 +319,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
-                            Type = EmailType.AOL
+                            Type = EmailAddressType.AOL
                         };
                         emailAddresses.Add(emailAddress);
                     }
@@ -329,7 +329,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
-                            Type = EmailType.Applelink
+                            Type = EmailAddressType.Applelink
                         };
                         emailAddresses.Add(emailAddress);
                     }
@@ -339,7 +339,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
-                            Type = EmailType.Work
+                            Type = EmailAddressType.Work
                         };
                         emailAddresses.Add(emailAddress);
                     }
@@ -348,7 +348,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Email = emailString,
-                            Type = EmailType.None
+                            Type = EmailAddressType.None
                         };
                         emailAddresses.Add(emailAddress);
                     }
