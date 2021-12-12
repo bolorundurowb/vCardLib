@@ -22,10 +22,10 @@ namespace vCardLib.Serializers
             {
                 switch (phoneNumber.Type)
                 {
-                    case PhoneNumberType.None:
+                    case TelephoneNumberType.None:
                         stringBuilder.AppendLine("TEL:" + phoneNumber.Value);
                         break;
-                    case PhoneNumberType.MainNumber:
+                    case TelephoneNumberType.MainNumber:
                         stringBuilder.AppendLine("TEL;TYPE=MAIN-NUMBER:" + phoneNumber.Value);
                         break;
                     default:

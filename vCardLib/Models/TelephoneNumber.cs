@@ -15,6 +15,6 @@ namespace vCardLib.Models
         /// <summary>
         /// The number type
         /// </summary>
-        public PhoneNumberType Type { get; set; }
+        public TelephoneNumberType Type { get; set; }
     }
 }

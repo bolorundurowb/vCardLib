@@ -120,7 +120,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Cell
+                        Type = TelephoneNumberType.Cell
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -131,7 +131,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Home
+                        Type = TelephoneNumberType.Home
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -142,7 +142,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Work
+                        Type = TelephoneNumberType.Work
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -152,7 +152,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Voice
+                        Type = TelephoneNumberType.Voice
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -162,7 +162,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Fax
+                        Type = TelephoneNumberType.Fax
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -172,7 +172,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Fax
+                        Type = TelephoneNumberType.Fax
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -181,7 +181,7 @@ namespace vCardLib.Deserializers
                     phoneString = phoneString.Replace("TEXT:", "");
                     var phoneNumber = new TelephoneNumber();
                     phoneNumber.Value = phoneString;
-                    phoneNumber.Type = PhoneNumberType.Text;
+                    phoneNumber.Type = TelephoneNumberType.Text;
                     phoneNumberCollection.Add(phoneNumber);
                 }
                 else if (phoneString.StartsWith("VIDEO"))
@@ -190,7 +190,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Video
+                        Type = TelephoneNumberType.Video
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -200,7 +200,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Pager
+                        Type = TelephoneNumberType.Pager
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -210,7 +210,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Fax
+                        Type = TelephoneNumberType.Fax
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -220,7 +220,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Pager
+                        Type = TelephoneNumberType.Pager
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -230,7 +230,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Pager
+                        Type = TelephoneNumberType.Pager
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -240,7 +240,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Pager
+                        Type = TelephoneNumberType.Pager
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -250,7 +250,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.Pager
+                        Type = TelephoneNumberType.Pager
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
@@ -259,7 +259,7 @@ namespace vCardLib.Deserializers
                     var phoneNumber = new TelephoneNumber
                     {
                         Value = phoneString,
-                        Type = PhoneNumberType.None
+                        Type = TelephoneNumberType.None
                     };
                     phoneNumberCollection.Add(phoneNumber);
                 }
