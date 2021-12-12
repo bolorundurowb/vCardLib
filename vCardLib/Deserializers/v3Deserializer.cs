@@ -123,7 +123,7 @@ namespace vCardLib.Deserializers
                     continue;
 
                 // parse the phone number and extension
-                var values = telParts.Last().Split(SectionDelimiter);
+                var values = telParts.Last().Split(MetadataDelimiter);
                 var extensionValue = values.FirstOrDefault(x =>
                     x.StartsWith(TelephoneNumberTypeConstants.Extension, StringComparison.OrdinalIgnoreCase));
                 var phoneNumber = new TelephoneNumber
@@ -140,7 +140,7 @@ namespace vCardLib.Deserializers
 
                 foreach (var type in typeMetadata)
                 {
-                    var types = type.Split(KeyValueDelimiter)[1].Split(',');
+                    var types = type.Split(KeyValueDelimiter)[1].Trim('"').Split(',');
 
                     foreach (var x in types)
                         phoneNumber.Type |= EnumHelpers.ParseTelephoneType(x);
@@ -157,8 +157,11 @@ namespace vCardLib.Deserializers
                         phoneNumber.Preference = preference;
                 }
 
-                return phoneNumbers;
+                phoneNumbers.Add(phoneNumber);
             }
+
+            return phoneNumbers;
+        }
 
         protected override List<EmailAddress> ParseEmailAddresses(IEnumerable<string> contactDetails)
         {
