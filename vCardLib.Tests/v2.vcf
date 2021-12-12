@@ -34,6 +34,7 @@ EMAIL;APPLELINK:forrestgump@example.com
 EMAIL;WORK:forrestgump@example.com
 EMAIL;HOME:forrestgump@example.com
 EMAIL;INTERNET:forrestgump@example.com
+EMAIL;INTERNET;HOME:jon@gmail.com
 TEL:(123) 555-5832
 TEL;CAR:(123) 555-5832
 TEL;MODEM:(123) 555-5832
