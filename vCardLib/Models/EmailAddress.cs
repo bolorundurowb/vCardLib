@@ -10,7 +10,7 @@ namespace vCardLib.Models
         /// <summary>
         /// The email address
         /// </summary>
-        public string Email { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// The email address type
@@ -18,8 +18,8 @@ namespace vCardLib.Models
         public EmailAddressType Type { get; set; }
 
         /// <summary>
-        /// Indicates if this email address is preferred
+        /// Indicates the email address is preference level (lower  values mean a higher preference)
         /// </summary>
-        public bool IsPreferred { get; set; }
+        public int? Preference { get; set; }
     }
 }

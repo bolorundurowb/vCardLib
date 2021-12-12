@@ -14,7 +14,7 @@ namespace vCardLib.Tests.ModelTests
             {
                 var emailAddress = new EmailAddress
                 {
-                    Email = "test@test.org",
+                    Value = "test@test.org",
                     Type = EmailAddressType.AOL
                 };
                 emailAddress.Type = EmailAddressType.Applelink;

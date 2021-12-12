@@ -41,11 +41,11 @@ namespace vCardLib.Serializers
             {
                 if (email.Type == EmailAddressType.None)
                 {
-                    stringBuilder.AppendLine("EMAIL:" + email.Email);
+                    stringBuilder.AppendLine("EMAIL:" + email.Value);
                 }
                 else
                 {
-                    stringBuilder.AppendLine("EMAIL;" + email.Type.ToString().ToUpper() + ":" + email.Email);
+                    stringBuilder.AppendLine("EMAIL;" + email.Type.ToString().ToUpper() + ":" + email.Value);
                 }
             }
         }

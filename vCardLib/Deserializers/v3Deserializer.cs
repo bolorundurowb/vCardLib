@@ -9,6 +9,9 @@ namespace vCardLib.Deserializers
     // ReSharper disable once InconsistentNaming
     public class v3Deserializer : Deserializer
     {
+        private const string TypeKey = "TYPE";
+        private const string PreferenceKey = "PREF";
+        
         protected override vCardVersion ParseVersion()
         {
             return vCardVersion.V3;
@@ -291,6 +294,33 @@ namespace vCardLib.Deserializers
             {
                 try
                 {
+                    var emailParts = email.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (emailParts.Length < 1)
+                        continue;
+
+                    var emailAddress = new EmailAddress {Value = emailParts[1]};
+                    
+                    var metadata = emailParts[0].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    // parse the type info
+                    var typeMetadata = metadata.Where(x =>
+                        x.StartsWith(TypeKey, StringComparison.InvariantCultureIgnoreCase));
+
+                    foreach (var type in typeMetadata) 
+                        emailAddress.Type |= ParseEmailType(type.Split('=')[1]);
+
+                    // parse the email preference
+                    var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(PreferenceKey));
+                    var prefSplit = preferenceMetadata?.Split('=');
+
+                    if (prefSplit?.Length > 1)
+                    {
+                        int.TryParse(prefSplit[1], out var preference);
+                        if (preference != default)
+                            emailAddress.Preference = preference;
+                    }
+                    
                     var emailString = email.Replace("EMAIL;", "").Replace("EMAIL:", "");
                     emailString = emailString.Replace("TYPE=", "");
                     if (emailString.Contains(";"))
@@ -309,7 +339,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("INTERNET:", "").Replace("internet:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Internet
                         };
                         emailAddresses.Add(emailAddress);
@@ -319,7 +349,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("HOME:", "").Replace("home:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Home
                         };
                         emailAddresses.Add(emailAddress);
@@ -329,7 +359,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("WORK:", "").Replace("work:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Work
                         };
                         emailAddresses.Add(emailAddress);
@@ -339,7 +369,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.AOL
                         };
                         emailAddresses.Add(emailAddress);
@@ -349,7 +379,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Applelink
                         };
                         emailAddresses.Add(emailAddress);
@@ -359,7 +389,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Work
                         };
                         emailAddresses.Add(emailAddress);
@@ -368,7 +398,7 @@ namespace vCardLib.Deserializers
                     {
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.None
                         };
                         emailAddresses.Add(emailAddress);
@@ -380,8 +410,13 @@ namespace vCardLib.Deserializers
             }
 
             return emailAddresses;
-            
-            EmailAddressType
+
+            EmailAddressType ParseEmailType(string typeString)
+            {
+                typeString = typeString.ToLowerInvariant();
+                
+                
+            }
         }
 
         protected override List<Hobby> ParseHobbies(string[] contactDetails)

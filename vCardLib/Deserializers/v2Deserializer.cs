@@ -288,7 +288,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("INTERNET:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Internet
                         };
                         emailAddresses.Add(emailAddress);
@@ -298,7 +298,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("HOME:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Home
                         };
                         emailAddresses.Add(emailAddress);
@@ -308,7 +308,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("WORK:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Work
                         };
                         emailAddresses.Add(emailAddress);
@@ -318,7 +318,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.AOL
                         };
                         emailAddresses.Add(emailAddress);
@@ -328,7 +328,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Applelink
                         };
                         emailAddresses.Add(emailAddress);
@@ -338,7 +338,7 @@ namespace vCardLib.Deserializers
                         emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.Work
                         };
                         emailAddresses.Add(emailAddress);
@@ -347,7 +347,7 @@ namespace vCardLib.Deserializers
                     {
                         var emailAddress = new EmailAddress
                         {
-                            Email = emailString,
+                            Value = emailString,
                             Type = EmailAddressType.None
                         };
                         emailAddresses.Add(emailAddress);
