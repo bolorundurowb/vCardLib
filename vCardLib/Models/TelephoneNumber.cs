@@ -13,6 +13,11 @@ namespace vCardLib.Models
         public string Value { get; set; }
 
         /// <summary>
+        /// The telephone number extension
+        /// </summary>
+        public string Extension { get; set; }
+
+        /// <summary>
         /// The number type
         /// </summary>
         public TelephoneNumberType Type { get; set; }

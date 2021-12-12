@@ -11,6 +11,10 @@ namespace vCardLib.Deserializers
     // ReSharper disable once InconsistentNaming
     public class v3Deserializer : Deserializer
     {
+        private static char[] SectionDelimiter = { ':' };
+        private static char[] KeyValueDelimiter = { '=' };
+        private static char[] MetadataDelimiter = { ';' };
+        
         protected override vCardVersion ParseVersion()
         {
             return vCardVersion.V3;
@@ -111,178 +115,50 @@ namespace vCardLib.Deserializers
             var phoneNumbers = new List<TelephoneNumber>();
 
             var telStrings = contactDetails.Where(s => s.StartsWith(FieldKeyConstants.TelKey));
-            foreach (var telString in telStrings)
+            foreach (var tel in telStrings)
             {
-                var phoneString = telString.Replace("TEL;", "").Replace("TEL:", "");
-                phoneString = phoneString.Replace("TYPE=", "");
-                if (phoneString.Contains(";"))
+                var telParts = tel.Split(SectionDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+                if (telParts.Length < 1)
+                    continue;
+
+                // parse the phone number and extension
+                var values = telParts.Last().Split(SectionDelimiter);
+                var extensionValue = values.FirstOrDefault(x =>
+                    x.StartsWith(TelephoneNumberTypeConstants.Extension, StringComparison.OrdinalIgnoreCase));
+                var phoneNumber = new TelephoneNumber
                 {
-                    var index = phoneString.LastIndexOf(";", StringComparison.Ordinal);
-                    phoneString = phoneString.Remove(0, index + 1);
+                    Value = values.FirstOrDefault(),
+                    Extension = extensionValue?.Split(KeyValueDelimiter).LastOrDefault()
+                };
+
+                // parse metadata
+                var metadata = telParts.First().Split(MetadataDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+                var typeMetadata = metadata.Where(x =>
+                    x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.OrdinalIgnoreCase));
+
+                foreach (var type in typeMetadata)
+                {
+                    var types = type.Split(KeyValueDelimiter)[1].Split(',');
+
+                    foreach (var x in types)
+                        phoneNumber.Type |= EnumHelpers.ParseTelephoneType(x);
                 }
 
-                if (phoneString.Contains(","))
+                // parse the email preference
+                var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(FieldKeyConstants.PreferenceKey));
+                var prefSplit = preferenceMetadata?.Split('=');
+
+                if (prefSplit?.Length > 1)
                 {
-                    var index = phoneString.LastIndexOf(",", StringComparison.Ordinal);
-                    phoneString = phoneString.Remove(0, index + 1);
+                    int.TryParse(prefSplit[1], out var preference);
+                    if (preference != default)
+                        phoneNumber.Preference = preference;
                 }
 
-                if (phoneString.StartsWith("CELL"))
-                {
-                    phoneString = phoneString.Replace(",VOICE", "");
-                    phoneString = phoneString.Replace("CELL:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Cell
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("HOME"))
-                {
-                    phoneString = phoneString.Replace(",VOICE", "");
-                    phoneString = phoneString.Replace("HOME:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Home
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("WORK"))
-                {
-                    phoneString = phoneString.Replace(",VOICE", "");
-                    phoneString = phoneString.Replace("WORK:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Work
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("VOICE:"))
-                {
-                    phoneString = phoneString.Replace("VOICE:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Voice
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("FAX"))
-                {
-                    phoneString = phoneString.Replace("FAX:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Fax
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("TEXTPHONE"))
-                {
-                    phoneString = phoneString.Replace("TEXTPHONE:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Fax
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("TEXT"))
-                {
-                    phoneString = phoneString.Replace("TEXT:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Text
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("VIDEO"))
-                {
-                    phoneString = phoneString.Replace("VIDEO:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Video
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("PAGER"))
-                {
-                    phoneString = phoneString.Replace("PAGER:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Pager
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("MAIN-NUMBER"))
-                {
-                    phoneString = phoneString.Replace("MAIN-NUMBER:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Fax
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("BBS"))
-                {
-                    phoneString = phoneString.Replace("BBS:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Pager
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("CAR"))
-                {
-                    phoneString = phoneString.Replace("CAR:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Pager
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("MODEM"))
-                {
-                    phoneString = phoneString.Replace("MODEM:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Pager
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else if (phoneString.StartsWith("ISDN"))
-                {
-                    phoneString = phoneString.Replace("ISDN:", "");
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.Pager
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
-                else
-                {
-                    var phoneNumber = new TelephoneNumber
-                    {
-                        Value = phoneString,
-                        Type = TelephoneNumberType.None
-                    };
-                    phoneNumbers.Add(phoneNumber);
-                }
+                return phoneNumbers;
             }
-
-            return phoneNumbers;
-        }
 
         protected override List<EmailAddress> ParseEmailAddresses(IEnumerable<string> contactDetails)
         {
@@ -291,21 +167,21 @@ namespace vCardLib.Deserializers
             var emailStrings = contactDetails.Where(s => s.StartsWith(FieldKeyConstants.EmailKey));
             foreach (var email in emailStrings)
             {
-                var emailParts = email.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                var emailParts = email.Split(SectionDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
                 if (emailParts.Length < 1)
                     continue;
 
-                var emailAddress = new EmailAddress { Value = emailParts[1] };
+                var emailAddress = new EmailAddress { Value = emailParts.Last() };
 
-                var metadata = emailParts[0].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                var metadata = emailParts.First().Split(MetadataDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
                 // parse the type info
                 var typeMetadata = metadata.Where(x =>
                     x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.OrdinalIgnoreCase));
 
                 foreach (var type in typeMetadata)
-                    emailAddress.Type |= EnumHelpers.ParseEmailType(type.Split('=')[1]);
+                    emailAddress.Type |= EnumHelpers.ParseEmailType(type.Split(KeyValueDelimiter)[1]);
 
                 // parse the email preference
                 var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(FieldKeyConstants.PreferenceKey));
