@@ -301,7 +301,7 @@ namespace vCardLib.Deserializers
 
                 // parse the type info
                 var typeMetadata = metadata.Where(x =>
-                    x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.InvariantCultureIgnoreCase));
+                    x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.OrdinalIgnoreCase));
 
                 foreach (var type in typeMetadata)
                     emailAddress.Type |= ParseEmailType(type.Split('=')[1]);
@@ -324,22 +324,22 @@ namespace vCardLib.Deserializers
 
             EmailAddressType ParseEmailType(string typeString)
             {
-                if (EmailAddressTypeConstants.Internet.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                if (EmailAddressTypeConstants.Internet.Equals(typeString, StringComparison.OrdinalIgnoreCase))
                     return EmailAddressType.Internet;
 
-                if (EmailAddressTypeConstants.Home.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                if (EmailAddressTypeConstants.Home.Equals(typeString, StringComparison.OrdinalIgnoreCase))
                     return EmailAddressType.Home;
 
-                if (EmailAddressTypeConstants.Work.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                if (EmailAddressTypeConstants.Work.Equals(typeString, StringComparison.OrdinalIgnoreCase))
                     return EmailAddressType.Work;
 
-                if (EmailAddressTypeConstants.Aol.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                if (EmailAddressTypeConstants.Aol.Equals(typeString, StringComparison.OrdinalIgnoreCase))
                     return EmailAddressType.Aol;
 
-                if (EmailAddressTypeConstants.IbmMail.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                if (EmailAddressTypeConstants.IbmMail.Equals(typeString, StringComparison.OrdinalIgnoreCase))
                     return EmailAddressType.IbmMail;
 
-                if (EmailAddressTypeConstants.AppleLink.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                if (EmailAddressTypeConstants.AppleLink.Equals(typeString, StringComparison.OrdinalIgnoreCase))
                     return EmailAddressType.Applelink;
 
                 return EmailAddressType.None;
