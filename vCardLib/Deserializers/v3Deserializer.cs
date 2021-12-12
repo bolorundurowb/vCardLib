@@ -11,10 +11,6 @@ namespace vCardLib.Deserializers
     // ReSharper disable once InconsistentNaming
     public class v3Deserializer : Deserializer
     {
-        private static char[] SectionDelimiter = { ':' };
-        private static char[] KeyValueDelimiter = { '=' };
-        private static char[] MetadataDelimiter = { ';' };
-        
         protected override vCardVersion ParseVersion()
         {
             return vCardVersion.V3;
@@ -117,30 +113,30 @@ namespace vCardLib.Deserializers
             var telStrings = contactDetails.Where(s => s.StartsWith(FieldKeyConstants.TelKey));
             foreach (var tel in telStrings)
             {
-                var telParts = tel.Split(SectionDelimiter, StringSplitOptions.RemoveEmptyEntries);
+                var telParts = tel.Split(FieldKeyConstants.SectionDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
                 if (telParts.Length < 1)
                     continue;
 
                 // parse the phone number and extension
-                var values = telParts.Last().Split(MetadataDelimiter);
+                var values = telParts.Last().Split(FieldKeyConstants.MetadataDelimiter);
                 var extensionValue = values.FirstOrDefault(x =>
                     x.StartsWith(TelephoneNumberTypeConstants.Extension, StringComparison.OrdinalIgnoreCase));
                 var phoneNumber = new TelephoneNumber
                 {
                     Value = values.FirstOrDefault(),
-                    Extension = extensionValue?.Split(KeyValueDelimiter).LastOrDefault()
+                    Extension = extensionValue?.Split(FieldKeyConstants.KeyValueDelimiter).LastOrDefault()
                 };
 
                 // parse metadata
-                var metadata = telParts.First().Split(MetadataDelimiter, StringSplitOptions.RemoveEmptyEntries);
+                var metadata = telParts.First().Split(FieldKeyConstants.MetadataDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
                 var typeMetadata = metadata.Where(x =>
                     x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.OrdinalIgnoreCase));
 
                 foreach (var type in typeMetadata)
                 {
-                    var types = type.Split(KeyValueDelimiter)[1].Trim('"').Split(',');
+                    var types = type.Split(FieldKeyConstants.KeyValueDelimiter)[1].Trim('"').Split(',');
 
                     foreach (var x in types)
                         phoneNumber.Type |= EnumHelpers.ParseTelephoneType(x);
@@ -170,21 +166,21 @@ namespace vCardLib.Deserializers
             var emailStrings = contactDetails.Where(s => s.StartsWith(FieldKeyConstants.EmailKey));
             foreach (var email in emailStrings)
             {
-                var emailParts = email.Split(SectionDelimiter, StringSplitOptions.RemoveEmptyEntries);
+                var emailParts = email.Split(FieldKeyConstants.SectionDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
                 if (emailParts.Length < 1)
                     continue;
 
                 var emailAddress = new EmailAddress { Value = emailParts.Last() };
 
-                var metadata = emailParts.First().Split(MetadataDelimiter, StringSplitOptions.RemoveEmptyEntries);
+                var metadata = emailParts.First().Split(FieldKeyConstants.MetadataDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
                 // parse the type info
                 var typeMetadata = metadata.Where(x =>
                     x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.OrdinalIgnoreCase));
 
                 foreach (var type in typeMetadata)
-                    emailAddress.Type |= EnumHelpers.ParseEmailType(type.Split(KeyValueDelimiter)[1]);
+                    emailAddress.Type |= EnumHelpers.ParseEmailType(type.Split(FieldKeyConstants.KeyValueDelimiter)[1]);
 
                 // parse the email preference
                 var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(FieldKeyConstants.PreferenceKey));
