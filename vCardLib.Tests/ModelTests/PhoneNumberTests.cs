@@ -14,8 +14,8 @@ namespace vCardLib.Tests.ModelTests
 		{
 			Assert.DoesNotThrow(delegate
 			{
-				var phoneNumber = new PhoneNumber();
-				phoneNumber.Number = "089089893333";
+				var phoneNumber = new TelephoneNumber();
+				phoneNumber.Value = "089089893333";
 				phoneNumber.Type = PhoneNumberType.BBS;
 				phoneNumber.Type = PhoneNumberType.Cell;
 				phoneNumber.Type = PhoneNumberType.Car;

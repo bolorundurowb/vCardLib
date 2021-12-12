@@ -18,7 +18,7 @@ namespace vCardLib.Deserializers
             throw new NotImplementedException();
         }
 
-        protected override List<PhoneNumber> ParsePhoneNumbers(string[] contactDetails)
+        protected override List<TelephoneNumber> ParsePhoneNumbers(string[] contactDetails)
         {
             throw new NotImplementedException();
         }

@@ -34,7 +34,7 @@ namespace vCardLib.Tests.ModelTests
                 _vcard.Language = "English";
                 _vcard.NickName = "Gumpy";
                 _vcard.Organization = "Google";
-                _vcard.PhoneNumbers = new List<PhoneNumber>();
+                _vcard.PhoneNumbers = new List<TelephoneNumber>();
                 _vcard.Pictures = new List<Photo>();
                 _vcard.TimeZone = "GMT+1";
                 _vcard.Title = "Mr";

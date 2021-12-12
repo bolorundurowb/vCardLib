@@ -500,7 +500,7 @@ namespace vCardLib.Deserializers
 
         protected abstract List<Address> ParseAddresses(string[] contactDetails);
 
-        protected abstract List<PhoneNumber> ParsePhoneNumbers(string[] contactDetails);
+        protected abstract List<TelephoneNumber> ParsePhoneNumbers(string[] contactDetails);
 
         protected abstract List<EmailAddress> ParseEmailAddresses(string[] contactDetails);
 

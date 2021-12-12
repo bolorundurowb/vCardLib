@@ -5,12 +5,12 @@ namespace vCardLib.Models
     /// <summary>
     /// Object to store phone  number details
     /// </summary>
-    public class PhoneNumber
+    public class TelephoneNumber
     {
         /// <summary>
         /// The Number
         /// </summary>
-        public string Number { get; set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// The number type

@@ -229,7 +229,7 @@ namespace vCardLib.Serializers
 
         protected abstract void AddVersion(StringBuilder stringBuilder);
 
-        protected abstract void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<PhoneNumber> phoneNumbers);
+        protected abstract void AddPhoneNumbers(StringBuilder stringBuilder, IEnumerable<TelephoneNumber> phoneNumbers);
 
         protected abstract void AddEmailAddresses(StringBuilder stringBuilder,
             IEnumerable<EmailAddress> emailAddresses);

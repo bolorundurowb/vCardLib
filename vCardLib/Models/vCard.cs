@@ -125,7 +125,7 @@ namespace vCardLib.Models
         /// <summary>
         /// A collection of phone numbers associated with the contact
         /// </summary>
-        public List<PhoneNumber> PhoneNumbers { get; set; }
+        public List<TelephoneNumber> PhoneNumbers { get; set; }
 
         /// <summary>
         /// A collection of email addresses associated with the contact
@@ -167,7 +167,7 @@ namespace vCardLib.Models
         /// </summary>
         public vCard()
         {
-            PhoneNumbers = new List<PhoneNumber>();
+            PhoneNumbers = new List<TelephoneNumber>();
             EmailAddresses = new List<EmailAddress>();
             Pictures = new List<Photo>();
             Addresses = new List<Address>();
