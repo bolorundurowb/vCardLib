@@ -319,7 +319,7 @@ namespace vCardLib.Deserializers
                         var emailAddress = new EmailAddress
                         {
                             Value = emailString,
-                            Type = EmailAddressType.AOL
+                            Type = EmailAddressType.Aol
                         };
                         emailAddresses.Add(emailAddress);
                     }

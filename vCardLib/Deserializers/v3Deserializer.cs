@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Models;
 
@@ -292,130 +293,59 @@ namespace vCardLib.Deserializers
             var emailStrings = contactDetails.Where(s => s.StartsWith("EMAIL"));
             foreach (var email in emailStrings)
             {
-                try
+                var emailParts = email.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (emailParts.Length < 1)
+                    continue;
+
+                var emailAddress = new EmailAddress { Value = emailParts[1] };
+
+                var metadata = emailParts[0].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                // parse the type info
+                var typeMetadata = metadata.Where(x =>
+                    x.StartsWith(TypeKey, StringComparison.InvariantCultureIgnoreCase));
+
+                foreach (var type in typeMetadata)
+                    emailAddress.Type |= ParseEmailType(type.Split('=')[1]);
+
+                // parse the email preference
+                var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(PreferenceKey));
+                var prefSplit = preferenceMetadata?.Split('=');
+
+                if (prefSplit?.Length > 1)
                 {
-                    var emailParts = email.Split(new[] {':'}, StringSplitOptions.RemoveEmptyEntries);
-
-                    if (emailParts.Length < 1)
-                        continue;
-
-                    var emailAddress = new EmailAddress {Value = emailParts[1]};
-                    
-                    var metadata = emailParts[0].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    // parse the type info
-                    var typeMetadata = metadata.Where(x =>
-                        x.StartsWith(TypeKey, StringComparison.InvariantCultureIgnoreCase));
-
-                    foreach (var type in typeMetadata) 
-                        emailAddress.Type |= ParseEmailType(type.Split('=')[1]);
-
-                    // parse the email preference
-                    var preferenceMetadata = metadata.FirstOrDefault(x => x.StartsWith(PreferenceKey));
-                    var prefSplit = preferenceMetadata?.Split('=');
-
-                    if (prefSplit?.Length > 1)
-                    {
-                        int.TryParse(prefSplit[1], out var preference);
-                        if (preference != default)
-                            emailAddress.Preference = preference;
-                    }
-                    
-                    var emailString = email.Replace("EMAIL;", "").Replace("EMAIL:", "");
-                    emailString = emailString.Replace("TYPE=", "");
-                    if (emailString.Contains(";"))
-                    {
-                        emailString = emailString.Replace(";", "");
-                    }
-
-                    if (emailString.Contains(","))
-                    {
-                        var index = emailString.LastIndexOf(",", StringComparison.Ordinal);
-                        emailString = emailString.Remove(0, index + 1);
-                    }
-
-                    if (emailString.StartsWith("INTERNET:") || emailString.StartsWith("internet:"))
-                    {
-                        emailString = emailString.Replace("INTERNET:", "").Replace("internet:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Value = emailString,
-                            Type = EmailAddressType.Internet
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("HOME:") || emailString.StartsWith("home:"))
-                    {
-                        emailString = emailString.Replace("HOME:", "").Replace("home:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Value = emailString,
-                            Type = EmailAddressType.Home
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("WORK:") || emailString.StartsWith("work:"))
-                    {
-                        emailString = emailString.Replace("WORK:", "").Replace("work:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Value = emailString,
-                            Type = EmailAddressType.Work
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("AOL:") || emailString.StartsWith("aol:"))
-                    {
-                        emailString = emailString.Replace("AOL:", "").Replace("aol:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Value = emailString,
-                            Type = EmailAddressType.AOL
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("APPLELINK:") || emailString.StartsWith("applelink:"))
-                    {
-                        emailString = emailString.Replace("APPLELINK:", "").Replace("applelink:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Value = emailString,
-                            Type = EmailAddressType.Applelink
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else if (emailString.StartsWith("IBMMAIL:") || emailString.StartsWith("ibmmail:"))
-                    {
-                        emailString = emailString.Replace("IBMMAIL:", "").Replace("ibmmail:", "");
-                        var emailAddress = new EmailAddress
-                        {
-                            Value = emailString,
-                            Type = EmailAddressType.Work
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
-                    else
-                    {
-                        var emailAddress = new EmailAddress
-                        {
-                            Value = emailString,
-                            Type = EmailAddressType.None
-                        };
-                        emailAddresses.Add(emailAddress);
-                    }
+                    int.TryParse(prefSplit[1], out var preference);
+                    if (preference != default)
+                        emailAddress.Preference = preference;
                 }
-                catch (FormatException)
-                {
-                }
+
+                emailAddresses.Add(emailAddress);
             }
 
             return emailAddresses;
 
             EmailAddressType ParseEmailType(string typeString)
             {
-                typeString = typeString.ToLowerInvariant();
-                
-                
+                if (EmailAddressTypeConstants.Internet.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                    return EmailAddressType.Internet;
+
+                if (EmailAddressTypeConstants.Home.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                    return EmailAddressType.Home;
+
+                if (EmailAddressTypeConstants.Work.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                    return EmailAddressType.Work;
+
+                if (EmailAddressTypeConstants.Aol.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                    return EmailAddressType.Aol;
+
+                if (EmailAddressTypeConstants.IbmMail.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                    return EmailAddressType.IbmMail;
+
+                if (EmailAddressTypeConstants.AppleLink.Equals(typeString, StringComparison.InvariantCultureIgnoreCase))
+                    return EmailAddressType.Applelink;
+
+                return EmailAddressType.None;
             }
         }
 

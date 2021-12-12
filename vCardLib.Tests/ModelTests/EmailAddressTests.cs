@@ -15,11 +15,11 @@ namespace vCardLib.Tests.ModelTests
                 var emailAddress = new EmailAddress
                 {
                     Value = "test@test.org",
-                    Type = EmailAddressType.AOL
+                    Type = EmailAddressType.Aol
                 };
                 emailAddress.Type = EmailAddressType.Applelink;
                 emailAddress.Type = EmailAddressType.Home;
-                emailAddress.Type = EmailAddressType.IBMMail;
+                emailAddress.Type = EmailAddressType.IbmMail;
                 emailAddress.Type = EmailAddressType.Internet;
                 emailAddress.Type = EmailAddressType.None;
                 emailAddress.Type = EmailAddressType.Work;

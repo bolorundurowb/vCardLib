@@ -16,10 +16,10 @@ namespace vCardLib.Enums
 
         Home = 4,
 
-        AOL = 8,
+        Aol = 8,
 
         Applelink = 16,
 
-        IBMMail = 32
+        IbmMail = 32
     }
 }
