@@ -3,7 +3,7 @@
     <Version>3.0.1</Version>
     <Copyright>© 2017-2022 , Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
     <PackageReleaseNotes>
-      - fix issues with email serialization
+      - fix issues with photo serialization
     </PackageReleaseNotes>
     <Authors>Bolorunduro Winner-Timothy</Authors>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -17,11 +17,11 @@
     <Title>vCardLib</Title>
     <RepositoryType>git</RepositoryType>
     <PackageTags>vcard, vcardlib</PackageTags>
-    <PackageVersion>4.0.0</PackageVersion>
+    <PackageVersion>4.0.1</PackageVersion>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     <Company>bolorundurowb</Company>
-    <AssemblyVersion>4.0.0</AssemblyVersion>
-    <FileVersion>4.0.0</FileVersion>
+    <AssemblyVersion>4.0.1</AssemblyVersion>
+    <FileVersion>4.0.1</FileVersion>
     <NeutralLanguage>en-NG</NeutralLanguage>
   </PropertyGroup>
 </Project>
