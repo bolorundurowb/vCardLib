@@ -70,7 +70,7 @@ namespace vCardLib.Serializers
         {
             foreach (var photo in photos)
             {
-                stringBuilder.Append("PHOTO);TYPE=" + photo.Encoding);
+                stringBuilder.Append("PHOTO;TYPE=" + photo.Encoding);
                 switch (photo.Type)
                 {
                     case PhotoType.URL:
