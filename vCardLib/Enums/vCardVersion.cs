@@ -6,10 +6,19 @@
     // ReSharper disable once InconsistentNaming
     public enum vCardVersion
     {
-        V2,
+        /// <summary>
+        /// This represents vCard version 2.1
+        /// </summary>
+        v2,
 
-        V3,
+        /// <summary>
+        /// This represents vCard version 3.0
+        /// </summary>
+        v3,
 
-        V4
+        /// <summary>
+        /// This represents vCard version 4.0
+        /// </summary>
+        v4
     }
 }

@@ -10,7 +10,7 @@ namespace vCardLib.Deserializers
     {
         protected override vCardVersion ParseVersion()
         {
-            return vCardVersion.V4;
+            return vCardVersion.v4;
         }
 
         protected override List<Address> ParseAddresses(string[] contactDetails)

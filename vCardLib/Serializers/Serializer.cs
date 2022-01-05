@@ -20,13 +20,13 @@ namespace vCardLib.Serializers
 
             switch (vCard.Version)
             {
-                case vCardVersion.V2:
+                case vCardVersion.v2:
                     serializer = new v2Serializer();
                     break;
-                case vCardVersion.V3:
+                case vCardVersion.v3:
                     serializer = new v3Serializer();
                     break;
-                case vCardVersion.V4:
+                case vCardVersion.v4:
                     serializer = new v4Serializer();
                     break;
                 default:

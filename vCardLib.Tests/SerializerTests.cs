@@ -14,7 +14,7 @@ namespace vCardLib.Tests
         {
             var card = new vCard
             {
-                Version = vCardVersion.V2,
+                Version = vCardVersion.v2,
                 FamilyName = "Jane",
                 GivenName = "John",
                 MiddleName = "Janice",
@@ -31,7 +31,7 @@ namespace vCardLib.Tests
         {
             var card = new vCard
             {
-                Version = vCardVersion.V3,
+                Version = vCardVersion.v3,
                 FormattedName = "Jimmy Jane",
                 NickName = "JJ",
                 Note = "Do stuff",
@@ -53,7 +53,7 @@ namespace vCardLib.Tests
         {
             var card = new vCard
             {
-                Version = vCardVersion.V4,
+                Version = vCardVersion.v4,
                 Organization = "Bing",
                 Title = "Boss",
                 Kind = ContactType.Group,

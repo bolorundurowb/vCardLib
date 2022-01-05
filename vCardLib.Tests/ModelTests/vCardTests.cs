@@ -50,7 +50,7 @@ namespace vCardLib.Tests.ModelTests
                     new KeyValuePair<string, string>("XSkypeDisplayName", "Forrest J Gump"),
                     new KeyValuePair<string, string>("XSkypePstnNumber", "23949490044")
                 };
-                _vcard.Version = vCardVersion.V2;
+                _vcard.Version = vCardVersion.v2;
             });
         }
     }

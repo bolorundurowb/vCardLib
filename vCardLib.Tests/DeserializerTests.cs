@@ -24,7 +24,7 @@ namespace vCardLib.Tests
             var card = cards.FirstOrDefault();
 
             card.ShouldNotBeNull();
-            card.Version.ShouldBe(vCardVersion.V2);
+            card.Version.ShouldBe(vCardVersion.v2);
             card.EmailAddresses.Count.ShouldBe(8);
             card.PhoneNumbers.Count.ShouldBe(15);
         }
@@ -39,7 +39,7 @@ namespace vCardLib.Tests
             var card = cards.FirstOrDefault();
 
             card.ShouldNotBeNull();
-            card.Version.ShouldBe(vCardVersion.V3);
+            card.Version.ShouldBe(vCardVersion.v3);
             card.EmailAddresses.Count.ShouldBe(9);
             card.PhoneNumbers.Count.ShouldBe(17);
         }

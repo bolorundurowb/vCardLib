@@ -1,16 +1,29 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using System;
+using vCardLib.Deserialization.Interfaces;
+using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers
 {
-    internal class VersionDeserializer : IFieldDeserializer<float>
+    internal class VersionDeserializer : IFieldDeserializer<vCardVersion>
     {
         public string FieldKey => "VERSION";
 
-        public float Read(string input)
+        public vCardVersion Read(string input)
         {
             var separatorIndex = input.IndexOf(':');
-            var representation = input.Substring(separatorIndex + 1).Trim();
-            return float.Parse(representation);
+            var value = input.Substring(separatorIndex + 1).Trim();
+
+            switch (value)
+            {
+                case "2.1":
+                    return vCardVersion.v2;
+                case "3.0":
+                    return vCardVersion.v3;
+                case "4.0":
+                    return vCardVersion.v4;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(value), value, "Parsed version is not supported.");
+            }
         }
     }
 }
