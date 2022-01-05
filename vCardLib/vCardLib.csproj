@@ -24,4 +24,7 @@
     <FileVersion>4.0.1</FileVersion>
     <NeutralLanguage>en-NG</NeutralLanguage>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Serialization" />
+  </ItemGroup>
 </Project>
