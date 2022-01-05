@@ -25,6 +25,6 @@
     <NeutralLanguage>en-NG</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Serialization" />
+    <Folder Include="Serialization\Interfaces" />
   </ItemGroup>
 </Project>
