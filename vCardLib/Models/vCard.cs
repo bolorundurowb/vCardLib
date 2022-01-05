@@ -143,7 +143,7 @@ namespace vCardLib.Models
         public List<Address> Addresses { get; set; }
 
         /// <summary>
-        /// The contact'c areas of expertise
+        /// The contact's areas of expertise
         /// </summary>
         public List<Expertise> Expertises { get; set; }
 

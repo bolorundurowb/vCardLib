@@ -3,7 +3,10 @@
 namespace vCardLib.Models
 {
     /// <summary>
-    /// Class to describe a contacts' hobby
+    /// A hobby, as opposed to an interest,
+    /// is an activity that one actively engages in for
+    /// entertainment, intellectual stimulation, creative
+    /// expression, or the like.
     /// </summary>
     public class Hobby
     {
