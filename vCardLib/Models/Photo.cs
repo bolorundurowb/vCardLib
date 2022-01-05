@@ -10,7 +10,7 @@ namespace vCardLib.Models
     public class Photo
     {
         /// <summary>
-        /// The image
+        /// The image data
         /// </summary>
         public byte[] Picture { get; set; }
 

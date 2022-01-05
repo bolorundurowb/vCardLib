@@ -1,6 +1,6 @@
 ﻿namespace vCardLib.Constants
 {
-    internal class FieldKeyConstants
+    internal static class FieldKeyConstants
     {
         public static char[] SectionDelimiter = { ':' };
 
