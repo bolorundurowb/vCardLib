@@ -14,17 +14,13 @@ namespace vCardLib.Deserialization.FieldDeserializers
             var separatorIndex = input.IndexOf(':');
             var value = input.Substring(separatorIndex + 1).Trim();
 
-            switch (value)
+            return value switch
             {
-                case "2.1":
-                    return vCardVersion.v2;
-                case "3.0":
-                    return vCardVersion.v3;
-                case "4.0":
-                    return vCardVersion.v4;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Parsed version is not supported.");
-            }
+                "2.1" => vCardVersion.v2,
+                "3.0" => vCardVersion.v3,
+                "4.0" => vCardVersion.v4,
+                _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Parsed version is not supported.")
+            };
         }
     }
 }

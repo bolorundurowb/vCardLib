@@ -24,9 +24,9 @@ namespace vCardLib.Tests.ModelTests
                 _vcard.Expertises = new List<Expertise>();
                 _vcard.FamilyName = "Gump";
                 _vcard.GivenName = "Forrest";
-                _vcard.MiddleName = "Johnson";
-                _vcard.Prefix = "HRH";
-                _vcard.Suffix = "PhD";
+                _vcard.AdditionalName = "Johnson";
+                _vcard.HonorificPrefix = "HRH";
+                _vcard.HonorificSuffix = "PhD";
                 _vcard.Gender = GenderType.Female;
                 _vcard.Hobbies = new List<Hobby>();
                 _vcard.Interests = new List<Interest>();

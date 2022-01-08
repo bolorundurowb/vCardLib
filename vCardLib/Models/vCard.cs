@@ -27,19 +27,19 @@ namespace vCardLib.Models
         public string GivenName { get; set; }
 
         /// <summary>
-        /// The middle name of the contact
+        /// Any additional name of the contact
         /// </summary>
-        public string MiddleName { get; set; }
+        public string AdditionalNames { get; set; }
 
         /// <summary>
-        /// The prefix of the contact
+        /// The honorific prefix of the contact
         /// </summary>
-        public string Prefix { get; set; }
+        public string HonorificPrefix { get; set; }
 
         /// <summary>
-        /// The suffix of the contact
+        /// The honorific suffix of the contact
         /// </summary>
-        public string Suffix { get; set; }
+        public string HonorificSuffix { get; set; }
 
         /// <summary>
         /// The full name of the contact

@@ -18,13 +18,23 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>vcard, vcardlib</PackageTags>
     <PackageVersion>4.0.1</PackageVersion>
-    <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0;netstandard1.3;netstandard2.0</TargetFrameworks>
     <Company>bolorundurowb</Company>
     <AssemblyVersion>4.0.1</AssemblyVersion>
     <FileVersion>4.0.1</FileVersion>
     <NeutralLanguage>en-NG</NeutralLanguage>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
+  
   <ItemGroup>
     <Folder Include="Serialization\Interfaces" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 </Project>

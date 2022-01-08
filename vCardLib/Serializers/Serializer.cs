@@ -37,8 +37,8 @@ namespace vCardLib.Serializers
             serializer.AddCardStart(stringBuilder);
             serializer.AddVersion(stringBuilder);
             serializer.AddRevision(stringBuilder);
-            serializer.AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.MiddleName, vCard.Prefix,
-                vCard.Suffix);
+            serializer.AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.AdditionalName, vCard.HonorificPrefix,
+                vCard.HonorificSuffix);
             serializer.AddFormattedName(stringBuilder, vCard.FormattedName);
             serializer.AddOrganization(stringBuilder, vCard.Organization);
             serializer.AddTitle(stringBuilder, vCard.Title);

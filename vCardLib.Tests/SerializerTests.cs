@@ -17,9 +17,9 @@ namespace vCardLib.Tests
                 Version = vCardVersion.v2,
                 FamilyName = "Jane",
                 GivenName = "John",
-                MiddleName = "Janice",
-                Prefix = "Sir",
-                Suffix = "PhD"
+                AdditionalName = "Janice",
+                HonorificPrefix = "Sir",
+                HonorificSuffix = "PhD"
             };
             var data = Serializer.Serialize(card);
 
