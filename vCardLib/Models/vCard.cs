@@ -65,9 +65,9 @@ public class vCard
     /// The contact's timezone
     /// </summary>
     /// <example>
-    /// vcard.TimeZone = "GMT-1";
+    /// vcard.Timezone = "GMT-1";
     /// </example>
-    public string TimeZone { get; set; }
+    public string Timezone { get; set; }
 
     /// <summary>
     /// The contacts geographical location specified by a longitude and latitude
