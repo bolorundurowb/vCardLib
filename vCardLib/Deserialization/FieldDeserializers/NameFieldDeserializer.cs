@@ -19,23 +19,23 @@ internal class NameFieldDeserializer : IFieldDeserializer,
             honorificPrefix = null,
             honorificSuffix = null;
 
-        var nameParts = value.Split(';');
-        var partsLength = nameParts.Length;
+        var parts = value.Split(';');
+        var partsLength = parts.Length;
 
         if (partsLength > 0)
-            familyName = nameParts[0];
+            familyName = parts[0];
 
         if (partsLength > 1)
-            givenName = nameParts[1];
+            givenName = parts[1];
 
         if (partsLength > 2)
-            additionalNames = nameParts[2];
+            additionalNames = parts[2];
 
         if (partsLength > 3)
-            honorificPrefix = nameParts[3];
+            honorificPrefix = parts[3];
 
         if (partsLength > 4)
-            honorificSuffix = nameParts[4];
+            honorificSuffix = parts[4];
 
         return (familyName, givenName, additionalNames, honorificPrefix, honorificSuffix);
     }

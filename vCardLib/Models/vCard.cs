@@ -75,9 +75,9 @@ public class vCard
     public Geo Geo { get; set; }
 
     /// <summary>
-    /// An organization the cotact belongs to
+    /// organizational name and units associated with the vCard.
     /// </summary>
-    public string Organization { get; set; }
+    public Organization Organization { get; set; }
 
     /// <summary>
     /// The contact's title
