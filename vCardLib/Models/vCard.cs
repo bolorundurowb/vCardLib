@@ -52,7 +52,7 @@ public class vCard
     public string NickName { get; set; }
 
     /// <summary>
-    /// The contants special note
+    /// supplemental information or a comment that is associated with the vCard
     /// </summary>
     public string Note { get; set; }
 
@@ -62,7 +62,7 @@ public class vCard
     public string Url { get; set; }
 
     /// <summary>
-    /// The contact's timezone
+    /// information related to the time zone of the object the vCard represents
     /// </summary>
     /// <example>
     /// vcard.Timezone = "GMT-1";
@@ -70,7 +70,7 @@ public class vCard
     public string Timezone { get; set; }
 
     /// <summary>
-    /// The contacts geographical location specified by a longitude and latitude
+    /// information related to the global positioning of the object the vCard represents
     /// </summary>
     public Geo Geo { get; set; }
 

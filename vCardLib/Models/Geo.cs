@@ -3,15 +3,21 @@
 /// <summary>
 /// Holds the Location properties
 /// </summary>
-public class Geo
+public struct Geo
 {
     /// <summary>
     /// The longitude of the location
     /// </summary>
-    public double Longitude { get; set; }
+    public float Longitude { get; set; }
 
     /// <summary>
     /// The latitude of the location
     /// </summary>
-    public double Latitude { get; set; }
+    public float Latitude { get; set; }
+
+    public Geo(float latitude, float longitude)
+    {
+        Latitude = latitude;
+        Longitude = longitude;
+    }
 }
