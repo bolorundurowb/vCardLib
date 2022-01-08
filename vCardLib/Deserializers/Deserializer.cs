@@ -167,27 +167,27 @@ public abstract class Deserializer
         return card;
     }
 
-    protected ContactType ParseKind(string[] contactDetails)
+    protected ContactKind ParseKind(string[] contactDetails)
     {
         var contactKindString = contactDetails.FirstOrDefault(s => s.StartsWith("KIND:"));
         if (contactKindString != null)
         {
             contactKindString = contactKindString.Replace("KIND:", "").Trim();
             if (contactKindString == "INDIVIDUAL")
-                return ContactType.Individual;
+                return ContactKind.Individual;
             if (contactKindString == "GROUP")
-                return ContactType.Group;
+                return ContactKind.Group;
             if (contactKindString == "ORG")
-                return ContactType.Organization;
+                return ContactKind.Organization;
             if (contactKindString == "LOCATION")
-                return ContactType.Location;
+                return ContactKind.Location;
             if (contactKindString == "APPLICATION")
-                return ContactType.Application;
+                return ContactKind.Application;
             if (contactKindString == "DEVICE")
-                return ContactType.Device;
+                return ContactKind.Device;
         }
 
-        return ContactType.Individual;
+        return ContactKind.Individual;
     }
 
     /// <summary>

@@ -3,12 +3,13 @@
 /// <summary>
 /// Contact types
 /// </summary>
-public enum ContactType
+public enum ContactKind
 {
     Individual,
+    
     Group,
+    
     Organization,
-    Location,
-    Application,
-    Device
+    
+    Location
 }

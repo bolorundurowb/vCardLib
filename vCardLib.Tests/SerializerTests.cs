@@ -56,7 +56,7 @@ public class SerializerTests
             Version = vCardVersion.v4,
             Organization = "Bing",
             Title = "Boss",
-            Kind = ContactType.Group,
+            Kind = ContactKind.Group,
             Gender = GenderType.Female,
             Language = "en-GB",
             BirthDay = DateTime.Now

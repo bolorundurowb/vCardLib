@@ -66,9 +66,9 @@ public class vCard
     public string Title { get; set; }
 
     /// <summary>
-    /// The contact type
+    /// the kind of object the vCard represents.
     /// </summary>
-    public ContactType Kind { get; set; }
+    public ContactKind? Kind { get; set; }
 
     /// <summary>
     /// The contact's gender

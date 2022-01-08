@@ -200,9 +200,9 @@ public abstract class Serializer
         }
     }
 
-    protected void AddContactKind(StringBuilder stringBuilder, ContactType contactType)
+    protected void AddContactKind(StringBuilder stringBuilder, ContactKind contactKind)
     {
-        stringBuilder.AppendLine($"KIND:{contactType.ToString()}");
+        stringBuilder.AppendLine($"KIND:{contactKind.ToString()}");
     }
 
     protected void AddGender(StringBuilder stringBuilder, GenderType genderType)

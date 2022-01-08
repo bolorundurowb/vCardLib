@@ -30,7 +30,7 @@ public class vCardTests
             _vcard.Gender = GenderType.Female;
             _vcard.Hobbies = new List<Hobby>();
             _vcard.Interests = new List<Interest>();
-            _vcard.Kind = ContactType.Application;
+            _vcard.Kind = ContactKind.Application;
             _vcard.Language = "English";
             _vcard.NickName = "Gumpy";
             _vcard.Organization = "Google";

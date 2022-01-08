@@ -21,12 +21,12 @@ public class EnumTests
 	public void ContactsAreStable()
 	{
 		Assert.DoesNotThrow(delegate {
-			var contactType = ContactType.Application;
-			contactType = ContactType.Device;
-			contactType = ContactType.Group;
-			contactType = ContactType.Individual;
-			contactType = ContactType.Location;
-			contactType = ContactType.Organization;
+			var contactType = ContactKind.Application;
+			contactType = ContactKind.Device;
+			contactType = ContactKind.Group;
+			contactType = ContactKind.Individual;
+			contactType = ContactKind.Location;
+			contactType = ContactKind.Organization;
 		});
 	}
 
