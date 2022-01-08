@@ -2,10 +2,16 @@
 
 namespace vCardLib.Deserialization.FieldDeserializers
 {
-    internal class FormattedNameDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>,
+    internal class NicknameDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>,
         IV3FieldDeserializer<string>, IV4FieldDeserializer<string>
     {
-        public string FieldKey => "FN";
+        public string FieldKey => "NICKNAME";
+
+        /// <summary>
+        /// The nickname field is not supported on the v2 standard
+        /// </summary>
+        /// <returns>null</returns>
+        string IV2FieldDeserializer<string>.Read(string input) => null;
 
         public string Read(string input)
         {

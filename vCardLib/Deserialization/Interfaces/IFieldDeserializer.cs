@@ -1,9 +1,7 @@
 ﻿namespace vCardLib.Deserialization.Interfaces
 {
-    internal interface IFieldDeserializer<out TModel>
+    internal interface IFieldDeserializer
     {
         string FieldKey { get; }
-
-        TModel Read(string input);
     }
 }

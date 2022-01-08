@@ -4,7 +4,8 @@ using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers
 {
-    internal class VersionDeserializer : IFieldDeserializer<vCardVersion>
+    internal class VersionDeserializer : IFieldDeserializer, IV2FieldDeserializer<vCardVersion>,
+        IV3FieldDeserializer<vCardVersion>, IV4FieldDeserializer<vCardVersion>
     {
         public string FieldKey => "VERSION";
 
