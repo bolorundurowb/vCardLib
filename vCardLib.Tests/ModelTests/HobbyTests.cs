@@ -4,24 +4,23 @@ using NUnit.Framework;
 using vCardLib.Enums;
 using vCardLib.Models;
 
-namespace vCardLib.Tests.ModelTests
+namespace vCardLib.Tests.ModelTests;
+
+[TestFixture]
+public class HobbyTests
 {
-	[TestFixture]
-	public class HobbyTests
+	[Test]
+	public void HobbyIsStable()
 	{
-		[Test]
-		public void HobbyIsStable()
+		Assert.DoesNotThrow(delegate
 		{
-			Assert.DoesNotThrow(delegate
+			var hobby = new Hobby
 			{
-			    var hobby = new Hobby
-			    {
-			        Activity = "Tennis",
-			        Level = Level.High
-			    };
-			    hobby.Level = Level.Medium;
-				hobby.Level = Level.Low;
-			});
-		}
+				Activity = "Tennis",
+				Level = Level.High
+			};
+			hobby.Level = Level.Medium;
+			hobby.Level = Level.Low;
+		});
 	}
 }

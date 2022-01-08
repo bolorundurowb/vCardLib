@@ -1,7 +1,6 @@
-﻿namespace vCardLib.Deserialization.Interfaces
+﻿namespace vCardLib.Deserialization.Interfaces;
+
+internal interface IV3FieldDeserializer<out TData>
 {
-    internal interface IV3FieldDeserializer<out TData>
-    {
-        TData Read(string input);
-    }
+    TData Read(string input);
 }

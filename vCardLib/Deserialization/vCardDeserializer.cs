@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using vCardLib.Models;
 
-namespace vCardLib.Deserialization
+namespace vCardLib.Deserialization;
+
+// ReSharper disable once InconsistentNaming
+public class vCardDeserializer
 {
-    // ReSharper disable once InconsistentNaming
-    public class vCardDeserializer
-    {
-        // public static List<vCard>
-    }
+    // public static List<vCard>
 }

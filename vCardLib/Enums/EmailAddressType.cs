@@ -1,27 +1,26 @@
 ﻿using System;
 
-namespace vCardLib.Enums
+namespace vCardLib.Enums;
+
+/// <summary>
+/// Various email address types in a vCard
+/// </summary>
+[Flags]
+public enum EmailAddressType
 {
-    /// <summary>
-    /// Various email address types in a vCard
-    /// </summary>
-    [Flags]
-    public enum EmailAddressType
-    {
-        None = 0,
+    None = 0,
 
-        Work = 1,
+    Work = 1,
 
-        Internet = 2,
+    Internet = 2,
 
-        Home = 4,
+    Home = 4,
 
-        Aol = 8,
+    Aol = 8,
 
-        Applelink = 16,
+    Applelink = 16,
 
-        IbmMail = 32,
+    IbmMail = 32,
         
-        Pref = 64
-    }
+    Pref = 64
 }

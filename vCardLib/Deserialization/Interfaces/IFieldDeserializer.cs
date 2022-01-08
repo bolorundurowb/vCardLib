@@ -1,7 +1,6 @@
-﻿namespace vCardLib.Deserialization.Interfaces
+﻿namespace vCardLib.Deserialization.Interfaces;
+
+internal interface IFieldDeserializer
 {
-    internal interface IFieldDeserializer
-    {
-        string FieldKey { get; }
-    }
+    string FieldKey { get; }
 }

@@ -1,9 +1,8 @@
-﻿namespace vCardLib.Serialization
-{
-    public interface IFieldSerializer<in TModel>
-    {
-        string FieldKey { get; }
+﻿namespace vCardLib.Serialization;
 
-        string Write(TModel data);
-    }
+public interface IFieldSerializer<in TModel>
+{
+    string FieldKey { get; }
+
+    string Write(TModel data);
 }
