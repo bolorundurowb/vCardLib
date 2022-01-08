@@ -32,10 +32,10 @@ namespace vCardLib.Deserialization.FieldDeserializers
                 additionalNames = nameParts[2];
 
             if (partsLength > 3)
-                honorificPrefix = nameParts[1];
+                honorificPrefix = nameParts[3];
 
             if (partsLength > 4)
-                honorificSuffix = nameParts[1];
+                honorificSuffix = nameParts[4];
 
             return (familyName, givenName, additionalNames, honorificPrefix, honorificSuffix);
         }
