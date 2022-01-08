@@ -17,37 +17,17 @@ public class vCard
     public vCardVersion Version { get; set; }
 
     /// <summary>
-    /// The Family name or Surname of the contact
+    /// components of the name of the object the vCard represents.
     /// </summary>
-    public string FamilyName { get; set; }
+    public Name Name { get; set; }
 
     /// <summary>
-    /// The Firstname or Given name of the contact
-    /// </summary>
-    public string GivenName { get; set; }
-
-    /// <summary>
-    /// Any additional name of the contact
-    /// </summary>
-    public string AdditionalNames { get; set; }
-
-    /// <summary>
-    /// The honorific prefix of the contact
-    /// </summary>
-    public string HonorificPrefix { get; set; }
-
-    /// <summary>
-    /// The honorific suffix of the contact
-    /// </summary>
-    public string HonorificSuffix { get; set; }
-
-    /// <summary>
-    /// The full name of the contact
+    /// formatted text corresponding to the name of the object the vCard represents.
     /// </summary>
     public string FormattedName { get; set; }
 
     /// <summary>
-    /// The contact's nickname
+    /// text corresponding to the nickname of the object the vCard represents.
     /// </summary>
     public string NickName { get; set; }
 
@@ -57,7 +37,8 @@ public class vCard
     public string Note { get; set; }
 
     /// <summary>
-    /// A url associated with the contact
+    /// uniform resource locator associated with the object to which the vCard refers.  Examples for individuals
+    /// include personal web sites, blogs, and social networking site identifiers.
     /// </summary>
     public string Url { get; set; }
 
