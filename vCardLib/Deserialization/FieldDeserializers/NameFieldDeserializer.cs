@@ -1,15 +1,14 @@
 ﻿using vCardLib.Deserialization.Interfaces;
+using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class NameFieldDeserializer : IFieldDeserializer,
-    IV2FieldDeserializer<(string, string, string, string, string)>,
-    IV3FieldDeserializer<(string, string, string, string, string)>,
-    IV4FieldDeserializer<(string, string, string, string, string)>
+internal class NameFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Name>, IV3FieldDeserializer<Name>,
+    IV4FieldDeserializer<Name>
 {
     public string FieldKey => "N";
 
-    public (string, string, string, string, string) Read(string input)
+    public Name Read(string input)
     {
         var separatorIndex = input.IndexOf(':');
         var value = input.Substring(separatorIndex + 1).Trim();
@@ -37,6 +36,6 @@ internal class NameFieldDeserializer : IFieldDeserializer,
         if (partsLength > 4)
             honorificSuffix = parts[4];
 
-        return (familyName, givenName, additionalNames, honorificPrefix, honorificSuffix);
+        return new Name(familyName, givenName, additionalNames, honorificPrefix, honorificSuffix);
     }
 }

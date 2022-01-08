@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using System.Text.RegularExpressions;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -20,7 +21,7 @@ internal class OrganizationFieldDeserializer : IFieldDeserializer, IV2FieldDeser
         var partsLength = parts.Length;
         
         if (partsLength > 0)
-            orgName = parts[0];
+            orgName = Regex.Unescape(parts[0]);
 
         if (partsLength > 1)
             orgUnitOne = parts[1];
