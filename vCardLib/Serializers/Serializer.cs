@@ -205,9 +205,9 @@ public abstract class Serializer
         stringBuilder.AppendLine($"KIND:{contactKind.ToString()}");
     }
 
-    protected void AddGender(StringBuilder stringBuilder, GenderType genderType)
+    protected void AddGender(StringBuilder stringBuilder, BiologicalSex biologicalSex)
     {
-        stringBuilder.AppendLine($"GENDER:{genderType.ToString()}");
+        stringBuilder.AppendLine($"GENDER:{biologicalSex.ToString()}");
     }
 
     protected void AddGeo(StringBuilder stringBuilder, Geo geo)

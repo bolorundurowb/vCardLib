@@ -424,21 +424,21 @@ public abstract class Deserializer
     /// <summary>
     /// Gets the gender from the details array
     /// </summary>
-    /// <returns>A <see cref="GenderType"/> representing the gender</returns>
-    protected GenderType ParseGender(string[] contactDetails)
+    /// <returns>A <see cref="BiologicalSex"/> representing the gender</returns>
+    protected BiologicalSex ParseGender(string[] contactDetails)
     {
         var genderString = contactDetails.FirstOrDefault(s => s.StartsWith("GENDER:"));
         if (genderString != null)
         {
             genderString = genderString.Replace("GENDER:", "").Trim();
             if (genderString.ToLower() == "male" || genderString.ToLower() == "m")
-                return GenderType.Male;
+                return BiologicalSex.Male;
             if (genderString.ToLower() == "female" || genderString.ToLower() == "f")
-                return GenderType.Female;
-            return GenderType.Other;
+                return BiologicalSex.Female;
+            return BiologicalSex.Other;
         }
 
-        return GenderType.None;
+        return BiologicalSex.None;
     }
 
     /// <summary>

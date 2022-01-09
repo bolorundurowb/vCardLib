@@ -10,10 +10,10 @@ public class EnumTests
 	public void GenderIsStable()
 	{
 		Assert.DoesNotThrow(delegate {
-			var gender = GenderType.Male;
-			gender = GenderType.Female;
-			gender = GenderType.Other;
-			gender = GenderType.None;
+			var gender = BiologicalSex.Male;
+			gender = BiologicalSex.Female;
+			gender = BiologicalSex.Other;
+			gender = BiologicalSex.None;
 		});
 	}
 

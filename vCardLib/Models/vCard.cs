@@ -71,9 +71,9 @@ public class vCard
     public ContactKind? Kind { get; set; }
 
     /// <summary>
-    /// The contact's gender
+    /// the components of the sex and gender identity of the object the vCard represents.
     /// </summary>
-    public GenderType Gender { get; set; }
+    public Gender Gender { get; set; }
 
     /// <summary>
     /// The contact's language

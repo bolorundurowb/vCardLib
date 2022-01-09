@@ -57,7 +57,7 @@ public class SerializerTests
             Organization = "Bing",
             Title = "Boss",
             Kind = ContactKind.Group,
-            Gender = GenderType.Female,
+            Gender = BiologicalSex.Female,
             Language = "en-GB",
             BirthDay = DateTime.Now
         };

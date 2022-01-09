@@ -17,7 +17,7 @@ public struct Organization
     /// </summary>
     public string SecondaryUnit { get; set; }
 
-    public Organization(string name, string primaryUnit = null, string secondaryUnit = null)
+    public Organization(string name, string primaryUnit, string secondaryUnit)
     {
         Name = name;
         PrimaryUnit = primaryUnit;

@@ -27,7 +27,7 @@ public class vCardTests
             _vcard.AdditionalName = "Johnson";
             _vcard.HonorificPrefix = "HRH";
             _vcard.HonorificSuffix = "PhD";
-            _vcard.Gender = GenderType.Female;
+            _vcard.Gender = BiologicalSex.Female;
             _vcard.Hobbies = new List<Hobby>();
             _vcard.Interests = new List<Interest>();
             _vcard.Kind = ContactKind.Application;
