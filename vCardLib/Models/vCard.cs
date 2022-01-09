@@ -76,6 +76,11 @@ public class vCard
     public Gender Gender { get; set; }
 
     /// <summary>
+    /// revision information about the current vCard.
+    /// </summary>
+    public DateTime? Revision { get; set; }
+
+    /// <summary>
     /// The contact's language
     /// </summary>
     /// <example>
@@ -84,24 +89,9 @@ public class vCard
     public string Language { get; set; }
 
     /// <summary>
-    /// The contact's birthday
+    /// the birth date of the object the vCard represents.
     /// </summary>
     public DateTime? BirthDay { get; set; }
-
-    /// <summary>
-    /// The contact's birth place
-    /// </summary>
-    public string BirthPlace { get; set; }
-
-    /// <summary>
-    /// The contact's death place
-    /// </summary>
-    public string DeathPlace { get; set; }
-
-    /// <summary>
-    /// The last time the vCard was updated
-    /// </summary>
-    public DateTime? Revision { get; set; }
 
     /// <summary>
     /// A collection of phone numbers associated with the contact
