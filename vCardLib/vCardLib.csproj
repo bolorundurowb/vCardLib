@@ -24,6 +24,7 @@
     <FileVersion>4.0.1</FileVersion>
     <NeutralLanguage>en-NG</NeutralLanguage>
     <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   
   <ItemGroup>
