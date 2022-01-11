@@ -16,7 +16,7 @@ internal class BirthdayFieldDeserializer : IFieldDeserializer, IV2FieldDeseriali
         const string timeFormat = "--HHmm";
         const string dateTimeFormat = "yyyyMMddTHHmmssZ";
 
-        input = input.Replace(FieldKey, string.Empty, StringComparison.CurrentCultureIgnoreCase);
+        input = input.ToUpper().Replace(FieldKey, string.Empty);
         input = input.TrimStart(':').TrimStart(';').TrimStart();
 
         if (DateTime.TryParseExact(input, dateFormat, provider, DateTimeStyles.AssumeUniversal, out var date))

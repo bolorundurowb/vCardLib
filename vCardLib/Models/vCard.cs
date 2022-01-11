@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using vCardLib.Enums;
-using vCardLib.Serializers;
 
 namespace vCardLib.Models;
 
@@ -137,28 +136,25 @@ public class vCard
         EmailAddresses = new List<EmailAddress>();
         Pictures = new List<Photo>();
         Addresses = new List<Address>();
-        Interests = new List<Interest>();
-        Hobbies = new List<Hobby>();
-        Expertises = new List<Expertise>();
         CustomFields = new List<KeyValuePair<string, string>>();
         Revision = DateTime.UtcNow;
     }
 
     /// <inheritdoc/>
-    public override string ToString()
-    {
-        return Serializer.Serialize(this);
-    }
+    // public override string ToString()
+    // {
+    //     return Serializer.Serialize(this);
+    // }
 
     /// <summary>
     /// Returns a string that represents the current object.
     /// </summary>
     /// <param name="version">vCard version</param>
     /// <returns>A string that represents the current object.</returns>
-    public string ToString(vCardVersion version)
-    {
-        var clone = this;
-        clone.Version = version;
-        return Serializer.Serialize(this);
-    }
+    // public string ToString(vCardVersion version)
+    // {
+    //     var clone = this;
+    //     clone.Version = version;
+    //     return Serializer.Serialize(this);
+    // }
 }

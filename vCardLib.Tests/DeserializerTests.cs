@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using Shouldly;
-using vCardLib.Deserializers;
 using vCardLib.Enums;
 
 namespace vCardLib.Tests;
