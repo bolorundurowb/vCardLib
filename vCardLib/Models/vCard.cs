@@ -19,7 +19,7 @@ public class vCard
     /// <summary>
     /// components of the name of the object the vCard represents.
     /// </summary>
-    public Name Name { get; set; }
+    public Name? Name { get; set; }
 
     /// <summary>
     /// formatted text corresponding to the name of the object the vCard represents.
@@ -29,18 +29,18 @@ public class vCard
     /// <summary>
     /// text corresponding to the nickname of the object the vCard represents.
     /// </summary>
-    public string NickName { get; set; }
+    public string? NickName { get; set; }
 
     /// <summary>
     /// supplemental information or a comment that is associated with the vCard
     /// </summary>
-    public string Note { get; set; }
+    public string? Note { get; set; }
 
     /// <summary>
     /// uniform resource locator associated with the object to which the vCard refers.  Examples for individuals
     /// include personal web sites, blogs, and social networking site identifiers.
     /// </summary>
-    public string Url { get; set; }
+    public string? Url { get; set; }
 
     /// <summary>
     /// information related to the time zone of the object the vCard represents
@@ -53,12 +53,12 @@ public class vCard
     /// <summary>
     /// information related to the global positioning of the object the vCard represents
     /// </summary>
-    public Geo Geo { get; set; }
+    public Geo? Geo { get; set; }
 
     /// <summary>
     /// organizational name and units associated with the vCard.
     /// </summary>
-    public Organization Organization { get; set; }
+    public Organization? Organization { get; set; }
 
     /// <summary>
     /// The contact's title
@@ -73,7 +73,7 @@ public class vCard
     /// <summary>
     /// the components of the sex and gender identity of the object the vCard represents.
     /// </summary>
-    public Gender Gender { get; set; }
+    public Gender? Gender { get; set; }
 
     /// <summary>
     /// revision information about the current vCard.
@@ -86,12 +86,17 @@ public class vCard
     /// <example>
     /// vcard.Language = "en-US";
     /// </example>
-    public string Language { get; set; }
+    public Language? Language { get; set; }
 
     /// <summary>
     /// the birth date of the object the vCard represents.
     /// </summary>
     public DateTime? BirthDay { get; set; }
+
+    /// <summary>
+    /// Information about another person who will act on behalf of the vCard object.
+    /// </summary>
+    public string? Agent { get; set; }
 
     /// <summary>
     /// a member in the group this vCard represents.
