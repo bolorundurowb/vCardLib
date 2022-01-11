@@ -119,21 +119,6 @@ public class vCard
     public List<Address> Addresses { get; set; }
 
     /// <summary>
-    /// The contact's areas of expertise
-    /// </summary>
-    public List<Expertise> Expertises { get; set; }
-
-    /// <summary>
-    /// The contact's hobbies
-    /// </summary>
-    public List<Hobby> Hobbies { get; set; }
-
-    /// <summary>
-    /// The contact's interests
-    /// </summary>
-    public List<Interest> Interests { get; set; }
-
-    /// <summary>
     /// All other fields not defined in the spec
     /// </summary>
     public List<KeyValuePair<string, string>> CustomFields { get; set; }
