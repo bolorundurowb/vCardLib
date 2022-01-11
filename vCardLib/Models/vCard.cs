@@ -94,6 +94,11 @@ public class vCard
     public DateTime? BirthDay { get; set; }
 
     /// <summary>
+    /// a member in the group this vCard represents.
+    /// </summary>
+    public List<string> Members { get; set; }
+
+    /// <summary>
     /// A collection of phone numbers associated with the contact
     /// </summary>
     public List<TelephoneNumber> PhoneNumbers { get; set; }
