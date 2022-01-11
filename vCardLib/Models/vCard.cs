@@ -81,7 +81,7 @@ public class vCard
     public DateTime? Revision { get; set; }
 
     /// <summary>
-    /// The contact's language
+    /// the language(s) that may be used for contacting the entity associated with the vCard.
     /// </summary>
     /// <example>
     /// vcard.Language = "en-US";

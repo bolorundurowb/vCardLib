@@ -6,12 +6,13 @@ using vCardLib.Models;
 namespace vCardLib.Deserialization.FieldDeserializers;
 
 internal class LanguageFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Language?>,
-    IV3FieldDeserializer<Language?>,
-    IV4FieldDeserializer<Language?>
+    IV3FieldDeserializer<Language?>, IV4FieldDeserializer<Language?>
 {
     public string FieldKey => "LANG";
 
-    public Language? Read(string input)
+    public Language? Read(string input) => null;
+
+    Language? IV4FieldDeserializer<Language?>.Read(string input)
     {
         var parts = input.Split(':');
 
