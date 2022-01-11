@@ -4,24 +4,26 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class OrganizationFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Organization>, IV3FieldDeserializer<Organization>,
-    IV4FieldDeserializer<Organization>
+internal class OrganizationFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Organization?>, IV3FieldDeserializer<Organization?>,
+    IV4FieldDeserializer<Organization?>
 {
     public string FieldKey => "ORG";
 
-    public Organization Read(string input)
+    public Organization? Read(string input)
     {
         var replaceTarget = $"{FieldKey}:";
         var value = input.Replace(replaceTarget, string.Empty).Trim();
-        string orgName = null,
+        string? orgName = null,
             orgUnitOne = null,
             orgUnitTwo = null;
                 
         var parts = value.Split(';');
         var partsLength = parts.Length;
-        
-        if (partsLength > 0)
-            orgName = Regex.Unescape(parts[0]);
+
+        if (partsLength == 0)
+            return null;
+
+        orgName = Regex.Unescape(parts[0]);
 
         if (partsLength > 1)
             orgUnitOne = parts[1];

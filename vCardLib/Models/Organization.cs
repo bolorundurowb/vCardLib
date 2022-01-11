@@ -10,14 +10,14 @@ public struct Organization
     /// <summary>
     /// The organization primary unit
     /// </summary>
-    public string PrimaryUnit { get; set; }
+    public string? PrimaryUnit { get; set; }
 
     /// <summary>
     /// The organization secondary unit
     /// </summary>
-    public string SecondaryUnit { get; set; }
+    public string? SecondaryUnit { get; set; }
 
-    public Organization(string name, string primaryUnit, string secondaryUnit)
+    public Organization(string name, string? primaryUnit, string? secondaryUnit)
     {
         Name = name;
         PrimaryUnit = primaryUnit;

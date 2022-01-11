@@ -12,7 +12,7 @@ internal class NameFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<
     {
         var separatorIndex = input.IndexOf(':');
         var value = input.Substring(separatorIndex + 1).Trim();
-        string familyName = null,
+        string? familyName = null,
             givenName = null,
             additionalNames = null,
             honorificPrefix = null,

@@ -15,7 +15,7 @@ internal class GenderFieldDeserializer : IFieldDeserializer, IV2FieldDeserialize
         var value = input.Substring(separatorIndex + 1).Trim();
 
         BiologicalSex? sex = null;
-        string genderIdentity = null;
+        string? genderIdentity = null;
 
         var parts = value.Split(';');
         var partsLength = parts.Length;
