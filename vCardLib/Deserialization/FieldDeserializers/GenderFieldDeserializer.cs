@@ -4,12 +4,14 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class GenderFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Gender>, IV3FieldDeserializer<Gender>,
-    IV4FieldDeserializer<Gender>
+internal class GenderFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Gender?>,
+    IV3FieldDeserializer<Gender?>, IV4FieldDeserializer<Gender>
 {
     public string FieldKey => "GENDER";
 
-    public Gender Read(string input)
+    public Gender? Read(string input) => null;
+
+    Gender IV4FieldDeserializer<Gender>.Read(string input)
     {
         var separatorIndex = input.IndexOf(':');
         var value = input.Substring(separatorIndex + 1).Trim();
@@ -28,6 +30,7 @@ internal class GenderFieldDeserializer : IFieldDeserializer, IV2FieldDeserialize
                 "O" => BiologicalSex.Other,
                 "N" => BiologicalSex.None,
                 "U" => BiologicalSex.Unknown,
+                _ => null
             };
 
         if (partsLength > 1)
