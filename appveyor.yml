@@ -22,4 +22,4 @@ before_build:
   - cmd: dotnet restore
 
 test_script:
-  - cmd: dotnet test
+  - cmd: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
