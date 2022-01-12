@@ -12,4 +12,4 @@ before_build:
 test_script:
   - cmd: dotnet tool install coveralls.net --version 3.0.0 --tool-path tools
   - cmd: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  - cmd: .\tools\csmacnz.Coveralls --opencover -i ".\vCardLib.Tests\coverage.opencover.xml" --repoToken 3QOzLMYef0X6JD8cCDkPZBuVFtut7qZmg
+  - cmd: .\tools\csmacnz.Coveralls --opencover -i ".\vCardLib.Tests\coverage.opencover.xml" --useRelativePaths --repoToken 3QOzLMYef0X6JD8cCDkPZBuVFtut7qZmg
