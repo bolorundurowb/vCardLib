@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using Shouldly;
+using vCardLib.Deserialization.FieldDeserializers;
+using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 
