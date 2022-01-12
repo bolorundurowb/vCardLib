@@ -14,5 +14,6 @@ before_build:
   - cmd: dotnet --version
   - cmd: dotnet restore --verbosity m
 test_script:
-  - cmd: dotnet tool install Codecov.Tool --version 1.10.0 --tool-path tools
+  - cmd: dotnet tool install coveralls.net --version 3.0.0 --tool-path tools
   - cmd: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - cmd: .\tools\csmacnz.Coveralls --opencover
