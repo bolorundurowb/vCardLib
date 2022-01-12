@@ -66,4 +66,27 @@ public class GenderFieldDeserializerTests
         result.GenderIdentity.ShouldNotBeNull();
         result.GenderIdentity.ShouldBe("it's complicated");
     }
+    
+    [Test]
+    public void ShouldReturnParseSexCorrectly()
+    {
+        IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
+        var input = "GENDER:O";
+        var result = deserializer.Read(input);
+
+        result.Sex.ShouldNotBeNull();
+        result.Sex.ShouldBe(BiologicalSex.Other);
+        
+        input = "GENDER:U";
+        result = deserializer.Read(input);
+
+        result.Sex.ShouldNotBeNull();
+        result.Sex.ShouldBe(BiologicalSex.Unknown);
+        
+        input = "GENDER:N";
+        result = deserializer.Read(input);
+
+        result.Sex.ShouldNotBeNull();
+        result.Sex.ShouldBe(BiologicalSex.None);
+    }
 }
