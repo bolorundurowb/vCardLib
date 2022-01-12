@@ -16,4 +16,4 @@ before_build:
 test_script:
   - cmd: dotnet tool install coveralls.net --version 3.0.0 --tool-path tools
   - cmd: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  - cmd: .\tools\csmacnz.Coveralls --opencover
+  - cmd: .\tools\csmacnz.Coveralls --opencover -i ".\vCardLib.Tests\coverage.opencover.xml"
