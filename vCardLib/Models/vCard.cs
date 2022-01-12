@@ -98,6 +98,11 @@ public class vCard
     public string? Agent { get; set; }
 
     /// <summary>
+    /// the type of electronic mail software that is used by the individual associated with the vCard.
+    /// </summary>
+    public string? Mailer { get; set; }
+
+    /// <summary>
     /// a member in the group this vCard represents.
     /// </summary>
     public List<string> Members { get; set; }
