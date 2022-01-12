@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
