@@ -13,20 +13,20 @@ internal class BirthdayFieldDeserializer : IFieldDeserializer, IV2FieldDeseriali
     {
         IFormatProvider provider = new CultureInfo("en-US");
         const string dateFormat = "yyyyMMdd";
-        const string timeFormat = "--HHmm";
+        const string timeFormat = "\\-\\-hhmm";
         const string dateTimeFormat = "yyyyMMddTHHmmssZ";
 
         input = input.ToUpper().Replace(FieldKey, string.Empty);
         input = input.TrimStart(':').TrimStart(';').TrimStart();
 
         if (DateTime.TryParseExact(input, dateFormat, provider, DateTimeStyles.AssumeUniversal, out var date))
-            return date;
+            return date.ToUniversalTime();
 
         if (DateTime.TryParseExact(input, dateTimeFormat, provider, DateTimeStyles.AssumeUniversal, out var dateTime))
-            return dateTime;
+            return dateTime.ToUniversalTime();
 
         if (TimeSpan.TryParseExact(input, timeFormat, provider, TimeSpanStyles.None, out var time))
-            return DateTime.MinValue + time;
+            return (DateTime.MinValue + time).ToUniversalTime();
 
         return null;
     }
