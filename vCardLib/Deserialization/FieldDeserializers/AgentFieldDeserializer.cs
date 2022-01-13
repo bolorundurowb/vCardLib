@@ -9,8 +9,16 @@ internal class AgentFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer
 
     public string Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
-        return input.Substring(separatorIndex + 1).Trim();
+        input = input.Replace(FieldKey, string.Empty);
+
+        // since the separator can be a ';' or ':' we need to trim them
+        input = input.TrimStart(';').TrimStart(':');
+
+        const string valuePreamble = "VALUE=";
+        if (input.StartsWith(valuePreamble))
+            input = input.Replace(valuePreamble, string.Empty);
+
+        return input;
     }
 
     string? IV4FieldDeserializer<string?>.Read(string input) => null;
