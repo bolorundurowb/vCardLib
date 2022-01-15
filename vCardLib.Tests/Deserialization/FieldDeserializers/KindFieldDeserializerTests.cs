@@ -56,7 +56,7 @@ public class KindFieldDeserializerTests
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
         var result = deserializer.Read(input);
         
-        result.ShouldBe(ContactKind.Individual);
+        result.ShouldBe(ContactKind.Location);
     }
     
     [Test]
