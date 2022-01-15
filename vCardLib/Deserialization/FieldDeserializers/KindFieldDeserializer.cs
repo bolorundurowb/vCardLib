@@ -3,13 +3,14 @@ using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class KindFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<ContactKind?>, IV3FieldDeserializer<ContactKind?>, IV4FieldDeserializer<ContactKind?>
+internal class KindFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<ContactKind?>,
+    IV3FieldDeserializer<ContactKind?>, IV4FieldDeserializer<ContactKind>
 {
-    public string FieldKey => "TITLE";
+    public string FieldKey => "KIND";
 
     public ContactKind? Read(string input) => null;
 
-    ContactKind? IV4FieldDeserializer<ContactKind?>.Read(string input)
+    ContactKind IV4FieldDeserializer<ContactKind>.Read(string input)
     {
         var separatorIndex = input.IndexOf(':');
         var value = input.Substring(separatorIndex + 1).Trim().ToLowerInvariant();
