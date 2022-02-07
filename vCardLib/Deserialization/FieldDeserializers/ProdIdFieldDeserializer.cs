@@ -11,7 +11,7 @@ internal class ProdIdFieldDeserializer : IFieldDeserializer, IV2FieldDeserialize
     public string Read(string input)
     {
         var separatorIndex = input.IndexOf(':');
-        var value = input.Substring(separatorIndex + 1).Trim().ToLowerInvariant();
+        var value = input.Substring(separatorIndex + 1);
         return Regex.Unescape(value);
     }
 }
