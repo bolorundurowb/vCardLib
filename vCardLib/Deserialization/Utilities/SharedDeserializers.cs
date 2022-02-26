@@ -9,10 +9,13 @@ internal static class SharedDeserializers
     {
         IFormatProvider provider = new CultureInfo("en-US");
         const string dateFormat = "yyyyMMdd";
-        const string timeFormat = "\\-\\-hhmm";
+        const string timeFormat = "hhmm";
         const string dateTimeFormat = "yyyyMMddTHHmmssZ";
 
-        input = input.TrimStart(':').TrimStart(';').TrimStart();
+        input = input.Replace("-", string.Empty)
+            .TrimStart(':')
+            .TrimStart(';')
+            .TrimStart();
 
         if (DateTime.TryParseExact(input, dateFormat, provider, DateTimeStyles.AssumeUniversal, out var date))
             return date.ToUniversalTime();
