@@ -13,6 +13,12 @@ internal class CategoriesFieldDeserializer : IFieldDeserializer, IV2FieldDeseria
     {
         input = input.ToUpper().Replace(FieldKey, string.Empty);
         var value = input.TrimStart(':');
-        return value.Split(',').ToList();
+
+        if (string.IsNullOrWhiteSpace(value))
+            return new List<string>();
+
+        return value.Split(',')
+            .Select(x => x.Trim())
+            .ToList();
     }
 }
