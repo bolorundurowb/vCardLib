@@ -21,7 +21,7 @@ internal static class SharedDeserializers
             return dateTime.ToUniversalTime();
 
         if (TimeSpan.TryParseExact(input, timeFormat, provider, TimeSpanStyles.None, out var time))
-            return (DateTime.MinValue + time).ToUniversalTime();
+            return DateTime.MinValue.ToUniversalTime() + time;
 
         return null;
     }
