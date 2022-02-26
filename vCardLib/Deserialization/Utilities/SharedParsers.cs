@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Globalization;
+using vCardLib.Enums;
+using vCardLib.Extensions;
 
 namespace vCardLib.Deserialization.Utilities;
 
-internal static class SharedDeserializers
+internal static class SharedParsers
 {
     public static DateTime? ParseDate(string input)
     {
@@ -25,6 +27,29 @@ internal static class SharedDeserializers
 
         if (TimeSpan.TryParseExact(input, timeFormat, provider, TimeSpanStyles.None, out var time))
             return DateTime.MinValue.ToUniversalTime() + time;
+
+        return null;
+    }
+
+    public static AddressType? ParseAddressType(string input)
+    {
+        if ("dom".EqualsIgnoreCase(input))
+            return AddressType.Domestic;
+
+        if ("home".EqualsIgnoreCase(input))
+            return AddressType.Home;
+
+        if ("intl".EqualsIgnoreCase(input))
+            return AddressType.International;
+
+        if ("parcel".EqualsIgnoreCase(input))
+            return AddressType.Parcel;
+
+        if ("postal".EqualsIgnoreCase(input))
+            return AddressType.Postal;
+
+        if ("work".EqualsIgnoreCase(input))
+            return AddressType.Work;
 
         return null;
     }

@@ -13,6 +13,6 @@ internal class BirthdayFieldDeserializer : IFieldDeserializer, IV2FieldDeseriali
     public DateTime? Read(string input)
     {
         input = input.ToUpper().Replace(FieldKey, string.Empty);
-        return SharedDeserializers.ParseDate(input);
+        return SharedParsers.ParseDate(input);
     }
 }

@@ -14,6 +14,6 @@ internal class RevisionFieldDeserializer : IFieldDeserializer, IV2FieldDeseriali
     {
         var separatorIndex = input.IndexOf(':');
         var value = input.Substring(separatorIndex + 1);
-        return SharedDeserializers.ParseDate(value);
+        return SharedParsers.ParseDate(value);
     }
 }

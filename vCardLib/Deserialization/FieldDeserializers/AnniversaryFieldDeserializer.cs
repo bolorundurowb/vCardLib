@@ -15,6 +15,6 @@ internal class AnniversaryFieldDeserializer : IFieldDeserializer, IV2FieldDeseri
     DateTime? IV4FieldDeserializer<DateTime?>.Read(string input)
     {
         input = input.ToUpper().Replace(FieldKey, string.Empty);
-        return SharedDeserializers.ParseDate(input);
+        return SharedParsers.ParseDate(input);
     }
 }
