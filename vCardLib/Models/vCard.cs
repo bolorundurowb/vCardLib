@@ -103,6 +103,11 @@ public class vCard
     public string? Mailer { get; set; }
 
     /// <summary>
+    /// category information about the vCard, also known as "tags"
+    /// </summary>
+    public List<string> Categories { get; set; }
+
+    /// <summary>
     /// a member in the group this vCard represents.
     /// </summary>
     public List<string> Members { get; set; }
