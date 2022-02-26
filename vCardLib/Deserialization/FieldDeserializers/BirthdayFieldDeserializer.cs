@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
 

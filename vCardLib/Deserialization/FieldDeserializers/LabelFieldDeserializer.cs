@@ -17,11 +17,12 @@ internal class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer
 
     public Label Read(string input)
     {
-        input = input.Replace(FieldKey, string.Empty);
-        var parts = input.Split(':');
+        var separatorIndex = input.IndexOf(':');
+        var preamble = input.Substring(0, separatorIndex).Trim();
+        var value = input.Substring(separatorIndex + 1).Trim();
 
-        var label = new Label(parts.Length > 1 ? parts[1] : null);
-        label.Types.AddRange(ParseTypes(parts[0]));
+        var label = new Label(Regex.Unescape(value));
+        label.Types.AddRange(ParseTypes(preamble));
 
         return label;
     }
@@ -32,16 +33,21 @@ internal class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer
     {
         const string typeKey = "TYPE=";
         var typeGroups = part
-            .Split(';', StringSplitOptions.RemoveEmptyEntries)
+            .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
             .Select(x => x.Trim());
 
         foreach (var typeGroup in typeGroups.Where(x => x.StartsWithIgnoreCase(typeKey)))
         {
-            var value = typeGroup.ReplaceIgnoreCase(typeKey, string.Empty);
-            var parsedValue = SharedParsers.ParseAddressType(value);
+            var value = typeGroup.Replace(typeKey, string.Empty);
+            var types = value.Split(',');
 
-            if (parsedValue != null)
-                yield return parsedValue.Value;
+            foreach (var type in types)
+            {
+                var parsedValue = SharedParsers.ParseAddressType(type);
+
+                if (parsedValue != null)
+                    yield return parsedValue.Value;
+            }
         }
     }
 }
