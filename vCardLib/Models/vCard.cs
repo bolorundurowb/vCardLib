@@ -147,7 +147,6 @@ public class vCard
         Pictures = new List<Photo>();
         Addresses = new List<Address>();
         CustomFields = new List<KeyValuePair<string, string>>();
-        Revision = DateTime.UtcNow;
     }
 
     /// <inheritdoc/>
