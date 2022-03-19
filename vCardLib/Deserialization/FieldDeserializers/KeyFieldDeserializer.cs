@@ -47,8 +47,8 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
             var (key, data) = SplitDatum(datum);
 
             if (key.EqualsIgnoreCase("ENCODING"))
-                encoding = data;
-            else if (key.EqualsIgnoreCase("TYPE")) 
+                encoding = data == "b" ? "BASE64" : data;
+            else if (key.EqualsIgnoreCase("TYPE"))
                 type = data;
         }
 
@@ -57,6 +57,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
     Key IV4FieldDeserializer<Key>.Read(string input)
     {
+        const string dataPrefix = "data:";
         var (metadata, value) = Split(input);
 
         if (metadata.Length == 0)
@@ -68,10 +69,25 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
         {
             var (key, data) = SplitDatum(datum);
 
-            if (key.EqualsIgnoreCase("ENCODING"))
-                encoding = data;
-            else if (key.EqualsIgnoreCase("MEDIATYPE")) 
+            if (key.EqualsIgnoreCase("MEDIATYPE"))
                 mimeType = data;
+        }
+
+        if (value.StartsWithIgnoreCase(dataPrefix))
+            value = value.Replace(dataPrefix, string.Empty);
+
+        if (value.Contains(";"))
+        {
+            var split = value.Split(';');
+            mimeType = split[0];
+            value = split[1];
+        }
+
+        if (value.Contains(","))
+        {
+            var split = value.Split(',');
+            encoding = split[0];
+            value = split[1];
         }
 
         return new Key(value, type, mimeType, encoding);
@@ -83,7 +99,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
             .TrimStart(':')
             .TrimStart(';');
 
-        if (Uri.IsWellFormedUriString(input, UriKind.Relative))
+        if (Uri.IsWellFormedUriString(input, UriKind.Absolute))
             return (Array.Empty<string>(), input);
 
         var index = input.IndexOf(':');
