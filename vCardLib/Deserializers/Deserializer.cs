@@ -85,10 +85,11 @@ namespace vCardLib.Deserializers
             }
 
             var decimalSeparator = CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator;
-            var version = float.Parse(versionString
+            var versionNumber = versionString
                 .Replace("VERSION:", "")
                 .Trim()
-                .Replace(".", decimalSeparator));
+                .Replace(".", decimalSeparator);
+            var version = float.Parse(versionNumber, CultureInfo.CurrentUICulture.NumberFormat);
 
             Deserializer deserializer;
             if (version >= 2f && version < 3f)

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserializers;
@@ -10,11 +12,13 @@ using vCardLib.Enums;
 namespace vCardLib.Tests
 {
     [TestFixture]
+    [SetUICulture("en-US")]
     public class DeserializerTests
     {
         string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         [Test]
+        
         public void ShouldSucceedWithV2File()
         {
             var filePath = Path.Combine(assemblyFolder, "v2.vcf");

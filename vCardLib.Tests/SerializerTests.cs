@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using vCardLib.Enums;
 using vCardLib.Models;
@@ -46,6 +47,45 @@ namespace vCardLib.Tests
             var data = Serializer.Serialize(card);
 
             Assert.IsNotEmpty(data);
+        }
+
+
+        [Test]
+        public void MultipleV3CardsShouldHaveCorrectRevisionAndStartEndFrameFormat()
+        {
+            var cards = new List<vCard>
+            {
+                new vCard
+                {
+                    Version = vCardVersion.V3,
+                    Revision = new DateTime(2022,01,01),
+                    FormattedName = "Card1",
+                },
+                new vCard
+                {
+                    Version = vCardVersion.V3,
+                    Revision = new DateTime(2022,01,01),
+                    FormattedName = "Card2",
+                }
+            };
+            var data = Serializer.Serialize(cards);
+
+            Assert.AreEqual(data, @"BEGIN:VCARD
+VERSION:3.0
+REV:20220101T000000Z
+N:;;;;
+FN:Card1
+KIND:Individual
+GENDER:None
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+REV:20220101T000000Z
+N:;;;;
+FN:Card2
+KIND:Individual
+GENDER:None
+END:VCARD");
         }
 
         [Test]
