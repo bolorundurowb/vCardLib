@@ -36,9 +36,8 @@ namespace vCardLib.Serializers
             // add fields in order
             serializer.AddCardStart(stringBuilder);
             serializer.AddVersion(stringBuilder);
-            serializer.AddRevision(stringBuilder);
-            serializer.AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.MiddleName, vCard.Prefix,
-                vCard.Suffix);
+            serializer.AddRevision(stringBuilder, vCard.Revision);
+            serializer.AddName(stringBuilder, vCard.FamilyName, vCard.GivenName, vCard.MiddleName, vCard.Prefix, vCard.Suffix);
             serializer.AddFormattedName(stringBuilder, vCard.FormattedName);
             serializer.AddOrganization(stringBuilder, vCard.Organization);
             serializer.AddTitle(stringBuilder, vCard.Title);
@@ -98,6 +97,10 @@ namespace vCardLib.Serializers
 
         protected void AddCardStart(StringBuilder stringBuilder)
         {
+            if (stringBuilder.Length > 0)
+            {
+                stringBuilder.AppendLine();
+            }
             stringBuilder.AppendLine(FieldKeyConstants.StartToken);
         }
 
@@ -107,9 +110,9 @@ namespace vCardLib.Serializers
                 .Append(FieldKeyConstants.EndToken);
         }
 
-        protected void AddRevision(StringBuilder stringBuilder)
+        protected void AddRevision(StringBuilder stringBuilder, DateTime? revision)
         {
-            stringBuilder.AppendLine($"REV:{DateTime.Now:yyyyMMddTHHmmssZ}");
+            stringBuilder.AppendLine($"REV:{(revision ?? DateTime.Now):yyyyMMddTHHmmssZ}");
         }
 
         protected void AddName(StringBuilder stringBuilder, string familyName, string givenName, string middleName,
