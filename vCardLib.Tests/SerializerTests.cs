@@ -90,6 +90,86 @@ namespace vCardLib.Tests
         }
 
         [Test]
+        public void V2CardShouldSerializeCustomTelephoneType()
+        {
+            var card = new vCard
+            {
+                Version = vCardVersion.V2,
+                Revision = new DateTime(2022, 01, 01),
+                FamilyName = "Card1",
+                FormattedName = "Card1",
+                PhoneNumbers = new List<TelephoneNumber>
+                {
+                    new TelephoneNumber
+                    {
+                        Type = TelephoneNumberType.Custom,
+                        CustomTypeName = "CUSTOM,VALUE",
+                        Value = "+1 234",
+                    },
+                    new TelephoneNumber
+                    {
+                        Type = TelephoneNumberType.Custom,
+                        CustomTypeName = "CUSTOM1",
+                        Value = "+1 234",
+                    }
+                }
+            };
+            var data = Serializer.Serialize(card);
+
+            // we need to use Environment.NewLine to pass unit-tests also in Unix environments. VS hardcodes \n\r due to Windows newline.
+            Assert.AreEqual(data, "BEGIN:VCARD" + Environment.NewLine +
+                                  "VERSION:2.1" + Environment.NewLine +
+                                  "REV:20220101T000000Z" + Environment.NewLine +
+                                  "N:Card1;;;;" + Environment.NewLine +
+                                  "FN:Card1" + Environment.NewLine +
+                                  "KIND:Individual" + Environment.NewLine +
+                                  "GENDER:None" + Environment.NewLine +
+                                  "TEL;TYPE=\"CUSTOM,VALUE\":+1 234" + Environment.NewLine +
+                                  "TEL;TYPE=\"CUSTOM1\":+1 234" + Environment.NewLine +
+                                  "END:VCARD");
+        }
+
+        [Test]
+        public void V3CardShouldSerializeCustomTelephoneType()
+        {
+            var card = new vCard
+                {
+                    Version = vCardVersion.V3,
+                    Revision = new DateTime(2022,01,01),
+                    FamilyName = "Card1",
+                    FormattedName = "Card1",
+                    PhoneNumbers = new List<TelephoneNumber>
+                    {
+                        new TelephoneNumber
+                        {
+                            Type = TelephoneNumberType.Custom,
+                            CustomTypeName = "CUSTOM,VALUE",
+                            Value = "+1 234",
+                        },
+                        new TelephoneNumber
+                        {
+                            Type = TelephoneNumberType.Custom,
+                            CustomTypeName = "CUSTOM1",
+                            Value = "+1 234",
+                        }
+                    }
+                };
+            var data = Serializer.Serialize(card);
+
+            // we need to use Environment.NewLine to pass unit-tests also in Unix environments. VS hardcodes \n\r due to Windows newline.
+            Assert.AreEqual(data, "BEGIN:VCARD" + Environment.NewLine +
+                                  "VERSION:3.0" + Environment.NewLine +
+                                  "REV:20220101T000000Z" + Environment.NewLine +
+                                  "N:Card1;;;;" + Environment.NewLine +
+                                  "FN:Card1" + Environment.NewLine +
+                                  "KIND:Individual" + Environment.NewLine +
+                                  "GENDER:None" + Environment.NewLine +
+                                  "TEL;TYPE=\"CUSTOM,VALUE\":+1 234" + Environment.NewLine +
+                                  "TEL;TYPE=\"CUSTOM1\":+1 234" + Environment.NewLine +
+                                  "END:VCARD");
+        }
+
+        [Test]
         public void ShouldThrowWithV4Card()
         {
             var card = new vCard

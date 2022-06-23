@@ -28,6 +28,9 @@ namespace vCardLib.Serializers
                     case TelephoneNumberType.MainNumber:
                         stringBuilder.AppendLine("TEL;MAIN-NUMBER:" + phoneNumber.Value);
                         break;
+                    case TelephoneNumberType.Custom:
+                        stringBuilder.AppendLine($"TEL;TYPE=\"{phoneNumber.CustomTypeName}\":" + phoneNumber.Value);
+                        break;
                     default:
                         stringBuilder.AppendLine("TEL;" + phoneNumber.Type.ToString().ToUpper() + ":" + phoneNumber.Value);
                         break;
