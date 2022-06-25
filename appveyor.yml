@@ -4,7 +4,7 @@ branches:
   except:
     - gh-pages
 
-image: Visual Studio 2019
+image: Visual Studio 2022
 
 clone_folder: c:\projects\
 
@@ -19,7 +19,11 @@ platform: Any CPU
 configuration: Debug
 
 before_build:
-  - cmd: dotnet restore
+  - cmd: dotnet --version
+  - cmd: dotnet restore --verbosity m
+ 
+build_script:
+  - cmd: dotnet build
 
 test_script:
   - cmd: dotnet test
