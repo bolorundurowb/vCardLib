@@ -23,6 +23,11 @@ namespace vCardLib.Models
         public TelephoneNumberType Type { get; set; }
 
         /// <summary>
+        /// The telephone number extension
+        /// </summary>
+        public string CustomTypeName { get; set; }
+
+        /// <summary>
         /// Indicates the telephone numbers preference level (lower values mean a higher preference)
         /// </summary>
         public int? Preference { get; set; }

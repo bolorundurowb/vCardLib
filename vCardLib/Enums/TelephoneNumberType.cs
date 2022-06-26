@@ -38,6 +38,8 @@ namespace vCardLib.Enums
 
         ISDN = 8192,
         
-        Pref = 16384
+        Pref = 16384,
+
+        Custom = int.MaxValue,
     }
 }
