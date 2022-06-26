@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>3.0.1</Version>
     <Copyright>© 2017-2022 , Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
-    <PackageReleaseNotes>- fix frame start end
+    <PackageReleaseNotes>- add custom phone number support
     </PackageReleaseNotes>
     <Authors>Bolorunduro Winner-Timothy</Authors>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -16,11 +16,11 @@
     <Title>vCardLib</Title>
     <RepositoryType>git</RepositoryType>
     <PackageTags>vcard, vcardlib</PackageTags>
-    <PackageVersion>4.0.2</PackageVersion>
+    <PackageVersion>4.0.3</PackageVersion>
     <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     <Company>bolorundurowb</Company>
-    <AssemblyVersion>4.0.2</AssemblyVersion>
-    <FileVersion>4.0.2</FileVersion>
+    <AssemblyVersion>4.0.3</AssemblyVersion>
+    <FileVersion>4.0.3</FileVersion>
     <NeutralLanguage>en-NG</NeutralLanguage>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
