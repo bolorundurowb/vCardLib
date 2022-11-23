@@ -2,34 +2,31 @@
 using vCardLib.Constants;
 using vCardLib.Enums;
 
-namespace vCardLib.Utils;
+namespace vCardLib.Utilities;
 
 internal static class EnumHelpers
 {
-    public static EmailAddressType ParseEmailType(string typeString)
+    public static EmailAddressType? ParseEmailAddressType(this string type)
     {
-        if (EmailAddressTypeConstants.Internet.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Internet.Equals(type, StringComparison.OrdinalIgnoreCase))
             return EmailAddressType.Internet;
 
-        if (EmailAddressTypeConstants.Home.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Home.Equals(type, StringComparison.OrdinalIgnoreCase))
             return EmailAddressType.Home;
 
-        if (EmailAddressTypeConstants.Work.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Work.Equals(type, StringComparison.OrdinalIgnoreCase))
             return EmailAddressType.Work;
 
-        if (EmailAddressTypeConstants.Aol.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Aol.Equals(type, StringComparison.OrdinalIgnoreCase))
             return EmailAddressType.Aol;
 
-        if (EmailAddressTypeConstants.IbmMail.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.IbmMail.Equals(type, StringComparison.OrdinalIgnoreCase))
             return EmailAddressType.IbmMail;
 
-        if (EmailAddressTypeConstants.AppleLink.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.AppleLink.Equals(type, StringComparison.OrdinalIgnoreCase))
             return EmailAddressType.Applelink;
 
-        if (EmailAddressTypeConstants.Pref.Equals(typeString, StringComparison.OrdinalIgnoreCase))
-            return EmailAddressType.Pref;
-
-        return EmailAddressType.None;
+        return null;
     }
         
     public static TelephoneNumberType ParseTelephoneType(string typeString)

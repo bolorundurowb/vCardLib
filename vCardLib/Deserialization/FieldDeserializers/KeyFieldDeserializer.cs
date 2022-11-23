@@ -2,6 +2,7 @@
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Extensions;
 using vCardLib.Models;
+using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
@@ -12,7 +13,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
     Key IV2FieldDeserializer<Key>.Read(string input)
     {
-        var (metadata, value) = Split(input);
+        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
         if (metadata.Length == 0)
             return new Key(value);
@@ -21,7 +22,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
         foreach (var datum in metadata)
         {
-            var (key, data) = SplitDatum(datum);
+            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase("ENCODING"))
                 encoding = data;
@@ -35,7 +36,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
     Key IV3FieldDeserializer<Key>.Read(string input)
     {
-        var (metadata, value) = Split(input);
+        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
         if (metadata.Length == 0)
             return new Key(value);
@@ -44,7 +45,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
         foreach (var datum in metadata)
         {
-            var (key, data) = SplitDatum(datum);
+            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase("ENCODING"))
                 encoding = data == "b" ? "BASE64" : data;
@@ -58,7 +59,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
     Key IV4FieldDeserializer<Key>.Read(string input)
     {
         const string dataPrefix = "data:";
-        var (metadata, value) = Split(input);
+        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
         if (metadata.Length == 0)
             return new Key(value);
@@ -67,7 +68,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
         foreach (var datum in metadata)
         {
-            var (key, data) = SplitDatum(datum);
+            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase("MEDIATYPE"))
                 mimeType = data;
@@ -91,27 +92,5 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
         }
 
         return new Key(value, type, mimeType, encoding);
-    }
-
-    private (string[], string) Split(string input)
-    {
-        input = input.Replace(FieldKey, string.Empty)
-            .TrimStart(':')
-            .TrimStart(';');
-
-        if (Uri.IsWellFormedUriString(input, UriKind.Absolute))
-            return (Array.Empty<string>(), input);
-
-        var index = input.IndexOf(':');
-        var metadata = input.Substring(0, index);
-        var value = input.Substring(index + 1);
-
-        return (metadata.Split(';'), value);
-    }
-
-    private static (string, string?) SplitDatum(string datum)
-    {
-        var parts = datum.Split('=');
-        return parts.Length == 1 ? (parts[0], null) : (parts[0], parts[1]);
     }
 }

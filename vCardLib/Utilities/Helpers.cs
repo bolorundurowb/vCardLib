@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using vCardLib.Constants;
 
-namespace vCardLib.Utils;
+namespace vCardLib.Utilities;
 
 /// <summary>
 /// Class to hold all supporting methods
