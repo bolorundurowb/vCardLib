@@ -1,6 +1,6 @@
 ﻿namespace vCardLib.Constants;
 
-internal sealed class EmailAddressTypeConstants
+internal static class EmailAddressTypeConstants
 {
     public const string Internet = "INTERNET";
 
@@ -13,6 +13,4 @@ internal sealed class EmailAddressTypeConstants
     public const string AppleLink = "APPLELINK";
 
     public const string IbmMail = "IBMMAIL";
-
-    public const string Pref = "PREF";
 }
