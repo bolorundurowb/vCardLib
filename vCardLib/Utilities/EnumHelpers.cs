@@ -74,9 +74,6 @@ internal static class EnumHelpers
         if (TelephoneNumberTypeConstants.Isdn.Equals(typeString, StringComparison.OrdinalIgnoreCase))
             return TelephoneNumberType.ISDN;
 
-        if (TelephoneNumberTypeConstants.Pref.Equals(typeString, StringComparison.OrdinalIgnoreCase))
-            return TelephoneNumberType.Pref;
-
         return TelephoneNumberType.None;
     }
 }

@@ -4,13 +4,13 @@ internal static class DataSplitHelpers
 {
     public static (string[], string) SplitLine(string fieldKey, string input)
     {
-        input = input.Replace(fieldKey, string.Empty)
-            .TrimStart(':')
-            .TrimStart(';');
-
-        var index = input.IndexOf(':');
+        var index = input.LastIndexOf(':');
         var metadata = input.Substring(0, index);
         var value = input.Substring(index + 1);
+
+        metadata = metadata.Replace(fieldKey, string.Empty)
+            .TrimStart(':')
+            .TrimStart(';');
 
         return (metadata.Split(';'), value);
     }

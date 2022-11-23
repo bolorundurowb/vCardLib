@@ -26,7 +26,12 @@ internal sealed class EmailFieldDeserializer : IFieldDeserializer, IV2FieldDeser
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase("TYPE"))
-                type = data?.ParseEmailAddressType();
+            {
+                var emailType = data?.ParseEmailAddressType();
+
+                if (emailType.HasValue) 
+                    type = type.HasValue ? type.Value | emailType : emailType;
+            }
             else if (key.EqualsIgnoreCase("PREF"))
                 preference = 1;
         }
@@ -49,7 +54,12 @@ internal sealed class EmailFieldDeserializer : IFieldDeserializer, IV2FieldDeser
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase("TYPE"))
-                type = data?.ParseEmailAddressType();
+            {
+                var emailType = data?.ParseEmailAddressType();
+
+                if (emailType.HasValue) 
+                    type = type.HasValue ? type.Value | emailType : emailType;
+            }
             else if (key.EqualsIgnoreCase("PREF"))
                 if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
                     preference = pref;

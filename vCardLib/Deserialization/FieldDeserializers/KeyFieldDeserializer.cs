@@ -1,5 +1,4 @@
-﻿using System;
-using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Deserialization.Interfaces;
 using vCardLib.Extensions;
 using vCardLib.Models;
 using vCardLib.Utilities;

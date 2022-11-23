@@ -1,6 +1,6 @@
 ﻿namespace vCardLib.Constants;
 
-internal sealed class TelephoneNumberTypeConstants
+internal static class TelephoneNumberTypeConstants
 {
     public const string Extension = "EXT";
 
@@ -31,6 +31,4 @@ internal sealed class TelephoneNumberTypeConstants
     public const string Car = "CAR";
 
     public const string Isdn = "ISDN";
-
-    public const string Pref = "PREF";
 }
