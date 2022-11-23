@@ -10,7 +10,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Label>, IV3FieldDeserializer<Label>,
+internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Label>, IV3FieldDeserializer<Label>,
     IV4FieldDeserializer<Label?>
 {
     public string FieldKey => "LABEL";

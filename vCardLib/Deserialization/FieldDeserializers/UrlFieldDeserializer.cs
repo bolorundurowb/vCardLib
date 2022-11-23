@@ -2,7 +2,7 @@
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class UrlFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
+internal sealed class UrlFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
     IV4FieldDeserializer<string>
 {
     public string FieldKey => "URL";

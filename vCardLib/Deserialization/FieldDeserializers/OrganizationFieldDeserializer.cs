@@ -4,7 +4,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class OrganizationFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Organization?>, IV3FieldDeserializer<Organization?>,
+internal sealed class OrganizationFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Organization?>, IV3FieldDeserializer<Organization?>,
     IV4FieldDeserializer<Organization?>
 {
     public string FieldKey => "ORG";

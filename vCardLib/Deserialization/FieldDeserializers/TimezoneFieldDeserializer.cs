@@ -2,7 +2,7 @@
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class TimezoneFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
+internal sealed class TimezoneFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
     IV4FieldDeserializer<string>
 {
     public string FieldKey => "TZ";

@@ -4,7 +4,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class GenderFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Gender?>,
+internal sealed class GenderFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Gender?>,
     IV3FieldDeserializer<Gender?>, IV4FieldDeserializer<Gender>
 {
     public string FieldKey => "GENDER";

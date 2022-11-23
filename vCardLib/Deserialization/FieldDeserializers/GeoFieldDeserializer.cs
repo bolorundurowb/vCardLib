@@ -4,7 +4,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class GeoFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Geo>, IV3FieldDeserializer<Geo>,
+internal sealed class GeoFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Geo>, IV3FieldDeserializer<Geo>,
     IV4FieldDeserializer<Geo>
 {
     public string FieldKey => "GEO";

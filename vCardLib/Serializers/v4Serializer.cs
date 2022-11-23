@@ -8,7 +8,7 @@
 // /// <summary>
 // /// Handles the serialization of version 4 cards
 // /// </summary>
-// internal class v4Serializer : Serializer
+// internal sealed class v4Serializer : Serializer
 // {
 //     protected override void AddVersion(StringBuilder stringBuilder)
 //     {

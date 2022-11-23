@@ -2,7 +2,7 @@
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class MailerFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
+internal sealed class MailerFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
     IV4FieldDeserializer<string?>
 {
     public string FieldKey => "MAILER";

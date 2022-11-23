@@ -3,7 +3,7 @@ using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class ProdIdFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>,
+internal sealed class ProdIdFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>,
     IV3FieldDeserializer<string>, IV4FieldDeserializer<string>
 {
     public string FieldKey => "PRODID";

@@ -1,6 +1,6 @@
 ﻿namespace vCardLib.Constants;
 
-internal class EmailAddressTypeConstants
+internal sealed class EmailAddressTypeConstants
 {
     public const string Internet = "INTERNET";
 

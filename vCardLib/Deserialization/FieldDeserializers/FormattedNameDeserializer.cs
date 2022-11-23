@@ -2,7 +2,7 @@
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class FormattedNameDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>,
+internal sealed class FormattedNameDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>,
     IV3FieldDeserializer<string>, IV4FieldDeserializer<string>
 {
     public string FieldKey => "FN";

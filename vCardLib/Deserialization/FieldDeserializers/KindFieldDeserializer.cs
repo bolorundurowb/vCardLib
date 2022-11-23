@@ -3,7 +3,7 @@ using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal class KindFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<ContactKind?>,
+internal sealed class KindFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<ContactKind?>,
     IV3FieldDeserializer<ContactKind?>, IV4FieldDeserializer<ContactKind>
 {
     public string FieldKey => "KIND";
