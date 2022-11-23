@@ -31,4 +31,6 @@ internal static class TelephoneNumberTypeConstants
     public const string Car = "CAR";
 
     public const string Isdn = "ISDN";
+
+    public const string Pcs = "PCS";
 }

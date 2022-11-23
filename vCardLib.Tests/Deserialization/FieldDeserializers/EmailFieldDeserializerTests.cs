@@ -14,31 +14,31 @@ public class EmailFieldDeserializerTests
     public void V2ShouldParseSimple()
     {
         const string input = @"EMAIL:johndoe@hotmail.com";
-        IV2FieldDeserializer<EmailAddress> deserializer = new EmailFieldDeserializer();
+        IV2FieldDeserializer<EmailAddress> deserializer = new EmaiAddresslFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBeNull();
         result.Type.ShouldBe(EmailAddressType.None);
         result.Value.ShouldBe("johndoe@hotmail.com");
     }
-    
+
     [Test]
     public void V3ShouldParseComplex()
     {
         const string input = @"EMAIL;type=INTERNET;type=WORK;pref:johnDoe@example.org";
-        IV3FieldDeserializer<EmailAddress> deserializer = new EmailFieldDeserializer();
+        IV3FieldDeserializer<EmailAddress> deserializer = new EmaiAddresslFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBe(1);
         result.Type.ShouldBe(EmailAddressType.Internet | EmailAddressType.Work);
         result.Value.ShouldBe("johnDoe@example.org");
     }
-    
+
     [Test]
     public void V4ShouldParseComplex()
     {
         const string input = @"EMAIL;type=Aol;type=HOME;pref=1:johnDoe@example.org";
-        IV4FieldDeserializer<EmailAddress> deserializer = new EmailFieldDeserializer();
+        IV4FieldDeserializer<EmailAddress> deserializer = new EmaiAddresslFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBe(1);

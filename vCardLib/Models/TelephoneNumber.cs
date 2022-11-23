@@ -2,10 +2,7 @@
 
 namespace vCardLib.Models;
 
-/// <summary>
-/// Object to store phone  number details
-/// </summary>
-public class TelephoneNumber
+public struct TelephoneNumber
 {
     /// <summary>
     /// The Number
@@ -15,7 +12,7 @@ public class TelephoneNumber
     /// <summary>
     /// The telephone number extension
     /// </summary>
-    public string Extension { get; set; }
+    public string? Extension { get; set; }
 
     /// <summary>
     /// The number type

@@ -6,7 +6,7 @@ using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class EmailFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<EmailAddress>,
+internal sealed class EmaiAddresslFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<EmailAddress>,
     IV3FieldDeserializer<EmailAddress>, IV4FieldDeserializer<EmailAddress>
 {
     public string FieldKey => "EMAIL";
@@ -29,7 +29,7 @@ internal sealed class EmailFieldDeserializer : IFieldDeserializer, IV2FieldDeser
             {
                 var emailType = data?.ParseEmailAddressType();
 
-                if (emailType.HasValue) 
+                if (emailType.HasValue)
                     type = type.HasValue ? type.Value | emailType : emailType;
             }
             else if (key.EqualsIgnoreCase("PREF"))
@@ -57,7 +57,7 @@ internal sealed class EmailFieldDeserializer : IFieldDeserializer, IV2FieldDeser
             {
                 var emailType = data?.ParseEmailAddressType();
 
-                if (emailType.HasValue) 
+                if (emailType.HasValue)
                     type = type.HasValue ? type.Value | emailType : emailType;
             }
             else if (key.EqualsIgnoreCase("PREF"))

@@ -1,5 +1,4 @@
-﻿using System;
-using vCardLib.Constants;
+﻿using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 
@@ -30,50 +29,53 @@ internal static class EnumHelpers
         return null;
     }
         
-    public static TelephoneNumberType ParseTelephoneType(string typeString)
+    public static TelephoneNumberType? ParseTelephoneNumberType(string type)
     {
-        if (TelephoneNumberTypeConstants.Voice.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Voice.EqualsIgnoreCase(type))
             return TelephoneNumberType.Voice;
 
-        if (TelephoneNumberTypeConstants.Text.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Text.EqualsIgnoreCase(type))
             return TelephoneNumberType.Text;
 
-        if (TelephoneNumberTypeConstants.Fax.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Fax.EqualsIgnoreCase(type))
             return TelephoneNumberType.Fax;
 
-        if (TelephoneNumberTypeConstants.Cell.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Cell.EqualsIgnoreCase(type))
             return TelephoneNumberType.Cell;
 
-        if (TelephoneNumberTypeConstants.Video.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Video.EqualsIgnoreCase(type))
             return TelephoneNumberType.Video;
 
-        if (TelephoneNumberTypeConstants.Pager.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Pager.EqualsIgnoreCase(type))
             return TelephoneNumberType.Pager;
 
-        if (TelephoneNumberTypeConstants.TextPhone.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.TextPhone.EqualsIgnoreCase(type))
             return TelephoneNumberType.TextPhone;
 
-        if (TelephoneNumberTypeConstants.Home.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Home.EqualsIgnoreCase(type))
             return TelephoneNumberType.Home;
 
-        if (TelephoneNumberTypeConstants.MainNumber.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.MainNumber.EqualsIgnoreCase(type))
             return TelephoneNumberType.MainNumber;
 
-        if (TelephoneNumberTypeConstants.Work.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Work.EqualsIgnoreCase(type))
             return TelephoneNumberType.Work;
 
-        if (TelephoneNumberTypeConstants.Bbs.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Bbs.EqualsIgnoreCase(type))
             return TelephoneNumberType.BBS;
 
-        if (TelephoneNumberTypeConstants.Modem.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Modem.EqualsIgnoreCase(type))
             return TelephoneNumberType.Modem;
 
-        if (TelephoneNumberTypeConstants.Car.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Car.EqualsIgnoreCase(type))
             return TelephoneNumberType.Car;
 
-        if (TelephoneNumberTypeConstants.Isdn.Equals(typeString, StringComparison.OrdinalIgnoreCase))
+        if (TelephoneNumberTypeConstants.Isdn.EqualsIgnoreCase(type))
             return TelephoneNumberType.ISDN;
 
-        return TelephoneNumberType.None;
+        if (TelephoneNumberTypeConstants.Pcs.EqualsIgnoreCase(type))
+            return TelephoneNumberType.PCS;
+
+        return null;
     }
 }
