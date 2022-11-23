@@ -1,6 +1,7 @@
 ﻿using System;
 using vCardLib.Constants;
 using vCardLib.Enums;
+using vCardLib.Extensions;
 
 namespace vCardLib.Utilities;
 
@@ -8,22 +9,22 @@ internal static class EnumHelpers
 {
     public static EmailAddressType? ParseEmailAddressType(this string type)
     {
-        if (EmailAddressTypeConstants.Internet.Equals(type, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Internet.EqualsIgnoreCase(type))
             return EmailAddressType.Internet;
 
-        if (EmailAddressTypeConstants.Home.Equals(type, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Home.EqualsIgnoreCase(type))
             return EmailAddressType.Home;
 
-        if (EmailAddressTypeConstants.Work.Equals(type, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Work.EqualsIgnoreCase(type))
             return EmailAddressType.Work;
 
-        if (EmailAddressTypeConstants.Aol.Equals(type, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.Aol.EqualsIgnoreCase(type))
             return EmailAddressType.Aol;
 
-        if (EmailAddressTypeConstants.IbmMail.Equals(type, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.IbmMail.EqualsIgnoreCase(type))
             return EmailAddressType.IbmMail;
 
-        if (EmailAddressTypeConstants.AppleLink.Equals(type, StringComparison.OrdinalIgnoreCase))
+        if (EmailAddressTypeConstants.AppleLink.EqualsIgnoreCase(type))
             return EmailAddressType.Applelink;
 
         return null;

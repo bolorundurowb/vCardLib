@@ -19,10 +19,10 @@ public struct EmailAddress
     /// </summary>
     public int? Preference { get; set; }
 
-    public EmailAddress(string value, EmailAddressType type = EmailAddressType.None, int? preference = null)
+    public EmailAddress(string value, EmailAddressType? type = null, int? preference = null)
     {
         Value = value;
-        Type = type;
         Preference = preference;
+        Type = type ?? EmailAddressType.None;
     }
 }
