@@ -23,4 +23,12 @@ public struct TelephoneNumber
     /// Indicates the telephone numbers preference level (lower values mean a higher preference)
     /// </summary>
     public int? Preference { get; set; }
+
+    public TelephoneNumber(string value, TelephoneNumberType? telephoneNumberType = null, string? extension = null, int? preference = null)
+    {
+        Value = value;
+        Extension = extension;
+        Preference = preference;
+        Type = telephoneNumberType ?? TelephoneNumberType.None;
+    }
 }

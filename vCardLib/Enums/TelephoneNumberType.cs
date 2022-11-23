@@ -38,5 +38,7 @@ public enum TelephoneNumberType
 
     ISDN = 8192,
     
-    PCS = 16384
+    PCS = 16384,
+    
+    Preferred = 32768
 }

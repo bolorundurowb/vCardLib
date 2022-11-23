@@ -8,7 +8,7 @@ using vCardLib.Models;
 namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 
 [TestFixture]
-public class EmailFieldDeserializerTests
+public class EmailAddressFieldDeserializerTests
 {
     [Test]
     public void V2ShouldParseSimple()

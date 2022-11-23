@@ -20,5 +20,7 @@ public enum EmailAddressType
 
     Applelink = 16,
 
-    IbmMail = 32
+    IbmMail = 32,
+    
+    Preferred = 64
 }

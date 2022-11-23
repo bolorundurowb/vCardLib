@@ -26,10 +26,13 @@ internal static class EnumHelpers
         if (EmailAddressTypeConstants.AppleLink.EqualsIgnoreCase(type))
             return EmailAddressType.Applelink;
 
+        if (EmailAddressTypeConstants.Preferred.EqualsIgnoreCase(type))
+            return EmailAddressType.Preferred;
+
         return null;
     }
         
-    public static TelephoneNumberType? ParseTelephoneNumberType(string type)
+    public static TelephoneNumberType? ParseTelephoneNumberType(this string type)
     {
         if (TelephoneNumberTypeConstants.Voice.EqualsIgnoreCase(type))
             return TelephoneNumberType.Voice;
@@ -75,6 +78,9 @@ internal static class EnumHelpers
 
         if (TelephoneNumberTypeConstants.Pcs.EqualsIgnoreCase(type))
             return TelephoneNumberType.PCS;
+
+        if (TelephoneNumberTypeConstants.Preferred.EqualsIgnoreCase(type))
+            return TelephoneNumberType.Preferred;
 
         return null;
     }

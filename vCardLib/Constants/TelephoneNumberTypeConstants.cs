@@ -33,4 +33,6 @@ internal static class TelephoneNumberTypeConstants
     public const string Isdn = "ISDN";
 
     public const string Pcs = "PCS";
+
+    public const string Preferred = "PREF";
 }

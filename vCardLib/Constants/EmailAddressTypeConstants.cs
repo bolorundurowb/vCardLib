@@ -13,4 +13,6 @@ internal static class EmailAddressTypeConstants
     public const string AppleLink = "APPLELINK";
 
     public const string IbmMail = "IBMMAIL";
+
+    public const string Preferred = "PREF";
 }
