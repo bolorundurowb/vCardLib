@@ -2,11 +2,11 @@
 
 internal static class FieldKeyConstants
 {
-    public static char[] SectionDelimiter = { ':' };
+    public const char SectionDelimiter = ':';
 
     public static char[] KeyValueDelimiter = { '=' };
 
-    public static char[] MetadataDelimiter = { ';' };
+    public const char MetadataDelimiter = ';';
 
     public const string StartToken = "BEGIN:VCARD";
 

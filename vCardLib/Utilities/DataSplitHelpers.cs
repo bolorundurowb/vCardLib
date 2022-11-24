@@ -1,18 +1,20 @@
-﻿namespace vCardLib.Utilities;
+﻿using vCardLib.Constants;
+
+namespace vCardLib.Utilities;
 
 internal static class DataSplitHelpers
 {
     public static (string[], string) SplitLine(string fieldKey, string input)
     {
         input = input.Replace(fieldKey, string.Empty)
-            .TrimStart(':')
-            .TrimStart(';');
+            .TrimStart(FieldKeyConstants.SectionDelimiter)
+            .TrimStart(FieldKeyConstants.MetadataDelimiter);
 
-        var index = input.IndexOf(':');
+        var index = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         var metadata = input.Substring(0, index < 0 ? 0 : index);
         var value = input.Substring(index + 1);
 
-        return (metadata.Split(';'), value);
+        return (metadata.Split(FieldKeyConstants.MetadataDelimiter), value);
     }
 
     public static (string, string?) SplitDatum(string datum, char metadataSeparator)

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using vCardLib.Enums;
+﻿using vCardLib.Enums;
 
 namespace vCardLib.Models;
 
@@ -7,7 +6,11 @@ public struct Label
 {
     public string? Text { get; set; }
 
-    public List<AddressType> Types { get; set; } = new();
+    public AddressType Type { get; set; }
 
-    public Label(string? text) => Text = text;
+    public Label(string? text, AddressType? addressType = null)
+    {
+        Text = text;
+        Type = addressType ?? AddressType.None;
+    }
 }

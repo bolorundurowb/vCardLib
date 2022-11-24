@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using vCardLib.Enums;
+﻿using vCardLib.Enums;
 
 namespace vCardLib.Models;
 
@@ -19,16 +18,17 @@ public struct Address
 
     public string Country { get; set; }
 
+    public AddressType Type { get; set; }
+
     public string? Label { get; set; }
 
     public Geo? Geographic { get; set; }
 
     public string? Timezone { get; set; }
 
-    public List<AddressType> Types { get; set; } = new();
-
     public Address(string postOfficeBox, string apartmentOrSuiteNumber, string streetAddress, string cityOrLocality,
-        string stateOrProvinceOrRegion, string postalOrZipCode, string country, string? label, Geo? geographic, string? timezone)
+        string stateOrProvinceOrRegion, string postalOrZipCode, string country, AddressType? addressType = null,
+        string? label = null, Geo? geographic = null, string? timezone = null)
     {
         PostOfficeBox = postOfficeBox;
         ApartmentOrSuiteNumber = apartmentOrSuiteNumber;
@@ -40,5 +40,6 @@ public struct Address
         Label = label;
         Geographic = geographic;
         Timezone = timezone;
+        Type = addressType ?? AddressType.None;
     }
 }

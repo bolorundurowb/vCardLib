@@ -10,7 +10,8 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Label>, IV3FieldDeserializer<Label>,
+internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Label>,
+    IV3FieldDeserializer<Label>,
     IV4FieldDeserializer<Label?>
 {
     public string FieldKey => "LABEL";
@@ -21,16 +22,14 @@ internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeser
         var preamble = input.Substring(0, separatorIndex).Trim();
         var value = input.Substring(separatorIndex + 1).Trim();
 
-        var label = new Label(Regex.Unescape(value));
-        label.Types.AddRange(ParseTypes(preamble));
-
-        return label;
+        return new Label(Regex.Unescape(value), ParseTypes(preamble));
     }
 
     Label? IV4FieldDeserializer<Label?>.Read(string input) => null;
 
-    private static IEnumerable<AddressType> ParseTypes(string part)
+    private static AddressType? ParseTypes(string part)
     {
+        AddressType? addressType = null;
         const string typeKey = "TYPE=";
         var typeGroups = part
             .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
@@ -45,9 +44,16 @@ internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeser
             {
                 var parsedValue = SharedParsers.ParseAddressType(type);
 
-                if (parsedValue != null)
-                    yield return parsedValue.Value;
+                if (parsedValue == null)
+                    continue;
+
+                if (addressType.HasValue)
+                    addressType |= parsedValue.Value;
+                else
+                    addressType = parsedValue.Value;
             }
         }
+
+        return addressType;
     }
 }
