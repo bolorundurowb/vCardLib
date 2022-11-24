@@ -1,5 +1,4 @@
 ﻿using System;
-using vCardLib.Enums;
 
 namespace vCardLib.Models;
 
@@ -21,6 +20,14 @@ public struct Photo
     public string? Encoding { get; set; }
 
     public string Value { get; set; }
+
+    public Photo(string value, string? encoding = null, string? type = null, string? mimeType = null)
+    {
+        Value = value;
+        Encoding = encoding;
+        Type = type;
+        MimeType = mimeType;
+    }
 
     public byte[] AsByteArray() => Convert.FromBase64String(Value);
 }

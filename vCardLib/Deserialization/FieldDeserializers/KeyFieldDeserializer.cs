@@ -71,6 +71,8 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
             if (key.EqualsIgnoreCase("MEDIATYPE"))
                 mimeType = data;
+            else if (key.EqualsIgnoreCase("TYPE"))
+                type = data;
         }
 
         if (value.StartsWithIgnoreCase(dataPrefix))
