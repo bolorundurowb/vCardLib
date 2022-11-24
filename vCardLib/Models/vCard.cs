@@ -93,6 +93,11 @@ public class vCard
     public DateTime? BirthDay { get; set; }
 
     /// <summary>
+    /// The logo of the organization that is associated with the individual to which the vCard belongs
+    /// </summary>
+    public Photo? Logo { get; set; }
+
+    /// <summary>
     /// Information about another person who will act on behalf of the vCard object.
     /// </summary>
     public string? Agent { get; set; }
@@ -125,7 +130,7 @@ public class vCard
     /// <summary>
     /// A collection of photos associated with the contact
     /// </summary>
-    public List<Photo> Pictures { get; set; }
+    public List<Photo> Photos { get; set; }
 
     /// <summary>
     /// The contact's addresses
@@ -144,7 +149,7 @@ public class vCard
     {
         PhoneNumbers = new List<TelephoneNumber>();
         EmailAddresses = new List<EmailAddress>();
-        Pictures = new List<Photo>();
+        Photos = new List<Photo>();
         Addresses = new List<Address>();
         CustomFields = new List<KeyValuePair<string, string>>();
     }

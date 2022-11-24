@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
 using vCardLib.Extensions;
@@ -27,7 +28,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IFieldDeserializer, IV2
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("TYPE"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
             {
                 if (string.IsNullOrWhiteSpace(data))
                     continue;
@@ -64,7 +65,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IFieldDeserializer, IV2
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("TYPE"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
             {
                 if (string.IsNullOrWhiteSpace(data))
                     continue;

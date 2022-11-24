@@ -14,7 +14,7 @@ public class EmailAddressFieldDeserializerTests
     public void V2ShouldParseSimple()
     {
         const string input = @"EMAIL:johndoe@hotmail.com";
-        IV2FieldDeserializer<EmailAddress> deserializer = new EmaiAddresslFieldDeserializer();
+        IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBeNull();
@@ -26,7 +26,7 @@ public class EmailAddressFieldDeserializerTests
     public void V3ShouldParseComplex()
     {
         const string input = @"EMAIL;type=INTERNET;type=WORK;pref:johnDoe@example.org";
-        IV3FieldDeserializer<EmailAddress> deserializer = new EmaiAddresslFieldDeserializer();
+        IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBe(1);
@@ -38,7 +38,7 @@ public class EmailAddressFieldDeserializerTests
     public void V4ShouldParseComplex()
     {
         const string input = @"EMAIL;type=Aol;type=HOME;pref=1:johnDoe@example.org";
-        IV4FieldDeserializer<EmailAddress> deserializer = new EmaiAddresslFieldDeserializer();
+        IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBe(1);

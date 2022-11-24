@@ -14,6 +14,10 @@ internal static class FieldKeyConstants
 
     public const string TypeKey = "TYPE";
 
+    public const string MediaTypeKey = "MEDIATYPE";
+
+    public const string EncodingKey = "ENCODING";
+
     public const string PreferenceKey = "PREF";
 
     public const string EmailKey = "EMAIL";

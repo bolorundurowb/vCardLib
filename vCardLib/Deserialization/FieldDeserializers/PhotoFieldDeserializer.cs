@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Constants;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Extensions;
 using vCardLib.Models;
 using vCardLib.Utilities;
@@ -8,7 +9,9 @@ namespace vCardLib.Deserialization.FieldDeserializers;
 internal sealed class PhotoFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Photo>,
     IV3FieldDeserializer<Photo>, IV4FieldDeserializer<Photo>
 {
-    public string FieldKey => "PHOTO";
+    public string FieldKey { get; }
+
+    public PhotoFieldDeserializer(string fieldKey) => FieldKey = fieldKey;
 
     Photo IV2FieldDeserializer<Photo>.Read(string input)
     {
@@ -23,7 +26,7 @@ internal sealed class PhotoFieldDeserializer : IFieldDeserializer, IV2FieldDeser
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("ENCODING"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
                 encoding = data;
             // HACK: not sure how else to distinguish the type for v2.1
             else
@@ -46,9 +49,9 @@ internal sealed class PhotoFieldDeserializer : IFieldDeserializer, IV2FieldDeser
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("ENCODING"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
                 encoding = data == "b" ? "BASE64" : data;
-            else if (key.EqualsIgnoreCase("TYPE"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 type = data;
         }
 
@@ -71,7 +74,7 @@ internal sealed class PhotoFieldDeserializer : IFieldDeserializer, IV2FieldDeser
 
             if (key.EqualsIgnoreCase("MEDIATYPE"))
                 mimeType = data;
-            else if (key.EqualsIgnoreCase("TYPE"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 type = data;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
 
@@ -25,7 +26,7 @@ internal sealed class LanguageFieldDeserializer : IFieldDeserializer, IV2FieldDe
 
         var metadata = parts[0].Split(';');
 
-        var typeMetadatum = metadata.First(x => x.StartsWith("TYPE", StringComparison.CurrentCultureIgnoreCase));
+        var typeMetadatum = metadata.First(x => x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.CurrentCultureIgnoreCase));
 
         if (!string.IsNullOrWhiteSpace(typeMetadatum))
         {

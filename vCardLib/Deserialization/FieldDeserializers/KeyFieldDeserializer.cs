@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Constants;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Extensions;
 using vCardLib.Models;
 using vCardLib.Utilities;
@@ -23,7 +24,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("ENCODING"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
                 encoding = data;
             // HACK: not sure how else to distinguish the type for v2.1
             else
@@ -46,9 +47,9 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("ENCODING"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
                 encoding = data == "b" ? "BASE64" : data;
-            else if (key.EqualsIgnoreCase("TYPE"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 type = data;
         }
 
@@ -71,7 +72,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
 
             if (key.EqualsIgnoreCase("MEDIATYPE"))
                 mimeType = data;
-            else if (key.EqualsIgnoreCase("TYPE"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 type = data;
         }
 

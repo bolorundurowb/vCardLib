@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Constants;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
@@ -6,7 +7,7 @@ using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class EmaiAddresslFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<EmailAddress>,
+internal sealed class EmailAddressFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<EmailAddress>,
     IV3FieldDeserializer<EmailAddress>, IV4FieldDeserializer<EmailAddress>
 {
     public string FieldKey => "EMAIL";
@@ -25,7 +26,7 @@ internal sealed class EmaiAddresslFieldDeserializer : IFieldDeserializer, IV2Fie
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("TYPE"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
             {
                 var emailType = data?.ParseEmailAddressType();
 
@@ -53,7 +54,7 @@ internal sealed class EmaiAddresslFieldDeserializer : IFieldDeserializer, IV2Fie
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("TYPE"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
             {
                 var emailType = data?.ParseEmailAddressType();
 
