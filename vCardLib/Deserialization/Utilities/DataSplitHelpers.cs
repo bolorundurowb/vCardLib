@@ -1,6 +1,6 @@
 ﻿using vCardLib.Constants;
 
-namespace vCardLib.Utilities;
+namespace vCardLib.Deserialization.Utilities;
 
 internal static class DataSplitHelpers
 {

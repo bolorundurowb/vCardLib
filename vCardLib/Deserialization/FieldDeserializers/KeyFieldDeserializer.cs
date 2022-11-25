@@ -1,5 +1,6 @@
 ﻿using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
+using vCardLib.Deserialization.Utilities;
 using vCardLib.Extensions;
 using vCardLib.Models;
 using vCardLib.Utilities;
@@ -70,7 +71,7 @@ public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("MEDIATYPE"))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
                 mimeType = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 type = data;

@@ -18,7 +18,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>vcard, vcardlib</PackageTags>
     <PackageVersion>5.0.0</PackageVersion>
-    <TargetFrameworks>net5.0;net6.0;netstandard1.6;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
     <Company>bolorundurowb</Company>
     <AssemblyVersion>5.0.0</AssemblyVersion>
     <FileVersion>5.0.0</FileVersion>
@@ -31,7 +31,7 @@
     <Folder Include="Serialization\Interfaces" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 

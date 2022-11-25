@@ -4,7 +4,7 @@ internal static class FieldKeyConstants
 {
     public const char SectionDelimiter = ':';
 
-    public const char KeyValueDelimiter =  '=' ;
+    public const char KeyValueDelimiter = '=';
 
     public const char MetadataDelimiter = ';';
 
@@ -20,9 +20,5 @@ internal static class FieldKeyConstants
 
     public const string EncodingKey = "ENCODING";
 
-    public const string PreferenceKey = "PREF";
-
-    public const string EmailKey = "EMAIL";
-
-    public const string TelKey = "TEL";
+    public const string VersionKey = "VERSION";
 }

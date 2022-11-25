@@ -110,49 +110,37 @@ public class vCard
     /// <summary>
     /// category information about the vCard, also known as "tags"
     /// </summary>
-    public List<string> Categories { get; set; }
+    public List<string> Categories { get; set; } = new();
 
     /// <summary>
     /// a member in the group this vCard represents.
     /// </summary>
-    public List<string> Members { get; set; }
+    public List<string> Members { get; set; } = new();
 
     /// <summary>
     /// A collection of phone numbers associated with the contact
     /// </summary>
-    public List<TelephoneNumber> PhoneNumbers { get; set; }
+    public List<TelephoneNumber> PhoneNumbers { get; set; } = new();
 
     /// <summary>
     /// A collection of email addresses associated with the contact
     /// </summary>
-    public List<EmailAddress> EmailAddresses { get; set; }
+    public List<EmailAddress> EmailAddresses { get; set; } = new();
 
     /// <summary>
     /// A collection of photos associated with the contact
     /// </summary>
-    public List<Photo> Photos { get; set; }
+    public List<Photo> Photos { get; set; } = new();
 
     /// <summary>
     /// The contact's addresses
     /// </summary>
-    public List<Address> Addresses { get; set; }
+    public List<Address> Addresses { get; set; } = new();
 
     /// <summary>
     /// All other fields not defined in the spec
     /// </summary>
-    public List<KeyValuePair<string, string>> CustomFields { get; set; }
-
-    /// <summary>
-    /// Default constructor, it initializes the collections in the vCard object
-    /// </summary>
-    public vCard()
-    {
-        PhoneNumbers = new List<TelephoneNumber>();
-        EmailAddresses = new List<EmailAddress>();
-        Photos = new List<Photo>();
-        Addresses = new List<Address>();
-        CustomFields = new List<KeyValuePair<string, string>>();
-    }
+    public List<KeyValuePair<string, string>> CustomFields { get; set; } = new();
 
     /// <inheritdoc/>
     // public override string ToString()
