@@ -31,7 +31,7 @@ internal static class SharedParsers
         return null;
     }
 
-    public static AddressType? ParseAddressType(string input)
+    public static AddressType? ParseAddressType(this string input)
     {
         if ("dom".EqualsIgnoreCase(input))
             return AddressType.Domestic;
@@ -50,6 +50,85 @@ internal static class SharedParsers
 
         if ("work".EqualsIgnoreCase(input))
             return AddressType.Work;
+
+        return null;
+    }
+
+    public static EmailAddressType? ParseEmailAddressType(this string type)
+    {
+        if ("internet".EqualsIgnoreCase(type))
+            return EmailAddressType.Internet;
+
+        if ("home".EqualsIgnoreCase(type))
+            return EmailAddressType.Home;
+
+        if ("work".EqualsIgnoreCase(type))
+            return EmailAddressType.Work;
+
+        if ("aol".EqualsIgnoreCase(type))
+            return EmailAddressType.Aol;
+
+        if ("ibmmail".EqualsIgnoreCase(type))
+            return EmailAddressType.IbmMail;
+
+        if ("applelink".EqualsIgnoreCase(type))
+            return EmailAddressType.Applelink;
+
+        if ("pref".EqualsIgnoreCase(type))
+            return EmailAddressType.Preferred;
+
+        return null;
+    }
+        
+    public static TelephoneNumberType? ParseTelephoneNumberType(this string type)
+    {
+        if ("voice".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Voice;
+
+        if ("text".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Text;
+
+        if ("fax".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Fax;
+
+        if ("cell".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Cell;
+
+        if ("video".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Video;
+
+        if ("pager".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Pager;
+
+        if ("textphone".EqualsIgnoreCase(type))
+            return TelephoneNumberType.TextPhone;
+
+        if ("home".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Home;
+
+        if ("main-number".EqualsIgnoreCase(type))
+            return TelephoneNumberType.MainNumber;
+
+        if ("work".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Work;
+
+        if ("bbs".EqualsIgnoreCase(type))
+            return TelephoneNumberType.BBS;
+
+        if ("modem".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Modem;
+
+        if ("car".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Car;
+
+        if ("isdn".EqualsIgnoreCase(type))
+            return TelephoneNumberType.ISDN;
+
+        if ("pcs".EqualsIgnoreCase(type))
+            return TelephoneNumberType.PCS;
+
+        if ("pref".EqualsIgnoreCase(type))
+            return TelephoneNumberType.Preferred;
 
         return null;
     }

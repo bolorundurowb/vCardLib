@@ -64,7 +64,7 @@ internal sealed class AddressFieldDeserializer : IFieldDeserializer, IV2FieldDes
 
         foreach (var typeGroup in typeGroups)
         {
-            var parsedValue = SharedParsers.ParseAddressType(typeGroup);
+            var parsedValue = typeGroup.ParseAddressType();
 
             if (parsedValue == null)
                 continue;

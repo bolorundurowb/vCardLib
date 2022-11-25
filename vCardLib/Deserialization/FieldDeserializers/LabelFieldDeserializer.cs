@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using vCardLib.Deserialization.Interfaces;
@@ -42,7 +41,7 @@ internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeser
 
             foreach (var type in types)
             {
-                var parsedValue = SharedParsers.ParseAddressType(type);
+                var parsedValue = type.ParseAddressType();
 
                 if (parsedValue == null)
                     continue;

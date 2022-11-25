@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
+using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
