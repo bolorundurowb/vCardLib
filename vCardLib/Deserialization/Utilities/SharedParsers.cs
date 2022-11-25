@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 
@@ -14,9 +15,9 @@ internal static class SharedParsers
         const string timeFormat = "hhmm";
         const string dateTimeFormat = "yyyyMMddTHHmmssZ";
 
-        input = input.Replace("-", string.Empty)
-            .TrimStart(':')
-            .TrimStart(';')
+        input = input.Replace(FieldKeyConstants.KeyValueDelimiter.ToString(), string.Empty)
+            .TrimStart(FieldKeyConstants.SectionDelimiter)
+            .TrimStart(FieldKeyConstants.MetadataDelimiter)
             .TrimStart();
 
         if (DateTime.TryParseExact(input, dateFormat, provider, DateTimeStyles.AssumeUniversal, out var date))
@@ -79,7 +80,7 @@ internal static class SharedParsers
 
         return null;
     }
-        
+
     public static TelephoneNumberType? ParseTelephoneNumberType(this string type)
     {
         if ("voice".EqualsIgnoreCase(type))

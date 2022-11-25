@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
+using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
@@ -17,42 +17,36 @@ internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeser
 
     public Label Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
-        var preamble = input.Substring(0, separatorIndex).Trim();
-        var value = input.Substring(separatorIndex + 1).Trim();
+        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
-        return new Label(Regex.Unescape(value), ParseTypes(preamble));
-    }
+        if (metadata.Length == 0)
+            return new Label(Regex.Unescape(value));
 
-    Label? IV4FieldDeserializer<Label?>.Read(string input) => null;
+        AddressType? type = null;
 
-    private static AddressType? ParseTypes(string part)
-    {
-        AddressType? addressType = null;
-        const string typeKey = "TYPE=";
-        var typeGroups = part
-            .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(x => x.Trim());
-
-        foreach (var typeGroup in typeGroups.Where(x => x.StartsWithIgnoreCase(typeKey)))
+        foreach (var datum in metadata)
         {
-            var value = typeGroup.Replace(typeKey, string.Empty);
-            var types = value.Split(',');
+            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            foreach (var type in types)
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
             {
-                var parsedValue = type.ParseAddressType();
-
-                if (parsedValue == null)
+                if (string.IsNullOrWhiteSpace(data))
                     continue;
 
-                if (addressType.HasValue)
-                    addressType |= parsedValue.Value;
-                else
-                    addressType = parsedValue.Value;
+                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
+
+                foreach (var individualType in typeGroup)
+                {
+                    var adrType = individualType.ParseAddressType();
+
+                    if (adrType.HasValue)
+                        type = type.HasValue ? type.Value | adrType : adrType;
+                }
             }
         }
 
-        return addressType;
+        return new Label(Regex.Unescape(value), type);
     }
+
+    Label? IV4FieldDeserializer<Label?>.Read(string input) => null;
 }

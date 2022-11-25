@@ -4,9 +4,11 @@ internal static class FieldKeyConstants
 {
     public const char SectionDelimiter = ':';
 
-    public static char[] KeyValueDelimiter = { '=' };
+    public const char KeyValueDelimiter =  '=' ;
 
     public const char MetadataDelimiter = ';';
+
+    public const char ConcatenationDelimiter = ',';
 
     public const string StartToken = "BEGIN:VCARD";
 
