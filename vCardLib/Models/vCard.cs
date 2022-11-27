@@ -25,7 +25,7 @@ public class vCard
     /// </summary>
     public string FormattedName { get; set; }
 
-    /// <summary>
+    /// <summary>````   123
     /// text corresponding to the nickname of the object the vCard represents.
     /// </summary>
     public string? NickName { get; set; }
