@@ -1,22 +1,21 @@
 ﻿using NUnit.Framework;
 using vCardLib.Models;
 
-namespace vCardLib.Tests.ModelTests
+namespace vCardLib.Tests.ModelTests;
+
+[TestFixture]
+public class GeoTests
 {
-    [TestFixture]
-    public class GeoTests
+    public void PropertiesTest()
     {
-        public void PropertiesTest()
-        {
-            Assert.DoesNotThrow(
-                delegate
+        Assert.DoesNotThrow(
+            delegate
+            {
+                var geo = new Geo()
                 {
-                    var geo = new Geo()
-                    {
-                        Latitude = -4.56,
-                        Longitude = +45.77
-                    };
-                });
-        }
+                    Latitude = -4.56,
+                    Longitude = +45.77
+                };
+            });
     }
 }

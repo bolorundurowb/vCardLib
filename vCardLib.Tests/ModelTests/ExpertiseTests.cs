@@ -4,23 +4,22 @@ using NUnit.Framework;
 using vCardLib.Enums;
 using vCardLib.Models;
 
-namespace vCardLib.Tests.ModelTests
+namespace vCardLib.Tests.ModelTests;
+
+[TestFixture]
+public class ExpertiseTests
 {
-	[TestFixture]
-	public class ExpertiseTests
+	[Test]
+	public void ExpertiseIsStable()
 	{
-		[Test]
-		public void ExpertiseIsStable()
-		{
-			Assert.DoesNotThrow(delegate {
-			    var expertise = new Expertise
-			    {
-			        Area = "Engineering",
-			        Level = Level.High
-			    };
-			    expertise.Level = Level.Low;
-				expertise.Level = Level.Medium;
-			});
-		}
+		Assert.DoesNotThrow(delegate {
+			var expertise = new Expertise
+			{
+				Area = "Engineering",
+				Level = Level.High
+			};
+			expertise.Level = Level.Low;
+			expertise.Level = Level.Medium;
+		});
 	}
 }

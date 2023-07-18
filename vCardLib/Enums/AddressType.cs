@@ -1,16 +1,15 @@
-﻿namespace vCardLib.Models
+﻿namespace vCardLib.Models;
+
+/// <summary>
+/// Address type.
+/// </summary>
+public enum AddressType
 {
-    /// <summary>
-    /// Address type.
-    /// </summary>
-    public enum AddressType
-    {
-        Work,
-        Home,
-        Domestic,
-        International,
-        Postal,
-        Parcel,
-        None
-    }
+    Work,
+    Home,
+    Domestic,
+    International,
+    Postal,
+    Parcel,
+    None
 }

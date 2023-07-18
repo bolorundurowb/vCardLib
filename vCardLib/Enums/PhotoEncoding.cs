@@ -1,11 +1,10 @@
-﻿namespace vCardLib.Enums
+﻿namespace vCardLib.Enums;
+
+/// <summary>
+/// Supported ecnoding types
+/// </summary>
+public enum PhotoEncoding
 {
-    /// <summary>
-    /// Supported ecnoding types
-    /// </summary>
-    public enum PhotoEncoding
-    {
-        JPEG,
-        GIF
-    }
+    JPEG,
+    GIF
 }
