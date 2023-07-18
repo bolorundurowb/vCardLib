@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Models;
@@ -69,16 +71,42 @@ public abstract class Serializer
         return stringBuilder.ToString();
     }
 
+    /// <summary>
+    /// Serialize a vCard to a UTF-8 string and write to a stream
+    /// </summary>
+    /// <param name="vCard">vCard to be written</param>
+    /// <param name="stream">Stream to be written to</param>
+    public static async Task SerializeToStream(vCard vCard, Stream stream)
+    {
+        var content = Serialize(vCard);
+        using var streamWriter = new StreamWriter(stream, default, -1, true);
+        await streamWriter.WriteAsync(content);
+    }
+
     public static string Serialize(IEnumerable<vCard> vCardCollection)
     {
-        if (!vCardCollection.Any())
+        var vcards = vCardCollection.ToArray();
+        
+        if (!vcards.Any())
             return string.Empty;
 
         var stringBuilder = new StringBuilder();
-        foreach (var vCard in vCardCollection)
+        foreach (var vCard in vcards)
             WriteCardToBuilder(stringBuilder, vCard);
 
         return stringBuilder.ToString();
+    }
+
+    /// <summary>
+    /// Serialize a vCard collection to a UTF-8 string and write to a stream
+    /// </summary>
+    /// <param name="vCardCollection">A collection of vCards</param>
+    /// <param name="stream">Stream to be written to</param>
+    public static async Task SerializeToStream(IEnumerable<vCard> vCardCollection, Stream stream)
+    {
+        var content = Serialize(vCardCollection);
+        using var streamWriter = new StreamWriter(stream, default, -1, true);
+        await streamWriter.WriteAsync(content);
     }
 
     protected void AddCardStart(StringBuilder stringBuilder)

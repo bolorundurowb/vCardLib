@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using NUnit.Framework;
+using Shouldly;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serializers;
@@ -24,7 +27,28 @@ public class SerializerTests
         };
         var data = Serializer.Serialize(card);
 
-        Assert.IsNotEmpty(data);
+        data.ShouldNotBeEmpty();
+    }
+
+    [Test]
+    public async Task SerializeToStream_Should_SerializeCard()
+    {
+        var card = new vCard
+        {
+            Version = vCardVersion.V2,
+            FamilyName = "Jane",
+            GivenName = "John",
+            MiddleName = "Janice",
+            Prefix = "Sir",
+            Suffix = "PhD"
+        };
+
+        var ms = new MemoryStream();
+        ms.Length.ShouldBe(0);
+
+        await Serializer.SerializeToStream(card, ms);
+
+        ms.Length.ShouldBeGreaterThan(0);
     }
 
     [Test]
@@ -46,7 +70,7 @@ public class SerializerTests
         };
         var data = Serializer.Serialize(card);
 
-        Assert.IsNotEmpty(data);
+        data.ShouldNotBeEmpty();
     }
 
 
@@ -55,38 +79,38 @@ public class SerializerTests
     {
         var cards = new List<vCard>
         {
-            new vCard
+            new()
             {
                 Version = vCardVersion.V3,
-                Revision = new DateTime(2022,01,01),
+                Revision = new DateTime(2022, 01, 01),
                 FormattedName = "Card1",
             },
-            new vCard
+            new()
             {
                 Version = vCardVersion.V3,
-                Revision = new DateTime(2022,01,01),
+                Revision = new DateTime(2022, 01, 01),
                 FormattedName = "Card2",
             }
         };
         var data = Serializer.Serialize(cards);
 
         // we need to use Environment.NewLine to pass unit-tests also in Unix environments. VS hardcodes \n\r due to Windows newline.
-        Assert.AreEqual(data, "BEGIN:VCARD" + Environment.NewLine +
-                              "VERSION:3.0" + Environment.NewLine +
-                              "REV:20220101T000000Z" + Environment.NewLine +
-                              "N:;;;;" + Environment.NewLine +
-                              "FN:Card1" + Environment.NewLine +
-                              "KIND:Individual" + Environment.NewLine +
-                              "GENDER:None" + Environment.NewLine +
-                              "END:VCARD" + Environment.NewLine +
-                              "BEGIN:VCARD" + Environment.NewLine +
-                              "VERSION:3.0" + Environment.NewLine +
-                              "REV:20220101T000000Z" + Environment.NewLine +
-                              "N:;;;;" + Environment.NewLine +
-                              "FN:Card2" + Environment.NewLine +
-                              "KIND:Individual" + Environment.NewLine +
-                              "GENDER:None" + Environment.NewLine +
-                              "END:VCARD");
+        data.ShouldBe("BEGIN:VCARD" + Environment.NewLine +
+                      "VERSION:3.0" + Environment.NewLine +
+                      "REV:20220101T000000Z" + Environment.NewLine +
+                      "N:;;;;" + Environment.NewLine +
+                      "FN:Card1" + Environment.NewLine +
+                      "KIND:Individual" + Environment.NewLine +
+                      "GENDER:None" + Environment.NewLine +
+                      "END:VCARD" + Environment.NewLine +
+                      "BEGIN:VCARD" + Environment.NewLine +
+                      "VERSION:3.0" + Environment.NewLine +
+                      "REV:20220101T000000Z" + Environment.NewLine +
+                      "N:;;;;" + Environment.NewLine +
+                      "FN:Card2" + Environment.NewLine +
+                      "KIND:Individual" + Environment.NewLine +
+                      "GENDER:None" + Environment.NewLine +
+                      "END:VCARD");
     }
 
     [Test]
@@ -100,13 +124,13 @@ public class SerializerTests
             FormattedName = "Card1",
             PhoneNumbers = new List<TelephoneNumber>
             {
-                new TelephoneNumber
+                new()
                 {
                     Type = TelephoneNumberType.Custom,
                     CustomTypeName = "CUSTOM,VALUE",
                     Value = "+1 234",
                 },
-                new TelephoneNumber
+                new()
                 {
                     Type = TelephoneNumberType.Custom,
                     CustomTypeName = "CUSTOM1",
@@ -117,16 +141,16 @@ public class SerializerTests
         var data = Serializer.Serialize(card);
 
         // we need to use Environment.NewLine to pass unit-tests also in Unix environments. VS hardcodes \n\r due to Windows newline.
-        Assert.AreEqual(data, "BEGIN:VCARD" + Environment.NewLine +
-                              "VERSION:2.1" + Environment.NewLine +
-                              "REV:20220101T000000Z" + Environment.NewLine +
-                              "N:Card1;;;;" + Environment.NewLine +
-                              "FN:Card1" + Environment.NewLine +
-                              "KIND:Individual" + Environment.NewLine +
-                              "GENDER:None" + Environment.NewLine +
-                              "TEL;TYPE=\"CUSTOM,VALUE\":+1 234" + Environment.NewLine +
-                              "TEL;TYPE=\"CUSTOM1\":+1 234" + Environment.NewLine +
-                              "END:VCARD");
+        data.ShouldBe("BEGIN:VCARD" + Environment.NewLine +
+                      "VERSION:2.1" + Environment.NewLine +
+                      "REV:20220101T000000Z" + Environment.NewLine +
+                      "N:Card1;;;;" + Environment.NewLine +
+                      "FN:Card1" + Environment.NewLine +
+                      "KIND:Individual" + Environment.NewLine +
+                      "GENDER:None" + Environment.NewLine +
+                      "TEL;TYPE=\"CUSTOM,VALUE\":+1 234" + Environment.NewLine +
+                      "TEL;TYPE=\"CUSTOM1\":+1 234" + Environment.NewLine +
+                      "END:VCARD");
     }
 
     [Test]
@@ -135,18 +159,18 @@ public class SerializerTests
         var card = new vCard
         {
             Version = vCardVersion.V3,
-            Revision = new DateTime(2022,01,01),
+            Revision = new DateTime(2022, 01, 01),
             FamilyName = "Card1",
             FormattedName = "Card1",
             PhoneNumbers = new List<TelephoneNumber>
             {
-                new TelephoneNumber
+                new()
                 {
                     Type = TelephoneNumberType.Custom,
                     CustomTypeName = "CUSTOM,VALUE",
                     Value = "+1 234",
                 },
-                new TelephoneNumber
+                new()
                 {
                     Type = TelephoneNumberType.Custom,
                     CustomTypeName = "CUSTOM1",
@@ -157,16 +181,16 @@ public class SerializerTests
         var data = Serializer.Serialize(card);
 
         // we need to use Environment.NewLine to pass unit-tests also in Unix environments. VS hardcodes \n\r due to Windows newline.
-        Assert.AreEqual(data, "BEGIN:VCARD" + Environment.NewLine +
-                              "VERSION:3.0" + Environment.NewLine +
-                              "REV:20220101T000000Z" + Environment.NewLine +
-                              "N:Card1;;;;" + Environment.NewLine +
-                              "FN:Card1" + Environment.NewLine +
-                              "KIND:Individual" + Environment.NewLine +
-                              "GENDER:None" + Environment.NewLine +
-                              "TEL;TYPE=\"CUSTOM,VALUE\":+1 234" + Environment.NewLine +
-                              "TEL;TYPE=\"CUSTOM1\":+1 234" + Environment.NewLine +
-                              "END:VCARD");
+        data.ShouldBe("BEGIN:VCARD" + Environment.NewLine +
+                      "VERSION:3.0" + Environment.NewLine +
+                      "REV:20220101T000000Z" + Environment.NewLine +
+                      "N:Card1;;;;" + Environment.NewLine +
+                      "FN:Card1" + Environment.NewLine +
+                      "KIND:Individual" + Environment.NewLine +
+                      "GENDER:None" + Environment.NewLine +
+                      "TEL;TYPE=\"CUSTOM,VALUE\":+1 234" + Environment.NewLine +
+                      "TEL;TYPE=\"CUSTOM1\":+1 234" + Environment.NewLine +
+                      "END:VCARD");
     }
 
     [Test]
@@ -182,6 +206,6 @@ public class SerializerTests
             Language = "en-GB",
             BirthDay = DateTime.Now
         };
-        Assert.Throws<NotImplementedException>(delegate { Serializer.Serialize(card); });
+        Should.Throw<NotImplementedException>(() => { Serializer.Serialize(card); });
     }
 }

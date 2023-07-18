@@ -9,7 +9,7 @@ namespace vCardLib.Tests.ModelTests;
 [TestFixture]
 public class vCardTests
 {
-    readonly vCard _vcard = new vCard();
+    readonly vCard _vcard = new();
 
     [Test]
     public void GenerateValidVcard()
@@ -47,8 +47,8 @@ public class vCardTests
             };
             _vcard.CustomFields = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("XSkypeDisplayName", "Forrest J Gump"),
-                new KeyValuePair<string, string>("XSkypePstnNumber", "23949490044")
+                new("XSkypeDisplayName", "Forrest J Gump"),
+                new("XSkypePstnNumber", "23949490044")
             };
             _vcard.Version = vCardVersion.V2;
         });
