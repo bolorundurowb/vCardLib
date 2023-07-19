@@ -16,7 +16,7 @@ before_build:
 build:
   verbosity: minimal
 after_build:
-  - cmd: ./tools/csmacnz.Coveralls --opencover -i ./vCardLib.Tests/coverage.opencover.xml --repoToken $COVERALLS_REPO_TOKEN
+  - sh: ./tools/csmacnz.Coveralls --opencover -i ./vCardLib.Tests/coverage.opencover.xml --repoToken $COVERALLS_REPO_TOKEN
 test_script:
   - cmd: dotnet test
 deploy: off
