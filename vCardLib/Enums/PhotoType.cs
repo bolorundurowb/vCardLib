@@ -1,11 +1,10 @@
-﻿namespace vCardLib.Enums
+﻿namespace vCardLib.Enums;
+
+/// <summary>
+/// Support image format types
+/// </summary>
+public enum PhotoType
 {
-    /// <summary>
-    /// Support image format types
-    /// </summary>
-    public enum PhotoType
-    {
-        Image,
-        URL
-    }
+    Image,
+    URL
 }

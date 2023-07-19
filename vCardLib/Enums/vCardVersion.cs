@@ -1,15 +1,14 @@
-﻿namespace vCardLib.Enums
+﻿namespace vCardLib.Enums;
+
+/// <summary>
+/// vCard version
+/// </summary>
+// ReSharper disable once InconsistentNaming
+public enum vCardVersion
 {
-    /// <summary>
-    /// vCard version
-    /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public enum vCardVersion
-    {
-        V2,
+    V2,
 
-        V3,
+    V3,
 
-        V4
-    }
+    V4
 }
