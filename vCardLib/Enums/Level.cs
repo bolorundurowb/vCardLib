@@ -5,7 +5,7 @@
 /// </summary>
 public enum Level
 {
-	High,
-	Medium,
-	Low
+    High,
+    Medium,
+    Low
 }

@@ -16,7 +16,7 @@ public class DeserializerTests
     string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
     [Test]
-        
+
     public void ShouldSucceedWithV2File()
     {
         var filePath = Path.Combine(assemblyFolder, "v2.vcf");

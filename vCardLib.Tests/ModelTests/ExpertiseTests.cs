@@ -9,17 +9,18 @@ namespace vCardLib.Tests.ModelTests;
 [TestFixture]
 public class ExpertiseTests
 {
-	[Test]
-	public void ExpertiseIsStable()
-	{
-		Assert.DoesNotThrow(delegate {
-			var expertise = new Expertise
-			{
-				Area = "Engineering",
-				Level = Level.High
-			};
-			expertise.Level = Level.Low;
-			expertise.Level = Level.Medium;
-		});
-	}
+    [Test]
+    public void ExpertiseIsStable()
+    {
+        Assert.DoesNotThrow(delegate
+        {
+            var expertise = new Expertise
+            {
+                Area = "Engineering",
+                Level = Level.High
+            };
+            expertise.Level = Level.Low;
+            expertise.Level = Level.Medium;
+        });
+    }
 }

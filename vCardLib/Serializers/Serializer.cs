@@ -86,7 +86,7 @@ public abstract class Serializer
     public static string Serialize(IEnumerable<vCard> vCardCollection)
     {
         var vcards = vCardCollection.ToArray();
-        
+
         if (!vcards.Any())
             return string.Empty;
 

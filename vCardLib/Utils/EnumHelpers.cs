@@ -31,7 +31,7 @@ internal static class EnumHelpers
 
         return EmailAddressType.None;
     }
-        
+
     public static TelephoneNumberType ParseTelephoneType(string typeString)
     {
         if (TelephoneNumberTypeConstants.Voice.Equals(typeString, StringComparison.OrdinalIgnoreCase))

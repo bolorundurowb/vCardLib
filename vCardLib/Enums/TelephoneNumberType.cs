@@ -37,7 +37,7 @@ public enum TelephoneNumberType
     Car = 4096,
 
     ISDN = 8192,
-        
+
     Pref = 16384,
 
     Custom = int.MaxValue,
