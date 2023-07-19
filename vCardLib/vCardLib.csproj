@@ -12,17 +12,21 @@
     <PackageProjectUrl>https://bolorundurowb.github.io/vCardLib/</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/bolorundurowb/vCardLib/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>vCardLib</Title>
     <RepositoryType>git</RepositoryType>
     <PackageTags>vcard, vcardlib</PackageTags>
     <PackageVersion>4.0.4</PackageVersion>
     <Company>bolorundurowb</Company>
-    <AssemblyVersion>4.0.3</AssemblyVersion>
-    <FileVersion>4.0.3</FileVersion>
+    <AssemblyVersion>4.0.4</AssemblyVersion>
+    <FileVersion>4.0.4</FileVersion>
     <NeutralLanguage>en-NG</NeutralLanguage>
     <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
     <TargetFramework>netstandard1.3</TargetFramework>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
