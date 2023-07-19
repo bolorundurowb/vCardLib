@@ -1,29 +1,22 @@
-version: '{build}'
-
-branches:
-  except:
-    - gh-pages
-
+version: 1.0.{build}
 image: Visual Studio 2022
-
-clone_folder: c:\projects\
-
+configuration: Debug
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: 5xIkb6RiiVnvka4l9AKKGHwKl86XcJcyE
-  DOTNET_CLI_TELEMETRY_OPTOUT: true
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-
-platform: Any CPU
-
-configuration: Debug
-
+    secure: pji/PrfzeqSnJ+t5Ltr9Evk/1ia+/Tzjic6Z49/BSGaq7duXx0V5Y9mxVxzplfwr
+install:
+  - cmd: dotnet tool install coveralls.net --version 1.0.0 --tool-path tools
 before_build:
-  - cmd: dotnet --version
-  - cmd: dotnet restore --verbosity m
- 
-build_script:
-  - cmd: dotnet build
-
+  - cmd: >-
+      dotnet --version
+      
+      dotnet --list-sdks
+      
+      dotnet restore
+build:
+  verbosity: minimal
+after_build:
+  - cmd: ./tools/csmacnz.Coveralls --opencover -i ./vCardLib.Tests/coverage.opencover.xml --repoToken $COVERALLS_REPO_TOKEN
 test_script:
   - cmd: dotnet test
+deploy: off
