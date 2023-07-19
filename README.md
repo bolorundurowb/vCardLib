@@ -33,37 +33,31 @@ dotnet add package vCardLib.dll
 
 ## For Deserialization
 
-Import the namespaces:
+### Deserialize from a file
 
 ```csharp
-using vCardLib.Deserializers;
-```
-
-In your class you call the static method 'FromFile' and pass a string containing a path to it:
-
-```csharp
-string filePath = //path to vcf file;
-
+string filePath = // path to vcf file;
 var contacts = Deserializer.FromFile(filePath);
 ```
 
-Or read your contacts from a `Stream`:
+### Deserialize from a Stream
 
  ```csharp
-var stream = //generate a stream somehow;
+var stream = // generate stream containing serialized vcards
 var contacts = Deserializer.FromStream(stream);
  ```
 
-Or read your contacts from a `string`:
+### Deserialize from a string
 
  ```csharp
 var contactDetails = @"BEGIN:VCARD
+VERSION:2.1
 N:John;Doe;;;
 END:VCARD";
 var contacts = Deserializer.FromString(contactDetails);
  ```
 
-Iterate over the contact collection and pick the vCard objects:
+All deserialization produces a `vCardCollection` containing the successfully deserialized contact information that can be iterated over. Iterate over the contact collection and pick the vCard objects:
 
 ```csharp
 foreach(var contact in contacts)
@@ -72,11 +66,58 @@ foreach(var contact in contacts)
 }
 ```
 
-complete documentation on [github.io](http://bolorundurowb.github.io/vCardLib/)
+## For Serialization
 
-## Contrbutors
+### Serialize as string
 
-A huge thank you to these beautiful people
+```csharp
+var vcard = new vCard
+{
+    Version = vCardVersion.V2,
+    FormattedName = "John Doe",
+    BirthPlace = "Antarctica",
+    Gender = GenderType.Other,
+    GivenName = "John",
+    MiddleName = "Adekunle",
+    FamilyName = "Doe"
+};
+var serialized = Serializer.Serialize(vcard);
+
+/*
+BEGIN:VCARD
+VERSION:2.1
+REV:20230719T001838Z
+N:Doe;John;Adekunle;;
+FN:John Doe
+BIRTHPLACE:Antarctica
+KIND:Individual
+GENDER:Other
+END:VCARD
+ */
+```
+
+### Serialize to a Stream
+
+```csharp
+var ms = new MemoryStream();
+var vcard = new vCard
+{
+    Version = vCardVersion.V2,
+    FormattedName = "John Doe",
+    BirthPlace = "Antarctica",
+    Gender = GenderType.Other,
+    GivenName = "John",
+    MiddleName = "Adekunle",
+    FamilyName = "Doe"
+};
+await Serializer.SerializeToStream(vcard, ms);
+```
+
+There is support for serializing a collection of `vCard` as well with overloads to the `Serialize` and `SerializeToStream` methods.
+
+## Contributors
+
+A huge thank you to these wonderful people who took time to contribute to this project.
 
 <br/>
 
