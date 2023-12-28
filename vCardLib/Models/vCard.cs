@@ -23,7 +23,7 @@ public class vCard
     /// <summary>
     /// formatted text corresponding to the name of the object the vCard represents.
     /// </summary>
-    public string FormattedName { get; set; }
+    public string? FormattedName { get; set; }
 
     /// <summary>````   123
     /// text corresponding to the nickname of the object the vCard represents.
@@ -47,7 +47,7 @@ public class vCard
     /// <example>
     /// vcard.Timezone = "GMT-1";
     /// </example>
-    public string Timezone { get; set; }
+    public string? Timezone { get; set; }
 
     /// <summary>
     /// information related to the global positioning of the object the vCard represents
@@ -62,7 +62,7 @@ public class vCard
     /// <summary>
     /// The contact's title
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary>
     /// the kind of object the vCard represents.
@@ -141,6 +141,8 @@ public class vCard
     /// All other fields not defined in the spec
     /// </summary>
     public List<KeyValuePair<string, string>> CustomFields { get; set; } = new();
+
+    public vCard(vCardVersion version) => Version = version;
 
     /// <inheritdoc/>
     // public override string ToString()
