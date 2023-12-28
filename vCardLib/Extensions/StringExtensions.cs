@@ -12,4 +12,8 @@ internal static class StringExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool StartsWithIgnoreCase(this string input, string value) =>
         input.StartsWith(value, StringComparison.CurrentCultureIgnoreCase);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool EndsWithIgnoreCase(this string input, string value) =>
+        input.EndsWith(value, StringComparison.CurrentCultureIgnoreCase);
 }

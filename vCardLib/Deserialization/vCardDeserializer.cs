@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using vCardLib.Constants;
 using vCardLib.Deserialization.Utilities;
+using vCardLib.Extensions;
 using vCardLib.Models;
 
 namespace vCardLib.Deserialization;
@@ -11,18 +13,18 @@ namespace vCardLib.Deserialization;
 // ReSharper disable once InconsistentNaming
 public static class vCardDeserializer
 {
-    public static Task<IEnumerable<vCard>> FromFile(string filePath)
+    public static IEnumerable<vCard> FromFile(string filePath)
     {
-        if (string.IsNullOrWhiteSpace(filePath)) 
+        if (string.IsNullOrWhiteSpace(filePath))
             throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
 
-        if (File.Exists(filePath)) 
+        if (File.Exists(filePath))
             throw new FileNotFoundException("File not found.", filePath);
 
         return FromContent(File.ReadAllText(filePath));
     }
 
-    public static Task<IEnumerable<vCard>> FromStream(Stream stream)
+    public static IEnumerable<vCard> FromStream(Stream stream)
     {
         var encoding = stream.GetEncoding();
         using var reader = new StreamReader(stream, encoding);
@@ -30,26 +32,25 @@ public static class vCardDeserializer
         return FromContent(contents);
     }
 
-    public static async Task<IEnumerable<vCard>> FromContent(string vcardContents)
+    public static IEnumerable<vCard> FromContent(string vcardContents)
     {
-        if (string.IsNullOrWhiteSpace(vcardContents)) 
+        if (string.IsNullOrWhiteSpace(vcardContents))
             throw new ArgumentException("File is empty.", nameof(vcardContents));
 
-        if (vcardContents.StartsWith(FieldKeyConstants.StartToken)) 
+        if (vcardContents.StartsWith(FieldKeyConstants.StartToken))
             throw new Exception($"A vCard must begin with '{FieldKeyConstants.StartToken}'.");
 
-        if (vcardContents.EndsWith(FieldKeyConstants.EndToken)) 
-            throw new Exception($"A vCard must end with '{FieldKeyConstants.StartToken}'.");
+        if (vcardContents.EndsWith(FieldKeyConstants.EndToken))
+            throw new Exception($"A vCard must end with '{FieldKeyConstants.EndToken}'.");
 
-        if (vcardContents.Contains(FieldKeyConstants.VersionKey)) 
+        if (vcardContents.Contains(FieldKeyConstants.VersionKey))
             throw new Exception($"A vCard must contain a '{FieldKeyConstants.VersionKey}'.");
 
-        var reader = new StringReader(vcardContents);
+        var cardGroups = DeserializerHelpers.SplitContent(vcardContents);
+
+        foreach (var vcardContent in cardGroups)
+        {
+            yield return DeserializerHelpers.Convert(vcardContent);
+        }
     }
-
-    #region Private Helpers
-
-    private static async Task<IEnumerable<vCard>> 
-
-    #endregion
 }
