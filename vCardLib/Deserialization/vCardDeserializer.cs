@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using vCardLib.Constants;
+using vCardLib.Deserialization.FieldDeserializers;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
+using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
 
@@ -13,6 +18,8 @@ namespace vCardLib.Deserialization;
 // ReSharper disable once InconsistentNaming
 public static class vCardDeserializer
 {
+    private static readonly ConcurrentDictionary<string, IFieldDeserializer> _fieldDeserializers = new();
+    
     public static IEnumerable<vCard> FromFile(string filePath)
     {
         if (string.IsNullOrWhiteSpace(filePath))
@@ -46,11 +53,68 @@ public static class vCardDeserializer
         if (vcardContents.Contains(FieldKeyConstants.VersionKey))
             throw new Exception($"A vCard must contain a '{FieldKeyConstants.VersionKey}'.");
 
-        var cardGroups = DeserializerHelpers.SplitContent(vcardContents);
+        var cardGroups = SplitContent(vcardContents);
 
-        foreach (var vcardContent in cardGroups)
+        foreach (var vcardContent in cardGroups) 
+            yield return Convert(vcardContent);
+    }
+    
+    #region Private Helpers
+
+    private static IEnumerable<string[]> SplitContent(string vcardContent)
+    {
+        using var reader = new StringReader(vcardContent);
+        var response = new List<string>();
+    
+        while (reader.ReadLine()?.Trim() is { } line)
         {
-            yield return DeserializerHelpers.Convert(vcardContent);
+            if (string.IsNullOrWhiteSpace(line))
+                continue;
+
+            if (line.EqualsIgnoreCase("END:VCARD"))
+            {
+                yield return response.ToArray();
+            }
+            else if (line.EqualsIgnoreCase("BEGIN:VCARD"))
+            {
+                response.Clear();
+            }
+            else if (line.EndsWithIgnoreCase("BEGIN:VCARD"))
+            {
+                var nested = new StringBuilder(line);
+                while (reader.ReadLine()?.Trim() is { } nestedLine && !nestedLine.EqualsIgnoreCase("END:VCARD"))
+                {
+                    nested.AppendLine(nestedLine);
+                }
+                response.Add(nested.ToString());
+            }
+            else
+            {
+                response.Add(line);
+            }
         }
     }
+
+    private static vCard Convert(string[] vcardContent)
+    {
+        var versionRow = vcardContent.FirstOrDefault(x => x.StartsWith(VersionDeserializer.FieldKey));
+
+        if (versionRow == null) 
+            throw new ArgumentException("No version specified");
+
+        var version = VersionDeserializer.Read(versionRow);
+
+        if (version == vCardVersion.v2)
+        {
+            return DeserializeV2(vcardContent);
+        }
+    }
+
+    private static vCard DeserializeV2(IReadOnlyCollection<string> vcardContent)
+    {
+        var vcard = new vCard(vCardVersion.v2);
+        
+    }
+    
+    #endregion
 }
