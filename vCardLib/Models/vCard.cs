@@ -16,33 +16,33 @@ public class vCard
     public vCardVersion Version { get; set; }
 
     /// <summary>
-    /// components of the name of the object the vCard represents.
+    /// Components of the name of the object the vCard represents.
     /// </summary>
     public Name? Name { get; set; }
 
     /// <summary>
-    /// formatted text corresponding to the name of the object the vCard represents.
+    /// Formatted text corresponding to the name of the object the vCard represents.
     /// </summary>
     public string? FormattedName { get; set; }
 
-    /// <summary>````   123
+    /// <summary>
     /// text corresponding to the nickname of the object the vCard represents.
     /// </summary>
     public string? NickName { get; set; }
 
     /// <summary>
-    /// supplemental information or a comment that is associated with the vCard
+    /// Supplemental information or a comment that is associated with the vCard
     /// </summary>
     public string? Note { get; set; }
 
     /// <summary>
-    /// uniform resource locator associated with the object to which the vCard refers.  Examples for individuals
+    /// Uniform resource locator associated with the object to which the vCard refers.  Examples for individuals
     /// include personal web sites, blogs, and social networking site identifiers.
     /// </summary>
     public string? Url { get; set; }
 
     /// <summary>
-    /// information related to the time zone of the object the vCard represents
+    /// Information related to the time zone of the object the vCard represents
     /// </summary>
     /// <example>
     /// vcard.Timezone = "GMT-1";
@@ -50,12 +50,12 @@ public class vCard
     public string? Timezone { get; set; }
 
     /// <summary>
-    /// information related to the global positioning of the object the vCard represents
+    /// Information related to the global positioning of the object the vCard represents
     /// </summary>
     public Geo? Geo { get; set; }
 
     /// <summary>
-    /// organizational name and units associated with the vCard.
+    /// Organizational name and units associated with the vCard.
     /// </summary>
     public Organization? Organization { get; set; }
 
@@ -65,22 +65,22 @@ public class vCard
     public string? Title { get; set; }
 
     /// <summary>
-    /// the kind of object the vCard represents.
+    /// The kind of object the vCard represents.
     /// </summary>
     public ContactKind? Kind { get; set; }
 
     /// <summary>
-    /// the components of the sex and gender identity of the object the vCard represents.
+    /// The components of the sex and gender identity of the object the vCard represents.
     /// </summary>
     public Gender? Gender { get; set; }
 
     /// <summary>
-    /// revision information about the current vCard.
+    /// Revision information about the current vCard.
     /// </summary>
     public DateTime? Revision { get; set; }
 
     /// <summary>
-    /// the language(s) that may be used for contacting the entity associated with the vCard.
+    /// The language(s) that may be used for contacting the entity associated with the vCard.
     /// </summary>
     /// <example>
     /// vcard.Language = "en-US";
@@ -88,7 +88,7 @@ public class vCard
     public Language? Language { get; set; }
 
     /// <summary>
-    /// the birth date of the object the vCard represents.
+    /// The birth date of the object the vCard represents.
     /// </summary>
     public DateTime? BirthDay { get; set; }
 

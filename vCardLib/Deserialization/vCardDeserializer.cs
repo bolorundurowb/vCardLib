@@ -18,8 +18,12 @@ namespace vCardLib.Deserialization;
 // ReSharper disable once InconsistentNaming
 public static class vCardDeserializer
 {
-    private static readonly ConcurrentDictionary<string, IFieldDeserializer> _fieldDeserializers = new();
-    
+    private static readonly Dictionary<string, IFieldDeserializer> FieldDeserializers = new()
+    {
+        { UnknownFieldDeserializer.Key, new UnknownFieldDeserializer() },
+        { AddressFieldDeserializer.FieldKey, new AddressFieldDeserializer() },
+    };
+
     public static IEnumerable<vCard> FromFile(string filePath)
     {
         if (string.IsNullOrWhiteSpace(filePath))
@@ -55,17 +59,17 @@ public static class vCardDeserializer
 
         var cardGroups = SplitContent(vcardContents);
 
-        foreach (var vcardContent in cardGroups) 
+        foreach (var vcardContent in cardGroups)
             yield return Convert(vcardContent);
     }
-    
+
     #region Private Helpers
 
     private static IEnumerable<string[]> SplitContent(string vcardContent)
     {
         using var reader = new StringReader(vcardContent);
         var response = new List<string>();
-    
+
         while (reader.ReadLine()?.Trim() is { } line)
         {
             if (string.IsNullOrWhiteSpace(line))
@@ -82,10 +86,10 @@ public static class vCardDeserializer
             else if (line.EndsWithIgnoreCase("BEGIN:VCARD"))
             {
                 var nested = new StringBuilder(line);
+
                 while (reader.ReadLine()?.Trim() is { } nestedLine && !nestedLine.EqualsIgnoreCase("END:VCARD"))
-                {
                     nested.AppendLine(nestedLine);
-                }
+
                 response.Add(nested.ToString());
             }
             else
@@ -99,22 +103,50 @@ public static class vCardDeserializer
     {
         var versionRow = vcardContent.FirstOrDefault(x => x.StartsWith(VersionDeserializer.FieldKey));
 
-        if (versionRow == null) 
+        if (versionRow == null)
             throw new ArgumentException("No version specified");
 
         var version = VersionDeserializer.Read(versionRow);
 
         if (version == vCardVersion.v2)
-        {
             return DeserializeV2(vcardContent);
-        }
+
+        throw new ArgumentException($"Unsupported version: {version}");
     }
 
     private static vCard DeserializeV2(IReadOnlyCollection<string> vcardContent)
     {
         var vcard = new vCard(vCardVersion.v2);
-        
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Name>>(NameFieldDeserializer.FieldKey,
+                out var rawName, out var nameDes))
+            vcard.Name = nameDes!.Read(rawName!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(FormattedNameDeserializer.FieldKey,
+                out var rawFormattedName, out var fnDes))
+            vcard.FormattedName = fnDes!.Read(rawFormattedName!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(NicknameFieldDeserializer.FieldKey,
+                out var rawNick, out var nickDes))
+            vcard.NickName = nickDes!.Read(rawNick!);
+
+        return vcard;
     }
-    
+
+    private static bool TryGetDeserializationParams<T>(this IEnumerable<string> vcardContent, string fieldKey,
+        out string? rawData, out T? deserializer) where T : IFieldDeserializer
+    {
+        rawData = vcardContent.FirstOrDefault(x => x.StartsWith(fieldKey));
+
+        if (rawData == null)
+        {
+            deserializer = default;
+            return false;
+        }
+
+        deserializer = (T)FieldDeserializers[fieldKey];
+        return true;
+    }
+
     #endregion
 }
