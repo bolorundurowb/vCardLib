@@ -3,14 +3,13 @@ using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
 using vCardLib.Extensions;
 using vCardLib.Models;
-using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-public class KeyFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Key>, IV3FieldDeserializer<Key>,
+public class KeyFieldDeserializer :  IV2FieldDeserializer<Key>, IV3FieldDeserializer<Key>,
     IV4FieldDeserializer<Key>
 {
-    public string FieldKey => "KEY";
+    public static string FieldKey => "KEY";
 
     Key IV2FieldDeserializer<Key>.Read(string input)
     {

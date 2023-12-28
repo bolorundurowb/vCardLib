@@ -3,10 +3,10 @@ using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class AgentFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string>,
+internal sealed class AgentFieldDeserializer :  IV2FieldDeserializer<string>,
     IV3FieldDeserializer<string>, IV4FieldDeserializer<string?>
 {
-    public string FieldKey => "AGENT";
+    public static string FieldKey => "AGENT";
 
     public string Read(string input)
     {

@@ -4,12 +4,11 @@ using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class VersionDeserializer : IFieldDeserializer, IV2FieldDeserializer<vCardVersion>,
-    IV3FieldDeserializer<vCardVersion>, IV4FieldDeserializer<vCardVersion>
+internal sealed class VersionDeserializer
 {
-    public string FieldKey => "VERSION";
+    public static string FieldKey => "VERSION";
 
-    public vCardVersion Read(string input)
+    public static vCardVersion Read(string input)
     {
         var separatorIndex = input.IndexOf(':');
         var value = input.Substring(separatorIndex + 1).Trim();

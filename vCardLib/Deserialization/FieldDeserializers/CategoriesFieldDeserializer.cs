@@ -4,10 +4,10 @@ using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class CategoriesFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<List<string>>,
+internal sealed class CategoriesFieldDeserializer :  IV2FieldDeserializer<List<string>>,
     IV3FieldDeserializer<List<string>>, IV4FieldDeserializer<List<string>>
 {
-    public string FieldKey => "CATEGORIES";
+    public static string FieldKey => "CATEGORIES";
 
     public List<string> Read(string input)
     {

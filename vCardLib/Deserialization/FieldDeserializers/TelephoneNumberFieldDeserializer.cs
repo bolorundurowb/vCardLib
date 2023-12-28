@@ -5,14 +5,13 @@ using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
-using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class TelephoneNumberFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<TelephoneNumber>,
+internal sealed class TelephoneNumberFieldDeserializer :  IV2FieldDeserializer<TelephoneNumber>,
     IV3FieldDeserializer<TelephoneNumber>, IV4FieldDeserializer<TelephoneNumber>
 {
-    public string FieldKey => "TEL";
+    public static string FieldKey => "TEL";
 
     public TelephoneNumber Read(string input)
     {

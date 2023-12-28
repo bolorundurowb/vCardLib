@@ -4,10 +4,10 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class OrganizationFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Organization?>, IV3FieldDeserializer<Organization?>,
+internal sealed class OrganizationFieldDeserializer :  IV2FieldDeserializer<Organization?>, IV3FieldDeserializer<Organization?>,
     IV4FieldDeserializer<Organization?>
 {
-    public string FieldKey => "ORG";
+    public static string FieldKey => "ORG";
 
     public Organization? Read(string input)
     {

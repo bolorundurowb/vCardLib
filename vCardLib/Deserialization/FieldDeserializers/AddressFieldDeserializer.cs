@@ -5,14 +5,13 @@ using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
-using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class AddressFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Address>,
+internal sealed class AddressFieldDeserializer :  IV2FieldDeserializer<Address>,
     IV3FieldDeserializer<Address>, IV4FieldDeserializer<Address>
 {
-    public string FieldKey => "ADR";
+    public static string FieldKey => "ADR";
 
     public Address Read(string input)
     {

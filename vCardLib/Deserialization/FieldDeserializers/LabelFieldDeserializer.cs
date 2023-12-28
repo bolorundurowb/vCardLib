@@ -5,15 +5,14 @@ using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
-using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class LabelFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<Label>,
+internal sealed class LabelFieldDeserializer :  IV2FieldDeserializer<Label>,
     IV3FieldDeserializer<Label>,
     IV4FieldDeserializer<Label?>
 {
-    public string FieldKey => "LABEL";
+    public static string FieldKey => "LABEL";
 
     public Label Read(string input)
     {

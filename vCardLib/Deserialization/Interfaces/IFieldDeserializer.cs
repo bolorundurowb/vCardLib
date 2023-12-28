@@ -2,5 +2,4 @@
 
 internal interface IFieldDeserializer
 {
-    string FieldKey { get; }
 }

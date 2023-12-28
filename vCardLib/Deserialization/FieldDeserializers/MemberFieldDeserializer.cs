@@ -2,10 +2,10 @@
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class MemberFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string?>,
+internal sealed class MemberFieldDeserializer :  IV2FieldDeserializer<string?>,
     IV3FieldDeserializer<string?>, IV4FieldDeserializer<string>
 {
-    public string FieldKey => "MEMBER";
+    public static string FieldKey => "MEMBER";
 
     public string? Read(string input) => null;
 

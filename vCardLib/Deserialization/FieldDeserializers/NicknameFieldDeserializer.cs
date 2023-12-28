@@ -2,10 +2,10 @@
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class NicknameFieldDeserializer : IFieldDeserializer, IV2FieldDeserializer<string?>,
+internal sealed class NicknameFieldDeserializer :  IV2FieldDeserializer<string?>,
     IV3FieldDeserializer<string>, IV4FieldDeserializer<string>
 {
-    public string FieldKey => "NICKNAME";
+    public static string FieldKey => "NICKNAME";
 
     /// <summary>
     /// The nickname field is not supported on the v2 standard
