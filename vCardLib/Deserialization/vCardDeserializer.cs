@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using vCardLib.Constants;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -129,6 +127,42 @@ public static class vCardDeserializer
         if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(NicknameFieldDeserializer.FieldKey,
                 out var rawNick, out var nickDes))
             vcard.NickName = nickDes!.Read(rawNick!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(NoteFieldDeserializer.FieldKey,
+                out var rawNote, out var noteDes))
+            vcard.Note = noteDes!.Read(rawNote!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(UrlFieldDeserializer.FieldKey,
+                out var rawUrl, out var urlDes))
+            vcard.Url = urlDes!.Read(rawUrl!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(TimezoneFieldDeserializer.FieldKey,
+                out var rawTz, out var tzDes))
+            vcard.Timezone = tzDes!.Read(rawTz!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Geo>>(GeoFieldDeserializer.FieldKey,
+                out var rawGeo, out var geoDes))
+            vcard.Geo = geoDes!.Read(rawGeo!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Organization>>(OrganizationFieldDeserializer.FieldKey,
+                out var rawOrg, out var orgDes))
+            vcard.Organization = orgDes!.Read(rawOrg!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(TitleFieldDeserializer.FieldKey,
+                out var rawTitle, out var titleDes))
+            vcard.Title = titleDes!.Read(rawTitle!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<ContactKind>>(KindFieldDeserializer.FieldKey,
+                out var rawKind, out var kindDes))
+            vcard.Kind = kindDes!.Read(rawKind!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Gender>>(GenderFieldDeserializer.FieldKey,
+                out var rawGender, out var genderDes))
+            vcard.Gender = genderDes!.Read(rawGender!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime>>(RevisionFieldDeserializer.FieldKey,
+                out var rawRev, out var revDes))
+            vcard.Revision = revDes!.Read(rawRev!);
 
         return vcard;
     }

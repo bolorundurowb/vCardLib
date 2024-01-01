@@ -1,5 +1,4 @@
 ﻿using System;
-using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
