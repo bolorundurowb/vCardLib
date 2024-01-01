@@ -144,7 +144,8 @@ public static class vCardDeserializer
                 out var rawGeo, out var geoDes))
             vcard.Geo = geoDes!.Read(rawGeo!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Organization>>(OrganizationFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Organization>>(
+                OrganizationFieldDeserializer.FieldKey,
                 out var rawOrg, out var orgDes))
             vcard.Organization = orgDes!.Read(rawOrg!);
 
@@ -173,8 +174,8 @@ public static class vCardDeserializer
             vcard.BirthDay = bdayDes!.Read(rawBday!);
 
         if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Photo>>(PhotoFieldDeserializer.FieldKey,
-                out var rawPhoto, out var photoDes))
-            vcard.Logo = photoDes!.Read(rawPhoto!);
+                out var rawLogo, out var logoDes))
+            vcard.Logo = logoDes!.Read(rawLogo!);
 
         if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(AgentFieldDeserializer.FieldKey,
                 out var rawAgent, out var agentDes))
@@ -183,6 +184,41 @@ public static class vCardDeserializer
         if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(MailerFieldDeserializer.FieldKey,
                 out var rawMailer, out var mailerDes))
             vcard.Mailer = mailerDes!.Read(rawMailer!);
+
+        if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<string>>(
+                CategoriesFieldDeserializer.FieldKey,
+                out var rawCategories, out var categoriesDes))
+            foreach (var rawCategory in rawCategories)
+                vcard.Categories.Add(categoriesDes!.Read(rawCategory));
+
+        if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<string>>(
+                MemberFieldDeserializer.FieldKey,
+                out var rawMembers, out var membersDes))
+            foreach (var rawMember in rawMembers)
+                vcard.Members.Add(membersDes!.Read(rawMember));
+
+        if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<TelephoneNumber>>(
+                TelephoneNumberFieldDeserializer.FieldKey,
+                out var rawTels, out var telDes))
+            foreach (var rawTel in rawTels)
+                vcard.PhoneNumbers.Add(telDes!.Read(rawTel));
+
+        if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<EmailAddress>>(
+                EmailAddressFieldDeserializer.FieldKey,
+                out var rawEmails, out var emailDes))
+            foreach (var rawEmail in rawEmails)
+                vcard.EmailAddresses.Add(emailDes!.Read(rawEmail));
+
+        if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<Photo>>(PhotoFieldDeserializer.FieldKey,
+                out var rawPhotos, out var photoDes))
+            foreach (var rawPhoto in rawPhotos)
+                vcard.Photos.Add(photoDes!.Read(rawPhoto));
+
+        if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<Address>>(
+                AddressFieldDeserializer.FieldKey,
+                out var rawAddrs, out var addrDes))
+            foreach (var rawAddr in rawAddrs)
+                vcard.Addresses.Add(addrDes!.Read(rawAddr));
 
         return vcard;
     }
@@ -193,6 +229,21 @@ public static class vCardDeserializer
         rawData = vcardContent.FirstOrDefault(x => x.StartsWith(fieldKey));
 
         if (rawData == null)
+        {
+            deserializer = default;
+            return false;
+        }
+
+        deserializer = (T)FieldDeserializers[fieldKey];
+        return true;
+    }
+
+    private static bool TryGetGroupDeserializationParams<T>(this IEnumerable<string> vcardContent, string fieldKey,
+        out IEnumerable<string> rawData, out T? deserializer) where T : IFieldDeserializer
+    {
+        rawData = vcardContent.Where(x => x.StartsWith(fieldKey)).ToList();
+
+        if (!rawData.Any())
         {
             deserializer = default;
             return false;
