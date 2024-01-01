@@ -164,6 +164,26 @@ public static class vCardDeserializer
                 out var rawRev, out var revDes))
             vcard.Revision = revDes!.Read(rawRev!);
 
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Language>>(LanguageFieldDeserializer.FieldKey,
+                out var rawLang, out var langDes))
+            vcard.Language = langDes!.Read(rawLang!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime>>(BirthdayFieldDeserializer.FieldKey,
+                out var rawBday, out var bdayDes))
+            vcard.BirthDay = bdayDes!.Read(rawBday!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Photo>>(PhotoFieldDeserializer.FieldKey,
+                out var rawPhoto, out var photoDes))
+            vcard.Logo = photoDes!.Read(rawPhoto!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(AgentFieldDeserializer.FieldKey,
+                out var rawAgent, out var agentDes))
+            vcard.Agent = agentDes!.Read(rawAgent!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(MailerFieldDeserializer.FieldKey,
+                out var rawMailer, out var mailerDes))
+            vcard.Mailer = mailerDes!.Read(rawMailer!);
+
         return vcard;
     }
 
