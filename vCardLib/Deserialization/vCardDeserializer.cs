@@ -469,7 +469,7 @@ public static class vCardDeserializer
     private static bool TryGetDeserializationParams<T>(this IEnumerable<string> vcardContent, string fieldKey,
         out string? rawData, out T? deserializer) where T : IFieldDeserializer
     {
-        rawData = vcardContent.FirstOrDefault(x => x.StartsWith(fieldKey));
+        rawData = vcardContent.FilterInPlace(x => x.StartsWith(fieldKey)).FirstOrDefault();
 
         if (rawData == null)
         {
@@ -484,7 +484,7 @@ public static class vCardDeserializer
     private static bool TryGetGroupDeserializationParams<T>(this IEnumerable<string> vcardContent, string fieldKey,
         out IEnumerable<string> rawData, out T? deserializer) where T : IFieldDeserializer
     {
-        rawData = vcardContent.Where(x => x.StartsWith(fieldKey)).ToList();
+        rawData = vcardContent.FilterInPlace(x => x.StartsWith(fieldKey)).ToList();
 
         if (!rawData.Any())
         {
