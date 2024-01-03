@@ -88,6 +88,11 @@ public class vCard
     public Language? Language { get; set; }
 
     /// <summary>
+    /// The anniversary date of the object the vCard represents.
+    /// </summary>
+    public DateTime? Anniversary { get; set; }
+
+    /// <summary>
     /// The birth date of the object the vCard represents.
     /// </summary>
     public DateTime? BirthDay { get; set; }
