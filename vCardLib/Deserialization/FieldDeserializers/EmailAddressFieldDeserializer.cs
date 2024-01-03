@@ -61,7 +61,7 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
                 if (emailType.HasValue)
                     type = type.HasValue ? type.Value | emailType : emailType;
             }
-            else if (key.EqualsIgnoreCase("PREF"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
                     preference = pref;
         }

@@ -18,7 +18,8 @@ public static class vCardDeserializer
 {
     private static readonly Dictionary<string, IFieldDeserializer> FieldDeserializers = new()
     {
-        { UnknownFieldDeserializer.Key, new UnknownFieldDeserializer() },
+        { CustomFieldDeserializer.Key, new CustomFieldDeserializer() },
+
         { AddressFieldDeserializer.FieldKey, new AddressFieldDeserializer() },
         { AgentFieldDeserializer.FieldKey, new AgentFieldDeserializer() },
         { AnniversaryFieldDeserializer.FieldKey, new AnniversaryFieldDeserializer() },
@@ -175,7 +176,7 @@ public static class vCardDeserializer
                 out var rawGeo, out var geoDes))
             vcard.Geo = geoDes!.Read(rawGeo!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Organization>>(
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Organization?>>(
                 OrganizationFieldDeserializer.FieldKey,
                 out var rawOrg, out var orgDes))
             vcard.Organization = orgDes!.Read(rawOrg!);
@@ -184,27 +185,31 @@ public static class vCardDeserializer
                 out var rawTitle, out var titleDes))
             vcard.Title = titleDes!.Read(rawTitle!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<ContactKind>>(KindFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<ContactKind?>>(KindFieldDeserializer.FieldKey,
                 out var rawKind, out var kindDes))
             vcard.Kind = kindDes!.Read(rawKind!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Gender>>(GenderFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Gender?>>(GenderFieldDeserializer.FieldKey,
                 out var rawGender, out var genderDes))
             vcard.Gender = genderDes!.Read(rawGender!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime>>(RevisionFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime?>>(
+                RevisionFieldDeserializer.FieldKey,
                 out var rawRev, out var revDes))
             vcard.Revision = revDes!.Read(rawRev!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Language>>(LanguageFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<Language?>>(
+                LanguageFieldDeserializer.FieldKey,
                 out var rawLang, out var langDes))
             vcard.Language = langDes!.Read(rawLang!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime>>(BirthdayFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime?>>(
+                BirthdayFieldDeserializer.FieldKey,
                 out var rawBday, out var bdayDes))
             vcard.BirthDay = bdayDes!.Read(rawBday!);
 
-        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime>>(AnniversaryFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<DateTime?>>(
+                AnniversaryFieldDeserializer.FieldKey,
                 out var rawAnni, out var anniDes))
             vcard.Anniversary = anniDes!.Read(rawAnni!);
 
@@ -220,11 +225,10 @@ public static class vCardDeserializer
                 out var rawMailer, out var mailerDes))
             vcard.Mailer = mailerDes!.Read(rawMailer!);
 
-        if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<string>>(
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<List<string>>>(
                 CategoriesFieldDeserializer.FieldKey,
                 out var rawCategories, out var categoriesDes))
-            foreach (var rawCategory in rawCategories)
-                vcard.Categories.Add(categoriesDes!.Read(rawCategory));
+            vcard.Categories = categoriesDes!.Read(rawCategories!);
 
         if (vcardContent.TryGetGroupDeserializationParams<IV2FieldDeserializer<string>>(
                 MemberFieldDeserializer.FieldKey,
@@ -295,7 +299,7 @@ public static class vCardDeserializer
                 out var rawGeo, out var geoDes))
             vcard.Geo = geoDes!.Read(rawGeo!);
 
-        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<Organization>>(
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<Organization?>>(
                 OrganizationFieldDeserializer.FieldKey,
                 out var rawOrg, out var orgDes))
             vcard.Organization = orgDes!.Read(rawOrg!);
@@ -304,27 +308,31 @@ public static class vCardDeserializer
                 out var rawTitle, out var titleDes))
             vcard.Title = titleDes!.Read(rawTitle!);
 
-        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<ContactKind>>(KindFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<ContactKind?>>(KindFieldDeserializer.FieldKey,
                 out var rawKind, out var kindDes))
             vcard.Kind = kindDes!.Read(rawKind!);
 
-        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<Gender>>(GenderFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<Gender?>>(GenderFieldDeserializer.FieldKey,
                 out var rawGender, out var genderDes))
             vcard.Gender = genderDes!.Read(rawGender!);
 
-        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<DateTime>>(RevisionFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<DateTime?>>(
+                RevisionFieldDeserializer.FieldKey,
                 out var rawRev, out var revDes))
             vcard.Revision = revDes!.Read(rawRev!);
 
-        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<DateTime>>(AnniversaryFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<DateTime?>>(
+                AnniversaryFieldDeserializer.FieldKey,
                 out var rawAnni, out var anniDes))
             vcard.Anniversary = anniDes!.Read(rawAnni!);
 
-        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<Language>>(LanguageFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<Language?>>(
+                LanguageFieldDeserializer.FieldKey,
                 out var rawLang, out var langDes))
             vcard.Language = langDes!.Read(rawLang!);
 
-        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<DateTime>>(BirthdayFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<DateTime?>>(
+                BirthdayFieldDeserializer.FieldKey,
                 out var rawBday, out var bdayDes))
             vcard.BirthDay = bdayDes!.Read(rawBday!);
 
@@ -340,11 +348,10 @@ public static class vCardDeserializer
                 out var rawMailer, out var mailerDes))
             vcard.Mailer = mailerDes!.Read(rawMailer!);
 
-        if (vcardContent.TryGetGroupDeserializationParams<IV3FieldDeserializer<string>>(
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<List<string>>>(
                 CategoriesFieldDeserializer.FieldKey,
                 out var rawCategories, out var categoriesDes))
-            foreach (var rawCategory in rawCategories)
-                vcard.Categories.Add(categoriesDes!.Read(rawCategory));
+            vcard.Categories = categoriesDes!.Read(rawCategories!);
 
         if (vcardContent.TryGetGroupDeserializationParams<IV3FieldDeserializer<string>>(
                 MemberFieldDeserializer.FieldKey,
@@ -415,7 +422,7 @@ public static class vCardDeserializer
                 out var rawGeo, out var geoDes))
             vcard.Geo = geoDes!.Read(rawGeo!);
 
-        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<Organization>>(
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<Organization?>>(
                 OrganizationFieldDeserializer.FieldKey,
                 out var rawOrg, out var orgDes))
             vcard.Organization = orgDes!.Read(rawOrg!);
@@ -432,19 +439,23 @@ public static class vCardDeserializer
                 out var rawGender, out var genderDes))
             vcard.Gender = genderDes!.Read(rawGender!);
 
-        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<DateTime>>(RevisionFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<DateTime?>>(
+                RevisionFieldDeserializer.FieldKey,
                 out var rawRev, out var revDes))
             vcard.Revision = revDes!.Read(rawRev!);
 
-        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<Language>>(LanguageFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<Language?>>(
+                LanguageFieldDeserializer.FieldKey,
                 out var rawLang, out var langDes))
             vcard.Language = langDes!.Read(rawLang!);
 
-        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<DateTime>>(BirthdayFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<DateTime?>>(
+                BirthdayFieldDeserializer.FieldKey,
                 out var rawBday, out var bdayDes))
             vcard.BirthDay = bdayDes!.Read(rawBday!);
 
-        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<DateTime>>(AnniversaryFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<DateTime?>>(
+                AnniversaryFieldDeserializer.FieldKey,
                 out var rawAnni, out var anniDes))
             vcard.Anniversary = anniDes!.Read(rawAnni!);
 
@@ -460,11 +471,10 @@ public static class vCardDeserializer
                 out var rawMailer, out var mailerDes))
             vcard.Mailer = mailerDes!.Read(rawMailer!);
 
-        if (vcardContent.TryGetGroupDeserializationParams<IV4FieldDeserializer<string>>(
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<List<string>>>(
                 CategoriesFieldDeserializer.FieldKey,
                 out var rawCategories, out var categoriesDes))
-            foreach (var rawCategory in rawCategories)
-                vcard.Categories.Add(categoriesDes!.Read(rawCategory));
+            vcard.Categories = categoriesDes!.Read(rawCategories!);
 
         if (vcardContent.TryGetGroupDeserializationParams<IV4FieldDeserializer<string>>(
                 MemberFieldDeserializer.FieldKey,
@@ -536,8 +546,8 @@ public static class vCardDeserializer
     private static bool TryGetCustomDeserializationParams<T>(this IEnumerable<string> vcardContent,
         out IEnumerable<string> rawData, out T? deserializer) where T : IFieldDeserializer
     {
-        var knownFieldKeys = FieldDeserializers.Keys.Except(new[] { UnknownFieldDeserializer.Key });
-        rawData = vcardContent.Where(x => !knownFieldKeys.All(x.StartsWith)).ToList();
+        var knownFieldKeys = new[] { VersionDeserializer.FieldKey }.Concat(FieldDeserializers.Keys);
+        rawData = vcardContent.Where(x => !knownFieldKeys.Any(x.StartsWith)).ToList();
 
         if (!rawData.Any())
         {
@@ -545,7 +555,7 @@ public static class vCardDeserializer
             return false;
         }
 
-        deserializer = (T)FieldDeserializers[UnknownFieldDeserializer.Key];
+        deserializer = (T)FieldDeserializers[CustomFieldDeserializer.Key];
         return true;
     }
 
