@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
@@ -31,14 +32,9 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
             {
                 var emailTypes = data.Split(',');
 
-                foreach (var parsedType in emailTypes)
-                {
-                    var emailType = parsedType?.ParseEmailAddressType();
-
-                    if (emailType.HasValue)
-                        type = type.HasValue ? type.Value | emailType : emailType;
-                }
-                
+                type = emailTypes
+                    .Select(parsedType => parsedType.ParseEmailAddressType())
+                    .Aggregate(type, (current, emailType) => current.HasValue ? current.Value | emailType : emailType);
             }
             else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 preference = 1;
@@ -65,14 +61,9 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
             {
                 var emailTypes = data.Split(',');
 
-                foreach (var parsedType in emailTypes)
-                {
-                    var emailType = parsedType?.ParseEmailAddressType();
-
-                    if (emailType.HasValue)
-                        type = type.HasValue ? type.Value | emailType : emailType;
-                }
-                
+                type = emailTypes
+                    .Select(parsedType => parsedType.ParseEmailAddressType())
+                    .Aggregate(type, (current, emailType) => current.HasValue ? current.Value | emailType : emailType);
             }
             else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))

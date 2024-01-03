@@ -29,6 +29,6 @@ public struct TelephoneNumber
         Value = value;
         Extension = extension;
         Preference = preference;
-        Type = telephoneNumberType ?? TelephoneNumberType.None;
+        Type = telephoneNumberType != null ? telephoneNumberType.Value : TelephoneNumberType.None;
     }
 }

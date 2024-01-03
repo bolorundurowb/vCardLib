@@ -11,6 +11,6 @@ public struct Label
     public Label(string? text, AddressType? addressType = null)
     {
         Text = text;
-        Type = addressType ?? AddressType.None;
+        Type = addressType != null ? addressType.Value : AddressType.None;
     }
 }

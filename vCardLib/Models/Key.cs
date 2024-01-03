@@ -13,8 +13,8 @@ public struct Key
     public Key(string value, string? type = null, string? mimeType = null, string? encoding = null)
     {
         Value = value;
-        MimeType = mimeType?.ToLowerInvariant();
-        Encoding = encoding?.ToLowerInvariant();
-        Type = type?.ToLowerInvariant();
+        MimeType = mimeType != null ? mimeType.ToLowerInvariant() : null;
+        Encoding = encoding != null ? encoding.ToLowerInvariant() : null;
+        Type = type != null ? type.ToLowerInvariant() : null;
     }
 }

@@ -94,7 +94,7 @@ public static class vCardDeserializer
         using var reader = new StringReader(vcardContent);
         var response = new List<string>();
 
-        while (reader.ReadLine()?.Trim() is { } line)
+        while (reader.ReadLine() != null ? reader.ReadLine().Trim() is { } line : false)
         {
             if (string.IsNullOrWhiteSpace(line))
                 continue;
@@ -111,7 +111,7 @@ public static class vCardDeserializer
             {
                 var nested = new StringBuilder(line);
 
-                while (reader.ReadLine()?.Trim() is { } nestedLine && !nestedLine.EqualsIgnoreCase("END:VCARD"))
+                while ((reader.ReadLine() != null ? reader.ReadLine().Trim() is { } nestedLine : false) && !nestedLine.EqualsIgnoreCase("END:VCARD"))
                     nested.AppendLine(nestedLine);
 
                 response.Add(nested.ToString());

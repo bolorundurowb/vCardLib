@@ -23,6 +23,6 @@ public struct EmailAddress
     {
         Value = value;
         Preference = preference;
-        Type = type ?? EmailAddressType.None;
+        Type = type != null ? type.Value : EmailAddressType.None;
     }
 }

@@ -71,6 +71,6 @@ public class AnniversaryFieldDeserializerTests
         var timeSpan = new TimeSpan(4, 15, 00);
 
         result.ShouldNotBeNull();
-        (result - DateTime.MinValue).ShouldBe(timeSpan);
+        (result != null ? result.Value - DateTime.MinValue : (TimeSpan?)null).ShouldBe(timeSpan);
     }
 }

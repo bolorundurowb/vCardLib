@@ -20,6 +20,6 @@ internal static class DataSplitHelpers
     public static (string, string?) SplitDatum(string datum, char metadataSeparator)
     {
         var parts = datum.Split(metadataSeparator);
-        return parts.Length == 1 ? (parts[0], null) : (parts[0], parts[1]?.Trim('"'));
+        return parts.Length == 1 ? (parts[0], null) : (parts[0], parts[1] != null ? parts[1].Trim('"') : null);
     }
 }
