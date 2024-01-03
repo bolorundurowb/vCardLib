@@ -6,7 +6,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class LanguageFieldDeserializer :  IV2FieldDeserializer<Language?>,
+internal sealed class LanguageFieldDeserializer : IV2FieldDeserializer<Language?>,
     IV3FieldDeserializer<Language?>, IV4FieldDeserializer<Language?>
 {
     public static string FieldKey => "LANG";

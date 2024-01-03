@@ -20,7 +20,7 @@ public class KeyFieldDeserializerTests
         result.Type.ShouldBe("pgp");
         result.Value.ShouldBe("http://example.com/key.pgp");
     }
-    
+
     [Test]
     public void V2ShouldParseBase64()
     {
@@ -60,7 +60,7 @@ public class KeyFieldDeserializerTests
          rZlVt9bJbs7MNYZVsyF1unsqaln4/vy6Uawfg8VUMk1U7jt8LYpo4YULU7
          UZHPYVUaSgVttImOHZIKi4hlPXBOhcUQ==");
     }
-    
+
     [Test]
     public void V3ShouldParseSimple()
     {
@@ -72,7 +72,7 @@ public class KeyFieldDeserializerTests
         result.Type.ShouldBe("pgp");
         result.Value.ShouldBe("http://example.com/key.pgp");
     }
-    
+
     [Test]
     public void V3ShouldParseBase64()
     {
@@ -112,7 +112,7 @@ public class KeyFieldDeserializerTests
          rZlVt9bJbs7MNYZVsyF1unsqaln4/vy6Uawfg8VUMk1U7jt8LYpo4YULU7
          UZHPYVUaSgVttImOHZIKi4hlPXBOhcUQ==");
     }
-    
+
     [Test]
     public void V4ShouldParseSimple()
     {
@@ -125,7 +125,7 @@ public class KeyFieldDeserializerTests
         result.MimeType.ShouldBe("application/pgp-keys");
         result.Value.ShouldBe("ftp://example.com/keys/jdoe");
     }
-    
+
     [Test]
     public void V4ShouldParseBase64()
     {

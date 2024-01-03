@@ -4,7 +4,7 @@ using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class CategoriesFieldDeserializer :  IV2FieldDeserializer<List<string>>,
+internal sealed class CategoriesFieldDeserializer : IV2FieldDeserializer<List<string>>,
     IV3FieldDeserializer<List<string>>, IV4FieldDeserializer<List<string>>
 {
     public static string FieldKey => "CATEGORIES";

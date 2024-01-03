@@ -4,7 +4,7 @@ using vCardLib.Deserialization.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class AnniversaryFieldDeserializer :  IV2FieldDeserializer<DateTime?>,
+internal sealed class AnniversaryFieldDeserializer : IV2FieldDeserializer<DateTime?>,
     IV3FieldDeserializer<DateTime?>, IV4FieldDeserializer<DateTime?>
 {
     public static string FieldKey => "ANNIVERSARY";

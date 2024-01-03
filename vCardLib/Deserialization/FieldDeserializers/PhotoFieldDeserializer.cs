@@ -6,7 +6,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class PhotoFieldDeserializer :  IV2FieldDeserializer<Photo>,
+internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
     IV3FieldDeserializer<Photo>, IV4FieldDeserializer<Photo>
 {
     public static string FieldKey => "PHOTO";

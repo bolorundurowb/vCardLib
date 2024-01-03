@@ -13,7 +13,7 @@ public class TitleFieldDeserializerTests
         const string input = "TITLE:Research Scientist";
         var deserializer = new TitleFieldDeserializer();
         var result = deserializer.Read(input);
-        
+
         result.ShouldNotBeNull();
         result.ShouldBe("Research Scientist");
     }

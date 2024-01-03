@@ -37,8 +37,8 @@ public enum TelephoneNumberType
     Car = 4096,
 
     ISDN = 8192,
-    
+
     PCS = 16384,
-    
+
     Preferred = 32768
 }

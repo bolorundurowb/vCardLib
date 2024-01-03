@@ -17,7 +17,7 @@ public class CategoriesFieldDeserializerTests
         result.ShouldBeEmpty();
     }
 
-    [Test] 
+    [Test]
     public void ShouldReturnPopulatedListWithSingleInput()
     {
         const string input = "CATEGORIES:TRAVEL AGENT";
@@ -29,7 +29,7 @@ public class CategoriesFieldDeserializerTests
         result.ShouldContain("TRAVEL AGENT");
     }
 
-    [Test] 
+    [Test]
     public void ShouldReturnPopulatedListWithMultipleInput()
     {
         const string input = "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY";

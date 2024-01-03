@@ -4,7 +4,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class OrganizationFieldDeserializer :  IV2FieldDeserializer<Organization?>, IV3FieldDeserializer<Organization?>,
+internal sealed class OrganizationFieldDeserializer : IV2FieldDeserializer<Organization?>, IV3FieldDeserializer<Organization?>,
     IV4FieldDeserializer<Organization?>
 {
     public static string FieldKey => "ORG";
@@ -16,7 +16,7 @@ internal sealed class OrganizationFieldDeserializer :  IV2FieldDeserializer<Orga
         string? orgName = null,
             orgUnitOne = null,
             orgUnitTwo = null;
-                
+
         var parts = value.Split(';');
         var partsLength = parts.Length;
 

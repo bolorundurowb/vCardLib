@@ -19,7 +19,7 @@ public class GeoFieldDeserializerTests
         result.Latitude.ShouldBe(37.386013f);
         result.Longitude.ShouldBe(-122.082932f);
     }
-    
+
     [Test]
     public void ShouldReturnValueWithV3Format()
     {
@@ -30,7 +30,7 @@ public class GeoFieldDeserializerTests
         result.Latitude.ShouldBe(37.386013f);
         result.Longitude.ShouldBe(-122.082932f);
     }
-    
+
     [Test]
     public void ShouldReturnValueWithV4Format()
     {

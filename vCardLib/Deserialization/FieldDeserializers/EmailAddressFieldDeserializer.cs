@@ -7,7 +7,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class EmailAddressFieldDeserializer :  IV2FieldDeserializer<EmailAddress>,
+internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<EmailAddress>,
     IV3FieldDeserializer<EmailAddress>, IV4FieldDeserializer<EmailAddress>
 {
     public static string FieldKey => "EMAIL";

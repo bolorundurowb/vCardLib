@@ -6,12 +6,12 @@
 public enum BiologicalSex
 {
     Male,
-    
+
     Female,
-    
+
     Other,
-    
+
     None,
-    
+
     Unknown
 }

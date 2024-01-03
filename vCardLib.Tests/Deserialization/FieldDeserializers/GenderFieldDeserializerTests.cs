@@ -19,7 +19,7 @@ public class GenderFieldDeserializerTests
 
         result.ShouldBeNull();
     }
-    
+
     [Test]
     public void ShouldReturnNullForV3()
     {
@@ -29,7 +29,7 @@ public class GenderFieldDeserializerTests
 
         result.ShouldBeNull();
     }
-    
+
     [Test]
     public void ShouldReturnValueForSexOnly()
     {
@@ -41,7 +41,7 @@ public class GenderFieldDeserializerTests
         result.Sex.ShouldBe(BiologicalSex.Male);
         result.GenderIdentity.ShouldBeNull();
     }
-    
+
     [Test]
     public void ShouldReturnValueForSexAndGenderIdentity()
     {
@@ -54,7 +54,7 @@ public class GenderFieldDeserializerTests
         result.GenderIdentity.ShouldNotBeNull();
         result.GenderIdentity.ShouldBe("grrrl");
     }
-    
+
     [Test]
     public void ShouldReturnValueForGenderIdentityOnly()
     {
@@ -66,7 +66,7 @@ public class GenderFieldDeserializerTests
         result.GenderIdentity.ShouldNotBeNull();
         result.GenderIdentity.ShouldBe("it's complicated");
     }
-    
+
     [Test]
     public void ShouldReturnParseSexCorrectly()
     {
@@ -76,13 +76,13 @@ public class GenderFieldDeserializerTests
 
         result.Sex.ShouldNotBeNull();
         result.Sex.ShouldBe(BiologicalSex.Other);
-        
+
         input = "GENDER:U";
         result = deserializer.Read(input);
 
         result.Sex.ShouldNotBeNull();
         result.Sex.ShouldBe(BiologicalSex.Unknown);
-        
+
         input = "GENDER:N";
         result = deserializer.Read(input);
 

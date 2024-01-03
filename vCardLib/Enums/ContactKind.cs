@@ -6,10 +6,10 @@
 public enum ContactKind
 {
     Individual,
-    
+
     Group,
-    
+
     Organization,
-    
+
     Location
 }

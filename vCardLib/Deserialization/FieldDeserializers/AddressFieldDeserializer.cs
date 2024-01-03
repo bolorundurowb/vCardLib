@@ -8,7 +8,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class AddressFieldDeserializer :  IV2FieldDeserializer<Address>,
+internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
     IV3FieldDeserializer<Address>, IV4FieldDeserializer<Address>
 {
     public static string FieldKey => "ADR";

@@ -14,17 +14,17 @@ public class MailerFieldDeserializerTests
         const string input = "MAILER:PigeonMail 2.1";
         IV4FieldDeserializer<string?> deserializer = new MailerFieldDeserializer();
         var result = deserializer.Read(input);
-        
+
         result.ShouldBeNull();
     }
-    
+
     [Test]
     public void ShouldReturnValueForV2OrV3()
     {
         const string input = "MAILER:PigeonMail 2.1";
         var deserializer = new MailerFieldDeserializer();
         var result = deserializer.Read(input);
-        
+
         result.ShouldNotBeNull();
         result.ShouldBe("PigeonMail 2.1");
     }

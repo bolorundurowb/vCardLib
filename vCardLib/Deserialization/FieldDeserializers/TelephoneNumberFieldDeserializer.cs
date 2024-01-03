@@ -8,7 +8,7 @@ using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class TelephoneNumberFieldDeserializer :  IV2FieldDeserializer<TelephoneNumber>,
+internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<TelephoneNumber>,
     IV3FieldDeserializer<TelephoneNumber>, IV4FieldDeserializer<TelephoneNumber>
 {
     public static string FieldKey => "TEL";
@@ -94,7 +94,7 @@ internal sealed class TelephoneNumberFieldDeserializer :  IV2FieldDeserializer<T
         input = input.ToUpperInvariant()
             .Replace(FieldKey, string.Empty)
             .TrimStart(':');
-        
+
         var phoneNumberParts = input.Split(';');
 
         if (phoneNumberParts.Length < 2)
