@@ -1,4 +1,5 @@
-﻿using vCardLib.Constants;
+﻿using System;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
@@ -26,14 +27,20 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
             {
-                var emailType = data?.ParseEmailAddressType();
+                var emailTypes = data.Split(',');
 
-                if (emailType.HasValue)
-                    type = type.HasValue ? type.Value | emailType : emailType;
+                foreach (var parsedType in emailTypes)
+                {
+                    var emailType = parsedType?.ParseEmailAddressType();
+
+                    if (emailType.HasValue)
+                        type = type.HasValue ? type.Value | emailType : emailType;
+                }
+                
             }
-            else if (key.EqualsIgnoreCase("PREF"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 preference = 1;
         }
 
@@ -54,12 +61,18 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
             {
-                var emailType = data?.ParseEmailAddressType();
+                var emailTypes = data.Split(',');
 
-                if (emailType.HasValue)
-                    type = type.HasValue ? type.Value | emailType : emailType;
+                foreach (var parsedType in emailTypes)
+                {
+                    var emailType = parsedType?.ParseEmailAddressType();
+
+                    if (emailType.HasValue)
+                        type = type.HasValue ? type.Value | emailType : emailType;
+                }
+                
             }
             else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
