@@ -2,5 +2,5 @@
 
 internal interface IV2FieldSerializer<in TModel> : IFieldSerializer
 {
-    string Write(TModel data);
+    string? Write(TModel data);
 }
