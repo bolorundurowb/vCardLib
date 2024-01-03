@@ -33,6 +33,18 @@ public static class vCardDeserializer
         { LabelFieldDeserializer.FieldKey, new LabelFieldDeserializer() },
         { LanguageFieldDeserializer.FieldKey, new LanguageFieldDeserializer() },
         { MailerFieldDeserializer.FieldKey, new MailerFieldDeserializer() },
+        { MemberFieldDeserializer.FieldKey, new MemberFieldDeserializer() },
+        { NameFieldDeserializer.FieldKey, new NameFieldDeserializer() },
+        { NicknameFieldDeserializer.FieldKey, new NicknameFieldDeserializer() },
+        { NoteFieldDeserializer.FieldKey, new NoteFieldDeserializer() },
+        { OrganizationFieldDeserializer.FieldKey, new OrganizationFieldDeserializer() },
+        { PhotoFieldDeserializer.FieldKey, new PhotoFieldDeserializer() },
+        { ProdIdFieldDeserializer.FieldKey, new ProdIdFieldDeserializer() },
+        { RevisionFieldDeserializer.FieldKey, new RevisionFieldDeserializer() },
+        { TelephoneNumberFieldDeserializer.FieldKey, new TelephoneNumberFieldDeserializer() },
+        { TimezoneFieldDeserializer.FieldKey, new TimezoneFieldDeserializer() },
+        { TitleFieldDeserializer.FieldKey, new TitleFieldDeserializer() },
+        { UrlFieldDeserializer.FieldKey, new UrlFieldDeserializer() },
     };
 
     public static IEnumerable<vCard> FromFile(string filePath)
@@ -59,13 +71,13 @@ public static class vCardDeserializer
         if (string.IsNullOrWhiteSpace(vcardContents))
             throw new ArgumentException("File is empty.", nameof(vcardContents));
 
-        if (vcardContents.StartsWith(FieldKeyConstants.StartToken))
+        if (!vcardContents.StartsWith(FieldKeyConstants.StartToken))
             throw new Exception($"A vCard must begin with '{FieldKeyConstants.StartToken}'.");
 
-        if (vcardContents.EndsWith(FieldKeyConstants.EndToken))
+        if (!vcardContents.EndsWith(FieldKeyConstants.EndToken))
             throw new Exception($"A vCard must end with '{FieldKeyConstants.EndToken}'.");
 
-        if (vcardContents.Contains(FieldKeyConstants.VersionKey))
+        if (!vcardContents.Contains(FieldKeyConstants.VersionKey))
             throw new Exception($"A vCard must contain a '{FieldKeyConstants.VersionKey}'.");
 
         var cardGroups = SplitContent(vcardContents);
