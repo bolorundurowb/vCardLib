@@ -10,11 +10,12 @@ using vCardLib.Serialization.Utilities;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
-internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3FieldSerializer<Address>, IV4FieldSerializer<Address>
+internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3FieldSerializer<Address>,
+    IV4FieldSerializer<Address>
 {
     public string FieldKey => "ADR";
 
-    public string? Write(Address data)
+    public string Write(Address data)
     {
         var builder = new StringBuilder(FieldKey);
 
@@ -28,8 +29,8 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
             if (addressTypes.Any())
             {
                 builder.Append(FieldKeyConstants.MetadataDelimiter);
-            
-                foreach (var addressType in addressTypes) 
+
+                foreach (var addressType in addressTypes)
                     builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, addressType.DecomposeAddressType());
             }
         }
@@ -43,7 +44,8 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
         if (data.Geographic != null)
         {
             builder.Append(FieldKeyConstants.MetadataDelimiter);
-            builder.AppendFormat("{0}={1},{2}", GeoFieldDeserializer.FieldKey, data.Geographic.Value.Latitude, data.Geographic.Value.Longitude);
+            builder.AppendFormat("{0}={1},{2}", GeoFieldDeserializer.FieldKey, data.Geographic.Value.Latitude,
+                data.Geographic.Value.Longitude);
         }
 
         builder.Append(FieldKeyConstants.SectionDelimiter);

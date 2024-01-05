@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -13,7 +14,7 @@ internal sealed class AgentFieldDeserializer : IV2FieldDeserializer<string>,
         input = input.Replace(FieldKey, string.Empty);
 
         // since the separator can be a ';' or ':' we need to trim them
-        input = input.TrimStart(';').TrimStart(':');
+        input = input.TrimStart(FieldKeyConstants.MetadataDelimiter).TrimStart(FieldKeyConstants.SectionDelimiter);
 
         const string valuePreamble = "VALUE=";
         if (input.StartsWith(valuePreamble))

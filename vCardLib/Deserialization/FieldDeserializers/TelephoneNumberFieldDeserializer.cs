@@ -43,7 +43,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                         type = type.HasValue ? type.Value | phoneType : phoneType;
                 }
             }
-            else if (key.EqualsIgnoreCase("PREF"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 preference = 1;
         }
 
@@ -90,7 +90,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
 
     private (string, string?) SplitOutExtension(string input)
     {
-        // HACk: in case the telephone number is in uri format
+        // HACK: in case the telephone number is in uri format
         input = input.ToUpperInvariant()
             .Replace(FieldKey, string.Empty)
             .TrimStart(':');

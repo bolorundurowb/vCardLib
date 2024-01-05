@@ -18,7 +18,7 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
         var (metadata, values) = SplitLine(input);
 
         if (values.Length != 7)
-            throw new Exception("Address parts incomplete.");
+            throw new Exception("Address parts incomplete");
 
         if (metadata.Length == 0)
             return new Address(values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
