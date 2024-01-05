@@ -3,7 +3,7 @@ using vCardLib.Serialization.Interfaces;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
-public class AnniversaryFieldSerializer : IV2FieldSerializer<DateTime?>, IV3FieldSerializer<DateTime?>,
+internal sealed class AnniversaryFieldSerializer : IV2FieldSerializer<DateTime?>, IV3FieldSerializer<DateTime?>,
     IV4FieldSerializer<DateTime?>
 {
     public string FieldKey => "ANNIVERSARY";
