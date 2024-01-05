@@ -40,6 +40,6 @@ public struct Address
         Label = label;
         Geographic = geographic;
         Timezone = timezone;
-        Type = addressType != null ? addressType.Value : AddressType.None;
+        Type = addressType ?? AddressType.None;
     }
 }
