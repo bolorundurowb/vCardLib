@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;

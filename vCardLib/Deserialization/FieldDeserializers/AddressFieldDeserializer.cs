@@ -31,11 +31,11 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase("GEO"))
-                geo = (new GeoFieldDeserializer() as IV4FieldDeserializer<Geo>)?.Read(data!);
-            else if (key.EqualsIgnoreCase("LABEL"))
+            if (key.EqualsIgnoreCase(GeoFieldDeserializer.FieldKey))
+                geo = (new GeoFieldDeserializer() as IV4FieldDeserializer<Geo>).Read(data!);
+            else if (key.EqualsIgnoreCase(LabelFieldDeserializer.FieldKey))
                 label = data;
-            else if (key.EqualsIgnoreCase("TYPE"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 type = ParseAddressType(data!);
         }
 
