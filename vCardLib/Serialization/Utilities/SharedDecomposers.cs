@@ -18,4 +18,18 @@ internal static class SharedDecomposers
             _ => throw new ArgumentException()
         };
     } 
+    
+    public static string DecomposeEmailAddressType(this EmailAddressType input)
+    {
+        return input switch
+        {
+            AddressType.Domestic => "dom",
+            AddressType.Home => "home",
+            AddressType.International => "intl",
+            AddressType.Parcel => "parcel",
+            AddressType.Postal => "postal",
+            AddressType.Work => "work",
+            _ => throw new ArgumentException()
+        };
+    } 
 }
