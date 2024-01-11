@@ -33,4 +33,17 @@ internal static class SharedDecomposers
             _ => throw new ArgumentException()
         };
     }
+
+    public static string DecomposeBiologicalSex(this BiologicalSex input)
+    {
+        return input switch
+        {
+            BiologicalSex.Male => "M",
+            BiologicalSex.Female => "F",
+            BiologicalSex.Other => "O",
+            BiologicalSex.None => "N",
+            BiologicalSex.Unknown => "U",
+            _ => throw new ArgumentException()
+        };
+    }
 }

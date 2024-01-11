@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using vCardLib.Serialization.FieldSerializers;
 using vCardLib.Serialization.Interfaces;
 
@@ -11,25 +12,18 @@ public static class vCardSerializer
 
     static vCardSerializer()
     {
-        var customSerializer = new CustomFieldSerializer();
-        var addressSerializer = new AddressFieldSerializer();
-        var agentSerializer = new AgentFieldSerializer();
-        var anniversarySerializer = new AnniversaryFieldSerializer();
-        var birthdaySerializer = new BirthdayFieldSerializer();
-        var categoriesSerializer = new CategoriesFieldSerializer();
-        var emailAddressSerializer = new EmailAddressFieldSerializer();
-        var formattedNameSerializer = new FormattedNameSerializer();
-
-        FieldSerializers = new Dictionary<string, IFieldSerializer>
+        var serializers = new List<IFieldSerializer>()
         {
-            { customSerializer.FieldKey, customSerializer },
-            { addressSerializer.FieldKey, addressSerializer },
-            { agentSerializer.FieldKey, agentSerializer },
-            { anniversarySerializer.FieldKey, anniversarySerializer },
-            { birthdaySerializer.FieldKey, birthdaySerializer },
-            { categoriesSerializer.FieldKey, categoriesSerializer },
-            { emailAddressSerializer.FieldKey, emailAddressSerializer },
-            { formattedNameSerializer.FieldKey, formattedNameSerializer },
+            new CustomFieldSerializer(),
+            new AddressFieldSerializer(),
+            new AgentFieldSerializer(),
+            new AnniversaryFieldSerializer(),
+            new BirthdayFieldSerializer(),
+            new CategoriesFieldSerializer(),
+            new EmailAddressFieldSerializer(),
+            new FormattedNameSerializer(),
+            new GenderFieldSerializer(),
         };
+        FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
 }
