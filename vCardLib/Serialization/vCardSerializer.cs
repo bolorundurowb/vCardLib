@@ -12,7 +12,7 @@ public static class vCardSerializer
 
     static vCardSerializer()
     {
-        var serializers = new List<IFieldSerializer>()
+        var serializers = new List<IFieldSerializer>
         {
             new CustomFieldSerializer(),
             new AddressFieldSerializer(),
@@ -23,6 +23,7 @@ public static class vCardSerializer
             new EmailAddressFieldSerializer(),
             new FormattedNameSerializer(),
             new GenderFieldSerializer(),
+            new KeyFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
