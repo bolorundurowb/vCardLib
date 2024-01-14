@@ -46,4 +46,16 @@ internal static class SharedDecomposers
             _ => throw new ArgumentException()
         };
     }
+
+    public static string DecomposeContactKind(this ContactKind input)
+    {
+        return input switch
+        {
+            ContactKind.Individual => "individual",
+            ContactKind.Group => "group",
+            ContactKind.Organization => "org",
+            ContactKind.Location => "location",
+            _ => throw new ArgumentException()
+        };
+    }
 }

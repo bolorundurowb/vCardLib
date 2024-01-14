@@ -24,6 +24,7 @@ public static class vCardSerializer
             new FormattedNameSerializer(),
             new GenderFieldSerializer(),
             new KeyFieldSerializer(),
+            new KindSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
