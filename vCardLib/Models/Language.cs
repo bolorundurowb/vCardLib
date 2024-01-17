@@ -2,16 +2,16 @@
 
 public struct Language
 {
-    public string Type { get; set; }
+    public string Locale { get; set; }
 
     public int? Preference { get; set; }
 
-    public string? Locale { get; set; }
+    public string? Type { get; set; }
 
-    public Language(string type, int? preference, string? locale)
+    public Language(string locale, int? preference = null, string? type = null)
     {
-        Type = type;
-        Preference = preference;
         Locale = locale;
+        Preference = preference;
+        Type = type;
     }
 }

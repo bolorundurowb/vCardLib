@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using vCardLib.Constants;
+﻿using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
+using vCardLib.Deserialization.Utilities;
+using vCardLib.Extensions;
 using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -15,37 +15,24 @@ internal sealed class LanguageFieldDeserializer : IV2FieldDeserializer<Language?
 
     Language? IV4FieldDeserializer<Language?>.Read(string input)
     {
-        var parts = input.Split(':');
+        var (metadata, locale) = DataSplitHelpers.SplitLine(FieldKey, input);
 
-        // the lang entry must have two parts
-        if (parts.Length != 2)
-            return null;
+        if (metadata.Length == 0)
+            return new Language(locale);
 
         int? preference = null;
         string? type = null;
 
-        var metadata = parts[0].Split(';');
-
-        var typeMetadatum = metadata.First(x => x.StartsWith(FieldKeyConstants.TypeKey, StringComparison.CurrentCultureIgnoreCase));
-
-        if (!string.IsNullOrWhiteSpace(typeMetadatum))
+        foreach (var datum in metadata)
         {
-            var typeParts = typeMetadatum.Split('=');
+            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (typeParts.Length == 2)
-                type = typeParts[1];
+            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+                type = data;
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
+                preference = int.TryParse(data, out var parsedPref) ? parsedPref : 1;
         }
 
-        var preferenceMetadatum = metadata.First(x => x.StartsWith("PREF", StringComparison.CurrentCultureIgnoreCase));
-
-        if (!string.IsNullOrWhiteSpace(preferenceMetadatum))
-        {
-            var prefParts = preferenceMetadatum.Split('=');
-
-            if (prefParts.Length == 2 && int.TryParse(prefParts[1], out var pref))
-                preference = pref;
-        }
-
-        return new Language(parts[1], preference, type);
+        return new Language(locale, preference, type);
     }
 }
