@@ -27,6 +27,7 @@ public static class vCardSerializer
             new KindSerializer(),
             new LabelFieldSerializer(),
             new LanguageFieldSerializer(),
+            new MailerFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
