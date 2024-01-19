@@ -80,7 +80,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                         type = type.HasValue ? type.Value | phoneType : phoneType;
                 }
             }
-            else if (key.EqualsIgnoreCase("PREF"))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
                     preference = pref;
         }
