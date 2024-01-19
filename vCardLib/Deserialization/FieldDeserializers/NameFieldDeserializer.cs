@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Constants;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -10,7 +11,7 @@ internal sealed class NameFieldDeserializer : IV2FieldDeserializer<Name>, IV3Fie
 
     public Name Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         var value = input.Substring(separatorIndex + 1).Trim();
         string? familyName = null,
             givenName = null,

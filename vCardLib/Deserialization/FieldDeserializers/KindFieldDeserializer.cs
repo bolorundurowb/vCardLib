@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Constants;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -12,7 +13,7 @@ internal sealed class KindFieldDeserializer : IV2FieldDeserializer<ContactKind?>
 
     ContactKind IV4FieldDeserializer<ContactKind>.Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         var value = input.Substring(separatorIndex + 1).Trim().ToLowerInvariant();
 
         return value switch

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
 
@@ -23,7 +24,7 @@ internal sealed class GeoFieldDeserializer : IV2FieldDeserializer<Geo>, IV3Field
 
     private static string Sanitize(string input)
     {
-        var index = input.LastIndexOf(':');
+        var index = input.LastIndexOf(FieldKeyConstants.SectionDelimiter);
         return input.Substring(index + 1).Trim();
     }
 

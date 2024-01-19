@@ -93,7 +93,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
         // HACK: in case the telephone number is in uri format
         input = input.ToUpperInvariant()
             .Replace(FieldKey, string.Empty)
-            .TrimStart(':');
+            .TrimStart(FieldKeyConstants.SectionDelimiter);
 
         var phoneNumberParts = input.Split(';');
 

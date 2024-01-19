@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -9,7 +10,7 @@ internal sealed class NoteFieldDeserializer : IV2FieldDeserializer<string>, IV3F
 
     public string Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         var value = input.Substring(separatorIndex + 1).Trim();
         return Regex.Unescape(value);
     }

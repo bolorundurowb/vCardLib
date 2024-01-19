@@ -1,4 +1,5 @@
 ﻿using System;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
 
@@ -11,7 +12,7 @@ internal sealed class RevisionFieldDeserializer : IV2FieldDeserializer<DateTime?
 
     public DateTime? Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         var value = input.Substring(separatorIndex + 1);
         return SharedParsers.ParseDate(value);
     }

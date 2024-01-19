@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -10,7 +11,7 @@ internal sealed class CustomFieldDeserializer : IV2FieldDeserializer<KeyValuePai
 
     public KeyValuePair<string, string> Read(string input)
     {
-        var separatorIndex = input.LastIndexOf(':');
+        var separatorIndex = input.LastIndexOf(FieldKeyConstants.SectionDelimiter);
         var key = input.Substring(0, separatorIndex).Trim();
         var value = input.Substring(separatorIndex + 1).Trim();
         return new KeyValuePair<string, string>(key, value);

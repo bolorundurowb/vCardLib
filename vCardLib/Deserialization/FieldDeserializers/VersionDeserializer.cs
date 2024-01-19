@@ -1,4 +1,5 @@
 ﻿using System;
+using vCardLib.Constants;
 using vCardLib.Enums;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -9,7 +10,7 @@ internal sealed class VersionDeserializer
 
     public static vCardVersion Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         var value = input.Substring(separatorIndex + 1).Trim();
 
         return value switch

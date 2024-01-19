@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Constants;
+using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
@@ -15,7 +16,7 @@ internal sealed class NicknameFieldDeserializer : IV2FieldDeserializer<string?>,
 
     public string Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         return input.Substring(separatorIndex + 1).Trim();
     }
 }

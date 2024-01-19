@@ -1,4 +1,5 @@
-﻿using vCardLib.Deserialization.Interfaces;
+﻿using vCardLib.Constants;
+using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
 using vCardLib.Models;
 
@@ -13,7 +14,7 @@ internal sealed class GenderFieldDeserializer : IV2FieldDeserializer<Gender?>,
 
     Gender IV4FieldDeserializer<Gender>.Read(string input)
     {
-        var separatorIndex = input.IndexOf(':');
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
         var value = input.Substring(separatorIndex + 1).Trim();
 
         BiologicalSex? sex = null;
