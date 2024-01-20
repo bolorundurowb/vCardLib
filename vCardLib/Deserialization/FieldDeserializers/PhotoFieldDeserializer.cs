@@ -81,7 +81,7 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
 
         if (value.Contains(";"))
         {
-            var split = value.Split(';');
+            var split = value.Split(FieldKeyConstants.MetadataDelimiter);
             mimeType = split[0];
             value = split[1];
         }

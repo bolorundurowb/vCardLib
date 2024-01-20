@@ -19,7 +19,7 @@ internal sealed class NameFieldDeserializer : IV2FieldDeserializer<Name>, IV3Fie
             honorificPrefix = null,
             honorificSuffix = null;
 
-        var parts = value.Split(';');
+        var parts = value.Split(FieldKeyConstants.MetadataDelimiter);
         var partsLength = parts.Length;
 
         if (partsLength > 0)

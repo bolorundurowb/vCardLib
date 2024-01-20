@@ -95,7 +95,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
             .Replace(FieldKey, string.Empty)
             .TrimStart(FieldKeyConstants.SectionDelimiter);
 
-        var phoneNumberParts = input.Split(';');
+        var phoneNumberParts = input.Split(FieldKeyConstants.MetadataDelimiter);
 
         if (phoneNumberParts.Length < 2)
             return (input, null);

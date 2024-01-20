@@ -12,7 +12,7 @@ internal sealed class GeoFieldDeserializer : IV2FieldDeserializer<Geo>, IV3Field
 
     public Geo Read(string input)
     {
-        var parts = Sanitize(input).Split(';');
+        var parts = Sanitize(input).Split(FieldKeyConstants.MetadataDelimiter);
         return GenerateGeo(parts);
     }
 

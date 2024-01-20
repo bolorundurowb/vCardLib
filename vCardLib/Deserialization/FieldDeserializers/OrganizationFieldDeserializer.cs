@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
 
@@ -17,7 +18,7 @@ internal sealed class OrganizationFieldDeserializer : IV2FieldDeserializer<Organ
             orgUnitOne = null,
             orgUnitTwo = null;
 
-        var parts = value.Split(';');
+        var parts = value.Split(FieldKeyConstants.MetadataDelimiter);
         var partsLength = parts.Length;
 
         if (partsLength == 0)

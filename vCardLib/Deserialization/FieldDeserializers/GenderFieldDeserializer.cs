@@ -20,7 +20,7 @@ internal sealed class GenderFieldDeserializer : IV2FieldDeserializer<Gender?>,
         BiologicalSex? sex = null;
         string? genderIdentity = null;
 
-        var parts = value.Split(';');
+        var parts = value.Split(FieldKeyConstants.MetadataDelimiter);
         var partsLength = parts.Length;
 
         if (partsLength > 0)
