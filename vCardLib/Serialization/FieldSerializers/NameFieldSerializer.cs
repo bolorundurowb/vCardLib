@@ -4,7 +4,7 @@ using vCardLib.Serialization.Interfaces;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
-internal sealed class NameSerializer : IV2FieldSerializer<Name>, IV3FieldSerializer<Name>, IV4FieldSerializer<Name>
+internal sealed class NameFieldSerializer : IV2FieldSerializer<Name>, IV3FieldSerializer<Name>, IV4FieldSerializer<Name>
 {
     public string FieldKey => "N";
 
