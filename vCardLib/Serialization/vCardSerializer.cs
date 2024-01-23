@@ -32,6 +32,7 @@ public static class vCardSerializer
             new NameFieldSerializer(),
             new NicknameFieldSerializer(),
             new NoteFieldSerializer(),
+            new OrganizationFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
