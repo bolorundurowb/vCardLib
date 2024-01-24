@@ -5,7 +5,7 @@ namespace vCardLib.Models;
 public struct Photo
 {
     /// <summary>
-    /// The image data
+    /// The image data type
     /// </summary>
     public string? Type { get; set; }
 
@@ -19,15 +19,19 @@ public struct Photo
     /// </summary>
     public string? Encoding { get; set; }
 
-    public string Value { get; set; }
+    public string? Value { get; set; }
 
-    public Photo(string value, string? encoding = null, string? type = null, string? mimeType = null)
+    public string Data { get; set; }
+
+    public Photo(string data, string? encoding = null, string? type = null, string? mimeType = null,
+        string? value = null)
     {
-        Value = value;
+        Data = data;
         Encoding = encoding;
         Type = type;
         MimeType = mimeType;
+        Value = value;
     }
 
-    public byte[] AsByteArray() => Convert.FromBase64String(Value);
+    public byte[] AsByteArray() => Convert.FromBase64String(Data);
 }

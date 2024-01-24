@@ -36,24 +36,26 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
 
     Photo IV3FieldDeserializer<Photo>.Read(string input)
     {
-        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
+        var (metadata, data) = DataSplitHelpers.SplitLine(FieldKey, input);
 
         if (metadata.Length == 0)
-            return new Photo(value);
+            return new Photo(data);
 
-        string? type = null, mimeType = null, encoding = null;
+        string? type = null, mimeType = null, encoding = null, value = null;
 
         foreach (var datum in metadata)
         {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
+            var (key, entry) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
-                encoding = data == "b" ? "BASE64" : data;
+                encoding = entry == "b" ? "BASE64" : data;
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
+                value = entry;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-                type = data;
+                type = entry;
         }
 
-        return new Photo(value, encoding, type, mimeType);
+        return new Photo(data, encoding, type, mimeType, value);
     }
 
     Photo IV4FieldDeserializer<Photo>.Read(string input)
@@ -64,7 +66,7 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
         if (metadata.Length == 0)
             return new Photo(value);
 
-        string? type = null, mimeType = null, encoding = null;
+        string? type = null, mimeType = null, encoding = null, valueMetadata = null;
 
         foreach (var datum in metadata)
         {
@@ -72,6 +74,8 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
 
             if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
                 mimeType = data;
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
+                valueMetadata = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 type = data;
         }
@@ -93,6 +97,6 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
             value = split[1];
         }
 
-        return new Photo(value, encoding, type, mimeType);
+        return new Photo(value, encoding, type, mimeType, valueMetadata);
     }
 }

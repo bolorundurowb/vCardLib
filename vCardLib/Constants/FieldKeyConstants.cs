@@ -20,6 +20,8 @@ internal static class FieldKeyConstants
 
     public const string EncodingKey = "ENCODING";
 
+    public const string ValueKey = "VALUE";
+
     public const string VersionKey = "VERSION";
 
     public const string PreferenceKey = "PREF";
