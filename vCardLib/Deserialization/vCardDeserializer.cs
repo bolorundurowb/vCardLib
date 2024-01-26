@@ -45,6 +45,7 @@ public static class vCardDeserializer
         { TelephoneNumberFieldDeserializer.FieldKey, new TelephoneNumberFieldDeserializer() },
         { TimezoneFieldDeserializer.FieldKey, new TimezoneFieldDeserializer() },
         { TitleFieldDeserializer.FieldKey, new TitleFieldDeserializer() },
+        { UidFieldDeserializer.FieldKey, new UidFieldDeserializer() },
         { UrlFieldDeserializer.FieldKey, new UrlFieldDeserializer() },
     };
 
@@ -99,19 +100,19 @@ public static class vCardDeserializer
             if (string.IsNullOrWhiteSpace(line))
                 continue;
 
-            if (line.EqualsIgnoreCase("END:VCARD"))
+            if (line.EqualsIgnoreCase(FieldKeyConstants.EndToken))
             {
                 yield return response.ToArray();
             }
-            else if (line.EqualsIgnoreCase("BEGIN:VCARD"))
+            else if (line.EqualsIgnoreCase(FieldKeyConstants.StartToken))
             {
                 response.Clear();
             }
-            else if (line.EndsWithIgnoreCase("BEGIN:VCARD"))
+            else if (line.EndsWithIgnoreCase(FieldKeyConstants.StartToken))
             {
                 var nested = new StringBuilder(line);
 
-                while ((reader.ReadLine() != null && reader.ReadLine().Trim() is { } nestedLine) && !nestedLine.EqualsIgnoreCase("END:VCARD"))
+                while ((reader.ReadLine() != null && reader.ReadLine().Trim() is { } nestedLine) && !nestedLine.EqualsIgnoreCase(FieldKeyConstants.EndToken))
                     nested.AppendLine(nestedLine);
 
                 response.Add(nested.ToString());
@@ -163,6 +164,10 @@ public static class vCardDeserializer
         if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(NoteFieldDeserializer.FieldKey,
                 out var rawNote, out var noteDes))
             vcard.Note = noteDes!.Read(rawNote!);
+
+        if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(UidFieldDeserializer.FieldKey,
+                out var rawUid, out var uidDes))
+            vcard.Uid = uidDes!.Read(rawUid!);
 
         if (vcardContent.TryGetDeserializationParams<IV2FieldDeserializer<string>>(UrlFieldDeserializer.FieldKey,
                 out var rawUrl, out var urlDes))
@@ -287,6 +292,10 @@ public static class vCardDeserializer
                 out var rawNote, out var noteDes))
             vcard.Note = noteDes!.Read(rawNote!);
 
+        if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<string>>(UidFieldDeserializer.FieldKey,
+                out var rawUid, out var uidDes))
+            vcard.Uid = uidDes!.Read(rawUid!);
+
         if (vcardContent.TryGetDeserializationParams<IV3FieldDeserializer<string>>(UrlFieldDeserializer.FieldKey,
                 out var rawUrl, out var urlDes))
             vcard.Url = urlDes!.Read(rawUrl!);
@@ -409,6 +418,10 @@ public static class vCardDeserializer
         if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<string>>(NoteFieldDeserializer.FieldKey,
                 out var rawNote, out var noteDes))
             vcard.Note = noteDes!.Read(rawNote!);
+
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<string>>(UidFieldDeserializer.FieldKey,
+                out var rawUid, out var uidDes))
+            vcard.Uid = uidDes!.Read(rawUid!);
 
         if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<string>>(UrlFieldDeserializer.FieldKey,
                 out var rawUrl, out var urlDes))

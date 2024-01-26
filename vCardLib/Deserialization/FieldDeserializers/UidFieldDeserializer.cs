@@ -3,10 +3,10 @@ using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
-internal sealed class UrlFieldDeserializer : IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
+internal sealed class UidFieldDeserializer : IV2FieldDeserializer<string>, IV3FieldDeserializer<string>,
     IV4FieldDeserializer<string>
 {
-    public static string FieldKey => "URL";
+    public static string FieldKey => "UID";
 
     public string Read(string input)
     {

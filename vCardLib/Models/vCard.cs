@@ -36,6 +36,11 @@ public class vCard
     public string? Note { get; set; }
 
     /// <summary>
+    /// Property is used to uniquely identify the object that the vCard represents
+    /// </summary>
+    public string? Uid { get; set; }
+
+    /// <summary>
     /// Uniform resource locator associated with the object to which the vCard refers.  Examples for individuals
     /// include personal web sites, blogs, and social networking site identifiers.
     /// </summary>
