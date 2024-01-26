@@ -35,6 +35,7 @@ public static class vCardSerializer
             new OrganizationFieldSerializer(),
             new PhotoFieldSerializer(),
             new ProdIdFieldSerializer(),
+            new RevisionFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
