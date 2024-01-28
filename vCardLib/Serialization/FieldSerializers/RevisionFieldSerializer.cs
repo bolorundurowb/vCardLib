@@ -1,12 +1,13 @@
-﻿using vCardLib.Constants;
+﻿using System;
+using vCardLib.Constants;
 using vCardLib.Serialization.Interfaces;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
-internal sealed class RevisionFieldSerializer : IV2FieldSerializer<string>, IV3FieldSerializer<string>,
-    IV4FieldSerializer<string>
+internal sealed class RevisionFieldSerializer : IV2FieldSerializer<DateTime>, IV3FieldSerializer<DateTime>,
+    IV4FieldSerializer<DateTime>
 {
     public string FieldKey => "REV";
 
-    public string Write(string data) => $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{data}";
+    public string Write(DateTime data) => $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{data:yyyyMMddTHHmmssZ}";
 }
