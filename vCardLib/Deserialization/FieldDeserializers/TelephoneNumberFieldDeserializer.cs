@@ -47,7 +47,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                 preference = 1;
         }
 
-        return new TelephoneNumber(telephoneNumber, type, extension, preference, _value);
+        return new TelephoneNumber(telephoneNumber, type, extension, preference);
     }
 
     TelephoneNumber IV4FieldDeserializer<TelephoneNumber>.Read(string input)
