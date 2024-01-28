@@ -7,7 +7,12 @@ public struct TelephoneNumber
     /// <summary>
     /// The Number
     /// </summary>
-    public string Value { get; set; }
+    public string Number { get; set; }
+    
+    /// <summary>
+    /// The tel value type
+    /// </summary>
+    public string? Value { get; set; }
 
     /// <summary>
     /// The telephone number extension
@@ -24,11 +29,12 @@ public struct TelephoneNumber
     /// </summary>
     public int? Preference { get; set; }
 
-    public TelephoneNumber(string value, TelephoneNumberType? telephoneNumberType = null, string? extension = null, int? preference = null)
+    public TelephoneNumber(string number, TelephoneNumberType? telephoneNumberType = null, string? extension = null, int? preference = null, string? value = null)
     {
+        Number = number;
         Value = value;
         Extension = extension;
         Preference = preference;
-        Type = telephoneNumberType != null ? telephoneNumberType.Value : TelephoneNumberType.None;
+        Type = telephoneNumberType ?? TelephoneNumberType.None;
     }
 }

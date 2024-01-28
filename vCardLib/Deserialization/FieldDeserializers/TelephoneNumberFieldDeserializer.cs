@@ -47,7 +47,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                 preference = 1;
         }
 
-        return new TelephoneNumber(telephoneNumber, type, extension, preference);
+        return new TelephoneNumber(telephoneNumber, type, extension, preference, _value);
     }
 
     TelephoneNumber IV4FieldDeserializer<TelephoneNumber>.Read(string input)
@@ -60,6 +60,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
 
         TelephoneNumberType? type = null;
         int? preference = null;
+        string? _value = null;
 
         foreach (var datum in metadata)
         {
@@ -80,12 +81,14 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                         type = type.HasValue ? type.Value | phoneType : phoneType;
                 }
             }
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
+                _value = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
                     preference = pref;
         }
 
-        return new TelephoneNumber(telephoneNumber, type, extension, preference);
+        return new TelephoneNumber(telephoneNumber, type, extension, preference, _value);
     }
 
     private (string, string?) SplitOutExtension(string input)

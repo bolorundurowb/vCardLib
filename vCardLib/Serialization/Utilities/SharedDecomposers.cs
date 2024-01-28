@@ -58,4 +58,28 @@ internal static class SharedDecomposers
             _ => throw new ArgumentException()
         };
     }
+
+    public static string DecomposeTelephoneNumberType(this TelephoneNumberType input)
+    {
+        return input switch
+        {
+            TelephoneNumberType.Voice => "voice",
+            TelephoneNumberType.Text => "text",
+            TelephoneNumberType.Fax => "fax",
+            TelephoneNumberType.Cell => "cell",
+            TelephoneNumberType.Video => "video",
+            TelephoneNumberType.Pager => "pager",
+            TelephoneNumberType.TextPhone => "textphone",
+            TelephoneNumberType.Home => "home",
+            TelephoneNumberType.MainNumber => "main-number",
+            TelephoneNumberType.Work => "work",
+            TelephoneNumberType.BBS => "bbs",
+            TelephoneNumberType.Modem => "modem",
+            TelephoneNumberType.Car => "car",
+            TelephoneNumberType.ISDN => "isdn",
+            TelephoneNumberType.PCS => "pcs",
+            TelephoneNumberType.Preferred => "pref",
+            _ => throw new ArgumentException()
+        };
+    }
 }
