@@ -14,7 +14,7 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
 {
     public string FieldKey => "TEL";
 
-    public string Write(TelephoneNumber data)
+    string IV2FieldSerializer<TelephoneNumber>.Write(TelephoneNumber data)
     {
         var builder = new StringBuilder(FieldKey);
 
@@ -47,7 +47,7 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
         return builder.ToString();
     }
 
-    string IV4FieldSerializer<TelephoneNumber>.Write(TelephoneNumber data)
+    public string Write(TelephoneNumber data)
     {
         var builder = new StringBuilder(FieldKey);
 

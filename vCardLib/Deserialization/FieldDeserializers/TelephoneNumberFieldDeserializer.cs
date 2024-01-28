@@ -13,7 +13,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
 {
     public static string FieldKey => "TEL";
 
-    public TelephoneNumber Read(string input)
+    TelephoneNumber IV2FieldDeserializer<TelephoneNumber>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
         var (telephoneNumber, extension) = SplitOutExtension(value);
@@ -50,7 +50,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
         return new TelephoneNumber(telephoneNumber, type, extension, preference);
     }
 
-    TelephoneNumber IV4FieldDeserializer<TelephoneNumber>.Read(string input)
+    public TelephoneNumber Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
         var (telephoneNumber, extension) = SplitOutExtension(value);
