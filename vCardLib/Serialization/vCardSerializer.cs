@@ -37,6 +37,7 @@ public static class vCardSerializer
             new ProdIdFieldSerializer(),
             new RevisionFieldSerializer(),
             new TelephoneNumberFieldSerializer(),
+            new TitleFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
