@@ -39,6 +39,7 @@ public static class vCardSerializer
             new TelephoneNumberFieldSerializer(),
             new TitleFieldSerializer(),
             new UidFieldSerializer(),
+            new UrlFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }
