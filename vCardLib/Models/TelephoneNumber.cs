@@ -8,7 +8,7 @@ public struct TelephoneNumber
     /// The Number
     /// </summary>
     public string Number { get; set; }
-    
+
     /// <summary>
     /// The tel value type
     /// </summary>

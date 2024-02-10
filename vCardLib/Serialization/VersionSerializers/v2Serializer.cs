@@ -10,16 +10,16 @@ using vCardLib.Serialization.Interfaces;
 
 namespace vCardLib.Serialization.VersionSerializers;
 
-internal sealed class v2Serializer
+internal sealed class V2Serializer
 {
     private readonly Dictionary<string, IFieldSerializer> FieldSerializers;
 
-    public v2Serializer(Dictionary<string, IFieldSerializer> fieldSerializers) => FieldSerializers = fieldSerializers;
+    public V2Serializer(Dictionary<string, IFieldSerializer> fieldSerializers) => FieldSerializers = fieldSerializers;
 
     public string Serialize(vCard card)
     {
         var builder = new StringBuilder();
-        
+
         builder.AppendLine(FieldKeyConstants.StartToken);
         builder.AppendLine(VersionFieldSerializer.Write(vCardVersion.v2));
 

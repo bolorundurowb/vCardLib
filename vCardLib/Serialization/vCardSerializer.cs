@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using vCardLib.Enums;
+using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
 using vCardLib.Serialization.Interfaces;
+using vCardLib.Serialization.VersionSerializers;
 
 namespace vCardLib.Serialization;
 
@@ -42,5 +46,15 @@ public static class vCardSerializer
             new UrlFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
+    }
+
+    public static string Serialize(vCard card, vCardVersion? overrideVersion = null)
+    {
+        var version = overrideVersion ?? card.Version;
+
+        if (version is vCardVersion.v2) 
+            return (new V2Serializer(FieldSerializers)).Serialize(card);
+
+        throw new ArgumentException("Unknown version", nameof(version));
     }
 }
