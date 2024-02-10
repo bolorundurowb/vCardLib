@@ -13,7 +13,7 @@ public class vCard
     /// <summary>
     /// The version of the vcf file
     /// </summary>
-    public vCardVersion Version { get; set; }
+    public vCardVersion Version { get; private set; }
 
     /// <summary>
     /// Components of the name of the object the vCard represents.
@@ -153,22 +153,4 @@ public class vCard
     public List<KeyValuePair<string, string>> CustomFields { get; set; } = new();
 
     public vCard(vCardVersion version) => Version = version;
-
-    /// <inheritdoc/>
-    // public override string ToString()
-    // {
-    //     return Serializer.Serialize(this);
-    // }
-
-    /// <summary>
-    /// Returns a string that represents the current object.
-    /// </summary>
-    /// <param name="version">vCard version</param>
-    /// <returns>A string that represents the current object.</returns>
-    // public string ToString(vCardVersion version)
-    // {
-    //     var clone = this;
-    //     clone.Version = version;
-    //     return Serializer.Serialize(this);
-    // }
 }

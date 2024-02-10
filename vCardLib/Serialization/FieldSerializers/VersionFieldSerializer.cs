@@ -4,7 +4,7 @@ using vCardLib.Enums;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
-internal sealed class VersionFieldSerializer
+internal static class VersionFieldSerializer
 {
     public static string FieldKey => "VERSION";
 
