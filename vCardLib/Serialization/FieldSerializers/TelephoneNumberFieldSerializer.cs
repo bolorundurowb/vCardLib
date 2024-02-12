@@ -20,8 +20,9 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
 
         if (data.Type != TelephoneNumberType.None)
         {
-            var telephoneNumberTypes = Enum.GetValues(data.GetType())
-                .Cast<TelephoneNumberType>().Where(x => data.Type.HasFlag(x))
+            var telephoneNumberTypes = Enum.GetValues(typeof(TelephoneNumberType))
+                .Cast<TelephoneNumberType>()
+                .Where(x => data.Type.HasFlag(x) && x != TelephoneNumberType.None)
                 .ToArray();
 
             if (telephoneNumberTypes.Any())
@@ -52,9 +53,9 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
 
         if (data.Type != TelephoneNumberType.None)
         {
-            var telephoneNumberTypes = Enum.GetValues(data.GetType())
+            var telephoneNumberTypes = Enum.GetValues(typeof(TelephoneNumberType))
                 .Cast<TelephoneNumberType>()
-                .Where(x => data.Type.HasFlag(x))
+                .Where(x => data.Type.HasFlag(x) && x != TelephoneNumberType.None)
                 .ToArray();
 
             if (telephoneNumberTypes.Any())

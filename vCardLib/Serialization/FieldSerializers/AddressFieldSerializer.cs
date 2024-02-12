@@ -21,9 +21,9 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
 
         if (data.Type != AddressType.None)
         {
-            var addressTypes = Enum.GetValues(data.GetType())
+            var addressTypes = Enum.GetValues(typeof(AddressType))
                 .Cast<AddressType>()
-                .Where(x => data.Type.HasFlag(x))
+                .Where(x => data.Type.HasFlag(x) && x != AddressType.None)
                 .ToArray();
 
             if (addressTypes.Any())

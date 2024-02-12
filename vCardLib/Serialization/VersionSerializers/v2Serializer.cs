@@ -20,7 +20,7 @@ internal sealed class V2Serializer
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine(FieldKeyConstants.StartToken);
+        builder.Append(FieldKeyConstants.StartToken);
         builder.AppendLine(VersionFieldSerializer.Write(vCardVersion.v2));
 
         if (card.Name != null)
@@ -124,10 +124,9 @@ internal sealed class V2Serializer
             );
 
         if (card.Members.Any())
-            foreach (var member in card.Members)
-                builder.AppendLine(
-                    ((IV2FieldSerializer<string>)_fieldSerializers["MEMBER"]).Write(member)
-                );
+            builder.AppendLine(
+                ((IV2FieldSerializer<List<string>>)_fieldSerializers["MEMBER"]).Write(card.Members)
+            );
 
         if (card.PhoneNumbers.Any())
             foreach (var phoneNumber in card.PhoneNumbers)
@@ -159,7 +158,7 @@ internal sealed class V2Serializer
                     ((IV2FieldSerializer<KeyValuePair<string, string>>)_fieldSerializers["UNKNOWN"]).Write(customField)
                 );
 
-        builder.AppendLine(FieldKeyConstants.EndToken);
+        builder.Append(FieldKeyConstants.EndToken);
 
         return builder.ToString();
     }

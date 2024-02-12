@@ -20,9 +20,9 @@ internal sealed class EmailAddressFieldSerializer : IV2FieldSerializer<EmailAddr
 
         if (data.Type != EmailAddressType.None)
         {
-            var emailTypes = Enum.GetValues(data.GetType())
+            var emailTypes = Enum.GetValues(typeof(EmailAddressType))
                 .Cast<EmailAddressType>()
-                .Where(x => data.Type.HasFlag(x))
+                .Where(x => data.Type.HasFlag(x) && x != EmailAddressType.None)
                 .ToArray();
 
             if (emailTypes.Any())
@@ -52,9 +52,9 @@ internal sealed class EmailAddressFieldSerializer : IV2FieldSerializer<EmailAddr
 
         if (data.Type != EmailAddressType.None)
         {
-            var emailTypes = Enum.GetValues(data.GetType())
+            var emailTypes = Enum.GetValues(typeof(EmailAddressType))
                 .Cast<EmailAddressType>()
-                .Where(x => data.Type.HasFlag(x))
+                .Where(x => data.Type.HasFlag(x) && x != EmailAddressType.None)
                 .ToArray();
 
             if (emailTypes.Any())

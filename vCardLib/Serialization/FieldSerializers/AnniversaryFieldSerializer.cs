@@ -10,5 +10,5 @@ internal sealed class AnniversaryFieldSerializer : IV2FieldSerializer<DateTime>,
 
     public string? Write(DateTime data) => null;
 
-    string? IV4FieldSerializer<DateTime>.Write(DateTime data) => $"{FieldKey}: {data:yyyyMMdd}";
+    string? IV4FieldSerializer<DateTime>.Write(DateTime data) => $"{FieldKey}:{data:yyyyMMdd}";
 }

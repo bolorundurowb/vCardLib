@@ -21,7 +21,7 @@ internal sealed class V4Serializer
         var builder = new StringBuilder();
 
         builder.AppendLine(FieldKeyConstants.StartToken);
-        builder.AppendLine(VersionFieldSerializer.Write(vCardVersion.v2));
+        builder.AppendLine(VersionFieldSerializer.Write(vCardVersion.v4));
 
         if (card.Name != null)
             builder.AppendLine(
@@ -124,10 +124,9 @@ internal sealed class V4Serializer
             );
 
         if (card.Members.Any())
-            foreach (var member in card.Members)
-                builder.AppendLine(
-                    ((IV4FieldSerializer<string>)_fieldSerializers["MEMBER"]).Write(member)
-                );
+            builder.AppendLine(
+                ((IV4FieldSerializer<List<string>>)_fieldSerializers["MEMBER"]).Write(card.Members)
+            );
 
         if (card.PhoneNumbers.Any())
             foreach (var phoneNumber in card.PhoneNumbers)
@@ -159,7 +158,7 @@ internal sealed class V4Serializer
                     ((IV4FieldSerializer<KeyValuePair<string, string>>)_fieldSerializers["UNKNOWN"]).Write(customField)
                 );
 
-        builder.AppendLine(FieldKeyConstants.EndToken);
+        builder.Append(FieldKeyConstants.EndToken);
 
         return builder.ToString();
     }
