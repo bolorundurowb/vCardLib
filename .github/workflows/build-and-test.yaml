@@ -19,14 +19,14 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '6.x'
 
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build vCardLib
-        run: dotnet build --configuration Release --project vCardLib/vCardLib.csproj
-
+        run: dotnet build vCardLib/vCardLib.csproj --configuration Release
+      
       - name: Build vCardLib.Tests
         run: dotnet build --configuration Release --project vCardLib.Tests/vCardLib.Tests.csproj
 
