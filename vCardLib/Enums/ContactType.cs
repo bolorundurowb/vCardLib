@@ -1,15 +1,14 @@
-﻿namespace vCardLib.Enums
+﻿namespace vCardLib.Enums;
+
+/// <summary>
+/// Contact types
+/// </summary>
+public enum ContactType
 {
-    /// <summary>
-    /// Contact types
-    /// </summary>
-    public enum ContactType
-    {
-        Individual,
-        Group,
-        Organization,
-        Location,
-        Application,
-        Device
-    }
+    Individual,
+    Group,
+    Organization,
+    Location,
+    Application,
+    Device
 }

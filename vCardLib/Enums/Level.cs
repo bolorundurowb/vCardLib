@@ -1,12 +1,11 @@
-﻿namespace vCardLib.Enums
+﻿namespace vCardLib.Enums;
+
+/// <summary>
+/// Various activity levels
+/// </summary>
+public enum Level
 {
-	/// <summary>
-	/// Various activity levels
-	/// </summary>
-	public enum Level
-	{
-		High,
-		Medium,
-		Low
-	}
+    High,
+    Medium,
+    Low
 }
