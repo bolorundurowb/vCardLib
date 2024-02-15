@@ -1,45 +1,37 @@
 ﻿using System;
-using vCardLib.Enums;
 
 namespace vCardLib.Models;
 
-/// <summary>
-/// Class to hold images embedded in the vCard 
-/// </summary>
-public class Photo
+public struct Photo
 {
     /// <summary>
-    /// The image
+    /// The image data type
     /// </summary>
-    public byte[] Picture { get; set; }
+    public string? Type { get; set; }
 
     /// <summary>
     /// The image type
     /// </summary>
-    public PhotoType Type { get; set; }
+    public string? MimeType { get; set; }
 
     /// <summary>
     /// The encoding of the image
     /// </summary>
-    public PhotoEncoding Encoding { get; set; }
+    public string? Encoding { get; set; }
 
-    /// <summary>
-    /// The URL for remote images
-    /// </summary>
-    public string PhotoURL { get; set; }
+    public string? Value { get; set; }
 
-    /// <summary>
-    /// Converts the embedded image to a base 64 string
-    /// </summary>
-    /// <returns>An empty string  if the picture is null or a base 64 representation of the image</returns>
-    public string ToBase64String()
+    public string Data { get; set; }
+
+    public Photo(string data, string? encoding = null, string? type = null, string? mimeType = null,
+        string? value = null)
     {
-        if (Picture == null)
-        {
-            return "";
-        }
-
-        var base64String = Convert.ToBase64String(Picture);
-        return base64String;
+        Data = data;
+        Encoding = encoding;
+        Type = type;
+        MimeType = mimeType;
+        Value = value;
     }
+
+    public byte[] AsByteArray() => Convert.FromBase64String(Data);
 }

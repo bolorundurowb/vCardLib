@@ -1,0 +1,34 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build vCardLib
+        run: dotnet build vCardLib/vCardLib.csproj --configuration Release
+      
+      - name: Build vCardLib.Tests
+        run: dotnet build vCardLib.Tests/vCardLib.Tests.csproj --configuration Release
+
+      - name: Run Tests
+        run: dotnet test vCardLib.Tests/vCardLib.Tests.csproj --configuration Release

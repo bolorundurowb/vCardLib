@@ -22,5 +22,5 @@ public enum EmailAddressType
 
     IbmMail = 32,
 
-    Pref = 64
+    Preferred = 64
 }

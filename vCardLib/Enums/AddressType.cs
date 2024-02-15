@@ -1,15 +1,24 @@
-﻿namespace vCardLib.Models;
+﻿using System;
+
+namespace vCardLib.Enums;
 
 /// <summary>
-/// Address type.
+/// the delivery address type.
 /// </summary>
+[Flags]
 public enum AddressType
 {
-    Work,
-    Home,
-    Domestic,
-    International,
-    Postal,
-    Parcel,
-    None
+    None = 0,
+
+    Domestic = 1,
+
+    International = 2,
+
+    Postal = 4,
+
+    Parcel = 8,
+
+    Home = 16,
+
+    Work = 32
 }

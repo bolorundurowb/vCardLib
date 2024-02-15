@@ -2,13 +2,10 @@
 
 namespace vCardLib.Models;
 
-/// <summary>
-/// Class to hold email addresses
-/// </summary>
-public class EmailAddress
+public struct EmailAddress
 {
     /// <summary>
-    /// The email address
+    /// The email address value
     /// </summary>
     public string Value { get; set; }
 
@@ -21,4 +18,11 @@ public class EmailAddress
     /// Indicates the email address' preference level (lower  values mean a higher preference)
     /// </summary>
     public int? Preference { get; set; }
+
+    public EmailAddress(string value, EmailAddressType? type = null, int? preference = null)
+    {
+        Value = value;
+        Preference = preference;
+        Type = type ?? EmailAddressType.None;
+    }
 }

@@ -38,7 +38,7 @@ public enum TelephoneNumberType
 
     ISDN = 8192,
 
-    Pref = 16384,
+    PCS = 16384,
 
-    Custom = int.MaxValue,
+    Preferred = 32768
 }
