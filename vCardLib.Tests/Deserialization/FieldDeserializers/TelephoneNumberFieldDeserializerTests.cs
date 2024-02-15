@@ -19,7 +19,7 @@ public class TelephoneNumberFieldDeserializerTests
 
         result.Preference.ShouldBeNull();
         result.Type.ShouldBe(TelephoneNumberType.Cell);
-        result.Value.ShouldBe("(123) 555-5832");
+        result.Number.ShouldBe("(123) 555-5832");
     }
 
     [Test]
@@ -31,7 +31,7 @@ public class TelephoneNumberFieldDeserializerTests
 
         result.Preference.ShouldBeNull();
         result.Type.ShouldBe(TelephoneNumberType.Work | TelephoneNumberType.Voice | TelephoneNumberType.Preferred);
-        result.Value.ShouldBe("+1-213-555-1234");
+        result.Number.ShouldBe("+1-213-555-1234");
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class TelephoneNumberFieldDeserializerTests
 
         result.Preference.ShouldBe(1);
         result.Type.ShouldBe(TelephoneNumberType.Voice | TelephoneNumberType.Home);
-        result.Value.ShouldBe("+1-555-555-5555");
+        result.Number.ShouldBe("+1-555-555-5555");
         result.Extension.ShouldBe("5555");
     }
 }

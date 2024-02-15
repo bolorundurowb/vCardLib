@@ -64,7 +64,7 @@ public class AnniversaryFieldDeserializerTests
     [Test]
     public void ShouldReturnValueWithTimeOnly()
     {
-        const string input = "ANNIVERSARY:--0415";
+        const string input = "ANNIVERSARY:0415";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
         var result = deserializer.Read(input);
 

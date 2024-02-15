@@ -43,7 +43,7 @@ public class BirthdayFieldDeserializerTests
     [Test]
     public void ShouldReturnValueWithTimeOnly()
     {
-        const string input = "BDAY:--0415";
+        const string input = "BDAY:0415";
         var deserializer = new BirthdayFieldDeserializer();
         var result = deserializer.Read(input);
 
