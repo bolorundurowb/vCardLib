@@ -78,26 +78,26 @@ public static class vCardSerializer
         switch (version)
         {
             case vCardVersion.v2:
-            {
-                var serializer = new V2Serializer(FieldSerializers);
-                foreach (var card in cardList)
-                    builder.AppendLine(serializer.Serialize(card));
-                break;
-            }
+                {
+                    var serializer = new V2Serializer(FieldSerializers);
+                    foreach (var card in cardList)
+                        builder.AppendLine(serializer.Serialize(card));
+                    break;
+                }
             case vCardVersion.v3:
-            {
-                var serializer = new V3Serializer(FieldSerializers);
-                foreach (var card in cardList)
-                    builder.AppendLine(serializer.Serialize(card));
-                break;
-            }
+                {
+                    var serializer = new V3Serializer(FieldSerializers);
+                    foreach (var card in cardList)
+                        builder.AppendLine(serializer.Serialize(card));
+                    break;
+                }
             case vCardVersion.v4:
-            {
-                var serializer = new V4Serializer(FieldSerializers);
-                foreach (var card in cardList)
-                    builder.AppendLine(serializer.Serialize(card));
-                break;
-            }
+                {
+                    var serializer = new V4Serializer(FieldSerializers);
+                    foreach (var card in cardList)
+                        builder.AppendLine(serializer.Serialize(card));
+                    break;
+                }
             default:
                 throw new ArgumentException("Unknown version", nameof(version));
         }

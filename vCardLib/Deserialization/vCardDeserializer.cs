@@ -94,8 +94,9 @@ public static class vCardDeserializer
     {
         using var reader = new StringReader(vcardContent);
         var response = new List<string>();
+        string? line;
 
-        while (reader.ReadLine() != null && reader.ReadLine().Trim() is { } line)
+        while ((line = reader.ReadLine()) != null)
         {
             if (string.IsNullOrWhiteSpace(line))
                 continue;
