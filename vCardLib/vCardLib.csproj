@@ -1,19 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Version>5.0.0</Version>
-        <PackageVersion>5.0.0</PackageVersion>
+        <PackageVersion>5.0.1</PackageVersion>
         <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-        <AssemblyVersion>5.0.0</AssemblyVersion>
-        <FileVersion>5.0.0</FileVersion>
+        <AssemblyVersion>5.0.1</AssemblyVersion>
+        <FileVersion>5.0.1</FileVersion>
         <NeutralLanguage>en-NG</NeutralLanguage>
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2024, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
-        <PackageReleaseNotes>- Full rewrite with performance upgrade
-            - stability fixes
-            - compliance with standards
-            - vcard 4.0 serialization and deserialization support
-        </PackageReleaseNotes>
+        <PackageReleaseNotes>- improved model documentation</PackageReleaseNotes>
         <Authors>Bolorunduro Winner-Timothy</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>

@@ -54,13 +54,13 @@ public static class vCardSerializer
         var version = overrideVersion ?? card.Version;
 
         if (version is vCardVersion.v2)
-            return (new V2Serializer(FieldSerializers)).Serialize(card);
+            return new V2Serializer(FieldSerializers).Serialize(card);
 
         if (version is vCardVersion.v3)
-            return (new V3Serializer(FieldSerializers)).Serialize(card);
+            return new V3Serializer(FieldSerializers).Serialize(card);
 
         if (version is vCardVersion.v4)
-            return (new V4Serializer(FieldSerializers)).Serialize(card);
+            return new V4Serializer(FieldSerializers).Serialize(card);
 
         throw new ArgumentException("Unknown version", nameof(version));
     }
