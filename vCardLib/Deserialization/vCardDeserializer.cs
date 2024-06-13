@@ -113,7 +113,7 @@ public static class vCardDeserializer
             {
                 var nested = new StringBuilder(line);
 
-                while ((reader.ReadLine() != null && reader.ReadLine().Trim() is { } nestedLine) && !nestedLine.EqualsIgnoreCase(FieldKeyConstants.EndToken))
+                while (reader.ReadLine() != null && reader.ReadLine().Trim() is { } nestedLine && !nestedLine.EqualsIgnoreCase(FieldKeyConstants.EndToken))
                     nested.AppendLine(nestedLine);
 
                 response.Add(nested.ToString());
