@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Version>5.0.0</Version>
-        <PackageVersion>5.0.1</PackageVersion>
+        <PackageVersion>5.0.2</PackageVersion>
         <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-        <AssemblyVersion>5.0.1</AssemblyVersion>
-        <FileVersion>5.0.1</FileVersion>
+        <AssemblyVersion>5.0.2</AssemblyVersion>
+        <FileVersion>5.0.2</FileVersion>
         <NeutralLanguage>en-NG</NeutralLanguage>
-        <LangVersion>10</LangVersion>
+        <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2024, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
         <PackageReleaseNotes>- improved model documentation</PackageReleaseNotes>
