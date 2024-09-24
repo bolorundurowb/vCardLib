@@ -1,5 +1,8 @@
 namespace vCardLib.Enums;
 
+/// <summary>
+/// Various types of URLs stored in a vCard
+/// </summary>
 public enum UrlType
 {
     None = 0,
