@@ -18,6 +18,8 @@ internal static class FieldKeyConstants
 
     public const string MediaTypeKey = "MEDIATYPE";
 
+    public const string MediaTypeAltKey = "MEDIA-TYPE";
+
     public const string EncodingKey = "ENCODING";
 
     public const string ValueKey = "VALUE";
@@ -25,4 +27,10 @@ internal static class FieldKeyConstants
     public const string VersionKey = "VERSION";
 
     public const string PreferenceKey = "PREF";
+
+    public const string LabelKey = "LABEL";
+
+    public const string CharacterSetKey = "CHARSET";
+
+    public const string LanguageSetKey = "LANGUAGE";
 }

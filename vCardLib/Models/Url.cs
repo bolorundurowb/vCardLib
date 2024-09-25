@@ -2,7 +2,7 @@ using vCardLib.Enums;
 
 namespace vCardLib.Models;
 
-/// <summary>
+/// <summary>   
 /// Represents a URL in a vCard
 /// </summary>
 public struct Url
