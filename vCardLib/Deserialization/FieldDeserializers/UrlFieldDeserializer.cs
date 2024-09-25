@@ -38,7 +38,8 @@ internal sealed class UrlFieldDeserializer : IV2FieldDeserializer<Url>, IV3Field
                 language = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 pref = int.Parse(data);
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeAltKey))
+            else if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey) ||
+                     key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeAltKey))
                 mimeType = data;
         }
 

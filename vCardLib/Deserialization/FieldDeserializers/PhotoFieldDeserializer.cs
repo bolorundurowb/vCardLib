@@ -72,7 +72,8 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey) ||
+                key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
                 mimeType = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
                 valueMetadata = data;
