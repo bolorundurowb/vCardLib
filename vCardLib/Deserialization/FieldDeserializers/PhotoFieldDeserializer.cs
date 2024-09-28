@@ -72,7 +72,8 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey) ||
+                key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
                 mimeType = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
                 valueMetadata = data;
@@ -92,7 +93,7 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
 
         if (value.Contains(","))
         {
-            var split = value.Split(',');
+            var split = value.Split(FieldKeyConstants.ConcatenationDelimiter);
             encoding = split[0];
             value = split[1];
         }
