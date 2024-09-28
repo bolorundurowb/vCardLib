@@ -34,7 +34,7 @@ internal sealed class UrlFieldDeserializer : IV2FieldDeserializer<Url>, IV3Field
                 type = type is null ? parsedType : type | parsedType;
             }
             else if (key.EqualsIgnoreCase(FieldKeyConstants.LabelKey))
-                label = data;
+                label = StringHelpers.IsQuoted(data) ? data.Trim().Trim('"') : data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.CharacterSetKey))
                 charset = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.LanguageSetKey))

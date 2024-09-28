@@ -69,7 +69,8 @@ internal sealed class UrlFieldSerializer : IV2FieldSerializer<Url>, IV3FieldSeri
         if (!string.IsNullOrWhiteSpace(data.Label))
         {
             builder.Append(FieldKeyConstants.MetadataDelimiter);
-            builder.AppendFormat("{0}={1}", FieldKeyConstants.LabelKey, data.Label);
+            var hasWhitespace = data.Label!.Any(char.IsWhiteSpace);
+            builder.AppendFormat(hasWhitespace ? "{0}={1}" : "\"{0}={1}\"", FieldKeyConstants.LabelKey, data.Label);
         }
 
         if (!string.IsNullOrWhiteSpace(data.MimeType))

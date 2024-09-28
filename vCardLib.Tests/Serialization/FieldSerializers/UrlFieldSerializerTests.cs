@@ -5,7 +5,7 @@ using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
 using vCardLib.Serialization.Interfaces;
 
-namespace vCardLib.Tests.Serialization;
+namespace vCardLib.Tests.Serialization.FieldSerializers;
 
 [TestFixture]
 public class UrlFieldSerializerTests

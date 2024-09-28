@@ -19,7 +19,4 @@
     <ItemGroup>
         <ProjectReference Include="..\vCardLib\vCardLib.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Serialization\FieldSerializers\" />
-    </ItemGroup>
 </Project>
