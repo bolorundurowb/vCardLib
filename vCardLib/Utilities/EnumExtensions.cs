@@ -43,6 +43,12 @@ internal static class EnumExtensions
         throw new ArgumentException($"'{value}' is not a valid value for enum {enumType.Name}.");
     }
 
+    /// <summary>
+    /// Returns all enum values that are part of the given enum value.
+    /// </summary>
+    /// <typeparam name="T">The type of the enum.</typeparam>
+    /// <param name="value">The enum value to get the combined values from.</param>
+    /// <returns>An array of enum values that are part of the given enum value.</returns>
     public static T[] Values<T>(T value) where T : struct, Enum
     {
         var enumType = typeof(T);

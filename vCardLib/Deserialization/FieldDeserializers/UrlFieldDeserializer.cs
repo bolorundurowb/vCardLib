@@ -4,7 +4,6 @@ using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
-using vCardLib.Serialization.Utilities;
 using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
@@ -21,7 +20,7 @@ internal sealed class UrlFieldDeserializer : IV2FieldDeserializer<Url>, IV3Field
         if (metadata.Length == 0)
             return new Url(value);
 
-        var type = UrlType.None;
+        UrlType? type = null;
         int? pref = null;
         string? label = null, mimeType = null, language = null, charset = null;
 
@@ -30,7 +29,10 @@ internal sealed class UrlFieldDeserializer : IV2FieldDeserializer<Url>, IV3Field
             var (key, data) = DataSplitHelpers.ExtractKeyValue(metadatum, '=');
 
             if (key is null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-                type |= EnumExtensions.Parse<UrlType>(data);
+            {
+                var parsedType = EnumExtensions.Parse<UrlType>(data);
+                type = type is null ? parsedType : type | parsedType;
+            }
             else if (key.EqualsIgnoreCase(FieldKeyConstants.LabelKey))
                 label = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.CharacterSetKey))

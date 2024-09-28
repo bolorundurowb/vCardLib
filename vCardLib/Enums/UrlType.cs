@@ -8,8 +8,6 @@ namespace vCardLib.Enums;
 [Flags]
 public enum UrlType
 {
-    None = 0,
-
     Work = 1,
 
     Home = 2,

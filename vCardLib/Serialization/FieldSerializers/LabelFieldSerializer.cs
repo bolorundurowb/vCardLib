@@ -6,7 +6,6 @@ using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization.Interfaces;
 using vCardLib.Serialization.Utilities;
-using vCardLib.Utilities;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
@@ -28,10 +27,11 @@ internal sealed class LabelFieldSerializer : IV2FieldSerializer<Label>, IV3Field
 
             if (addressTypes.Any())
             {
-                builder.Append(FieldKeyConstants.MetadataDelimiter);
-
                 foreach (var addressType in addressTypes)
+                {
+                    builder.Append(FieldKeyConstants.MetadataDelimiter);
                     builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, addressType.DecomposeAddressType());
+                }
             }
         }
 
