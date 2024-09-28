@@ -48,7 +48,7 @@ internal sealed class UrlFieldSerializer : IV2FieldSerializer<Url>, IV3FieldSeri
                 foreach (var urlType in urlTypes)
                 {
                     builder.Append(FieldKeyConstants.MetadataDelimiter);
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, urlType.ToString().ToUpperInvariant());
+                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, urlType.ToString().ToLowerInvariant());
                 }
             }
         }
