@@ -6,10 +6,10 @@
         <AssemblyVersion>6.0.0</AssemblyVersion>
         <FileVersion>6.0.0</FileVersion>
         <NeutralLanguage>en-NG</NeutralLanguage>
-        <LangVersion>10</LangVersion>
+        <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2024, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
-        <PackageReleaseNotes>- improved model documentation</PackageReleaseNotes>
+        <PackageReleaseNotes>- improve URL field serialization and deserialization</PackageReleaseNotes>
         <Authors>Bolorunduro Winner-Timothy</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>
