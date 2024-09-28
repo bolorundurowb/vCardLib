@@ -88,7 +88,7 @@ public class KeyFieldDeserializer : IV2FieldDeserializer<Key>, IV3FieldDeseriali
 
         if (value.Contains(","))
         {
-            var split = value.Split(',');
+            var split = value.Split(FieldKeyConstants.ConcatenationDelimiter);
             encoding = split[0];
             value = split[1];
         }

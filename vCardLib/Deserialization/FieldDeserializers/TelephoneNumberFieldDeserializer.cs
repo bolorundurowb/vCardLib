@@ -33,7 +33,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                 if (string.IsNullOrWhiteSpace(data))
                     continue;
 
-                var typeGroup = data!.Split(',');
+                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
 
                 foreach (var individualType in typeGroup)
                 {
@@ -71,7 +71,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                 if (string.IsNullOrWhiteSpace(data))
                     continue;
 
-                var typeGroup = data!.Split(',');
+                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
 
                 foreach (var individualType in typeGroup)
                 {

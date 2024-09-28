@@ -5,6 +5,7 @@ using vCardLib.Enums;
 using vCardLib.Extensions;
 using vCardLib.Models;
 using vCardLib.Serialization.Utilities;
+using vCardLib.Utilities;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 

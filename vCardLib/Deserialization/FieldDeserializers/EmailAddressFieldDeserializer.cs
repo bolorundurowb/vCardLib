@@ -29,7 +29,7 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
 
             if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
             {
-                var emailTypes = data.Split(',');
+                var emailTypes = data.Split(FieldKeyConstants.ConcatenationDelimiter);
 
                 type = emailTypes
                     .Select(parsedType => parsedType.ParseEmailAddressType())
@@ -58,7 +58,7 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
 
             if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
             {
-                var emailTypes = data.Split(',');
+                var emailTypes = data.Split(FieldKeyConstants.ConcatenationDelimiter);
 
                 type = emailTypes
                     .Select(parsedType => parsedType.ParseEmailAddressType())
