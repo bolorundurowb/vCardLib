@@ -9,6 +9,14 @@ internal static class EnumExtensions
 {
     private static readonly ConcurrentDictionary<Type, Dictionary<string, object>> EnumCache = new();
 
+    /// <summary>
+    /// Parses the given string into an enum value of the specified type.
+    /// </summary>
+    /// <typeparam name="TEnum">The type of the enum to parse into.</typeparam>
+    /// <param name="value">The string to parse. Must not be <see langword="null"/>.</param>
+    /// <returns>The parsed enum value.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException"><paramref name="value"/> is not a valid value for the enum.</exception>
     public static TEnum Parse<TEnum>(string value) where TEnum : struct, Enum
     {
         if (string.IsNullOrEmpty(value))

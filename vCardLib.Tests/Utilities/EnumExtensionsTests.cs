@@ -17,21 +17,21 @@ public class EnumExtensionsTests
 
         actual.ShouldBe(expected);
     }
-    
+
     [Test]
     public void Parse_ShouldParse_LowercaseInput()
     {
-        var value = "blue";
+        const string value = "blue";
 
         var actual = EnumExtensions.Parse<Color>(value);
 
         actual.ShouldBe(Color.Blue);
     }
-    
+
     [Test]
     public void Parse_ShouldParse_UppercaseInput()
     {
-        var value = "BLUE";
+        const string value = "BLUE";
 
         var actual = EnumExtensions.Parse<Color>(value);
 
@@ -41,7 +41,7 @@ public class EnumExtensionsTests
     [Test]
     public void Parse_InvalidInput_ThrowsArgumentException()
     {
-        var value = "InvalidColor";
+        const string value = "InvalidColor";
 
         Assert.Throws<ArgumentException>(() => EnumExtensions.Parse<Color>(value));
     }
@@ -67,6 +67,7 @@ public class EnumExtensionsTests
     }
 }
 
+[Flags]
 public enum Color
 {
     Red = 1,
