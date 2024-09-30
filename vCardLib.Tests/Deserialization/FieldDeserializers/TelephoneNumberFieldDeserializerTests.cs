@@ -13,7 +13,7 @@ public class TelephoneNumberFieldDeserializerTests
     [Test]
     public void V2ShouldParseSimple()
     {
-        const string input = @"TEL;TYPE=cell:(123) 555-5832";
+        const string input = "TEL;TYPE=cell:(123) 555-5832";
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
@@ -23,14 +23,74 @@ public class TelephoneNumberFieldDeserializerTests
     }
 
     [Test]
+    public void V2ShouldParseSimpleWithPref()
+    {
+        const string input = "TEL;TYPE=cell;pref:(123) 555-5832";
+        IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.Preference.ShouldBe(1);
+        result.Type.ShouldBe(TelephoneNumberType.Cell);
+        result.Number.ShouldBe("(123) 555-5832");
+    }
+
+    [Test]
+    public void V2ShouldParseWhenTypeKeywordIsOmittedForMetadata()
+    {
+        const string input = "TEL;CELL:(123) 555-5832";
+        IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.Preference.ShouldBeNull();
+        result.Type.ShouldBe(TelephoneNumberType.Cell);
+        result.Number.ShouldBe("(123) 555-5832");
+    }
+
+    [Test]
+    public void V2ShouldParseWhenTypeKeywordIsOmittedForMetadataAndHasMultipleValues()
+    {
+        const string input = "TEL;CELL;WORK:(123) 555-5832";
+        IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.Preference.ShouldBeNull();
+        result.Type.ShouldBe(TelephoneNumberType.Cell | TelephoneNumberType.Work);
+        result.Number.ShouldBe("(123) 555-5832");
+    }
+
+    [Test]
     public void V3ShouldParseComplex()
     {
-        const string input = @"TEL;TYPE=work,voice,pref,msg:+1-213-555-1234";
+        const string input = "TEL;TYPE=work,voice,pref,msg:+1-213-555-1234";
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBeNull();
         result.Type.ShouldBe(TelephoneNumberType.Work | TelephoneNumberType.Voice | TelephoneNumberType.Preferred);
+        result.Number.ShouldBe("+1-213-555-1234");
+    }
+
+    [Test]
+    public void V3ShouldParseWhenTypeKeywordIsOmittedForMetadata()
+    {
+        const string input = "TEL;WORK:+1-213-555-1234";
+        IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.Preference.ShouldBeNull();
+        result.Type.ShouldBe(TelephoneNumberType.Work);
+        result.Number.ShouldBe("+1-213-555-1234");
+    }
+
+    [Test]
+    public void V3ShouldParseWhenTypeKeywordIsOmittedForMetadataAndHasMultipleValues()
+    {
+        const string input = "TEL;WORK;CELL:+1-213-555-1234";
+        IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.Preference.ShouldBeNull();
+        result.Type.ShouldBe(TelephoneNumberType.Work | TelephoneNumberType.Cell);
         result.Number.ShouldBe("+1-213-555-1234");
     }
 
