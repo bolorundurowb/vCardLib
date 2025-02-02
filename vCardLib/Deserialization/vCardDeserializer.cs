@@ -54,7 +54,7 @@ public static class vCardDeserializer
         if (string.IsNullOrWhiteSpace(filePath))
             throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
 
-        if (File.Exists(filePath))
+        if (!File.Exists(filePath))
             throw new FileNotFoundException("File not found.", filePath);
 
         return FromContent(File.ReadAllText(filePath));

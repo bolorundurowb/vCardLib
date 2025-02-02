@@ -20,17 +20,18 @@ internal sealed class LabelFieldSerializer : IV2FieldSerializer<Label>, IV3Field
 
         if (data.Type != AddressType.None)
         {
-            var addressTypes = Enum.GetValues(data.GetType())
+            var addressTypes = Enum.GetValues(data.Type.GetType())
                 .Cast<AddressType>()
                 .Where(x => data.Type.HasFlag(x))
                 .ToArray();
 
             if (addressTypes.Any())
             {
-                builder.Append(FieldKeyConstants.MetadataDelimiter);
-
                 foreach (var addressType in addressTypes)
+                {
+                    builder.Append(FieldKeyConstants.MetadataDelimiter);
                     builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, addressType.DecomposeAddressType());
+                }
             }
         }
 

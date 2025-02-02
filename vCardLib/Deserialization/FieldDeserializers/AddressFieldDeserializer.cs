@@ -59,7 +59,7 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
     private static AddressType? ParseAddressType(string type)
     {
         AddressType? addressType = null;
-        var typeGroups = type.Split(',');
+        var typeGroups = type.Split(FieldKeyConstants.ConcatenationDelimiter);
 
         foreach (var typeGroup in typeGroups)
         {

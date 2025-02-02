@@ -1,13 +1,57 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Globalization;
 using vCardLib.Constants;
 using vCardLib.Enums;
-using vCardLib.Extensions;
 
 namespace vCardLib.Deserialization.Utilities;
 
 internal static class SharedParsers
 {
+    static readonly ConcurrentDictionary<string, EmailAddressType> EmailTypeMap
+        = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["internet"] = EmailAddressType.Internet,
+            ["home"] = EmailAddressType.Home,
+            ["work"] = EmailAddressType.Work,
+            ["aol"] = EmailAddressType.Aol,
+            ["ibmmail"] = EmailAddressType.IbmMail,
+            ["applelink"] = EmailAddressType.Applelink,
+            ["pref"] = EmailAddressType.Preferred,
+        };
+
+    static readonly ConcurrentDictionary<string, AddressType> AddressTypeMap
+        = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["dom"] = AddressType.Domestic,
+            ["home"] = AddressType.Home,
+            ["intl"] = AddressType.International,
+            ["parcel"] = AddressType.Parcel,
+            ["postal"] = AddressType.Postal,
+            ["work"] = AddressType.Work,
+        };
+
+    private static readonly ConcurrentDictionary<string, TelephoneNumberType> TelephoneNumberTypeMap
+        = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["voice"] = TelephoneNumberType.Voice,
+            ["text"] = TelephoneNumberType.Text,
+            ["fax"] = TelephoneNumberType.Fax,
+            ["cell"] = TelephoneNumberType.Cell,
+            ["video"] = TelephoneNumberType.Video,
+            ["pager"] = TelephoneNumberType.Pager,
+            ["textphone"] = TelephoneNumberType.TextPhone,
+            ["home"] = TelephoneNumberType.Home,
+            ["main-number"] = TelephoneNumberType.MainNumber,
+            ["work"] = TelephoneNumberType.Work,
+            ["bbs"] = TelephoneNumberType.BBS,
+            ["modem"] = TelephoneNumberType.Modem,
+            ["car"] = TelephoneNumberType.Car,
+            ["isdn"] = TelephoneNumberType.ISDN,
+            ["pcs"] = TelephoneNumberType.PCS,
+            ["pref"] = TelephoneNumberType.Preferred,
+        };
+
     public static DateTime? ParseDate(string input)
     {
         IFormatProvider provider = new CultureInfo("en-US");
@@ -32,105 +76,11 @@ internal static class SharedParsers
         return null;
     }
 
-    public static AddressType? ParseAddressType(this string input)
-    {
-        if ("dom".EqualsIgnoreCase(input))
-            return AddressType.Domestic;
+    public static AddressType? ParseAddressType(this string input) =>
+        AddressTypeMap.TryGetValue(input, out var result) ? result : null;
 
-        if ("home".EqualsIgnoreCase(input))
-            return AddressType.Home;
+    public static EmailAddressType? ParseEmailAddressType(this string type) =>
+        EmailTypeMap.TryGetValue(type, out var result) ? result : null;
 
-        if ("intl".EqualsIgnoreCase(input))
-            return AddressType.International;
-
-        if ("parcel".EqualsIgnoreCase(input))
-            return AddressType.Parcel;
-
-        if ("postal".EqualsIgnoreCase(input))
-            return AddressType.Postal;
-
-        if ("work".EqualsIgnoreCase(input))
-            return AddressType.Work;
-
-        return null;
-    }
-
-    public static EmailAddressType? ParseEmailAddressType(this string type)
-    {
-        if ("internet".EqualsIgnoreCase(type))
-            return EmailAddressType.Internet;
-
-        if ("home".EqualsIgnoreCase(type))
-            return EmailAddressType.Home;
-
-        if ("work".EqualsIgnoreCase(type))
-            return EmailAddressType.Work;
-
-        if ("aol".EqualsIgnoreCase(type))
-            return EmailAddressType.Aol;
-
-        if ("ibmmail".EqualsIgnoreCase(type))
-            return EmailAddressType.IbmMail;
-
-        if ("applelink".EqualsIgnoreCase(type))
-            return EmailAddressType.Applelink;
-
-        if ("pref".EqualsIgnoreCase(type))
-            return EmailAddressType.Preferred;
-
-        return null;
-    }
-
-    public static TelephoneNumberType? ParseTelephoneNumberType(this string type)
-    {
-        if ("voice".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Voice;
-
-        if ("text".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Text;
-
-        if ("fax".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Fax;
-
-        if ("cell".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Cell;
-
-        if ("video".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Video;
-
-        if ("pager".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Pager;
-
-        if ("textphone".EqualsIgnoreCase(type))
-            return TelephoneNumberType.TextPhone;
-
-        if ("home".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Home;
-
-        if ("main-number".EqualsIgnoreCase(type))
-            return TelephoneNumberType.MainNumber;
-
-        if ("work".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Work;
-
-        if ("bbs".EqualsIgnoreCase(type))
-            return TelephoneNumberType.BBS;
-
-        if ("modem".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Modem;
-
-        if ("car".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Car;
-
-        if ("isdn".EqualsIgnoreCase(type))
-            return TelephoneNumberType.ISDN;
-
-        if ("pcs".EqualsIgnoreCase(type))
-            return TelephoneNumberType.PCS;
-
-        if ("pref".EqualsIgnoreCase(type))
-            return TelephoneNumberType.Preferred;
-
-        return null;
-    }
+    public static TelephoneNumberType? ParseTelephoneNumberType(this string type) => TelephoneNumberTypeMap.TryGetValue(type, out var result) ? result : null;
 }
