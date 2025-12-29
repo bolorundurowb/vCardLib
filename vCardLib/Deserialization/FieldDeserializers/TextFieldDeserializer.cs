@@ -7,8 +7,8 @@ internal abstract class TextFieldDeserializer : IV2FieldDeserializer<string>, IV
 {
     string IV4FieldDeserializer<string>.Read(string input)
     {
-        int separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        string value = input.Substring(separatorIndex + 1).Trim();
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
+        var value = input.Substring(separatorIndex + 1).Trim();
 
         return value
             .Replace(@"\,", ",")
@@ -18,8 +18,8 @@ internal abstract class TextFieldDeserializer : IV2FieldDeserializer<string>, IV
 
     string IV3FieldDeserializer<string>.Read(string input)
     {
-        int separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        string value = input.Substring(separatorIndex + 1).Trim();
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
+        var value = input.Substring(separatorIndex + 1).Trim();
 
         return value
             .Replace(@"\r", "\r")
@@ -31,8 +31,8 @@ internal abstract class TextFieldDeserializer : IV2FieldDeserializer<string>, IV
 
     string IV2FieldDeserializer<string>.Read(string input)
     {
-        int separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        string value = input.Substring(separatorIndex + 1).Trim();
+        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
+        var value = input.Substring(separatorIndex + 1).Trim();
 
         return value
             .Replace(@"\""", @"""")

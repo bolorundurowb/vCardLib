@@ -13,7 +13,7 @@ public class TitleFieldDeserializerTests
     {
         const string input = "TITLE:Web & UI/UX Designer";
         IV2FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        string result = deserializer.Read(input);
+        var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
         result.ShouldBe("Web & UI/UX Designer");
@@ -24,7 +24,7 @@ public class TitleFieldDeserializerTests
     {
         const string input = "TITLE:Web & UI/UX Designer";
         IV3FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        string result = deserializer.Read(input);
+        var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
         result.ShouldBe("Web & UI/UX Designer");
@@ -35,7 +35,7 @@ public class TitleFieldDeserializerTests
     {
         const string input = "TITLE:Web & UI/UX Designer";
         IV4FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        string result = deserializer.Read(input);
+        var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
         result.ShouldBe("Web & UI/UX Designer");

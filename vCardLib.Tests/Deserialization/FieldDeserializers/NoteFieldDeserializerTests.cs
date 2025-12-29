@@ -13,7 +13,7 @@ public class NoteFieldDeserializerTests
     {
         const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
         IV2FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        string result = deserializer.Read(input);
+        var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
         result.ShouldBe(@"This fax number is operational 0800 to 1715 EST, Mon-Fri.");
@@ -24,7 +24,7 @@ public class NoteFieldDeserializerTests
     {
         const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
         IV3FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        string result = deserializer.Read(input);
+        var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
         result.ShouldBe(@"This fax number is operational 0800 to 1715 EST, Mon-Fri.");
@@ -35,7 +35,7 @@ public class NoteFieldDeserializerTests
     {
         const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        string result = deserializer.Read(input);
+        var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
         result.ShouldBe(@"This fax number is operational 0800 to 1715 EST, Mon-Fri.");

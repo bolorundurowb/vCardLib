@@ -7,17 +7,20 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
@@ -25,10 +28,7 @@ jobs:
         run: dotnet restore
 
       - name: Build vCardLib
-        run: dotnet build vCardLib/vCardLib.csproj --configuration Release
+        run: dotnet build vCardLib/vCardLib.csproj --configuration Release --no-restore
       
-      - name: Build vCardLib.Tests
-        run: dotnet build vCardLib.Tests/vCardLib.Tests.csproj --configuration Release
-
       - name: Run Tests
-        run: dotnet test vCardLib.Tests/vCardLib.Tests.csproj --configuration Release
+        run: dotnet test vCardLib.Tests/vCardLib.Tests.csproj --configuration Release --no-build

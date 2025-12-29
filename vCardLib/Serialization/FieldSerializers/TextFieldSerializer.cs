@@ -9,7 +9,7 @@ internal abstract class TextFieldSerializer : IV2FieldSerializer<string>, IV3Fie
 
     string IV2FieldSerializer<string>.Write(string data)
     {
-        string value = data
+        var value = data
             .Replace(@"\", @"\\")
             .Replace(";", @"\;")
             .Replace(",", @"\,");
@@ -19,7 +19,7 @@ internal abstract class TextFieldSerializer : IV2FieldSerializer<string>, IV3Fie
 
     string IV3FieldSerializer<string>.Write(string data)
     {
-        string value = data
+        var value = data
             .Replace(@"\", @"\\")
             .Replace(";", @"\;")
             .Replace(",", @"\,")
@@ -31,7 +31,7 @@ internal abstract class TextFieldSerializer : IV2FieldSerializer<string>, IV3Fie
 
     string IV4FieldSerializer<string>.Write(string data)
     {
-        string value = data
+        var value = data
             .Replace(@"\", @"\\")
             .Replace(";", @"\;")
             .Replace(",", @"\,")
