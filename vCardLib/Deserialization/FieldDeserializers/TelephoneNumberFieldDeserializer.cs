@@ -13,7 +13,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
 {
     public static string FieldKey => "TEL";
 
-    TelephoneNumber IV2FieldDeserializer<TelephoneNumber>.Read(string input)
+    public TelephoneNumber Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
         var (telephoneNumber, extension) = SplitOutExtension(value);
@@ -28,29 +28,28 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
             {
-                if (string.IsNullOrWhiteSpace(data))
-                    continue;
-
-                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                foreach (var individualType in typeGroup)
-                {
-                    var phoneType = individualType.ParseTelephoneNumberType();
-
-                    if (phoneType.HasValue)
-                        type = type.HasValue ? type.Value | phoneType : phoneType;
-                }
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 preference = 1;
+                continue;
+            }
+
+            var phoneTypes = key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null
+                ? data.Split(',')
+                : key != null && data == null
+                    ? key.Split(';')
+                    : null;
+
+            type = phoneTypes?
+                .Select(parsedType => parsedType.ParseTelephoneNumberType())
+                .Where(parsedType => parsedType != null)
+                .Aggregate(type, (current, phoneType) => current.HasValue ? current.Value | phoneType : phoneType);
         }
 
         return new TelephoneNumber(telephoneNumber, type, extension, preference);
     }
 
-    public TelephoneNumber Read(string input)
+    TelephoneNumber IV4FieldDeserializer<TelephoneNumber>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
         var (telephoneNumber, extension) = SplitOutExtension(value);
