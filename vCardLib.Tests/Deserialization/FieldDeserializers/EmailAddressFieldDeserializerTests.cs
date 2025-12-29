@@ -13,7 +13,7 @@ public class EmailAddressFieldDeserializerTests
     [Test]
     public void V2ShouldParseSimple()
     {
-        const string input = @"EMAIL:johndoe@hotmail.com";
+        const string input = "EMAIL:johndoe@hotmail.com";
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
@@ -25,7 +25,7 @@ public class EmailAddressFieldDeserializerTests
     [Test]
     public void V3ShouldParseComplex()
     {
-        const string input = @"EMAIL;type=INTERNET;type=WORK;pref:johnDoe@example.org";
+        const string input = "EMAIL;type=INTERNET;type=WORK;pref:johnDoe@example.org";
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
@@ -37,7 +37,7 @@ public class EmailAddressFieldDeserializerTests
     [Test]
     public void V4ShouldParseComplex()
     {
-        const string input = @"EMAIL;type=Aol;type=HOME;pref=1:johnDoe@example.org";
+        const string input = "EMAIL;type=Aol;type=HOME;pref=1:johnDoe@example.org";
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 

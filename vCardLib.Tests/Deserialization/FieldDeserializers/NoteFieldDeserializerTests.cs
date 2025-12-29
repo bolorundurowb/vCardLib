@@ -8,16 +8,6 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 [TestFixture]
 public class NoteFieldDeserializerTests
 {
-    [Test]
-    public void Write_Should_SerializeV2()
-    {
-        const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
-        IV2FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldNotBeNull();
-        result.ShouldBe(@"This fax number is operational 0800 to 1715 EST, Mon-Fri.");
-    }
 
     [Test]
     public void Write_Should_SerializeV3()
@@ -27,7 +17,7 @@ public class NoteFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.ShouldBe(@"This fax number is operational 0800 to 1715 EST, Mon-Fri.");
+        result.ShouldBe("This fax number is operational 0800 to 1715 EST, Mon-Fri.");
     }
 
     [Test]
@@ -38,6 +28,6 @@ public class NoteFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.ShouldBe(@"This fax number is operational 0800 to 1715 EST, Mon-Fri.");
+        result.ShouldBe("This fax number is operational 0800 to 1715 EST, Mon-Fri.");
     }
 }

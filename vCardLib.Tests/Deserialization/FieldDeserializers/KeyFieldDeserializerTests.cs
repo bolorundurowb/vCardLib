@@ -12,7 +12,7 @@ public class KeyFieldDeserializerTests
     [Test]
     public void V2ShouldParseSimple()
     {
-        const string input = @"KEY;PGP:http://example.com/key.pgp";
+        const string input = "KEY;PGP:http://example.com/key.pgp";
         IV2FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
@@ -64,7 +64,7 @@ public class KeyFieldDeserializerTests
     [Test]
     public void V3ShouldParseSimple()
     {
-        const string input = @"KEY;TYPE=PGP:http://example.com/key.pgp";
+        const string input = "KEY;TYPE=PGP:http://example.com/key.pgp";
         IV3FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
@@ -116,7 +116,7 @@ public class KeyFieldDeserializerTests
     [Test]
     public void V4ShouldParseSimple()
     {
-        const string input = @"KEY;MEDIATYPE=application/pgp-keys:ftp://example.com/keys/jdoe";
+        const string input = "KEY;MEDIATYPE=application/pgp-keys:ftp://example.com/keys/jdoe";
         IV4FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 

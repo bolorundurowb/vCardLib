@@ -13,7 +13,7 @@ public class TelephoneNumberFieldDeserializerTests
     [Test]
     public void V2ShouldParseSimple()
     {
-        const string input = @"TEL;TYPE=cell:(123) 555-5832";
+        const string input = "TEL;TYPE=cell:(123) 555-5832";
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
@@ -25,7 +25,7 @@ public class TelephoneNumberFieldDeserializerTests
     [Test]
     public void V3ShouldParseComplex()
     {
-        const string input = @"TEL;TYPE=work,voice,pref,msg:+1-213-555-1234";
+        const string input = "TEL;TYPE=work,voice,pref,msg:+1-213-555-1234";
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
