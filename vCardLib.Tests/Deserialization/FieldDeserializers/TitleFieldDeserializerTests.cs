@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
+using vCardLib.Deserialization.Interfaces;
 
 namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 
@@ -8,13 +9,35 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class TitleFieldDeserializerTests
 {
     [Test]
-    public void ShouldReturnParsedValue()
+    public void Write_Should_SerializeV2()
     {
-        const string input = "TITLE:Research Scientist";
-        var deserializer = new TitleFieldDeserializer();
-        var result = deserializer.Read(input);
+        const string input = "TITLE:Web & UI/UX Designer";
+        IV2FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
+        string result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.ShouldBe("Research Scientist");
+        result.ShouldBe("Web & UI/UX Designer");
+    }
+
+    [Test]
+    public void Write_Should_SerializeV3()
+    {
+        const string input = "TITLE:Web & UI/UX Designer";
+        IV3FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
+        string result = deserializer.Read(input);
+
+        result.ShouldNotBeNull();
+        result.ShouldBe("Web & UI/UX Designer");
+    }
+
+    [Test]
+    public void Write_Should_SerializeV4()
+    {
+        const string input = "TITLE:Web & UI/UX Designer";
+        IV4FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
+        string result = deserializer.Read(input);
+
+        result.ShouldNotBeNull();
+        result.ShouldBe("Web & UI/UX Designer");
     }
 }

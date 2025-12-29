@@ -1,13 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using vCardLib.Constants;
-using vCardLib.Serialization.Interfaces;
+﻿namespace vCardLib.Serialization.FieldSerializers;
 
-namespace vCardLib.Serialization.FieldSerializers;
-
-internal sealed class ProdIdFieldSerializer : IV2FieldSerializer<string>, IV3FieldSerializer<string>,
-    IV4FieldSerializer<string>
+internal sealed class ProdIdFieldSerializer : TextFieldSerializer
 {
-    public string FieldKey => "PRODID";
-
-    public string Write(string data) => $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{Regex.Escape(data)}";
+    public override string FieldKey => "PRODID";
 }
