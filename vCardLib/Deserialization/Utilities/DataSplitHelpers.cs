@@ -1,4 +1,5 @@
-﻿using vCardLib.Constants;
+﻿using System;
+using vCardLib.Constants;
 
 namespace vCardLib.Deserialization.Utilities;
 
@@ -6,15 +7,20 @@ internal static class DataSplitHelpers
 {
     public static (string[], string) SplitLine(string fieldKey, string input)
     {
-        input = input.Replace(fieldKey, string.Empty)
-            .TrimStart(FieldKeyConstants.SectionDelimiter)
-            .TrimStart(FieldKeyConstants.MetadataDelimiter);
+        var colonIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
+        var semiColonIndex = input.IndexOf(FieldKeyConstants.MetadataDelimiter);
 
-        var index = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        var metadata = input.Substring(0, index < 0 ? 0 : index);
-        var value = input.Substring(index + 1);
+        // if there is no metadata, the first separator should be a colon
+        if (semiColonIndex == -1 || semiColonIndex > colonIndex)
+        {
+            var value = input.Substring(colonIndex + 1);
+            return (Array.Empty<string>(), value);
+        }
 
-        return (metadata.Split(FieldKeyConstants.MetadataDelimiter), value);
+        var metadata = input.Substring(fieldKey.Length + 1, colonIndex - fieldKey.Length - 1);
+        var remainder = input.Substring(colonIndex + 1);
+
+        return (metadata.Split(FieldKeyConstants.MetadataDelimiter), remainder);
     }
 
     public static (string, string?) SplitDatum(string datum, char metadataSeparator)

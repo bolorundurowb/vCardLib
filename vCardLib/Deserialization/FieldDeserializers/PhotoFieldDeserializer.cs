@@ -48,7 +48,7 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
             var (key, entry) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
-                encoding = entry == "b" ? "BASE64" : data;
+                encoding = entry == "b" ? "BASE64" : entry;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
                 value = entry;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
@@ -73,7 +73,7 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
 
             if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey) ||
-                key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
+                key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeAltKey))
                 mimeType = data;
             else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
                 valueMetadata = data;
@@ -87,15 +87,21 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
         if (value.Contains(";"))
         {
             var split = value.Split(FieldKeyConstants.MetadataDelimiter);
-            mimeType = split[0];
-            value = split[1];
+            if (split.Length > 1)
+            {
+                mimeType = split[0];
+                value = split[1];
+            }
         }
 
         if (value.Contains(","))
         {
             var split = value.Split(FieldKeyConstants.ConcatenationDelimiter);
-            encoding = split[0];
-            value = split[1];
+            if (split.Length > 1)
+            {
+                encoding = split[0];
+                value = split[1];
+            }
         }
 
         return new Photo(value, encoding, type, mimeType, valueMetadata);
