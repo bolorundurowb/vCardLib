@@ -15,9 +15,6 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
-        if (metadata.Length == 0)
-            return new Photo(value);
-
         string? type = null, mimeType = null, encoding = null;
 
         foreach (var datum in metadata)
@@ -31,15 +28,14 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
                 type = key;
         }
 
-        return new Photo(value, encoding, type, mimeType);
+        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(value, mimeType, encoding);
+
+        return new Photo(finalValue, finalEncoding, type, finalMimeType);
     }
 
     Photo IV3FieldDeserializer<Photo>.Read(string input)
     {
         var (metadata, data) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new Photo(data);
 
         string? type = null, mimeType = null, encoding = null, value = null;
 
@@ -55,17 +51,14 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
                 type = entry;
         }
 
-        return new Photo(data, encoding, type, mimeType, value);
+        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(data, mimeType, encoding);
+
+        return new Photo(finalValue, finalEncoding, type, finalMimeType, value);
     }
 
     Photo IV4FieldDeserializer<Photo>.Read(string input)
     {
-        const string dataPrefix = "data:";
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new Photo(value);
-
         string? type = null, mimeType = null, encoding = null, valueMetadata = null;
 
         foreach (var datum in metadata)
@@ -81,10 +74,22 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
                 type = data;
         }
 
-        if (value.StartsWithIgnoreCase(dataPrefix))
-            value = value.Replace(dataPrefix, string.Empty);
+        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(value, mimeType, encoding);
 
-        if (value.Contains(";"))
+        return new Photo(finalValue, finalEncoding, type, finalMimeType, valueMetadata);
+    }
+
+    private static (string Value, string? MimeType, string? Encoding) ParseDataUri(string value, string? mimeType,
+        string? encoding)
+    {
+        const string dataPrefix = "data:";
+
+        if (!value.StartsWithIgnoreCase(dataPrefix))
+            return (value, mimeType, encoding);
+
+        value = value.Substring(dataPrefix.Length);
+
+        if (value.IndexOf(FieldKeyConstants.MetadataDelimiter) != -1)
         {
             var split = value.Split(FieldKeyConstants.MetadataDelimiter);
             if (split.Length > 1)
@@ -94,7 +99,7 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
             }
         }
 
-        if (value.Contains(","))
+        if (value.IndexOf(FieldKeyConstants.ConcatenationDelimiter) != -1)
         {
             var split = value.Split(FieldKeyConstants.ConcatenationDelimiter);
             if (split.Length > 1)
@@ -104,6 +109,6 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
             }
         }
 
-        return new Photo(value, encoding, type, mimeType, valueMetadata);
+        return (value, mimeType, encoding);
     }
 }
