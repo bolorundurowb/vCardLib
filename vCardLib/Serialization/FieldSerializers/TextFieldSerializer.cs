@@ -6,39 +6,31 @@ namespace vCardLib.Serialization.FieldSerializers;
 internal abstract class TextFieldSerializer : IV2FieldSerializer<string>, IV3FieldSerializer<string>, IV4FieldSerializer<string>
 {
     public abstract string FieldKey { get; }
+    
+    string IV2FieldSerializer<string>.Write(string data) 
+        // vCard 2.1 does not support backslash escaping.
+        => FormatField(data);
 
-    string IV2FieldSerializer<string>.Write(string data)
+    string IV3FieldSerializer<string>.Write(string data) 
+        => FormatField(Escape(data));
+
+    string IV4FieldSerializer<string>.Write(string data) 
+        => FormatField(Escape(data));
+
+    private string FormatField(string value) 
+        => $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{value}";
+
+    private static string Escape(string data)
     {
-        var value = data
-            .Replace(@"\", @"\\")
-            .Replace(";", @"\;")
-            .Replace(",", @"\,");
+        if (string.IsNullOrEmpty(data)) return data;
 
-        return $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{value}";
-    }
-
-    string IV3FieldSerializer<string>.Write(string data)
-    {
-        var value = data
-            .Replace(@"\", @"\\")
-            .Replace(";", @"\;")
-            .Replace(",", @"\,")
-            .Replace("\n", @"\n")
-            .Replace("\r", @"\r");
-
-        return $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{value}";
-    }
-
-    string IV4FieldSerializer<string>.Write(string data)
-    {
-        var value = data
-            .Replace(@"\", @"\\")
+        // RFC 2426 & RFC 6350: Escape \, ;, , and newlines.
+        return data
+            .Replace(@"\", @"\\")   // Must be first
             .Replace(";", @"\;")
             .Replace(",", @"\,")
+            .Replace("\r\n", @"\n") // Normalize Windows line endings
             .Replace("\n", @"\n")
-            .Replace("\r", @"\r")
-            .Replace(@"""", @"\""");
-
-        return $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{value}";
+            .Replace("\r", @"\n");  // Handle stray CRs
     }
 }
