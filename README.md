@@ -1,6 +1,6 @@
 # vCardLib: A vCard (.vcf) Processing Library 📇
 
-![NuGet Version](https://img.shields.io/nuget/v/vCardLib.dll)  [![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/vCardLib/badge.svg?branch=master)](https://coveralls.io/github/bolorundurowb/vCardLib?branch=master) 
+![NuGet Version](https://img.shields.io/nuget/v/vCardLib.dll)  [![codecov](https://codecov.io/gh/bolorundurowb/vCardLib/graph/badge.svg?token=UCqAPedMyw)](https://codecov.io/gh/bolorundurowb/vCardLib) 
 [![NET Standard](https://img.shields.io/badge/netstandard-1.3-ff66b6.svg)]()  [![NET Standard](https://img.shields.io/badge/netstandard-2.0-3f76b1.svg)]()  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
