@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>5.0.0</Version>
-        <PackageVersion>6.0.0</PackageVersion>
+        <PackageVersion>6.1.0</PackageVersion>
         <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-        <AssemblyVersion>6.0.0</AssemblyVersion>
-        <FileVersion>6.0.0</FileVersion>
+        <AssemblyVersion>6.1.0</AssemblyVersion>
+        <FileVersion>6.1.0</FileVersion>
         <NeutralLanguage>en-NG</NeutralLanguage>
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
-        <Copyright>© 2017-2024, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
-        <PackageReleaseNotes>- improve URL field serialization and deserialization</PackageReleaseNotes>
+        <Copyright>© 2017-2025, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
+        <PackageReleaseNotes>- unified and fixed the text escape logic for Title, Note, Text and ProdId
+        - fixed the incorrect parsing of Photo metadata</PackageReleaseNotes>
         <Authors>Bolorunduro Winner-Timothy</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>
