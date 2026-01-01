@@ -31,7 +31,7 @@ jobs:
         run: dotnet build vCardLib/vCardLib.csproj --configuration Release --no-restore
       
       - name: Run Tests
-        run: dotnet test vCardLib.Tests/vCardLib.Tests.csproj --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+        run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5

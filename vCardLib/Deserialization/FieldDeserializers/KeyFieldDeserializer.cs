@@ -14,10 +14,6 @@ public class KeyFieldDeserializer : IV2FieldDeserializer<Key>, IV3FieldDeseriali
     Key IV2FieldDeserializer<Key>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new Key(value);
-
         string? type = null, mimeType = null, encoding = null;
 
         foreach (var datum in metadata)
@@ -37,10 +33,6 @@ public class KeyFieldDeserializer : IV2FieldDeserializer<Key>, IV3FieldDeseriali
     Key IV3FieldDeserializer<Key>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new Key(value);
-
         string? type = null, mimeType = null, encoding = null;
 
         foreach (var datum in metadata)
@@ -60,10 +52,6 @@ public class KeyFieldDeserializer : IV2FieldDeserializer<Key>, IV3FieldDeseriali
     {
         const string dataPrefix = "data:";
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new Key(value);
-
         string? type = null, mimeType = null, encoding = null;
 
         foreach (var datum in metadata)
