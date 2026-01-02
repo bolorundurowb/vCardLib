@@ -20,7 +20,7 @@ internal sealed class V2Serializer
     {
         var builder = new StringBuilder();
 
-        builder.Append(FieldKeyConstants.StartToken);
+        builder.AppendLine(FieldKeyConstants.StartToken);
         builder.AppendLine(VersionFieldSerializer.Write(vCardVersion.v2));
 
         if (card.Name != null)
