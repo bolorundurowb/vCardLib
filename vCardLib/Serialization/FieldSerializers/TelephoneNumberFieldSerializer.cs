@@ -27,11 +27,12 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
 
             if (telephoneNumberTypes.Any())
             {
-                builder.Append(FieldKeyConstants.MetadataDelimiter);
-
                 foreach (var telephoneNumberType in telephoneNumberTypes)
+                {
+                    builder.Append(FieldKeyConstants.MetadataDelimiter);
                     builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey,
                         telephoneNumberType.DecomposeTelephoneNumberType());
+                }
             }
         }
 
@@ -60,11 +61,12 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
 
             if (telephoneNumberTypes.Any())
             {
-                builder.Append(FieldKeyConstants.MetadataDelimiter);
-
                 foreach (var telephoneNumberType in telephoneNumberTypes)
+                {
+                    builder.Append(FieldKeyConstants.MetadataDelimiter);
                     builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey,
                         telephoneNumberType.DecomposeTelephoneNumberType());
+                }
             }
         }
 
