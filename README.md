@@ -13,6 +13,14 @@ Perfect for applications dealing with contact management, address books, or any 
 
 ---
 
+## ⚠️ Deprecation Notice
+
+**Important:** The **.NET Standard 1.3** target will be **dropped in the next major release**. If your project currently
+targets .NET Standard 1.3, please plan to migrate to .NET Standard 2.0 or a later framework version to continue
+receiving updates and support.
+
+---
+
 ## Features ✨
 
 - **Read Multiple Contacts**: Parse multiple contacts from a single `.vcf` file, stream, or string.

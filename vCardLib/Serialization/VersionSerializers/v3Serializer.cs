@@ -50,7 +50,7 @@ internal sealed class V3Serializer
 
         if (card.Url != null)
             builder.AppendLine(
-                ((IV3FieldSerializer<string>)_fieldSerializers["URL"]).Write(card.Url)
+                ((IV3FieldSerializer<Url>)_fieldSerializers["URL"]).Write(card.Url.Value)
             );
 
         if (card.Timezone != null)
@@ -100,7 +100,7 @@ internal sealed class V3Serializer
 
         if (card.BirthDay != null)
             builder.AppendLine(
-                ((IV3FieldSerializer<DateTime>)_fieldSerializers["BIRTHDAY"]).Write(card.BirthDay.Value)
+                ((IV3FieldSerializer<DateTime>)_fieldSerializers["BDAY"]).Write(card.BirthDay.Value)
             );
 
         if (card.Logo != null)

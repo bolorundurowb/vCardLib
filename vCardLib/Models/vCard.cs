@@ -42,9 +42,9 @@ public class vCard
 
     /// <summary>
     /// Uniform resource locator associated with the object to which the vCard refers.  Examples for individuals
-    /// include personal web sites, blogs, and social networking site identifiers.
+    /// include personal websites, blogs, and social networking site identifiers.
     /// </summary>
-    public string? Url { get; set; }
+    public Url? Url { get; set; }
 
     /// <summary>
     /// Information related to the time zone of the object the vCard represents

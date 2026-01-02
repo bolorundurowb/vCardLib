@@ -9,7 +9,8 @@
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2025, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
         <PackageReleaseNotes>- unified and fixed the text escape logic for Title, Note, Text and ProdId
-        - fixed the incorrect parsing of Photo metadata</PackageReleaseNotes>
+        - fixed the incorrect parsing of Photo metadata
+        - fixed the serialization logic for Birthday, Urls</PackageReleaseNotes>
         <Authors>Bolorunduro Winner-Timothy</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>

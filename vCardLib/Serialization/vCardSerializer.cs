@@ -43,6 +43,7 @@ public static class vCardSerializer
             new RevisionFieldSerializer(),
             new TelephoneNumberFieldSerializer(),
             new TitleFieldSerializer(),
+            new TimezoneFieldSerializer(),
             new UidFieldSerializer(),
             new UrlFieldSerializer(),
         };

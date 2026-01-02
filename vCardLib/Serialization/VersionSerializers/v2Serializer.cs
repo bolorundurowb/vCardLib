@@ -20,7 +20,7 @@ internal sealed class V2Serializer
     {
         var builder = new StringBuilder();
 
-        builder.Append(FieldKeyConstants.StartToken);
+        builder.AppendLine(FieldKeyConstants.StartToken);
         builder.AppendLine(VersionFieldSerializer.Write(vCardVersion.v2));
 
         if (card.Name != null)
@@ -50,7 +50,7 @@ internal sealed class V2Serializer
 
         if (card.Url != null)
             builder.AppendLine(
-                ((IV2FieldSerializer<string>)_fieldSerializers["URL"]).Write(card.Url)
+                ((IV2FieldSerializer<Url>)_fieldSerializers["URL"]).Write(card.Url.Value)
             );
 
         if (card.Timezone != null)
@@ -100,7 +100,7 @@ internal sealed class V2Serializer
 
         if (card.BirthDay != null)
             builder.AppendLine(
-                ((IV2FieldSerializer<DateTime>)_fieldSerializers["BIRTHDAY"]).Write(card.BirthDay.Value)
+                ((IV2FieldSerializer<DateTime>)_fieldSerializers["BDAY"]).Write(card.BirthDay.Value)
             );
 
         if (card.Logo != null)

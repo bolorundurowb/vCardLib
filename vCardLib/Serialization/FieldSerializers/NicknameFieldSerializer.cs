@@ -8,6 +8,7 @@ internal sealed class NicknameFieldSerializer : IV2FieldSerializer<string>, IV3F
 {
     public string FieldKey => "NICKNAME";
 
+    // RFC-2425 does not support nicknames.
     string? IV2FieldSerializer<string>.Write(string data) => null;
 
     public string Write(string data) => $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{data}";
