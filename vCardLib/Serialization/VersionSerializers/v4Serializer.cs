@@ -50,7 +50,7 @@ internal sealed class V4Serializer
 
         if (card.Url != null)
             builder.AppendLine(
-                ((IV4FieldSerializer<string>)_fieldSerializers["URL"]).Write(card.Url)
+                ((IV4FieldSerializer<Url>)_fieldSerializers["URL"]).Write(card.Url.Value)
             );
 
         if (card.Timezone != null)
@@ -100,7 +100,7 @@ internal sealed class V4Serializer
 
         if (card.BirthDay != null)
             builder.AppendLine(
-                ((IV4FieldSerializer<DateTime>)_fieldSerializers["BIRTHDAY"]).Write(card.BirthDay.Value)
+                ((IV4FieldSerializer<DateTime>)_fieldSerializers["BDAY"]).Write(card.BirthDay.Value)
             );
 
         if (card.Logo != null)
