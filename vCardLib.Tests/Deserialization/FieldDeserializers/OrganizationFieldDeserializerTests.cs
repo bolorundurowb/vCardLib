@@ -17,9 +17,9 @@ public class OrganizationFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.Name.ShouldBe("ABC, Inc.");
-        result.PrimaryUnit.ShouldBeNull();
-        result.SecondaryUnit.ShouldBeNull();
+        result.Value.Name.ShouldBe("ABC, Inc.");
+        result.Value.PrimaryUnit.ShouldBeNull();
+        result.Value.SecondaryUnit.ShouldBeNull();
     }
 
     [Test]
@@ -30,9 +30,9 @@ public class OrganizationFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.Name.ShouldBe("ABC, Inc.");
-        result.PrimaryUnit.ShouldBe("North American Division");
-        result.SecondaryUnit.ShouldBe("Marketing");
+        result.Value.Name.ShouldBe("ABC, Inc.");
+        result.Value.PrimaryUnit.ShouldBe("North American Division");
+        result.Value.SecondaryUnit.ShouldBe("Marketing");
     }
 
     [Test]
@@ -43,8 +43,8 @@ public class OrganizationFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.Name.ShouldBe("ABC, Inc.");
-        result.PrimaryUnit.ShouldBe("North American Division");
+        result.Value.Name.ShouldBe("ABC, Inc.");
+        result.Value.PrimaryUnit.ShouldBe("North American Division");
     }
 
     [Test]
@@ -55,8 +55,8 @@ public class OrganizationFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.Name.ShouldBe(string.Empty);
-        result.PrimaryUnit.ShouldBeNull();
-        result.SecondaryUnit.ShouldBeNull();
+        result.Value.Name.ShouldBe(string.Empty);
+        result.Value.PrimaryUnit.ShouldBeNull();
+        result.Value.SecondaryUnit.ShouldBeNull();
     }
 }

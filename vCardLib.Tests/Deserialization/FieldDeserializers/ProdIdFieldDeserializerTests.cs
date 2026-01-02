@@ -11,7 +11,7 @@ public class ProdIdFieldDeserializerTests
     public void Write_Should_SerializeV2()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
-        IV2FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
+        IV2FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
@@ -22,7 +22,7 @@ public class ProdIdFieldDeserializerTests
     public void Write_Should_SerializeV3()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
-        IV3FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
+        IV3FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
@@ -33,7 +33,7 @@ public class ProdIdFieldDeserializerTests
     public void Write_Should_SerializeV4()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
-        IV4FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
+        IV4FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
