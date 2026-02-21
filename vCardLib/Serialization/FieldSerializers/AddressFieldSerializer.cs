@@ -8,6 +8,8 @@ using vCardLib.Models;
 using vCardLib.Serialization.Interfaces;
 using vCardLib.Serialization.Utilities;
 
+using vCardLib.Utilities;
+
 namespace vCardLib.Serialization.FieldSerializers;
 
 internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3FieldSerializer<Address>,
@@ -21,8 +23,7 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
 
         if (data.Type != AddressType.None)
         {
-            var addressTypes = Enum.GetValues(typeof(AddressType))
-                .Cast<AddressType>()
+            var addressTypes = EnumCache<AddressType>.Values
                 .Where(x => data.Type.HasFlag(x) && x != AddressType.None)
                 .ToArray();
 

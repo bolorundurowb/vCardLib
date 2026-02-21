@@ -83,4 +83,6 @@ internal static class SharedParsers
         EmailTypeMap.TryGetValue(type, out var result) ? result : null;
 
     public static TelephoneNumberType? ParseTelephoneNumberType(this string type) => TelephoneNumberTypeMap.TryGetValue(type, out var result) ? result : null;
+
+    public static UrlType? ParseUrlType(this string type) => Enum.TryParse<UrlType>(type, true, out var result) ? result : null;
 }

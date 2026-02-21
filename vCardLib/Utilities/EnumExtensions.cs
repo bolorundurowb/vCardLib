@@ -5,6 +5,11 @@ using System.Linq;
 
 namespace vCardLib.Utilities;
 
+internal static class EnumCache<TEnum> where TEnum : struct, Enum
+{
+    public static readonly TEnum[] Values = (TEnum[])Enum.GetValues(typeof(TEnum));
+}
+
 internal static class EnumExtensions
 {
     private static readonly ConcurrentDictionary<Type, Dictionary<string, object>> EnumCache = new();
@@ -51,9 +56,7 @@ internal static class EnumExtensions
     /// <returns>An array of enum values that are part of the given enum value.</returns>
     public static T[] Values<T>(T value) where T : struct, Enum
     {
-        var enumType = typeof(T);
-        return Enum.GetValues(enumType)
-            .Cast<T>()
+        return EnumCache<T>.Values
             .Where(x => value.HasFlag(x))
             .ToArray();
     }

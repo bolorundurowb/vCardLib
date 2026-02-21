@@ -16,32 +16,9 @@ internal sealed class LabelFieldDeserializer : IV2FieldDeserializer<Label>, IV3F
     public Label Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
+        var parameters = VCardParameters.Parse(metadata);
 
-        if (metadata.Length == 0)
-            return new Label(Regex.Unescape(value));
-
-        AddressType? type = null;
-
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-            {
-                if (string.IsNullOrWhiteSpace(data))
-                    continue;
-
-                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                foreach (var individualType in typeGroup)
-                {
-                    var adrType = individualType.ParseAddressType();
-
-                    if (adrType.HasValue)
-                        type = type.HasValue ? type.Value | adrType : adrType;
-                }
-            }
-        }
+        var type = ParameterInterpreters.ParseTypeFlags<AddressType>(parameters, SharedParsers.ParseAddressType);
 
         return new Label(Regex.Unescape(value), type);
     }

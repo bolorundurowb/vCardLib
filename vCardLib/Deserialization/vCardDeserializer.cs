@@ -424,7 +424,7 @@ public static class vCardDeserializer
                 out var rawUid, out var uidDes))
             vcard.Uid = uidDes!.Read(rawUid!);
 
-        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<Url?>>(UrlFieldDeserializer.FieldKey,
+        if (vcardContent.TryGetDeserializationParams<IV4FieldDeserializer<Url>>(UrlFieldDeserializer.FieldKey,
                 out var rawUrl, out var urlDes))
             vcard.Url = urlDes!.Read(rawUrl!);
 

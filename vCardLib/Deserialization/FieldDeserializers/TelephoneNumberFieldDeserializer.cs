@@ -15,80 +15,26 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
 
     TelephoneNumber IV2FieldDeserializer<TelephoneNumber>.Read(string input)
     {
-        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        var (telephoneNumber, extension) = SplitOutExtension(value);
-
-        if (metadata.Length == 0)
-            return new TelephoneNumber(telephoneNumber, extension: extension);
-
-        TelephoneNumberType? type = null;
-        int? preference = null;
-
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-            {
-                if (string.IsNullOrWhiteSpace(data))
-                    continue;
-
-                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                foreach (var individualType in typeGroup)
-                {
-                    var phoneType = individualType.ParseTelephoneNumberType();
-
-                    if (phoneType.HasValue)
-                        type = type.HasValue ? type.Value | phoneType : phoneType;
-                }
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
-                preference = 1;
-        }
-
-        return new TelephoneNumber(telephoneNumber, type, extension, preference);
+        return ReadInternal(input, false);
     }
 
     public TelephoneNumber Read(string input)
     {
+        return ReadInternal(input, true);
+    }
+
+    private TelephoneNumber ReadInternal(string input, bool numericPreference)
+    {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
         var (telephoneNumber, extension) = SplitOutExtension(value);
 
-        if (metadata.Length == 0)
-            return new TelephoneNumber(telephoneNumber, extension: extension);
+        var parameters = VCardParameters.Parse(metadata);
 
-        TelephoneNumberType? type = null;
-        int? preference = null;
-        string? _value = null;
+        var type = ParameterInterpreters.ParseTypeFlags<TelephoneNumberType>(parameters, SharedParsers.ParseTelephoneNumberType, FieldKeyConstants.PreferenceKey, FieldKeyConstants.ValueKey);
+        var preference = ParameterInterpreters.ParsePreference(parameters, numericPreference);
+        var valueType = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.ValueKey);
 
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-            {
-                if (string.IsNullOrWhiteSpace(data))
-                    continue;
-
-                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                foreach (var individualType in typeGroup)
-                {
-                    var phoneType = individualType.ParseTelephoneNumberType();
-
-                    if (phoneType.HasValue)
-                        type = type.HasValue ? type.Value | phoneType : phoneType;
-                }
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
-                _value = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
-                if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
-                    preference = pref;
-        }
-
-        return new TelephoneNumber(telephoneNumber, type, extension, preference, _value);
+        return new TelephoneNumber(telephoneNumber, type, extension, preference, valueType);
     }
 
     private (string, string?) SplitOutExtension(string input)

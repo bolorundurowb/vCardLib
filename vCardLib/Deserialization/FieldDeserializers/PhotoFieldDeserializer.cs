@@ -1,4 +1,5 @@
-﻿using vCardLib.Constants;
+﻿using System;
+using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
 using vCardLib.Extensions;
@@ -14,21 +15,18 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
     Photo IV2FieldDeserializer<Photo>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        string? type = null, mimeType = null, encoding = null;
-
+        
+        string? type = null, encoding = null;
         foreach (var datum in metadata)
         {
             var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
             if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
                 encoding = data;
-            // HACK: not sure how else to distinguish the type for v2.1
             else
                 type = key;
         }
 
-        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(value, mimeType, encoding);
+        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(value, null, encoding);
 
         return new Photo(finalValue, finalEncoding, type, finalMimeType);
     }
@@ -36,45 +34,30 @@ internal sealed class PhotoFieldDeserializer : IV2FieldDeserializer<Photo>,
     Photo IV3FieldDeserializer<Photo>.Read(string input)
     {
         var (metadata, data) = DataSplitHelpers.SplitLine(FieldKey, input);
+        var parameters = VCardParameters.Parse(metadata);
 
-        string? type = null, mimeType = null, encoding = null, value = null;
+        var encoding = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.EncodingKey);
+        if (encoding == "b") encoding = "BASE64";
 
-        foreach (var datum in metadata)
-        {
-            var (key, entry) = DataSplitHelpers.SplitDatum(datum, '=');
+        var type = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.TypeKey);
+        var valueMetadata = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.ValueKey);
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
-                encoding = entry == "b" ? "BASE64" : entry;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
-                value = entry;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-                type = entry;
-        }
+        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(data, null, encoding);
 
-        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(data, mimeType, encoding);
-
-        return new Photo(finalValue, finalEncoding, type, finalMimeType, value);
+        return new Photo(finalValue, finalEncoding, type, finalMimeType, valueMetadata);
     }
 
     Photo IV4FieldDeserializer<Photo>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        string? type = null, mimeType = null, encoding = null, valueMetadata = null;
+        var parameters = VCardParameters.Parse(metadata);
 
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
+        var mimeType = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.MediaTypeKey)
+                       ?? ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.MediaTypeAltKey);
+        var type = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.TypeKey);
+        var valueMetadata = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.ValueKey);
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey) ||
-                key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeAltKey))
-                mimeType = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
-                valueMetadata = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-                type = data;
-        }
-
-        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(value, mimeType, encoding);
+        var (finalValue, finalMimeType, finalEncoding) = ParseDataUri(value, mimeType, null);
 
         return new Photo(finalValue, finalEncoding, type, finalMimeType, valueMetadata);
     }

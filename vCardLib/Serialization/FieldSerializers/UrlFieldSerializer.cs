@@ -14,28 +14,15 @@ internal sealed class UrlFieldSerializer : IV2FieldSerializer<Url>, IV3FieldSeri
 
     string IV2FieldSerializer<Url>.Write(Url data)
     {
-        var builder = new StringBuilder(FieldKey);
-
-        if (data.Type.HasValue)
-        {
-            var urlTypes = EnumExtensions.Values(data.Type.Value);
-
-            if (urlTypes.Any())
-            {
-                foreach (var urlType in urlTypes)
-                {
-                    builder.Append(FieldKeyConstants.MetadataDelimiter);
-                    builder.Append(urlType.ToString().ToUpperInvariant());
-                }
-            }
-        }
-
-        WriteOtherAttributes(data, builder);
-
-        return builder.ToString();
+        return WriteInternal(data, v2Style: true);
     }
 
     public string Write(Url data)
+    {
+        return WriteInternal(data, v2Style: false);
+    }
+
+    private string WriteInternal(Url data, bool v2Style)
     {
         var builder = new StringBuilder(FieldKey);
 
@@ -48,7 +35,14 @@ internal sealed class UrlFieldSerializer : IV2FieldSerializer<Url>, IV3FieldSeri
                 foreach (var urlType in urlTypes)
                 {
                     builder.Append(FieldKeyConstants.MetadataDelimiter);
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, urlType.ToString().ToLowerInvariant());
+                    if (v2Style)
+                    {
+                        builder.Append(urlType.ToString().ToUpperInvariant());
+                    }
+                    else
+                    {
+                        builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, urlType.ToString().ToLowerInvariant());
+                    }
                 }
             }
         }

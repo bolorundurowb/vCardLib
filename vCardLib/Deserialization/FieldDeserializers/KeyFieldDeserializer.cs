@@ -14,7 +14,7 @@ public class KeyFieldDeserializer : IV2FieldDeserializer<Key>, IV3FieldDeseriali
     Key IV2FieldDeserializer<Key>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        string? type = null, mimeType = null, encoding = null;
+        string? type = null, encoding = null;
 
         foreach (var datum in metadata)
         {
@@ -27,42 +27,30 @@ public class KeyFieldDeserializer : IV2FieldDeserializer<Key>, IV3FieldDeseriali
                 type = key;
         }
 
-        return new Key(value, type, mimeType, encoding);
+        return new Key(value, type, null, encoding);
     }
 
     Key IV3FieldDeserializer<Key>.Read(string input)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        string? type = null, mimeType = null, encoding = null;
+        var parameters = VCardParameters.Parse(metadata);
 
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
+        var encoding = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.EncodingKey);
+        if (encoding == "b") encoding = "BASE64";
+        var type = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.TypeKey);
 
-            if (key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey))
-                encoding = data == "b" ? "BASE64" : data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-                type = data;
-        }
-
-        return new Key(value, type, mimeType, encoding);
+        return new Key(value, type, null, encoding);
     }
 
     Key IV4FieldDeserializer<Key>.Read(string input)
     {
         const string dataPrefix = "data:";
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        string? type = null, mimeType = null, encoding = null;
+        var parameters = VCardParameters.Parse(metadata);
 
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey))
-                mimeType = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-                type = data;
-        }
+        var mimeType = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.MediaTypeKey);
+        var type = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.TypeKey);
+        string? encoding = null;
 
         if (value.StartsWithIgnoreCase(dataPrefix))
             value = value.Replace(dataPrefix, string.Empty);

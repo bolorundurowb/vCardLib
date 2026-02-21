@@ -15,36 +15,28 @@ internal sealed class UrlFieldDeserializer : IV2FieldDeserializer<Url>, IV3Field
 
     public Url Read(string input)
     {
+        return ReadInternal(input, false);
+    }
+
+    Url IV4FieldDeserializer<Url>.Read(string input)
+    {
+        return ReadInternal(input, true);
+    }
+
+    private static Url ReadInternal(string input, bool numericPreference)
+    {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
+        var parameters = VCardParameters.Parse(metadata);
 
-        if (metadata.Length == 0)
-            return new Url(value);
-
-        UrlType? type = null;
-        int? pref = null;
-        string? label = null, mimeType = null, language = null, charset = null;
-
-        foreach (var metadatum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.ExtractKeyValue(metadatum, '=');
-
-            if (key is null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-            {
-                var parsedType = EnumExtensions.Parse<UrlType>(data);
-                type = type is null ? parsedType : type | parsedType;
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.LabelKey))
-                label = StringHelpers.IsQuoted(data) ? data.Trim().Trim('"') : data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.CharacterSetKey))
-                charset = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.LanguageSetKey))
-                language = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
-                pref = int.Parse(data);
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeKey) ||
-                     key.EqualsIgnoreCase(FieldKeyConstants.MediaTypeAltKey))
-                mimeType = data;
-        }
+        var type = ParameterInterpreters.ParseTypeFlags<UrlType>(parameters, SharedParsers.ParseUrlType,
+            FieldKeyConstants.LabelKey, FieldKeyConstants.CharacterSetKey, FieldKeyConstants.LanguageSetKey,
+            FieldKeyConstants.PreferenceKey, FieldKeyConstants.MediaTypeKey, FieldKeyConstants.MediaTypeAltKey);
+        var pref = ParameterInterpreters.ParsePreference(parameters, numericPreference);
+        var label = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.LabelKey);
+        var mimeType = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.MediaTypeKey)
+                       ?? ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.MediaTypeAltKey);
+        var language = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.LanguageSetKey);
+        var charset = ParameterInterpreters.ParseStringParameter(parameters, FieldKeyConstants.CharacterSetKey);
 
         return new Url(value, type, pref, label, mimeType, language, charset);
     }

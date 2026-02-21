@@ -15,59 +15,21 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
 
     public EmailAddress Read(string input)
     {
-        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new EmailAddress(value);
-
-        EmailAddressType? type = null;
-        int? preference = null;
-
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
-            {
-                var emailTypes = data.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                type = emailTypes
-                    .Select(parsedType => parsedType.ParseEmailAddressType())
-                    .Aggregate(type, (current, emailType) => current.HasValue ? current.Value | emailType : emailType);
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
-                preference = 1;
-        }
-
-        return new EmailAddress(value, type, preference);
+        return ReadInternal(input, false);
     }
 
     EmailAddress IV4FieldDeserializer<EmailAddress>.Read(string input)
     {
+        return ReadInternal(input, true);
+    }
+
+    private static EmailAddress ReadInternal(string input, bool numericPreference)
+    {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
+        var parameters = VCardParameters.Parse(metadata);
 
-        if (metadata.Length == 0)
-            return new EmailAddress(value);
-
-        EmailAddressType? type = null;
-        int? preference = null;
-
-        foreach (var datum in metadata)
-        {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
-            {
-                var emailTypes = data.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                type = emailTypes
-                    .Select(parsedType => parsedType.ParseEmailAddressType())
-                    .Aggregate(type, (current, emailType) => current.HasValue ? current.Value | emailType : emailType);
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
-                if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
-                    preference = pref;
-        }
+        var type = ParameterInterpreters.ParseTypeFlags<EmailAddressType>(parameters, SharedParsers.ParseEmailAddressType, FieldKeyConstants.PreferenceKey);
+        var preference = ParameterInterpreters.ParsePreference(parameters, numericPreference);
 
         return new EmailAddress(value, type, preference);
     }

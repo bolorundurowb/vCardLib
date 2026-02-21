@@ -20,23 +20,16 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
         if (values.Length != 7)
             throw new Exception("Address parts incomplete");
 
-        if (metadata.Length == 0)
-            return new Address(values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
+        var parameters = VCardParameters.Parse(metadata);
 
-        AddressType? type = null;
+        var type = ParameterInterpreters.ParseTypeFlags<AddressType>(parameters, SharedParsers.ParseAddressType, GeoFieldDeserializer.FieldKey, LabelFieldDeserializer.FieldKey);
+        var label = ParameterInterpreters.ParseStringParameter(parameters, LabelFieldDeserializer.FieldKey);
+        
         Geo? geo = null;
-        string? label = null;
-
-        foreach (var datum in metadata)
+        var geoStr = parameters.GetFirst(GeoFieldDeserializer.FieldKey);
+        if (geoStr != null)
         {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(GeoFieldDeserializer.FieldKey))
-                geo = (new GeoFieldDeserializer() as IV4FieldDeserializer<Geo>).Read(data!);
-            else if (key.EqualsIgnoreCase(LabelFieldDeserializer.FieldKey))
-                label = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
-                type = ParseAddressType(data!);
+            geo = (new GeoFieldDeserializer() as IV4FieldDeserializer<Geo>).Read(geoStr);
         }
 
         return new Address(values[0], values[1], values[2], values[3], values[4], values[5], values[6], type, label,
@@ -55,25 +48,4 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
     }
 
     private string[] SplitAddress(string datum) => datum.Split(FieldKeyConstants.MetadataDelimiter);
-
-    private static AddressType? ParseAddressType(string type)
-    {
-        AddressType? addressType = null;
-        var typeGroups = type.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-        foreach (var typeGroup in typeGroups)
-        {
-            var parsedValue = typeGroup.ParseAddressType();
-
-            if (parsedValue == null)
-                continue;
-
-            if (addressType.HasValue)
-                addressType |= parsedValue.Value;
-            else
-                addressType = parsedValue.Value;
-        }
-
-        return addressType;
-    }
 }

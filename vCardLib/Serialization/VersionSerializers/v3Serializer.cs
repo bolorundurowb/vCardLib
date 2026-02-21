@@ -137,7 +137,7 @@ internal sealed class V3Serializer
         if (card.EmailAddresses.Any())
             foreach (var emailAddress in card.EmailAddresses)
                 builder.AppendLine(
-                    ((IV3FieldSerializer<EmailAddress>)_fieldSerializers["EMAIL"]).Write(emailAddress)
+                    ((IV4FieldSerializer<EmailAddress>)_fieldSerializers["EMAIL"]).Write(emailAddress)
                 );
 
         if (card.Photos.Any())

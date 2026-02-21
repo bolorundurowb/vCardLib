@@ -7,6 +7,8 @@ using vCardLib.Models;
 using vCardLib.Serialization.Interfaces;
 using vCardLib.Serialization.Utilities;
 
+using vCardLib.Utilities;
+
 namespace vCardLib.Serialization.FieldSerializers;
 
 internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<TelephoneNumber>,
@@ -16,61 +18,45 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
 
     string IV2FieldSerializer<TelephoneNumber>.Write(TelephoneNumber data)
     {
-        var builder = new StringBuilder(FieldKey);
-
-        if (data.Type != TelephoneNumberType.None)
-        {
-            var telephoneNumberTypes = Enum.GetValues(typeof(TelephoneNumberType))
-                .Cast<TelephoneNumberType>()
-                .Where(x => data.Type.HasFlag(x) && x != TelephoneNumberType.None)
-                .ToArray();
-
-            if (telephoneNumberTypes.Any())
-            {
-                foreach (var telephoneNumberType in telephoneNumberTypes)
-                {
-                    builder.Append(FieldKeyConstants.MetadataDelimiter);
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey,
-                        telephoneNumberType.DecomposeTelephoneNumberType());
-                }
-            }
-        }
-
-        if (data.Preference.HasValue)
-        {
-            builder.Append(FieldKeyConstants.MetadataDelimiter);
-            builder.Append(FieldKeyConstants.PreferenceKey);
-        }
-
-        builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Number);
-
-        return builder.ToString();
+        return WriteInternal(data, false);
     }
 
     public string Write(TelephoneNumber data)
+    {
+        return WriteInternal(data, true);
+    }
+
+    private string WriteInternal(TelephoneNumber data, bool v4Style)
     {
         var builder = new StringBuilder(FieldKey);
 
         if (data.Type != TelephoneNumberType.None)
         {
-            var telephoneNumberTypes = Enum.GetValues(typeof(TelephoneNumberType))
-                .Cast<TelephoneNumberType>()
+            var telephoneNumberTypes = EnumCache<TelephoneNumberType>.Values
                 .Where(x => data.Type.HasFlag(x) && x != TelephoneNumberType.None)
                 .ToArray();
 
             if (telephoneNumberTypes.Any())
             {
-                foreach (var telephoneNumberType in telephoneNumberTypes)
+                builder.Append(FieldKeyConstants.MetadataDelimiter);
+                if (v4Style)
                 {
-                    builder.Append(FieldKeyConstants.MetadataDelimiter);
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey,
-                        telephoneNumberType.DecomposeTelephoneNumberType());
+                    builder.AppendFormat("{0}=", FieldKeyConstants.TypeKey);
+                    var typesList = telephoneNumberTypes.Select(t => t.DecomposeTelephoneNumberType()).ToList();
+                    builder.Append(string.Join(FieldKeyConstants.ConcatenationDelimiter.ToString(), typesList));
+                }
+                else
+                {
+                    foreach (var telephoneNumberType in telephoneNumberTypes)
+                    {
+                        builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey,
+                            telephoneNumberType.DecomposeTelephoneNumberType());
+                    }
                 }
             }
         }
 
-        if (!string.IsNullOrWhiteSpace(data.Value))
+        if (v4Style && !string.IsNullOrWhiteSpace(data.Value))
         {
             builder.Append(FieldKeyConstants.MetadataDelimiter);
             builder.AppendFormat("{0}={1}", FieldKeyConstants.ValueKey, data.Value);
@@ -79,7 +65,10 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
         if (data.Preference.HasValue)
         {
             builder.Append(FieldKeyConstants.MetadataDelimiter);
-            builder.AppendFormat("{0}={1}", FieldKeyConstants.PreferenceKey, data.Preference);
+            if (v4Style)
+                builder.AppendFormat("{0}={1}", FieldKeyConstants.PreferenceKey, data.Preference);
+            else
+                builder.Append(FieldKeyConstants.PreferenceKey);
         }
 
         builder.Append(FieldKeyConstants.SectionDelimiter);
