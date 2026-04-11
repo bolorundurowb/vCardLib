@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class KindFieldDeserializerTests
 {
     [Test]
-    public void ShouldReturnNullForV2()
+    public void Read_InputV2_ShouldReturnNull()
     {
         const string input = "KIND:individual";
         IV2FieldDeserializer<ContactKind?> deserializer = new KindFieldDeserializer();
@@ -20,7 +20,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnNullForV3()
+    public void Read_InputV3_ShouldReturnNull()
     {
         const string input = "KIND:individual";
         IV3FieldDeserializer<ContactKind?> deserializer = new KindFieldDeserializer();
@@ -30,7 +30,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseIndividualKind()
+    public void Read_IndividualKind_ShouldParseCorrectly()
     {
         const string input = "KIND:individual";
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
@@ -40,7 +40,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseOrgKind()
+    public void Read_OrgKind_ShouldParseCorrectly()
     {
         const string input = "KIND:org";
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
@@ -50,7 +50,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseLocationKind()
+    public void Read_LocationKind_ShouldParseCorrectly()
     {
         const string input = "KIND:location";
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
@@ -60,7 +60,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldDefaultToIndividualKind()
+    public void Read_UnexpectedInput_ShouldDefaultToIndividual()
     {
         const string input = "KIND:unknown";
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();

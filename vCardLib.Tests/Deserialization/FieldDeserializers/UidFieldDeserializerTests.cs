@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class UidFieldDeserializerTests
 {
     [Test]
-    public void ShouldParseUidV2()
+    public void Read_InputV2_ShouldParseCorrectly()
     {
         const string input = "UID:19950401-080045-40000F192713";
         IV2FieldDeserializer<string> deserializer = new UidFieldDeserializer();
@@ -19,7 +19,7 @@ public class UidFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseUidV3()
+    public void Read_InputV3_ShouldParseCorrectly()
     {
         const string input = "UID:19950401-080045-40000F192713";
         IV3FieldDeserializer<string> deserializer = new UidFieldDeserializer();
@@ -29,7 +29,7 @@ public class UidFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseUidV4()
+    public void Read_InputV4_ShouldParseCorrectly()
     {
         const string input = "UID:19950401-080045-40000F192713";
         IV4FieldDeserializer<string> deserializer = new UidFieldDeserializer();

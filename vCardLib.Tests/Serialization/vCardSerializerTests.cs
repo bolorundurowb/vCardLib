@@ -15,7 +15,7 @@ public class vCardSerializerTests
     [TestCase(vCardVersion.v2, "2.1")]
     [TestCase(vCardVersion.v3, "3.0")]
     [TestCase(vCardVersion.v4, "4.0")]
-    public void Serialize_SingleCard_ReturnsVCardString(vCardVersion version, string expectedVersion)
+    public void Serialize_SingleCard_ShouldReturnVCardString(vCardVersion version, string expectedVersion)
     {
         var card = new vCard(version)
         {
@@ -123,7 +123,7 @@ public class vCardSerializerTests
     [TestCase(vCardVersion.v2, "2.1")]
     [TestCase(vCardVersion.v3, "3.0")]
     [TestCase(vCardVersion.v4, "4.0")]
-    public void Serialize_MultipleCards_ReturnsVCardString(vCardVersion version, string expectedVersion)
+    public void Serialize_MultipleCards_ShouldReturnVCardString(vCardVersion version, string expectedVersion)
     {
         var cards = new List<vCard>
         {
@@ -145,14 +145,14 @@ public class vCardSerializerTests
     }
 
     [Test]
-    public void Serialize_EmptyCollection_ReturnsEmptyString()
+    public void Serialize_EmptyCollection_ShouldReturnEmptyString()
     {
         var result = vCardSerializer.Serialize(Enumerable.Empty<vCard>());
         result.ShouldBe(string.Empty);
     }
 
     [Test]
-    public void Serialize_OverrideVersion_UsesSpecifiedVersion()
+    public void Serialize_OverrideVersion_ShouldUseSpecifiedVersion()
     {
         var card = new vCard(vCardVersion.v2)
         {
@@ -165,7 +165,7 @@ public class vCardSerializerTests
     }
 
     [Test]
-    public void Serialize_V3_ReturnsCorrectVersion()
+    public void Serialize_V3_ShouldReturnCorrectVersion()
     {
         var card = new vCard(vCardVersion.v3)
         {

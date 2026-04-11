@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class TelephoneNumberFieldDeserializerTests
 {
     [Test]
-    public void V2ShouldParseSimple()
+    public void Read_V2SimpleInput_ShouldParseCorrectly()
     {
         const string input = "TEL;TYPE=cell:(123) 555-5832";
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
@@ -23,7 +23,7 @@ public class TelephoneNumberFieldDeserializerTests
     }
 
     [Test]
-    public void V3ShouldParseComplex()
+    public void Read_V3ComplexInput_ShouldParseCorrectly()
     {
         const string input = "TEL;TYPE=work,voice,pref,msg:+1-213-555-1234";
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
@@ -35,7 +35,7 @@ public class TelephoneNumberFieldDeserializerTests
     }
 
     [Test]
-    public void V4ShouldParseComplex()
+    public void Read_V4ComplexInput_ShouldParseCorrectly()
     {
         const string input = @" TEL;VALUE=uri;PREF=1;TYPE=""voice,home"":tel:+1-555-555-5555;ext=5555";
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();

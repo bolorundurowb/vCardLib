@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class EmailAddressFieldDeserializerTests
 {
     [Test]
-    public void V2ShouldParseSimple()
+    public void Read_V2SimpleInput_ShouldParseCorrectly()
     {
         const string input = "EMAIL:johndoe@hotmail.com";
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
@@ -23,7 +23,7 @@ public class EmailAddressFieldDeserializerTests
     }
 
     [Test]
-    public void V3ShouldParseComplex()
+    public void Read_V3ComplexInput_ShouldParseCorrectly()
     {
         const string input = "EMAIL;type=INTERNET;type=WORK;pref:johnDoe@example.org";
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
@@ -35,7 +35,7 @@ public class EmailAddressFieldDeserializerTests
     }
 
     [Test]
-    public void V4ShouldParseComplex()
+    public void Read_V4ComplexInput_ShouldParseCorrectly()
     {
         const string input = "EMAIL;type=Aol;type=HOME;pref=1:johnDoe@example.org";
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();

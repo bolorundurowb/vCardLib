@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class AnniversaryFieldDeserializerTests
 {
     [Test]
-    public void ShouldReturnNullForV2()
+    public void Read_InputV2_ShouldReturnNull()
     {
         const string input = "ANNIVERSARY:19901021";
         IV2FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -20,7 +20,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnNullForV3()
+    public void Read_InputV3_ShouldReturnNull()
     {
         const string input = "ANNIVERSARY:19901021";
         IV3FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -30,7 +30,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnNullWithUnexpectedInput()
+    public void Read_EmptyInput_ShouldReturnNull()
     {
         var input = string.Empty;
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -40,7 +40,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueWithDateOnly()
+    public void Read_DateOnlyInput_ShouldReturnValue()
     {
         const string input = "ANNIVERSARY:19901021";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -51,7 +51,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueWithDateAndTime()
+    public void Read_DateAndTimeInput_ShouldReturnValue()
     {
         const string input = "ANNIVERSARY:20121201T134211Z";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -62,7 +62,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueWithTimeOnly()
+    public void Read_TimeOnlyInput_ShouldReturnValue()
     {
         const string input = "ANNIVERSARY:0415";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();

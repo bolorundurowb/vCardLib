@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class AddressFieldSerializerTests
 {
     [Test]
-    public void Write_SimpleAddress_ReturnsCorrectString()
+    public void Write_SimpleAddress_ShouldReturnCorrectString()
     {
         var address = new Address("", "", "123 Main St", "Anytown", "State", "12345", "USA");
         var serializer = new AddressFieldSerializer();
@@ -20,7 +20,7 @@ public class AddressFieldSerializerTests
     }
 
     [Test]
-    public void Write_AddressWithType_ReturnsCorrectString()
+    public void Write_AddressWithType_ShouldReturnCorrectString()
     {
         var address = new Address("", "", "123 Main St", "Anytown", "State", "12345", "USA", AddressType.Home);
         var serializer = new AddressFieldSerializer();

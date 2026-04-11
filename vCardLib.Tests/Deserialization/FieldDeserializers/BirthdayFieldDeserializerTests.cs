@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class BirthdayFieldDeserializerTests
 {
     [Test]
-    public void ShouldReturnNullWithUnexpectedInput()
+    public void Read_EmptyInput_ShouldReturnNull()
     {
         var input = string.Empty;
         var deserializer = new BirthdayFieldDeserializer();
@@ -19,7 +19,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueWithDateOnly()
+    public void Read_DateOnlyInput_ShouldReturnValue()
     {
         const string input = "BDAY:19901021";
         var deserializer = new BirthdayFieldDeserializer();
@@ -30,7 +30,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueWithDateAndTime()
+    public void Read_DateAndTimeInput_ShouldReturnValue()
     {
         const string input = "BDAY;20121201T134211Z";
         var deserializer = new BirthdayFieldDeserializer();
@@ -41,7 +41,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueWithTimeOnly()
+    public void Read_TimeOnlyInput_ShouldReturnValue()
     {
         const string input = "BDAY:0415";
         var deserializer = new BirthdayFieldDeserializer();

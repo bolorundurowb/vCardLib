@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class GenderFieldDeserializerTests
 {
     [Test]
-    public void ShouldReturnNullForV2()
+    public void Read_InputV2_ShouldReturnNull()
     {
         const string input = "GENDER:M";
         IV2FieldDeserializer<Gender?> deserializer = new GenderFieldDeserializer();
@@ -21,7 +21,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnNullForV3()
+    public void Read_InputV3_ShouldReturnNull()
     {
         const string input = "GENDER:M";
         IV3FieldDeserializer<Gender?> deserializer = new GenderFieldDeserializer();
@@ -31,7 +31,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueForSexOnly()
+    public void Read_SexOnlyInput_ShouldReturnValue()
     {
         const string input = "GENDER:M";
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
@@ -43,7 +43,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueForSexAndGenderIdentity()
+    public void Read_SexAndGenderIdentityInput_ShouldReturnValue()
     {
         const string input = "GENDER:F;grrrl";
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
@@ -56,7 +56,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueForGenderIdentityOnly()
+    public void Read_GenderIdentityOnlyInput_ShouldReturnValue()
     {
         const string input = "GENDER:;it's complicated";
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
@@ -68,7 +68,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnParseSexCorrectly()
+    public void Read_InputWithSex_ShouldParseSexCorrectly()
     {
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
         var input = "GENDER:O";

@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class NameFieldDeserializerTests
 {
     [Test]
-    public void Read_SimpleName_ReturnsCorrectName()
+    public void Read_SimpleName_ShouldReturnCorrectName()
     {
         var input = "N:Doe;John;;;";
         var deserializer = new NameFieldDeserializer();
@@ -21,7 +21,7 @@ public class NameFieldDeserializerTests
     }
 
     [Test]
-    public void Read_FullName_ReturnsCorrectName()
+    public void Read_FullName_ShouldReturnCorrectName()
     {
         var input = "N:Doe;John;Middle;Mr.;Esq.";
         var deserializer = new NameFieldDeserializer();

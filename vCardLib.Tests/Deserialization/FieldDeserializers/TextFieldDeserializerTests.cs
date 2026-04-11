@@ -44,7 +44,7 @@ public class TextFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldPreserveUnknownEscapes()
+    public void Read_UnknownEscapesInput_ShouldPreserveEscapes()
     {
         const string input = @"NOTE:Unknown \z escape";
         IV3FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
@@ -54,7 +54,7 @@ public class TextFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldHandleEmptyValue()
+    public void Read_EmptyValueInput_ShouldHandleEmptyValue()
     {
         const string input = "NOTE:";
         IV3FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();

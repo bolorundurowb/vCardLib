@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class BirthdayFieldSerializerTests
 {
     [Test]
-    public void Write_ValidDate_ReturnsCorrectString()
+    public void Write_ValidDate_ShouldReturnCorrectString()
     {
         var date = new DateTime(1990, 1, 1);
         var serializer = new BirthdayFieldSerializer();

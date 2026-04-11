@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class FormattedNameDeserializerTests
 {
     [Test]
-    public void ShouldReturnParsedValue()
+    public void Read_ValidInput_ShouldReturnParsedValue()
     {
         const string input = @"FN:Mr. John Q. Public\, Esq.";
         var deserializer = new FormattedNameDeserializer();

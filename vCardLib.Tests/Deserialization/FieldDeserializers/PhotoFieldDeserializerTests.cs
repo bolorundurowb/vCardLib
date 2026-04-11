@@ -20,7 +20,7 @@ public class PhotoFieldDeserializerTests
     #region V2 Tests
 
     [Test]
-    public void Read_V2_SimpleUrl_ReturnsPhoto()
+    public void Read_V2SimpleUrl_ShouldReturnPhoto()
     {
         var input = "PHOTO:http://www.abc.com/pub/photos/jqpublic.gif";
         var result = ((IV2FieldDeserializer<Photo>)_deserializer).Read(input);
@@ -32,7 +32,7 @@ public class PhotoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V2_WithEncodingAndImplicitType_ReturnsPopulatedPhoto()
+    public void Read_V2WithEncodingAndImplicitType_ShouldReturnPopulatedPhoto()
     {
         var input = "PHOTO;GIF;ENCODING=BASE64:R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
         var result = ((IV2FieldDeserializer<Photo>)_deserializer).Read(input);
@@ -43,7 +43,7 @@ public class PhotoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V2_WithExplicitTypeParam_SetsKeyAsType()
+    public void Read_V2WithExplicitTypeParam_ShouldSetKeyAsType()
     {
         var input = "PHOTO;TYPE=JPEG:http://example.com/photo.jpg";
         var result = ((IV2FieldDeserializer<Photo>)_deserializer).Read(input);
@@ -52,7 +52,7 @@ public class PhotoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V2_DataUri_ParsesDataUri()
+    public void Read_V2DataUri_ShouldParseDataUri()
     {
         var rawData = "MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA";
         var input = $"PHOTO:data:image/jpeg;base64,{rawData}";
@@ -68,7 +68,7 @@ public class PhotoFieldDeserializerTests
     #region V3 Tests
 
     [Test]
-    public void Read_V3_WithBinaryEncoding_NormalizesToBase64()
+    public void Read_V3WithBinaryEncoding_ShouldNormalizeToBase64()
     {
         var input = "PHOTO;ENCODING=b;TYPE=JPEG:MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA";
         var result = ((IV3FieldDeserializer<Photo>)_deserializer).Read(input);
@@ -79,7 +79,7 @@ public class PhotoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3_WithUriValue_ReturnsPhoto()
+    public void Read_V3WithUriValue_ShouldReturnPhoto()
     {
         var input = "PHOTO;VALUE=uri;TYPE=GIF:http://www.abc.com/pub/photos/jqpublic.gif";
         var result = ((IV3FieldDeserializer<Photo>)_deserializer).Read(input);
@@ -90,7 +90,7 @@ public class PhotoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3_DataUri_ParsesDataUri()
+    public void Read_V3DataUri_ShouldParseDataUri()
     {
         var rawData = "MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA";
         var input = $"PHOTO:data:image/jpeg;base64,{rawData}";
@@ -106,7 +106,7 @@ public class PhotoFieldDeserializerTests
     #region V4 Tests
 
     [Test]
-    public void Read_V4_StandardUri_ReturnsPhoto()
+    public void Read_V4StandardUri_ShouldReturnPhoto()
     {
         var input = "PHOTO:http://www.example.com/pub/photos/jqpublic.gif";
         var result = ((IV4FieldDeserializer<Photo>)_deserializer).Read(input);
@@ -116,7 +116,7 @@ public class PhotoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4_DataUri_ParsesMimeTypeAndEncoding()
+    public void Read_V4DataUri_ShouldParseMimeTypeAndEncoding()
     {
         var rawData = "MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA";
         var input = $"PHOTO:data:image/jpeg;base64,{rawData}";
@@ -129,7 +129,7 @@ public class PhotoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4_WithMediaTypeParameter_ReturnsPhoto()
+    public void Read_V4WithMediaTypeParameter_ShouldReturnPhoto()
     {
         var input = "PHOTO;MEDIATYPE=image/jpeg:http://example.com/photo.jpg";
         
@@ -140,7 +140,7 @@ public class PhotoFieldDeserializerTests
     }
     
     [Test]
-    public void Read_V4_DataUri_StripsPrefixCorrectly()
+    public void Read_V4DataUri_ShouldStripPrefixCorrectly()
     {
         var input = "PHOTO:data:image/png;base64,ABC12345";
         var result = ((IV4FieldDeserializer<Photo>)_deserializer).Read(input);

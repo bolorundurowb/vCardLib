@@ -15,13 +15,13 @@ public class SharedDecomposersTests
     [TestCase(AddressType.Parcel, "parcel")]
     [TestCase(AddressType.Postal, "postal")]
     [TestCase(AddressType.Work, "work")]
-    public void DecomposeAddressType_ValidInput_ReturnsExpected(AddressType input, string expected)
+    public void DecomposeAddressType_ValidInput_ShouldReturnExpected(AddressType input, string expected)
     {
         input.DecomposeAddressType().ShouldBe(expected);
     }
 
     [Test]
-    public void DecomposeAddressType_InvalidInput_ThrowsArgumentException()
+    public void DecomposeAddressType_InvalidInput_ShouldThrowArgumentException()
     {
         var input = (AddressType)999;
         Should.Throw<ArgumentException>(() => input.DecomposeAddressType());
@@ -34,13 +34,13 @@ public class SharedDecomposersTests
     [TestCase(EmailAddressType.Applelink, "applelink")]
     [TestCase(EmailAddressType.IbmMail, "ibmmail")]
     [TestCase(EmailAddressType.Preferred, "pref")]
-    public void DecomposeEmailAddressType_ValidInput_ReturnsExpected(EmailAddressType input, string expected)
+    public void DecomposeEmailAddressType_ValidInput_ShouldReturnExpected(EmailAddressType input, string expected)
     {
         input.DecomposeEmailAddressType().ShouldBe(expected);
     }
 
     [Test]
-    public void DecomposeEmailAddressType_InvalidInput_ThrowsArgumentException()
+    public void DecomposeEmailAddressType_InvalidInput_ShouldThrowArgumentException()
     {
         var input = (EmailAddressType)999;
         Should.Throw<ArgumentException>(() => input.DecomposeEmailAddressType());
@@ -51,13 +51,13 @@ public class SharedDecomposersTests
     [TestCase(BiologicalSex.Other, "O")]
     [TestCase(BiologicalSex.None, "N")]
     [TestCase(BiologicalSex.Unknown, "U")]
-    public void DecomposeBiologicalSex_ValidInput_ReturnsExpected(BiologicalSex input, string expected)
+    public void DecomposeBiologicalSex_ValidInput_ShouldReturnExpected(BiologicalSex input, string expected)
     {
         input.DecomposeBiologicalSex().ShouldBe(expected);
     }
 
     [Test]
-    public void DecomposeBiologicalSex_InvalidInput_ThrowsArgumentException()
+    public void DecomposeBiologicalSex_InvalidInput_ShouldThrowArgumentException()
     {
         var input = (BiologicalSex)999;
         Should.Throw<ArgumentException>(() => input.DecomposeBiologicalSex());
@@ -67,13 +67,13 @@ public class SharedDecomposersTests
     [TestCase(ContactKind.Group, "group")]
     [TestCase(ContactKind.Organization, "org")]
     [TestCase(ContactKind.Location, "location")]
-    public void DecomposeContactKind_ValidInput_ReturnsExpected(ContactKind input, string expected)
+    public void DecomposeContactKind_ValidInput_ShouldReturnExpected(ContactKind input, string expected)
     {
         input.DecomposeContactKind().ShouldBe(expected);
     }
 
     [Test]
-    public void DecomposeContactKind_InvalidInput_ThrowsArgumentException()
+    public void DecomposeContactKind_InvalidInput_ShouldThrowArgumentException()
     {
         var input = (ContactKind)999;
         Should.Throw<ArgumentException>(() => input.DecomposeContactKind());
@@ -95,13 +95,13 @@ public class SharedDecomposersTests
     [TestCase(TelephoneNumberType.ISDN, "isdn")]
     [TestCase(TelephoneNumberType.PCS, "pcs")]
     [TestCase(TelephoneNumberType.Preferred, "pref")]
-    public void DecomposeTelephoneNumberType_ValidInput_ReturnsExpected(TelephoneNumberType input, string expected)
+    public void DecomposeTelephoneNumberType_ValidInput_ShouldReturnExpected(TelephoneNumberType input, string expected)
     {
         input.DecomposeTelephoneNumberType().ShouldBe(expected);
     }
 
     [Test]
-    public void DecomposeTelephoneNumberType_InvalidInput_ThrowsArgumentException()
+    public void DecomposeTelephoneNumberType_InvalidInput_ShouldThrowArgumentException()
     {
         var input = (TelephoneNumberType)999;
         Should.Throw<ArgumentException>(() => input.DecomposeTelephoneNumberType());

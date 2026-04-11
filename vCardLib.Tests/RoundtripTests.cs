@@ -12,7 +12,7 @@ namespace vCardLib.Tests;
 public class RoundtripTests
 {
     [Test]
-    public void Roundtrip_V2_Minimal()
+    public void Roundtrip_V2Minimal_ShouldPreserveData()
     {
         var card = new vCard(vCardVersion.v2)
         {
@@ -36,7 +36,7 @@ public class RoundtripTests
     }
 
     [Test]
-    public void Roundtrip_V3_Complex()
+    public void Roundtrip_V3Complex_ShouldPreserveData()
     {
         var card = new vCard(vCardVersion.v3)
         {
@@ -71,7 +71,7 @@ public class RoundtripTests
     }
 
     [Test]
-    public void Roundtrip_V4_Complex()
+    public void Roundtrip_V4Complex_ShouldPreserveData()
     {
         var card = new vCard(vCardVersion.v4)
         {

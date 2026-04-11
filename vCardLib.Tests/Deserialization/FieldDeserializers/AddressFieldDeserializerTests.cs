@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class AddressFieldDeserializerTests
 {
     [Test]
-    public void Read_SimpleAddress_ReturnsCorrectAddress()
+    public void Read_SimpleAddress_ShouldReturnCorrectAddress()
     {
         var input = "ADR:;;123 Main St;Anytown;State;12345;USA";
         var deserializer = new AddressFieldDeserializer();
@@ -24,7 +24,7 @@ public class AddressFieldDeserializerTests
     }
 
     [Test]
-    public void Read_AddressWithType_ReturnsCorrectAddress()
+    public void Read_AddressWithType_ShouldReturnCorrectAddress()
     {
         var input = "ADR;TYPE=home:;;123 Main St;Anytown;State;12345;USA";
         var deserializer = new AddressFieldDeserializer();
@@ -35,7 +35,7 @@ public class AddressFieldDeserializerTests
     }
 
     [Test]
-    public void Read_IncompleteAddress_ThrowsException()
+    public void Read_IncompleteAddress_ShouldThrowException()
     {
         var input = "ADR:;;123 Main St;Anytown";
         var deserializer = new AddressFieldDeserializer();

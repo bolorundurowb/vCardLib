@@ -10,7 +10,7 @@ public class NoteFieldDeserializerTests
 {
 
     [Test]
-    public void Write_Should_SerializeV3()
+    public void Read_V3Input_ShouldParseCorrectly()
     {
         const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
         IV3FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
@@ -21,7 +21,7 @@ public class NoteFieldDeserializerTests
     }
 
     [Test]
-    public void Write_Should_SerializeV4()
+    public void Read_V4Input_ShouldParseCorrectly()
     {
         const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();

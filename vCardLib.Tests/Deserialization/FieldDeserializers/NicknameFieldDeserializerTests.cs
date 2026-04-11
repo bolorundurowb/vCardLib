@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class NicknameFieldDeserializerTests
 {
     [Test]
-    public void Read_ValidNickname_ReturnsNickname()
+    public void Read_ValidNickname_ShouldReturnNickname()
     {
         var input = "NICKNAME:Johnny";
         var deserializer = new NicknameFieldDeserializer();
@@ -19,7 +19,7 @@ public class NicknameFieldDeserializerTests
     }
 
     [Test]
-    public void ReadV2_ReturnsNull()
+    public void Read_V2Input_ShouldReturnNull()
     {
         var input = "NICKNAME:Johnny";
         var deserializer = new NicknameFieldDeserializer();

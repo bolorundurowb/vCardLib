@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class MemberFieldDeserializerTests
 {
     [Test]
-    public void V2ShouldReturnNull()
+    public void Read_V2Input_ShouldReturnNull()
     {
         const string input = "MEMBER:mailto:subscriber1@example.com";
         IV2FieldDeserializer<string?> deserializer = new MemberFieldDeserializer();
@@ -19,7 +19,7 @@ public class MemberFieldDeserializerTests
     }
 
     [Test]
-    public void V3ShouldReturnNull()
+    public void Read_V3Input_ShouldReturnNull()
     {
         const string input = "MEMBER:mailto:subscriber1@example.com";
         IV3FieldDeserializer<string?> deserializer = new MemberFieldDeserializer();
@@ -29,7 +29,7 @@ public class MemberFieldDeserializerTests
     }
 
     [Test]
-    public void V4ShouldParseValue()
+    public void Read_V4Input_ShouldParseValue()
     {
         const string input = "MEMBER:mailto:subscriber1@example.com";
         IV4FieldDeserializer<string> deserializer = new MemberFieldDeserializer();
@@ -39,7 +39,7 @@ public class MemberFieldDeserializerTests
     }
 
     [Test]
-    public void V4ShouldParseWithSpaces()
+    public void Read_V4InputWithSpaces_ShouldParseValue()
     {
         const string input = "MEMBER : mailto:subscriber1@example.com ";
         IV4FieldDeserializer<string> deserializer = new MemberFieldDeserializer();

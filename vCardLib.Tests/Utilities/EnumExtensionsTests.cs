@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Utilities;
 public class EnumExtensionsTests
 {
     [Test]
-    public void Parse_ValidInput_ReturnsCorrectEnum()
+    public void Parse_ValidInput_ShouldReturnCorrectEnum()
     {
         const string value = "Red";
         var expected = Color.Red;
@@ -19,7 +19,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Parse_ShouldParse_LowercaseInput()
+    public void Parse_LowercaseInput_ShouldParseCorrectly()
     {
         const string value = "blue";
 
@@ -29,7 +29,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Parse_ShouldParse_UppercaseInput()
+    public void Parse_UppercaseInput_ShouldParseCorrectly()
     {
         const string value = "BLUE";
 
@@ -39,7 +39,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Parse_InvalidInput_ThrowsArgumentException()
+    public void Parse_InvalidInput_ShouldThrowArgumentException()
     {
         const string value = "InvalidColor";
 
@@ -47,7 +47,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Values_OneFlagSet_ReturnsSingleValue()
+    public void Values_OneFlagSet_ShouldReturnSingleValue()
     {
         var value = Color.Red;
 
@@ -57,7 +57,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Values_MultipleFlagsSet_ReturnsMultipleValues()
+    public void Values_MultipleFlagsSet_ShouldReturnMultipleValues()
     {
         var value = Color.Red | Color.Green;
 
