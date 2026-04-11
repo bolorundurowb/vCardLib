@@ -48,8 +48,13 @@ internal sealed class EmailAddressFieldSerializer : IV2FieldSerializer<EmailAddr
                 }
                 else
                 {
-                    foreach (var emailType in emailTypes)
-                        builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, emailType.DecomposeEmailAddressType());
+                    for (var i = 0; i < emailTypes.Length; i++)
+                    {
+                        if (i > 0)
+                            builder.Append(FieldKeyConstants.MetadataDelimiter);
+
+                        builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, emailTypes[i].DecomposeEmailAddressType());
+                    }
                 }
             }
         }

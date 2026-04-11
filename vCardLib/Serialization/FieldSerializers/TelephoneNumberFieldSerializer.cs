@@ -47,10 +47,13 @@ internal sealed class TelephoneNumberFieldSerializer : IV2FieldSerializer<Teleph
                 }
                 else
                 {
-                    foreach (var telephoneNumberType in telephoneNumberTypes)
+                    for (var i = 0; i < telephoneNumberTypes.Length; i++)
                     {
+                        if (i > 0)
+                            builder.Append(FieldKeyConstants.MetadataDelimiter);
+
                         builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey,
-                            telephoneNumberType.DecomposeTelephoneNumberType());
+                            telephoneNumberTypes[i].DecomposeTelephoneNumberType());
                     }
                 }
             }

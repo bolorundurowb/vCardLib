@@ -19,6 +19,16 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
 
     public string Write(Address data)
     {
+        return WriteInternal(data, false);
+    }
+
+    string? IV4FieldSerializer<Address>.Write(Address data)
+    {
+        return WriteInternal(data, true);
+    }
+
+    private string WriteInternal(Address data, bool v4Style)
+    {
         var builder = new StringBuilder(FieldKey);
 
         if (data.Type != AddressType.None)
@@ -31,8 +41,22 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
             {
                 builder.Append(FieldKeyConstants.MetadataDelimiter);
 
-                foreach (var addressType in addressTypes)
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, addressType.DecomposeAddressType());
+                if (v4Style)
+                {
+                    builder.AppendFormat("{0}=", FieldKeyConstants.TypeKey);
+                    var typesList = addressTypes.Select(t => t.DecomposeAddressType()).ToList();
+                    builder.Append(string.Join(FieldKeyConstants.ConcatenationDelimiter.ToString(), typesList));
+                }
+                else
+                {
+                    for (var i = 0; i < addressTypes.Length; i++)
+                    {
+                        if (i > 0)
+                            builder.Append(FieldKeyConstants.MetadataDelimiter);
+
+                        builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, addressTypes[i].DecomposeAddressType());
+                    }
+                }
             }
         }
 
