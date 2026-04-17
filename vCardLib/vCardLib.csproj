@@ -5,13 +5,13 @@
         <AssemblyVersion>6.1.0</AssemblyVersion>
         <FileVersion>6.1.0</FileVersion>
         <NeutralLanguage>en-NG</NeutralLanguage>
-        <LangVersion>12</LangVersion>
+        <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2026, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
         <PackageReleaseNotes>- unified and fixed the text escape logic for Title, Note, Text and ProdId
         - fixed the incorrect parsing of Photo metadata
         - fixed the serialization logic for Birthday, Urls</PackageReleaseNotes>
-        <Authors>Bolorunduro Winner-Timothy</Authors>
+        <Authors>Winner-Timothy Bolorunduro</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>
         <Description>vCardLib is a .NET library to help developers read either single or multiple contacts from a single vcf file or StreamReader.</Description>
