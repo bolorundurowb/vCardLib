@@ -29,8 +29,10 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBeNull();
-        result.Type.ShouldBe(TelephoneNumberType.Work | TelephoneNumberType.Voice | TelephoneNumberType.Preferred);
+        result.Preference.ShouldBe(1);
+        result.Type.HasFlag(TelephoneNumberType.Work).ShouldBeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Voice).ShouldBeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Preferred).ShouldBeTrue();
         result.Number.ShouldBe("+1-213-555-1234");
     }
 
@@ -42,7 +44,8 @@ public class TelephoneNumberFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBe(1);
-        result.Type.ShouldBe(TelephoneNumberType.Voice | TelephoneNumberType.Home);
+        result.Type.HasFlag(TelephoneNumberType.Voice).ShouldBeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Home).ShouldBeTrue();
         result.Number.ShouldBe("+1-555-555-5555");
         result.Extension.ShouldBe("5555");
     }

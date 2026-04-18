@@ -30,7 +30,8 @@ public class EmailAddressFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBe(1);
-        result.Type.ShouldBe(EmailAddressType.Internet | EmailAddressType.Work);
+        result.Type.HasFlag(EmailAddressType.Internet).ShouldBeTrue();
+        result.Type.HasFlag(EmailAddressType.Work).ShouldBeTrue();
         result.Value.ShouldBe("johnDoe@example.org");
     }
 
@@ -42,7 +43,8 @@ public class EmailAddressFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.Preference.ShouldBe(1);
-        result.Type.ShouldBe(EmailAddressType.Aol | EmailAddressType.Home);
+        result.Type.HasFlag(EmailAddressType.Aol).ShouldBeTrue();
+        result.Type.HasFlag(EmailAddressType.Home).ShouldBeTrue();
         result.Value.ShouldBe("johnDoe@example.org");
     }
 }

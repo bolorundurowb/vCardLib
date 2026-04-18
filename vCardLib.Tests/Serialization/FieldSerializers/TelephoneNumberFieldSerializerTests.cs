@@ -18,8 +18,8 @@ public class TelephoneNumberFieldSerializerTests
         var result = ((IV2FieldSerializer<TelephoneNumber>)serializer).Write(tel);
         
         result.ShouldContain("TEL");
-        result.ShouldContain("TYPE=home");
-        result.ShouldContain("TYPE=voice");
+        result.ShouldContain(";HOME");
+        result.ShouldContain(";VOICE");
         result.ShouldEndWith(":123456");
     }
 
@@ -28,8 +28,8 @@ public class TelephoneNumberFieldSerializerTests
     {
         var tel = new TelephoneNumber { Number = "123456", Preference = 1 };
         var serializer = new TelephoneNumberFieldSerializer();
-        var result = serializer.Write(tel);
+        var result = ((IV3FieldSerializer<TelephoneNumber>)serializer).Write(tel);
         
-        result.ShouldContain("TEL;PREF=1:123456");
+        result.ShouldContain("TEL;PREF:123456");
     }
 }

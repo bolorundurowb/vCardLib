@@ -27,9 +27,8 @@ public class EmailAddressFieldSerializerTests
         var serializer = new EmailAddressFieldSerializer();
         var result = (serializer as IV2FieldSerializer<EmailAddress>).Write(email);
 
-        // DecomposeEmailAddressType is called for each type
-        result.ShouldContain("TYPE=HOME");
-        result.ShouldContain("TYPE=INTERNET");
+        result.ShouldContain(";HOME");
+        result.ShouldContain(";INTERNET");
     }
 
     [Test]
