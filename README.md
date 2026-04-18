@@ -1,144 +1,145 @@
-# vCardLib: A vCard (.vcf) Processing Library 📇
+# vCardLib
 
-![NuGet Version](https://img.shields.io/nuget/v/vCardLib.dll)  [![codecov](https://codecov.io/gh/bolorundurowb/vCardLib/graph/badge.svg?token=UCqAPedMyw)](https://codecov.io/gh/bolorundurowb/vCardLib) 
-[![NET Standard](https://img.shields.io/badge/netstandard-1.3-ff66b6.svg)]()  [![NET Standard](https://img.shields.io/badge/netstandard-2.0-3f76b1.svg)]()  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![NuGet Version](https://img.shields.io/nuget/v/vCardLib.dll) [![codecov](https://codecov.io/gh/bolorundurowb/vCardLib/graph/badge.svg?token=UCqAPedMyw)](https://codecov.io/gh/bolorundurowb/vCardLib)
+[![NET Standard](https://img.shields.io/badge/netstandard-1.3-ff66b6.svg)]() [![NET Standard](https://img.shields.io/badge/netstandard-2.0-3f76b1.svg)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
----
+**vCardLib** is a .NET library for reading and writing **vCard (.vcf)** contacts. It targets **.NET Standard 1.3** and **.NET Standard 2.0** and supports vCard **2.1**, **3.0**, and **4.0**.
 
-## About vCardLib 📜
+Documentation site: [bolorundurowb.github.io/vCardLib](https://bolorundurowb.github.io/vCardLib/)
 
-**vCardLib** is a powerful and flexible .NET library designed to simplify working with **vCard (.vcf)** files. Whether you're reading, writing, or manipulating contact information, **vCardLib** provides an easy-to-use API to handle vCard versions **2.1, 3.0, and 4.0** seamlessly. 🌟
+## Deprecation notice
 
-Perfect for applications dealing with contact management, address books, or any scenario where vCard files are used, **vCardLib** ensures your vCard processing is smooth and efficient. 🚀
+The **.NET Standard 1.3** target is scheduled to be removed in a future major release. Prefer **.NET Standard 2.0** or a current .NET (6+) for new projects.
 
----
+## Features
 
-## ⚠️ Deprecation Notice
+- Parse **one or many** contacts from a file path, a `Stream`, or a string (`IEnumerable<vCard>`).
+- Serialize a single `vCard` or a collection to a string, with an optional **output version override**.
+- **Line unfolding** when reading: a physical line that begins with a space or tab is merged into the previous line (RFC-style folding). For **vCard 2.1**, a line ending with `=` is also merged with the next line (quoted-printable-style continuation).
+- Rich `vCard` model: names, formatted name, phones, emails, addresses, photos, categories, dates, gender, kind, URLs, timezone, geo, custom `X-` properties, and more (see `vCardLib.Models`).
 
-**Important:** The **.NET Standard 1.3** target will be **dropped in the next major release**. If your project currently
-targets .NET Standard 1.3, please plan to migrate to .NET Standard 2.0 or a later framework version to continue
-receiving updates and support.
+## Installation
 
----
+**Package Manager**
 
-## Features ✨
-
-- **Read Multiple Contacts**: Parse multiple contacts from a single `.vcf` file, stream, or string.
-- **Easy Iteration**: Returns contact data as an `IEnumerable<vCard>` for effortless looping.
-- **Cross-Version Support**: Works with vCard versions **2.1, 3.0, and 4.0**.
-- **Serialization and Deserialization**: Easily convert between vCard objects and their string/file representations.
-
----
-
-## Installation 📦
-
-You can install **vCardLib** via NuGet using one of the following methods:
-
-#### **Package Manager**
 ```cmd
 Install-Package vCardLib.dll
 ```
 
-#### **.NET CLI**
+**.NET CLI**
+
 ```bash
 dotnet add package vCardLib.dll
 ```
 
----
+The NuGet package id is **`vCardLib.dll`**. The latest published version is shown on the badge above.
 
-## Usage 🛠️
+## Usage
 
-### Deserialization (Reading vCards)
-
-#### **From a File**
 ```csharp
-string filePath = // path to .vcf file;
-IEnumerable<vCard> contacts = vCardDeserializer.FromFile(filePath);
+using vCardLib.Deserialization;
+using vCardLib.Enums;
+using vCardLib.Models;
+using vCardLib.Serialization;
 ```
 
-#### **From a Stream**
+### Deserialization
+
+**From a file**
+
 ```csharp
-var stream = // generate stream containing serialized vCards
+IEnumerable<vCard> contacts = vCardDeserializer.FromFile(@"C:\contacts\people.vcf");
+```
+
+**From a stream**
+
+```csharp
+// Encoding is chosen from a BOM when possible; the stream must be readable and seekable
+// so the BOM probe can rewind (see FileDataHelpers.GetEncoding).
 IEnumerable<vCard> contacts = vCardDeserializer.FromStream(stream);
 ```
 
-#### **From a String**
+**From a string**
+
+`FromContent` requires, in order:
+
+1. Non-whitespace input.
+2. The text must **start** with `BEGIN:VCARD` and **end** with `END:VCARD` (exact token match; leading or trailing whitespace is not stripped). A **UTF-8 BOM** at the start will cause the begin check to fail unless you remove it first.
+3. A `VERSION` property must appear in the payload.
+
 ```csharp
-var contactDetails = @"BEGIN:VCARD
+var vcf = @"BEGIN:VCARD
 VERSION:2.1
-N:John;Doe;;;
+N:Doe;John;;;
+FN:John Doe
 END:VCARD";
-IEnumerable<vCard> contacts = vCardDeserializer.FromContent(contactDetails);
+
+IEnumerable<vCard> contacts = vCardDeserializer.FromContent(vcf);
 ```
 
----
+### Serialization
 
-### Serialization (Writing vCards)
+Only properties you set are written. Line breaks follow **`Environment.NewLine`** (platform default), not forced CRLF.
 
-#### **Serialize as String**
+**Single card**
+
 ```csharp
-var vcard = new vCard(vCardVersion.V2)
+var card = new vCard(vCardVersion.v2)
 {
     FormattedName = "John Doe"
 };
-var serialized = vCardSerializer.Serialize(vcard);
-
-/*
-Output:
-BEGIN:VCARD
-VERSION:2.1
-REV:20230719T001838Z
-FN:John Doe
-END:VCARD
-*/
+string text = vCardSerializer.Serialize(card);
+// Example (Windows): lines separated by \r\n
+// BEGIN:VCARD
+// VERSION:2.1
+// FN:John Doe
+// END:VCARD
 ```
 
-#### **Serialize with Version Override**
+**Version override** (emit another vCard version from the same in-memory card)
+
 ```csharp
-var vcard = new vCard(vCardVersion.V2)
-{
-    FormattedName = "John Doe"
-};
-var serialized = vCardSerializer.Serialize(vcard, vCardVersion.V4);
-
-/*
-Output:
-BEGIN:VCARD
-VERSION:4.0
-REV:20230719T001838Z
-FN:John Doe
-END:VCARD
-*/
+string asV4 = vCardSerializer.Serialize(card, vCardVersion.v4);
 ```
 
----
+**Multiple cards**
 
-## Branches 🌿
+```csharp
+string bundle = vCardSerializer.Serialize(new[] { card1, card2 });
+```
 
-- **`master`**: Contains the latest **breaking changes and features**. 🚧  
-  **Note:** This branch may contain unstable code and is not recommended for production use.
+## API summary
 
-- **[v4 Tag](https://github.com/bolorundurowb/vCardLib/tree/v4)**: The most recent stable release. ✅
+| Operation | Entry point |
+|-----------|----------------|
+| Parse file | `vCardDeserializer.FromFile(string path)` |
+| Parse stream | `vCardDeserializer.FromStream(Stream stream)` |
+| Parse string | `vCardDeserializer.FromContent(string vcf)` |
+| Serialize one | `vCardSerializer.Serialize(vCard card, vCardVersion? overrideVersion = null)` |
+| Serialize many | `vCardSerializer.Serialize(IEnumerable<vCard> cards, vCardVersion? overrideVersion = null)` |
 
----
+**Versions:** use enum members `vCardVersion.v2`, `vCardVersion.v3`, and `vCardVersion.v4` (not `V2` / `V4`).
 
-## Contributors 🙌
+**vCard 2.1 note:** `NICKNAME` is not written for v2 output (not part of RFC 2426); other versions emit it when `NickName` is set.
 
-A huge thank you to these amazing contributors who have helped make **vCardLib** better:
+## Contributing
 
-[@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar),  
-[@rmja](https://github.com/rmja), [@JeanCollas](https://github.com/JeanCollas)
+Repository: [github.com/bolorundurowb/vCardLib](https://github.com/bolorundurowb/vCardLib).
 
----
+- **`master`** is the default branch and may include breaking changes while work is in progress.
+- **Release tags** (for example [v4](https://github.com/bolorundurowb/vCardLib/tree/v4)) point at stable snapshots if you need a fixed reference.
 
-## License 📜
+Build and test locally:
 
-**vCardLib** is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+```bash
+dotnet build
+dotnet test
+```
 
----
+### Contributors
 
-## Get Started Today! 🎉
+Thanks to [@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar), [@rmja](https://github.com/rmja), and [@JeanCollas](https://github.com/JeanCollas).
 
-Whether you're building a contact management system, integrating vCard support into your app, or just need to process `.vcf` files, **vCardLib** is here to make your life easier. Install the package, follow the examples, and start working with vCards like a pro! ⏱️
+## License
 
-**Happy Coding!** 🚀
+MIT. See [LICENSE](LICENSE).
