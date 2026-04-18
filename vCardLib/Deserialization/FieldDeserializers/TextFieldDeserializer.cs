@@ -50,11 +50,11 @@ internal abstract class TextFieldDeserializer : IV2FieldDeserializer<string>, IV
 
     private static string ParseValue(string source, bool handleNewlines)
     {
-        if (string.IsNullOrEmpty(source) || !source.Contains("\\")) 
+        if (string.IsNullOrEmpty(source) || !source.Contains("\\"))
             return source;
 
         var sb = new StringBuilder(source.Length);
-        
+
         for (var i = 0; i < source.Length; i++)
         {
             var c = source[i];

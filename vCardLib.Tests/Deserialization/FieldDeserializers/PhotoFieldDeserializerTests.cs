@@ -39,7 +39,7 @@ public class PhotoFieldDeserializerTests
 
         result.Data.ShouldBe("R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
         result.Encoding.ShouldBe("BASE64");
-        result.Type.ShouldBe("GIF"); 
+        result.Type.ShouldBe("GIF");
     }
 
     [Test]
@@ -112,7 +112,7 @@ public class PhotoFieldDeserializerTests
         var result = ((IV4FieldDeserializer<Photo>)_deserializer).Read(input);
 
         result.Data.ShouldBe("http://www.example.com/pub/photos/jqpublic.gif");
-        result.MimeType.ShouldBeNull(); 
+        result.MimeType.ShouldBeNull();
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class PhotoFieldDeserializerTests
     {
         var rawData = "MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA";
         var input = $"PHOTO:data:image/jpeg;base64,{rawData}";
-        
+
         var result = ((IV4FieldDeserializer<Photo>)_deserializer).Read(input);
 
         result.Data.ShouldBe(rawData);
@@ -132,19 +132,19 @@ public class PhotoFieldDeserializerTests
     public void Read_V4_WithMediaTypeParameter_ReturnsPhoto()
     {
         var input = "PHOTO;MEDIATYPE=image/jpeg:http://example.com/photo.jpg";
-        
+
         var result = ((IV4FieldDeserializer<Photo>)_deserializer).Read(input);
 
         result.Data.ShouldBe("http://example.com/photo.jpg");
         result.MimeType.ShouldBe("image/jpeg");
     }
-    
+
     [Test]
     public void Read_V4_DataUri_StripsPrefixCorrectly()
     {
         var input = "PHOTO:data:image/png;base64,ABC12345";
         var result = ((IV4FieldDeserializer<Photo>)_deserializer).Read(input);
-        
+
         result.Data.ShouldBe("ABC12345");
         result.MimeType.ShouldBe("image/png");
     }

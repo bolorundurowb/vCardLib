@@ -20,7 +20,7 @@ internal static class DataSplitHelpers
         if (firstSemiColon == -1) return (Array.Empty<string>(), value);
 
         var metadata = prefix.Substring(firstSemiColon + 1);
-        
+
         // Simple split by semicolon, but avoiding splitting inside quotes
         var parameters = new List<string>();
         var currentParam = new StringBuilder();

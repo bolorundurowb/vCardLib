@@ -37,10 +37,10 @@ public class CollectionExtensionsTests
         */
         // The implementation creates a NEW list via .ToList(), so it doesn't filter "in place" on the original enumerable.
         // It returns the filtered out items.
-        
+
         var list = new List<int> { 1, 2, 3, 4, 5 };
         var result = list.FilterInPlace(x => x % 2 == 0).ToList();
-        
+
         // The original 'list' remains unchanged because .ToList() created a copy.
         list.Count.ShouldBe(5);
         result.Count.ShouldBe(2);

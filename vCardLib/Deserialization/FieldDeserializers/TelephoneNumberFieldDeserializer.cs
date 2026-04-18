@@ -16,7 +16,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
     TelephoneNumber IV2FieldDeserializer<TelephoneNumber>.Read(string input)
     {
         var (parameters, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        
+
         TelephoneNumberType? type = null;
         int? preference = null;
         bool isQuotedPrintable = false;
@@ -34,7 +34,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                 if (phoneType.HasValue)
                     type = type.HasValue ? type.Value | phoneType : phoneType;
             }
-            
+
             if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
                 isQuotedPrintable = true;
         }
@@ -70,7 +70,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
                 if (phoneType.HasValue)
                     type = type.HasValue ? type.Value | phoneType : phoneType;
             }
-            
+
             if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
                 _value = val;
             else if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
@@ -93,8 +93,8 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
         // HACK: in case the telephone number is in uri format
         if (input.StartsWithIgnoreCase("tel:"))
         {
-             // basic URI handling, could be more robust
-             input = input.Substring(4);
+            // basic URI handling, could be more robust
+            input = input.Substring(4);
         }
 
         var phoneNumberParts = input.Split(FieldKeyConstants.MetadataDelimiter);

@@ -34,7 +34,7 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
                 if (emailType.HasValue)
                     type = type.HasValue ? type.Value | emailType : emailType;
             }
-            
+
             else if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
                 isQuotedPrintable = true;
         }
@@ -68,7 +68,7 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
                 if (emailType.HasValue)
                     type = type.HasValue ? type.Value | emailType : emailType;
             }
-            
+
             if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
             {
                 if (int.TryParse(val, out var pref))

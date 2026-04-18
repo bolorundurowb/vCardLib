@@ -39,7 +39,7 @@ public class AddressFieldDeserializerTests
     {
         var input = "ADR:;;123 Main St;Anytown";
         var deserializer = new AddressFieldDeserializer();
-        
+
         Should.Throw<Exception>(() => deserializer.Read(input))
             .Message.ShouldBe("Address parts incomplete");
     }

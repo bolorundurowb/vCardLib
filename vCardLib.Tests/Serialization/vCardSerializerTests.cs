@@ -39,10 +39,10 @@ public class vCardSerializerTests
             Note = "Important contact",
             Url = new Url
             {
-                Value = "https://example.com", 
+                Value = "https://example.com",
                 Type = UrlType.Work,
-                Preference = 1, 
-                Label = "Website", 
+                Preference = 1,
+                Label = "Website",
                 Charset = "UTF-8"
             },
             Timezone = "America/New_York",
@@ -89,10 +89,10 @@ public class vCardSerializerTests
         result.ShouldContain($"VERSION:{expectedVersion}");
         result.ShouldContain("FN:John Doe");
         result.ShouldContain("N:Doe;John;Robert;Mr.;Jr.");
-        
-        if (version != vCardVersion.v2) 
+
+        if (version != vCardVersion.v2)
             result.ShouldContain("NICKNAME:Johnny");
-        
+
         result.ShouldContain("TITLE:Software Engineer");
         result.ShouldContain("ORG:Tech Corp;Development;Backend");
         result.ShouldContain("NOTE:Important contact");
@@ -101,10 +101,10 @@ public class vCardSerializerTests
         result.ShouldContain("TZ:America/New_York");
         result.ShouldContain("UID:urn:uuid:12345");
         result.ShouldContain("BDAY:19900515");
-        
-        if (version == vCardVersion.v4) 
+
+        if (version == vCardVersion.v4)
             result.ShouldContain("ANNIVERSARY:");
-        
+
         result.ShouldContain("TEL");
         result.ShouldContain("+1234567890");
         result.ShouldContain("+0987654321");

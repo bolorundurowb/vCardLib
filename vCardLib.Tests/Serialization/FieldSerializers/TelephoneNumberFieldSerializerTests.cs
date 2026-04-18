@@ -16,7 +16,7 @@ public class TelephoneNumberFieldSerializerTests
         var tel = new TelephoneNumber { Number = "123456", Type = TelephoneNumberType.Home | TelephoneNumberType.Voice };
         var serializer = new TelephoneNumberFieldSerializer();
         var result = ((IV2FieldSerializer<TelephoneNumber>)serializer).Write(tel);
-        
+
         result.ShouldContain("TEL");
         result.ShouldContain(";HOME");
         result.ShouldContain(";VOICE");
@@ -29,7 +29,7 @@ public class TelephoneNumberFieldSerializerTests
         var tel = new TelephoneNumber { Number = "123456", Preference = 1 };
         var serializer = new TelephoneNumberFieldSerializer();
         var result = ((IV3FieldSerializer<TelephoneNumber>)serializer).Write(tel);
-        
+
         result.ShouldContain("TEL;PREF:123456");
     }
 }

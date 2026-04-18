@@ -35,7 +35,7 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
         }
 
         var parameters = SerializationHelpers.FormatParameters(version, types, null, extra);
-        
+
         var value = string.Join(FieldKeyConstants.MetadataDelimiter.ToString(),
             data.PostOfficeBox, data.ApartmentOrSuiteNumber, data.StreetAddress, data.CityOrLocality,
             data.StateOrProvinceOrRegion, data.PostalOrZipCode, data.Country);
