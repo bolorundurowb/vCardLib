@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Shouldly;
+using vCardLib.Deserialization;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization;
+using vCardLib.Serialization.Utilities;
 
 namespace vCardLib.Tests.Serialization;
 
@@ -118,6 +120,36 @@ public class vCardSerializerTests
         result.ShouldContain("Friends,Work");
         result.ShouldContain("X-CUSTOM: CustomValue");
         result.ShouldContain("END:VCARD");
+    }
+
+    [Test]
+    public void Serialize_UsesCrlfLineEndings()
+    {
+        var card = new vCard(vCardVersion.v4) { FormattedName = "Jane" };
+        var result = vCardSerializer.Serialize(card);
+
+        result.ShouldStartWith("BEGIN:VCARD\r\n");
+        result.ShouldEndWith("END:VCARD\r\n");
+        result.Split(new[] { VCardSerializationFormatting.Crlf }, StringSplitOptions.None)
+            .All(line => !line.Contains('\n') && !line.Contains('\r'))
+            .ShouldBeTrue();
+    }
+
+    [Test]
+    public void Serialize_LongNote_RoundTripsWithFolding()
+    {
+        var longNote = new string('x', 120);
+        var card = new vCard(vCardVersion.v4)
+        {
+            FormattedName = "T",
+            Note = longNote
+        };
+
+        var result = vCardSerializer.Serialize(card);
+        result.ShouldContain("\r\n ");
+
+        var roundtrip = vCardDeserializer.FromContent(result).Single();
+        roundtrip.Note.ShouldBe(longNote);
     }
 
     [TestCase(vCardVersion.v2, "2.1")]

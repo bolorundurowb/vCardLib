@@ -72,6 +72,36 @@ public class vCardDeserializerTests
     }
 
     [Test]
+    public void FromContent_FoldedFnWithCrlfSpace_ParsesFormattedName()
+    {
+        var content = "BEGIN:VCARD\r\nVERSION:4.0\r\nFN:John \r\n Doe\r\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+
+        vcards.Count.ShouldBe(1);
+        vcards[0].FormattedName.ShouldBe("John Doe");
+    }
+
+    [Test]
+    public void FromContent_FoldedNoteWithCrlfTab_ParsesNote()
+    {
+        var content = "BEGIN:VCARD\r\nVERSION:4.0\r\nFN:Test\r\nNOTE:hello\r\n\tworld\r\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+
+        vcards.Count.ShouldBe(1);
+        vcards[0].Note.ShouldBe("helloworld");
+    }
+
+    [Test]
+    public void FromContent_FoldedFnWithLfOnly_ParsesFormattedName()
+    {
+        var content = "BEGIN:VCARD\nVERSION:4.0\nFN:John \n Doe\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+
+        vcards.Count.ShouldBe(1);
+        vcards[0].FormattedName.ShouldBe("John Doe");
+    }
+
+    [Test]
     public void FromFile_InvalidPath_ThrowsArgumentException()
     {
         Should.Throw<ArgumentException>(() => vCardDeserializer.FromFile(""))

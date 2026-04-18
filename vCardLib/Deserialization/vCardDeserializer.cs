@@ -73,10 +73,12 @@ public static class vCardDeserializer
         if (string.IsNullOrWhiteSpace(vcardContents))
             throw new ArgumentException("File is empty.", nameof(vcardContents));
 
-        if (!vcardContents.StartsWith(FieldKeyConstants.StartToken))
+        var trimmedForBounds = vcardContents.TrimStart();
+        if (!trimmedForBounds.StartsWith(FieldKeyConstants.StartToken))
             throw new Exception($"A vCard must begin with '{FieldKeyConstants.StartToken}'.");
 
-        if (!vcardContents.EndsWith(FieldKeyConstants.EndToken))
+        var trimmedEnd = vcardContents.TrimEnd();
+        if (!trimmedEnd.EndsWith(FieldKeyConstants.EndToken))
             throw new Exception($"A vCard must end with '{FieldKeyConstants.EndToken}'.");
 
         if (!vcardContents.Contains(FieldKeyConstants.VersionKey))
@@ -92,12 +94,13 @@ public static class vCardDeserializer
 
     private static IEnumerable<string[]> SplitContent(string vcardContent)
     {
-        using var reader = new StringReader(vcardContent);
+        var logicalLines = VCardLineUtilities.GetLogicalContentLines(vcardContent);
         var response = new List<string>();
-        string? line;
+        var idx = 0;
 
-        while ((line = reader.ReadLine()) != null)
+        while (idx < logicalLines.Count)
         {
+            var line = logicalLines[idx++];
             if (string.IsNullOrWhiteSpace(line))
                 continue;
 
@@ -113,8 +116,14 @@ public static class vCardDeserializer
             {
                 var nested = new StringBuilder(line);
 
-                while (reader.ReadLine() != null && reader.ReadLine().Trim() is { } nestedLine && !nestedLine.EqualsIgnoreCase(FieldKeyConstants.EndToken))
-                    nested.AppendLine(nestedLine);
+                while (idx < logicalLines.Count)
+                {
+                    var inner = logicalLines[idx++];
+                    if (inner.Trim().EqualsIgnoreCase(FieldKeyConstants.EndToken))
+                        break;
+
+                    nested.Append('\n').Append(inner);
+                }
 
                 response.Add(nested.ToString());
             }
