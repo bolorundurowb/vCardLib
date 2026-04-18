@@ -122,20 +122,6 @@ string bundle = vCardSerializer.Serialize(new[] { card1, card2 });
 
 **vCard 2.1 note:** `NICKNAME` is not written for v2 output (not part of RFC 2426); other versions emit it when `NickName` is set.
 
-## Contributing
-
-Repository: [github.com/bolorundurowb/vCardLib](https://github.com/bolorundurowb/vCardLib).
-
-- **`master`** is the default branch and may include breaking changes while work is in progress.
-- **Release tags** (for example [v4](https://github.com/bolorundurowb/vCardLib/tree/v4)) point at stable snapshots if you need a fixed reference.
-
-Build and test locally:
-
-```bash
-dotnet build
-dotnet test
-```
-
 ### Contributors
 
 Thanks to [@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar), [@rmja](https://github.com/rmja), and [@JeanCollas](https://github.com/JeanCollas).
