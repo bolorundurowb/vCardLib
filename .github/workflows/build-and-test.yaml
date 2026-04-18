@@ -1,40 +1,38 @@
-name: Build and Test
+name: Build, Test & Coverage
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
   pull_request:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up .NET
+      - name: Setup .NET 10 SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          dotnet-version: '10.x'
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: ./src
 
-      - name: Build vCardLib
-        run: dotnet build vCardLib/vCardLib.csproj --configuration Release --no-restore
-      
-      - name: Run Tests
-        run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+      - name: Build all projects
+        run: dotnet build --configuration Release --no-restore
+        working-directory: ./src
 
-      - name: Upload coverage reports to Codecov
+      - name: Run tests with code coverage
+        run: dotnet test --configuration Release --no-build  /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=../../coverage/coverage.cobertura.xml
+        working-directory: ./src
+
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: vCardLib.Tests/coverage.cobertura.xml
+          directory: ./coverage/
+          fail_ci_if_error: true
