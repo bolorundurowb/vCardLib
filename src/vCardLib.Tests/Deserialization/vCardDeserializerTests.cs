@@ -169,4 +169,44 @@ public class vCardDeserializerTests
         vcards[0].FormattedName.ShouldBe("One");
         vcards[1].FormattedName.ShouldBe("Two");
     }
+
+    [Test]
+    public void FromContent_LeadingUnicodeBom_Parses()
+    {
+        var content = "\uFEFFBEGIN:VCARD\nVERSION:4.0\nFN:Bom\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+        vcards[0].FormattedName.ShouldBe("Bom");
+    }
+
+    [Test]
+    public void FromContent_CrOnlyLineEndings_Parses()
+    {
+        var content = "BEGIN:VCARD\rVERSION:3.0\rFN:CrOnly\rEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+        vcards[0].FormattedName.ShouldBe("CrOnly");
+    }
+
+    [Test]
+    public void FromContent_MixedCrLfAndLf_Parses()
+    {
+        var content = "BEGIN:VCARD\r\nVERSION:3.0\nFN:Mixed\r\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+        vcards[0].FormattedName.ShouldBe("Mixed");
+    }
+
+    [Test]
+    public void FromContent_CrlfFoldedNote_Unfolds()
+    {
+        var content = "BEGIN:VCARD\r\nVERSION:4.0\r\nNOTE:line1\r\n continuation\r\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+        vcards[0].Note.ShouldBe("line1continuation");
+    }
+
+    [Test]
+    public void FromContent_TabContinuation_Unfolds()
+    {
+        var content = "BEGIN:VCARD\nVERSION:2.1\nNOTE:hello\n\tworld\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+        vcards[0].Note.ShouldBe("helloworld");
+    }
 }
