@@ -8,9 +8,7 @@
         <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2026, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
-        <PackageReleaseNotes>- unified and fixed the text escape logic for Title, Note, Text and ProdId
-        - fixed the incorrect parsing of Photo metadata
-        - fixed the serialization logic for Birthday, Urls</PackageReleaseNotes>
+        <PackageReleaseNotes>- improve RFC compatibility  when serialising and deserialising photo, address and address types</PackageReleaseNotes>
         <Authors>Winner-Timothy Bolorunduro</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>
@@ -21,7 +19,7 @@
         <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
         <Title>vCardLib</Title>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>vcard, vcardlib</PackageTags>
+        <PackageTags>vcard vcf contacts contact-management address-book dotnet csharp netstandard library parsing serializer deserialization serialization rfc6350 rfc2426 vcard21 vcard30 vcard40 open-source</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
@@ -35,6 +33,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>
