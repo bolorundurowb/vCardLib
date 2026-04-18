@@ -1,11 +1,9 @@
 # vCardLib
 
-![NuGet Version](https://img.shields.io/nuget/v/vCardLib.dll) [![codecov](https://codecov.io/gh/bolorundurowb/vCardLib/graph/badge.svg?token=UCqAPedMyw)](https://codecov.io/gh/bolorundurowb/vCardLib)
+[![Build, Test & Coverage](https://github.com/bolorundurowb/vCardLib/actions/workflows/build-and-test.yaml/badge.svg)](https://github.com/bolorundurowb/vCardLib/actions/workflows/build-and-test.yaml) [![codecov](https://codecov.io/gh/bolorundurowb/vCardLib/graph/badge.svg?token=UCqAPedMyw)](https://codecov.io/gh/bolorundurowb/vCardLib) ![NuGet Version](https://img.shields.io/nuget/v/vCardLib.dll) 
 [![NET Standard](https://img.shields.io/badge/netstandard-1.3-ff66b6.svg)]() [![NET Standard](https://img.shields.io/badge/netstandard-2.0-3f76b1.svg)]() [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **vCardLib** is a .NET library for reading and writing **vCard (.vcf)** contacts. It targets **.NET Standard 1.3** and **.NET Standard 2.0** and supports vCard **2.1**, **3.0**, and **4.0**.
-
-Documentation site: [bolorundurowb.github.io/vCardLib](https://bolorundurowb.github.io/vCardLib/)
 
 ## Deprecation notice
 

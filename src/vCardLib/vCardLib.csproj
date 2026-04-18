@@ -14,7 +14,7 @@
         <PackageId>vCardLib.dll</PackageId>
         <Description>vCardLib is a .NET library to help developers read either single or multiple contacts from a single vcf file or StreamReader.</Description>
         <PackageIconUrl>https://res.cloudinary.com/dg2dgzbt4/image/upload/v1767354061/external_assets/open_source/icons/vCardLib.png</PackageIconUrl>
-        <PackageProjectUrl>https://bolorundurowb.github.io/vCardLib/</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/bolorundurowb/vCardLib</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/bolorundurowb/vCardLib/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
         <Title>vCardLib</Title>
