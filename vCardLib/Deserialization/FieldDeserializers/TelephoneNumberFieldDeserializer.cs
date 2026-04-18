@@ -15,78 +15,75 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
 
     TelephoneNumber IV2FieldDeserializer<TelephoneNumber>.Read(string input)
     {
-        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        var (telephoneNumber, extension) = SplitOutExtension(value);
-
-        if (metadata.Length == 0)
-            return new TelephoneNumber(telephoneNumber, extension: extension);
-
+        var (parameters, value) = DataSplitHelpers.SplitLine(FieldKey, input);
+        
         TelephoneNumberType? type = null;
         int? preference = null;
+        bool isQuotedPrintable = false;
 
-        foreach (var datum in metadata)
+        foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            if (val.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
             {
-                if (string.IsNullOrWhiteSpace(data))
-                    continue;
-
-                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                foreach (var individualType in typeGroup)
-                {
-                    var phoneType = individualType.ParseTelephoneNumberType();
-
-                    if (phoneType.HasValue)
-                        type = type.HasValue ? type.Value | phoneType : phoneType;
-                }
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 preference = 1;
+            }
+
+            if (key == null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            {
+                var phoneType = val.ParseTelephoneNumberType();
+                if (phoneType.HasValue)
+                    type = type.HasValue ? type.Value | phoneType : phoneType;
+            }
+            
+            if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
+                isQuotedPrintable = true;
         }
+
+        if (isQuotedPrintable) value = SharedParsers.DecodeQuotedPrintable(value);
+        var (telephoneNumber, extension) = SplitOutExtension(value);
 
         return new TelephoneNumber(telephoneNumber, type, extension, preference);
     }
 
     public TelephoneNumber Read(string input)
     {
-        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-        var (telephoneNumber, extension) = SplitOutExtension(value);
-
-        if (metadata.Length == 0)
-            return new TelephoneNumber(telephoneNumber, extension: extension);
+        var (parameters, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
         TelephoneNumberType? type = null;
         int? preference = null;
         string? _value = null;
+        bool isQuotedPrintable = false;
 
-        foreach (var datum in metadata)
+        foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            if (val.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
             {
-                if (string.IsNullOrWhiteSpace(data))
-                    continue;
-
-                var typeGroup = data!.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                foreach (var individualType in typeGroup)
+                if (key == null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
                 {
-                    var phoneType = individualType.ParseTelephoneNumberType();
-
-                    if (phoneType.HasValue)
-                        type = type.HasValue ? type.Value | phoneType : phoneType;
+                    preference = 1;
                 }
             }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
-                _value = data;
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
-                if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
+
+            if (key == null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            {
+                var phoneType = val.ParseTelephoneNumberType();
+                if (phoneType.HasValue)
+                    type = type.HasValue ? type.Value | phoneType : phoneType;
+            }
+            
+            if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.ValueKey))
+                _value = val;
+            else if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
+            {
+                if (int.TryParse(val, out var pref))
                     preference = pref;
+            }
+            else if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
+                isQuotedPrintable = true;
         }
+
+        if (isQuotedPrintable) value = SharedParsers.DecodeQuotedPrintable(value);
+        var (telephoneNumber, extension) = SplitOutExtension(value);
 
         return new TelephoneNumber(telephoneNumber, type, extension, preference, _value);
     }
@@ -94,9 +91,11 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
     private (string, string?) SplitOutExtension(string input)
     {
         // HACK: in case the telephone number is in uri format
-        input = input.ToUpperInvariant()
-            .Replace(FieldKey, string.Empty)
-            .TrimStart(FieldKeyConstants.SectionDelimiter);
+        if (input.StartsWithIgnoreCase("tel:"))
+        {
+             // basic URI handling, could be more robust
+             input = input.Substring(4);
+        }
 
         var phoneNumberParts = input.Split(FieldKeyConstants.MetadataDelimiter);
 

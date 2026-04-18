@@ -2,37 +2,55 @@ using System;
 using System.Text;
 using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
+using vCardLib.Deserialization.Utilities;
+using vCardLib.Extensions;
 
 namespace vCardLib.Deserialization.FieldDeserializers;
 
 internal abstract class TextFieldDeserializer : IV2FieldDeserializer<string>, IV3FieldDeserializer<string>, IV4FieldDeserializer<string>
 {
-    string IV4FieldDeserializer<string>.Read(string input) => ParseValue(input, handleNewlines: true);
-
-    string IV3FieldDeserializer<string>.Read(string input) => ParseValue(input, handleNewlines: true);
-
     string IV2FieldDeserializer<string>.Read(string input)
     {
-        // STRICT COMPLIANCE NOTE:
-        // vCard 2.1 does NOT officially support backslash escaping for text (like \, or \n).
-        // It uses Quoted-Printable for newlines.
-        // However, many implementations incorrectly use v3-style escaping in v2.
-        // If you want strict v2, simply return the substring. 
-        // If you want "pragmatic" (tolerant) v2, use the parser below but maybe disable newlines.
-        
-        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        // Usually 2.1 is just the raw value (or decoded from Quoted-Printable elsewhere)
-        return input.Substring(separatorIndex + 1).Trim(); 
+        var (parameters, value) = DataSplitHelpers.SplitLine("DUMMY", input);
+        bool isQuotedPrintable = false;
+
+        foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
+        {
+            if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
+            {
+                isQuotedPrintable = true;
+            }
+        }
+
+        if (isQuotedPrintable) value = SharedParsers.DecodeQuotedPrintable(value);
+
+        return value;
     }
 
-    private static string ParseValue(string input, bool handleNewlines)
-    {
-        var separatorIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        if (separatorIndex < 0) 
-            return string.Empty;
+    string IV3FieldDeserializer<string>.Read(string input) => Read(input);
+    string IV4FieldDeserializer<string>.Read(string input) => Read(input);
 
-        var source = input.Substring(separatorIndex + 1).Trim();
-        if (string.IsNullOrEmpty(source)) 
+    private string Read(string input)
+    {
+        var (parameters, value) = DataSplitHelpers.SplitLine("DUMMY", input);
+        bool isQuotedPrintable = false;
+
+        foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
+        {
+            if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
+            {
+                isQuotedPrintable = true;
+            }
+        }
+
+        if (isQuotedPrintable) value = SharedParsers.DecodeQuotedPrintable(value);
+
+        return ParseValue(value, handleNewlines: true);
+    }
+
+    private static string ParseValue(string source, bool handleNewlines)
+    {
+        if (string.IsNullOrEmpty(source) || !source.Contains("\\")) 
             return source;
 
         var sb = new StringBuilder(source.Length);

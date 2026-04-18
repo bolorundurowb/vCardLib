@@ -15,59 +15,70 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
 
     public EmailAddress Read(string input)
     {
-        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new EmailAddress(value);
+        var (parameters, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
         EmailAddressType? type = null;
         int? preference = null;
+        bool isQuotedPrintable = false;
 
-        foreach (var datum in metadata)
+        foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
+            if (val.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
             {
-                var emailTypes = data.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                type = emailTypes
-                    .Select(parsedType => parsedType.ParseEmailAddressType())
-                    .Aggregate(type, (current, emailType) => current.HasValue ? current.Value | emailType : emailType);
-            }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
                 preference = 1;
+            }
+
+            if (key == null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            {
+                var emailType = val.ParseEmailAddressType();
+                if (emailType.HasValue)
+                    type = type.HasValue ? type.Value | emailType : emailType;
+            }
+            
+            else if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
+                isQuotedPrintable = true;
         }
+
+        if (isQuotedPrintable) value = SharedParsers.DecodeQuotedPrintable(value);
 
         return new EmailAddress(value, type, preference);
     }
 
     EmailAddress IV4FieldDeserializer<EmailAddress>.Read(string input)
     {
-        var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
-
-        if (metadata.Length == 0)
-            return new EmailAddress(value);
+        var (parameters, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
         EmailAddressType? type = null;
         int? preference = null;
+        bool isQuotedPrintable = false;
 
-        foreach (var datum in metadata)
+        foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {
-            var (key, data) = DataSplitHelpers.SplitDatum(datum, '=');
-
-            if (key.EqualsIgnoreCase(FieldKeyConstants.TypeKey) && data != null)
+            if (val.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
             {
-                var emailTypes = data.Split(FieldKeyConstants.ConcatenationDelimiter);
-
-                type = emailTypes
-                    .Select(parsedType => parsedType.ParseEmailAddressType())
-                    .Aggregate(type, (current, emailType) => current.HasValue ? current.Value | emailType : emailType);
+                if (key == null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+                {
+                    preference = 1;
+                }
             }
-            else if (key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
-                if (!string.IsNullOrWhiteSpace(data) && int.TryParse(data, out var pref))
+
+            if (key == null || key.EqualsIgnoreCase(FieldKeyConstants.TypeKey))
+            {
+                var emailType = val.ParseEmailAddressType();
+                if (emailType.HasValue)
+                    type = type.HasValue ? type.Value | emailType : emailType;
+            }
+            
+            if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.PreferenceKey))
+            {
+                if (int.TryParse(val, out var pref))
                     preference = pref;
+            }
+            else if (key != null && key.EqualsIgnoreCase(FieldKeyConstants.EncodingKey) && val.EqualsIgnoreCase("QUOTED-PRINTABLE"))
+                isQuotedPrintable = true;
         }
+
+        if (isQuotedPrintable) value = SharedParsers.DecodeQuotedPrintable(value);
 
         return new EmailAddress(value, type, preference);
     }
