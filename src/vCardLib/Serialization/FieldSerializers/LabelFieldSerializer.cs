@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Models;
@@ -20,18 +18,10 @@ internal sealed class LabelFieldSerializer : IV2FieldSerializer<Label>, IV3Field
 
         if (data.Type != AddressType.None)
         {
-            var addressTypes = Enum.GetValues(data.Type.GetType())
-                .Cast<AddressType>()
-                .Where(x => data.Type.HasFlag(x))
-                .ToArray();
-
-            if (addressTypes.Any())
+            foreach (var typeToken in data.Type.DecomposeAddressTypes())
             {
-                foreach (var addressType in addressTypes)
-                {
-                    builder.Append(FieldKeyConstants.MetadataDelimiter);
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, addressType.DecomposeAddressType());
-                }
+                builder.Append(FieldKeyConstants.MetadataDelimiter);
+                builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, typeToken);
             }
         }
 

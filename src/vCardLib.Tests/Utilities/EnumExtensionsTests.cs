@@ -47,6 +47,18 @@ public class EnumExtensionsTests
     }
 
     [Test]
+    public void Parse_NullInput_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => EnumExtensions.Parse<Color>(null!));
+    }
+
+    [Test]
+    public void Parse_EmptyInput_ThrowsArgumentNullException()
+    {
+        Assert.Throws<ArgumentNullException>(() => EnumExtensions.Parse<Color>(string.Empty));
+    }
+
+    [Test]
     public void Values_OneFlagSet_ReturnsSingleValue()
     {
         var value = Color.Red;
