@@ -29,7 +29,9 @@ internal static class DataSplitHelpers
         var inQuotes = false;
         foreach (var c in metadata)
         {
-            if (c == '"') inQuotes = !inQuotes;
+            if (c == '"') 
+                inQuotes = !inQuotes;
+
             if (c == FieldKeyConstants.MetadataDelimiter && !inQuotes)
             {
                 parameters.Add(currentParam.ToString());
