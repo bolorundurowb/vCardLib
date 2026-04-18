@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using vCardLib.Constants;
 using vCardLib.Enums;
@@ -83,4 +84,32 @@ internal static class SharedParsers
         EmailTypeMap.TryGetValue(type, out var result) ? result : null;
 
     public static TelephoneNumberType? ParseTelephoneNumberType(this string type) => TelephoneNumberTypeMap.TryGetValue(type, out var result) ? result : null;
+
+    public static string DecodeQuotedPrintable(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return input;
+
+        var bytes = new List<byte>();
+        for (int i = 0; i < input.Length; i++)
+        {
+            if (input[i] == '=' && i + 2 < input.Length)
+            {
+                var hex = input.Substring(i + 1, 2);
+                if (byte.TryParse(hex, NumberStyles.HexNumber, null, out var b))
+                {
+                    bytes.Add(b);
+                    i += 2;
+                }
+                else
+                {
+                    bytes.Add((byte)input[i]);
+                }
+            }
+            else
+            {
+                bytes.Add((byte)input[i]);
+            }
+        }
+        return System.Text.Encoding.UTF8.GetString(bytes.ToArray());
+    }
 }

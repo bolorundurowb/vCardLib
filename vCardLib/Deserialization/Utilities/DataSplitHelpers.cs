@@ -1,26 +1,74 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using vCardLib.Constants;
 
 namespace vCardLib.Deserialization.Utilities;
 
 internal static class DataSplitHelpers
 {
-    public static (string[], string) SplitLine(string fieldKey, string input)
+    public static (string[] Parameters, string Value) SplitLine(string fieldKey, string input)
     {
+        input = input.Trim();
         var colonIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        var semiColonIndex = input.IndexOf(FieldKeyConstants.MetadataDelimiter);
+        if (colonIndex == -1) return (Array.Empty<string>(), input);
 
-        // if there is no metadata, the first separator should be a colon
-        if (semiColonIndex == -1 || semiColonIndex > colonIndex)
+        var prefix = input.Substring(0, colonIndex);
+        var value = input.Substring(colonIndex + 1);
+
+        var firstSemiColon = prefix.IndexOf(FieldKeyConstants.MetadataDelimiter);
+        if (firstSemiColon == -1) return (Array.Empty<string>(), value);
+
+        var metadata = prefix.Substring(firstSemiColon + 1);
+        
+        // Simple split by semicolon, but avoiding splitting inside quotes
+        var parameters = new List<string>();
+        var currentParam = new StringBuilder();
+        bool inQuotes = false;
+        foreach (var c in metadata)
         {
-            var value = input.Substring(colonIndex + 1);
-            return (Array.Empty<string>(), value);
+            if (c == '"') inQuotes = !inQuotes;
+            if (c == FieldKeyConstants.MetadataDelimiter && !inQuotes)
+            {
+                parameters.Add(currentParam.ToString());
+                currentParam.Clear();
+            }
+            else
+            {
+                currentParam.Append(c);
+            }
         }
+        parameters.Add(currentParam.ToString());
 
-        var metadata = input.Substring(fieldKey.Length + 1, colonIndex - fieldKey.Length - 1);
-        var remainder = input.Substring(colonIndex + 1);
+        return (parameters.ToArray(), value);
+    }
 
-        return (metadata.Split(FieldKeyConstants.MetadataDelimiter), remainder);
+    public static IEnumerable<(string? Key, string Value)> ParseParameters(string[] parameters)
+    {
+        foreach (var param in parameters)
+        {
+            var (key, value) = ExtractKeyValue(param, '=');
+            if (key == null)
+            {
+                yield return (null, value.Trim('"'));
+            }
+            else
+            {
+                // RFC 6350: TYPE=home,work -> should be treated as multiple type values
+                if (key.Equals(FieldKeyConstants.TypeKey, StringComparison.OrdinalIgnoreCase))
+                {
+                    var values = value.Trim('"').Split(FieldKeyConstants.ConcatenationDelimiter);
+                    foreach (var v in values)
+                    {
+                        yield return (FieldKeyConstants.TypeKey, v);
+                    }
+                }
+                else
+                {
+                    yield return (key, value.Trim('"'));
+                }
+            }
+        }
     }
 
     public static (string, string?) SplitDatum(string datum, char metadataSeparator)
