@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class OrganizationFieldDeserializerTests
 {
     [Test]
-    public void ShouldParseSimpleOrganization()
+    public void Read_SimpleOrganization_ReturnsCorrectValue()
     {
         const string input = "ORG:ABC, Inc.";
         IV2FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
@@ -23,7 +23,7 @@ public class OrganizationFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseOrganizationWithUnits()
+    public void Read_OrganizationWithUnits_ReturnsCorrectValue()
     {
         const string input = "ORG:ABC, Inc.;North American Division;Marketing";
         IV3FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
@@ -36,7 +36,7 @@ public class OrganizationFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldUnescapeOrganizationName()
+    public void Read_EscapedOrganizationName_ReturnsUnescapedValue()
     {
         const string input = @"ORG:ABC\, Inc.;North American Division";
         IV4FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
@@ -48,7 +48,7 @@ public class OrganizationFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldHandleEmptyInput()
+    public void Read_EmptyInput_ReturnsEmptyOrganization()
     {
         const string input = "ORG:";
         IV4FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();

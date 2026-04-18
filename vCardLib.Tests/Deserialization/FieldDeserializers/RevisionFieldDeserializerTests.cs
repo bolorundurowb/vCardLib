@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class RevisionFieldDeserializerTests
 {
     [Test]
-    public void ShouldParseRevisionV2()
+    public void Read_V2Version_ReturnsCorrectValue()
     {
         const string input = "REV:19951031T222710Z";
         IV2FieldDeserializer<DateTime?> deserializer = new RevisionFieldDeserializer();
@@ -23,7 +23,7 @@ public class RevisionFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseRevisionV3()
+    public void Read_V3Version_ReturnsCorrectValue()
     {
         const string input = "REV:19951031T222710Z";
         IV3FieldDeserializer<DateTime?> deserializer = new RevisionFieldDeserializer();
@@ -34,7 +34,7 @@ public class RevisionFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseRevisionV4()
+    public void Read_V4Version_ReturnsCorrectValue()
     {
         const string input = "REV:19951031T222710Z";
         IV4FieldDeserializer<DateTime?> deserializer = new RevisionFieldDeserializer();

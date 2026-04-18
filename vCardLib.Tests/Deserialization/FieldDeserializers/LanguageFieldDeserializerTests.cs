@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class LanguageFieldDeserializerTests
 {
     [Test]
-    public void Read_V4_ValidLanguage_ReturnsLanguage()
+    public void Read_V4ValidLanguage_ReturnsCorrectValue()
     {
         var input = "LANG:en-US";
         var deserializer = new LanguageFieldDeserializer();
@@ -20,7 +20,7 @@ public class LanguageFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4_WithMetadata_ReturnsLanguageWithMetadata()
+    public void Read_V4WithMetadata_ReturnsCorrectValue()
     {
         var input = "LANG;TYPE=home;PREF=1:en-US";
         var deserializer = new LanguageFieldDeserializer();
@@ -33,7 +33,7 @@ public class LanguageFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V2_ReturnsNull()
+    public void Read_V2Version_ReturnsNull()
     {
         var input = "LANG:en-US";
         var deserializer = new LanguageFieldDeserializer();

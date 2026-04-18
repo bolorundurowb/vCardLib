@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class CategoriesFieldDeserializerTests
 {
     [Test]
-    public void ShouldReturnAnEmptyListWithUnexpectedInput()
+    public void Read_UnexpectedInput_ReturnsEmptyList()
     {
         var input = string.Empty;
         var deserializer = new CategoriesFieldDeserializer();
@@ -18,7 +18,7 @@ public class CategoriesFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnPopulatedListWithSingleInput()
+    public void Read_SingleInput_ReturnsPopulatedList()
     {
         const string input = "CATEGORIES:TRAVEL AGENT";
         var deserializer = new CategoriesFieldDeserializer();
@@ -30,7 +30,7 @@ public class CategoriesFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnPopulatedListWithMultipleInput()
+    public void Read_MultipleInput_ReturnsPopulatedList()
     {
         const string input = "CATEGORIES:INTERNET,IETF,INDUSTRY,INFORMATION TECHNOLOGY";
         var deserializer = new CategoriesFieldDeserializer();

@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class PhotoFieldSerializerTests
 {
     [Test]
-    public void Write_V2_SimplePhoto_ReturnsCorrectString()
+    public void Write_V2SimplePhoto_ReturnsCorrectString()
     {
         var photo = new Photo("http://example.com/photo.jpg");
         var serializer = new PhotoFieldSerializer();
@@ -20,7 +20,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2_WithEncoding_ReturnsCorrectString()
+    public void Write_V2WithEncoding_ReturnsCorrectString()
     {
         var photo = new Photo("SGVsbG8=", "BASE64");
         var serializer = new PhotoFieldSerializer();
@@ -30,7 +30,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3_WithEncoding_ReturnsCorrectString()
+    public void Write_V3WithEncoding_ReturnsCorrectString()
     {
         // For V3, the code uses data.Value instead of data.Data for the value part.
         var photo = new Photo("SGVsbG8=", "BASE64", null, null, "SGVsbG8=");
@@ -41,7 +41,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_WithMimeType_ReturnsCorrectString()
+    public void Write_V4WithMimeType_ReturnsCorrectString()
     {
         var photo = new Photo("SGVsbG8=", "base64", null, "image/jpeg", "SGVsbG8=");
         var serializer = new PhotoFieldSerializer();

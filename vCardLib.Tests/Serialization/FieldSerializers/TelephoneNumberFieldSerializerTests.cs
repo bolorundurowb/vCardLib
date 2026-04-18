@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class TelephoneNumberFieldSerializerTests
 {
     [Test]
-    public void WriteV2_WithMultipleTypes_ReturnsCorrectString()
+    public void Write_V2MultipleTypes_ReturnsCorrectString()
     {
         var tel = new TelephoneNumber { Number = "123456", Type = TelephoneNumberType.Home | TelephoneNumberType.Voice };
         var serializer = new TelephoneNumberFieldSerializer();
@@ -24,7 +24,7 @@ public class TelephoneNumberFieldSerializerTests
     }
 
     [Test]
-    public void WriteV3_WithPreference_ReturnsCorrectString()
+    public void Write_V3WithPreference_ReturnsCorrectString()
     {
         var tel = new TelephoneNumber { Number = "123456", Preference = 1 };
         var serializer = new TelephoneNumberFieldSerializer();

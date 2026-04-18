@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class EmailAddressFieldSerializerTests
 {
     [Test]
-    public void Write_V2_SimpleEmail_ReturnsCorrectString()
+    public void Write_V2SimpleEmail_ReturnsCorrectString()
     {
         var email = new EmailAddress("john@example.com");
         var serializer = new EmailAddressFieldSerializer();
@@ -21,7 +21,7 @@ public class EmailAddressFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2_WithTypes_ReturnsCorrectString()
+    public void Write_V2WithTypes_ReturnsCorrectString()
     {
         var email = new EmailAddress("john@example.com", EmailAddressType.Home | EmailAddressType.Internet);
         var serializer = new EmailAddressFieldSerializer();
@@ -32,7 +32,7 @@ public class EmailAddressFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_WithPreference_ReturnsCorrectString()
+    public void Write_V4WithPreference_ReturnsCorrectString()
     {
         var email = new EmailAddress("john@example.com", EmailAddressType.Work, 2);
         var serializer = new EmailAddressFieldSerializer();

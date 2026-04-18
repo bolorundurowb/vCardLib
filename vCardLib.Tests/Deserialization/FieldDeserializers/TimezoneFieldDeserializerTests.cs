@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class TimezoneFieldDeserializerTests
 {
     [Test]
-    public void ShouldParseTimezoneV2()
+    public void Read_V2Version_ReturnsCorrectValue()
     {
         const string input = "TZ:-05:00";
         IV2FieldDeserializer<string> deserializer = new TimezoneFieldDeserializer();
@@ -19,7 +19,7 @@ public class TimezoneFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseTimezoneV3()
+    public void Read_V3Version_ReturnsCorrectValue()
     {
         const string input = "TZ:-05:00";
         IV3FieldDeserializer<string> deserializer = new TimezoneFieldDeserializer();
@@ -29,7 +29,7 @@ public class TimezoneFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseTimezoneV4()
+    public void Read_V4Version_ReturnsCorrectValue()
     {
         const string input = "TZ:Raleigh/North America";
         IV4FieldDeserializer<string> deserializer = new TimezoneFieldDeserializer();

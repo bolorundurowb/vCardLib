@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class MailerFieldDeserializerTests
 {
     [Test]
-    public void ShouldReturnNullForV4()
+    public void Read_V4Version_ReturnsNull()
     {
         const string input = "MAILER:PigeonMail 2.1";
         IV4FieldDeserializer<string?> deserializer = new MailerFieldDeserializer();
@@ -19,7 +19,7 @@ public class MailerFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldReturnValueForV2OrV3()
+    public void Read_V2OrV3Version_ReturnsCorrectValue()
     {
         const string input = "MAILER:PigeonMail 2.1";
         var deserializer = new MailerFieldDeserializer();

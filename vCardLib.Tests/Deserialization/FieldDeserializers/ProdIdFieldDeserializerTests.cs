@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class ProdIdFieldDeserializerTests
 {
     [Test]
-    public void Write_Should_SerializeV2()
+    public void Read_V2Version_ReturnsCorrectValue()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
         IV2FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
@@ -19,7 +19,7 @@ public class ProdIdFieldDeserializerTests
     }
 
     [Test]
-    public void Write_Should_SerializeV3()
+    public void Read_V3Version_ReturnsCorrectValue()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
         IV3FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
@@ -30,7 +30,7 @@ public class ProdIdFieldDeserializerTests
     }
 
     [Test]
-    public void Write_Should_SerializeV4()
+    public void Read_V4Version_ReturnsCorrectValue()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
         IV4FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();

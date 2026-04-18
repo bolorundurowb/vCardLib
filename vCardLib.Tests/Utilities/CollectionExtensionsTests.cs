@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Utilities;
 public class CollectionExtensionsTests
 {
     [Test]
-    public void FilterInPlace_ShouldReturnItemsMatchingCondition()
+    public void FilterInPlace_ValidInput_ReturnsItemsMatchingCondition()
     {
         var list = new List<int> { 1, 2, 3, 4, 5 };
         var result = list.FilterInPlace(x => x % 2 == 0).ToList();
@@ -21,7 +21,7 @@ public class CollectionExtensionsTests
     }
 
     [Test]
-    public void FilterInPlace_ShouldRemoveItemsMatchingConditionFromOriginalCollection()
+    public void FilterInPlace_ListInput_DoesNotModifyOriginalCollection()
     {
         // Note: FilterInPlace in the current implementation does NOT actually modify the input IEnumerable
         // unless it's a List<T> and it's casted back, but the implementation does .ToList() first.

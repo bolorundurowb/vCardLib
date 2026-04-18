@@ -19,7 +19,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Parse_ShouldParse_LowercaseInput()
+    public void Parse_LowercaseInput_ReturnsCorrectEnum()
     {
         const string value = "blue";
 
@@ -29,7 +29,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Parse_ShouldParse_UppercaseInput()
+    public void Parse_UppercaseInput_ReturnsCorrectEnum()
     {
         const string value = "BLUE";
 

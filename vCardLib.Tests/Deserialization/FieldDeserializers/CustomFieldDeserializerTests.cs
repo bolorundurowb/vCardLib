@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class CustomFieldDeserializerTests
 {
     [Test]
-    public void ShouldParseCustomField()
+    public void Read_SimpleCustomField_ReturnsCorrectValue()
     {
         const string input = "X-CUSTOM:Value";
         var deserializer = new CustomFieldDeserializer();
@@ -21,7 +21,7 @@ public class CustomFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseCustomFieldWithSpaces()
+    public void Read_CustomFieldWithSpaces_ReturnsCorrectValue()
     {
         const string input = "X-CUSTOM : Value ";
         var deserializer = new CustomFieldDeserializer();
@@ -32,7 +32,7 @@ public class CustomFieldDeserializerTests
     }
 
     [Test]
-    public void ShouldParseCustomFieldWithMultipleColons()
+    public void Read_CustomFieldWithMultipleColons_ReturnsCorrectValue()
     {
         const string input = "X-CUSTOM:Value:With:Colons";
         var deserializer = new CustomFieldDeserializer();
