@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <PackageVersion>6.2.0-beta.0</PackageVersion>
+        <PackageVersion>6.2.0-beta.1</PackageVersion>
         <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
         <AssemblyVersion>6.2.0</AssemblyVersion>
         <FileVersion>6.2.0</FileVersion>
