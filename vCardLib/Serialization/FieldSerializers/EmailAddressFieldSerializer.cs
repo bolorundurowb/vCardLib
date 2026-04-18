@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using vCardLib.Constants;
+﻿using vCardLib.Constants;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization.Interfaces;
@@ -14,67 +11,26 @@ internal sealed class EmailAddressFieldSerializer : IV2FieldSerializer<EmailAddr
 {
     public string FieldKey => "EMAIL";
 
-    public string? Write(EmailAddress data)
+    string? IV2FieldSerializer<EmailAddress>.Write(EmailAddress data)
     {
-        var builder = new StringBuilder(FieldKey);
-
-        if (data.Type != EmailAddressType.None)
-        {
-            var emailTypes = Enum.GetValues(typeof(EmailAddressType))
-                .Cast<EmailAddressType>()
-                .Where(x => data.Type.HasFlag(x) && x != EmailAddressType.None)
-                .ToArray();
-
-            if (emailTypes.Any())
-            {
-                builder.Append(FieldKeyConstants.MetadataDelimiter);
-
-                foreach (var emailType in emailTypes)
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, emailType.DecomposeEmailAddressType());
-            }
-        }
-
-        if (data.Preference.HasValue)
-        {
-            builder.Append(FieldKeyConstants.MetadataDelimiter);
-            builder.Append(FieldKeyConstants.PreferenceKey);
-        }
-
-        builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Value);
-
-        return builder.ToString();
+        var types = data.Type.DecomposeEmailAddressTypes();
+        var parameters = SerializationHelpers.FormatParameters(vCardVersion.v2, types, data.Preference);
+        return $"{FieldKey}{parameters}{FieldKeyConstants.SectionDelimiter}{data.Value}";
     }
+
+    string? IV3FieldSerializer<EmailAddress>.Write(EmailAddress data)
+    {
+        var types = data.Type.DecomposeEmailAddressTypes();
+        var parameters = SerializationHelpers.FormatParameters(vCardVersion.v3, types, data.Preference);
+        return $"{FieldKey}{parameters}{FieldKeyConstants.SectionDelimiter}{data.Value}";
+    }
+
+    public string? Write(EmailAddress data) => ((IV3FieldSerializer<EmailAddress>)this).Write(data);
 
     string? IV4FieldSerializer<EmailAddress>.Write(EmailAddress data)
     {
-        var builder = new StringBuilder(FieldKey);
-
-        if (data.Type != EmailAddressType.None)
-        {
-            var emailTypes = Enum.GetValues(typeof(EmailAddressType))
-                .Cast<EmailAddressType>()
-                .Where(x => data.Type.HasFlag(x) && x != EmailAddressType.None)
-                .ToArray();
-
-            if (emailTypes.Any())
-            {
-                builder.Append(FieldKeyConstants.MetadataDelimiter);
-
-                foreach (var emailType in emailTypes)
-                    builder.AppendFormat("{0}={1}", FieldKeyConstants.TypeKey, emailType.DecomposeEmailAddressType());
-            }
-        }
-
-        if (data.Preference.HasValue)
-        {
-            builder.Append(FieldKeyConstants.MetadataDelimiter);
-            builder.AppendFormat("{0}={1}", FieldKeyConstants.PreferenceKey, data.Preference.Value);
-        }
-
-        builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Value);
-
-        return builder.ToString();
+        var types = data.Type.DecomposeEmailAddressTypes();
+        var parameters = SerializationHelpers.FormatParameters(vCardVersion.v4, types, data.Preference);
+        return $"{FieldKey}{parameters}{FieldKeyConstants.SectionDelimiter}{data.Value}";
     }
 }
