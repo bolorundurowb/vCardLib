@@ -76,4 +76,50 @@ public class VCardContentLineFormatterTests
         VCardContentLineFormatter.AppendFoldedContentLine(sb, string.Empty);
         sb.ToString().ShouldBe("\r\n");
     }
+
+    [Test]
+    public void AppendCrlf_EmptyString_EmitsOnlyLineBreak()
+    {
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendCrlf(sb, string.Empty);
+        sb.ToString().ShouldBe("\r\n");
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_NullTreatedAsEmptyLine()
+    {
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, null);
+        sb.ToString().ShouldBe("\r\n");
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_LongAsciiProducesMultiplePhysicalLines()
+    {
+        var payload = new string('c', 200);
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, payload);
+        var text = sb.ToString();
+
+        var physical = text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+        (physical.Length >= 3).ShouldBeTrue();
+        foreach (var line in physical)
+            (Encoding.UTF8.GetByteCount(line) <= 75).ShouldBeTrue();
+
+        var unfolded = string.Concat(physical.Select(l =>
+            l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
+        unfolded.ShouldBe(payload);
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_CustomMaxOctets_RespectsBudget()
+    {
+        var payload = new string('d', 11);
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, payload, maxOctets: 10);
+        var physical = sb.ToString().Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+        physical.Length.ShouldBe(2);
+        (Encoding.UTF8.GetByteCount(physical[0]) <= 10).ShouldBeTrue();
+        (Encoding.UTF8.GetByteCount(physical[1]) <= 10).ShouldBeTrue();
+    }
 }

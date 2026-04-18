@@ -213,4 +213,46 @@ public class vCardSerializerTests
         var roundTrip = vCardDeserializer.FromContent(wire).Single();
         roundTrip.Note.ShouldBe(longNote);
     }
+
+    [Test]
+    public void Serialize_V2_LongNote_IsFoldedAndRoundTrips()
+    {
+        var longNote = new string('y', 130);
+        var card = new vCard(vCardVersion.v2)
+        {
+            FormattedName = "V2 Fold",
+            Note = longNote
+        };
+
+        var wire = vCardSerializer.Serialize(card);
+        wire.ShouldContain("\r\n ");
+        foreach (var line in wire.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+            (Encoding.UTF8.GetByteCount(line) <= 75).ShouldBeTrue();
+
+        var roundTrip = vCardDeserializer.FromContent(wire).Single();
+        roundTrip.Note.ShouldBe(longNote);
+    }
+
+    [Test]
+    public void Serialize_MultipleCards_UsesStrictCrlfBetweenCards()
+    {
+        var cards = new List<vCard>
+        {
+            new(vCardVersion.v4) { FormattedName = "First" },
+            new(vCardVersion.v4) { FormattedName = "Second" }
+        };
+
+        var result = vCardSerializer.Serialize(cards);
+
+        for (var i = 0; i < result.Length; i++)
+        {
+            if (result[i] == '\n' && (i == 0 || result[i - 1] != '\r'))
+                Assert.Fail("Serialized vCards must use CRLF only.");
+        }
+
+        result.ShouldEndWith("\r\n");
+        result.ShouldContain("FN:First");
+        result.ShouldContain("FN:Second");
+        System.Text.RegularExpressions.Regex.Matches(result, "BEGIN:VCARD").Count.ShouldBe(2);
+    }
 }
