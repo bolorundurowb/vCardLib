@@ -11,20 +11,22 @@ internal static class DataSplitHelpers
     {
         input = input.Trim();
         var colonIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
-        if (colonIndex == -1) return (Array.Empty<string>(), input);
+        if (colonIndex == -1) 
+            return ([], input);
 
         var prefix = input.Substring(0, colonIndex);
         var value = input.Substring(colonIndex + 1);
 
         var firstSemiColon = prefix.IndexOf(FieldKeyConstants.MetadataDelimiter);
-        if (firstSemiColon == -1) return (Array.Empty<string>(), value);
+        if (firstSemiColon == -1) 
+            return ([], value);
 
         var metadata = prefix.Substring(firstSemiColon + 1);
 
         // Simple split by semicolon, but avoiding splitting inside quotes
         var parameters = new List<string>();
         var currentParam = new StringBuilder();
-        bool inQuotes = false;
+        var inQuotes = false;
         foreach (var c in metadata)
         {
             if (c == '"') inQuotes = !inQuotes;
@@ -38,8 +40,8 @@ internal static class DataSplitHelpers
                 currentParam.Append(c);
             }
         }
+        
         parameters.Add(currentParam.ToString());
-
         return (parameters.ToArray(), value);
     }
 

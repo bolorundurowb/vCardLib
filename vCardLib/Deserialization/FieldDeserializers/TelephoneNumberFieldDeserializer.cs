@@ -19,7 +19,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
 
         TelephoneNumberType? type = null;
         int? preference = null;
-        bool isQuotedPrintable = false;
+        var isQuotedPrintable = false;
 
         foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {
@@ -52,7 +52,7 @@ internal sealed class TelephoneNumberFieldDeserializer : IV2FieldDeserializer<Te
         TelephoneNumberType? type = null;
         int? preference = null;
         string? _value = null;
-        bool isQuotedPrintable = false;
+        var isQuotedPrintable = false;
 
         foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {

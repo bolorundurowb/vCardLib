@@ -120,37 +120,37 @@ public class vCard
     /// <summary>
     /// category information about the vCard, also known as "tags"
     /// </summary>
-    public List<string> Categories { get; set; } = new();
+    public List<string> Categories { get; set; } = [];
 
     /// <summary>
     /// a member in the group this vCard represents.
     /// </summary>
-    public List<string> Members { get; set; } = new();
+    public List<string> Members { get; set; } = [];
 
     /// <summary>
     /// A collection of phone numbers associated with the contact
     /// </summary>
-    public List<TelephoneNumber> PhoneNumbers { get; set; } = new();
+    public List<TelephoneNumber> PhoneNumbers { get; set; } = [];
 
     /// <summary>
     /// A collection of email addresses associated with the contact
     /// </summary>
-    public List<EmailAddress> EmailAddresses { get; set; } = new();
+    public List<EmailAddress> EmailAddresses { get; set; } = [];
 
     /// <summary>
     /// A collection of photos associated with the contact
     /// </summary>
-    public List<Photo> Photos { get; set; } = new();
+    public List<Photo> Photos { get; set; } = [];
 
     /// <summary>
     /// The contact's addresses
     /// </summary>
-    public List<Address> Addresses { get; set; } = new();
+    public List<Address> Addresses { get; set; } = [];
 
     /// <summary>
     /// All other fields not defined in the spec
     /// </summary>
-    public List<KeyValuePair<string, string>> CustomFields { get; set; } = new();
+    public List<KeyValuePair<string, string>> CustomFields { get; set; } = [];
 
     public vCard(vCardVersion version) => Version = version;
 }

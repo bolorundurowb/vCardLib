@@ -12,7 +12,7 @@ internal abstract class TextFieldDeserializer : IV2FieldDeserializer<string>, IV
     string IV2FieldDeserializer<string>.Read(string input)
     {
         var (parameters, value) = DataSplitHelpers.SplitLine("DUMMY", input);
-        bool isQuotedPrintable = false;
+        var isQuotedPrintable = false;
 
         foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {
@@ -33,7 +33,7 @@ internal abstract class TextFieldDeserializer : IV2FieldDeserializer<string>, IV
     private string Read(string input)
     {
         var (parameters, value) = DataSplitHelpers.SplitLine("DUMMY", input);
-        bool isQuotedPrintable = false;
+        var isQuotedPrintable = false;
 
         foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {

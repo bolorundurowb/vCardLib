@@ -19,7 +19,7 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
 
         EmailAddressType? type = null;
         int? preference = null;
-        bool isQuotedPrintable = false;
+        var isQuotedPrintable = false;
 
         foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {
@@ -50,7 +50,7 @@ internal sealed class EmailAddressFieldDeserializer : IV2FieldDeserializer<Email
 
         EmailAddressType? type = null;
         int? preference = null;
-        bool isQuotedPrintable = false;
+        var isQuotedPrintable = false;
 
         foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {

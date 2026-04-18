@@ -20,7 +20,7 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
         AddressType? type = null;
         Geo? geo = null;
         string? label = null;
-        bool isQuotedPrintable = false;
+        var isQuotedPrintable = false;
 
         foreach (var (key, val) in DataSplitHelpers.ParseParameters(parameters))
         {

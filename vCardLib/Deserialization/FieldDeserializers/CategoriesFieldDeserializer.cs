@@ -16,7 +16,7 @@ internal sealed class CategoriesFieldDeserializer : IV2FieldDeserializer<List<st
         var value = input.TrimStart(FieldKeyConstants.SectionDelimiter);
 
         if (string.IsNullOrWhiteSpace(value))
-            return new List<string>();
+            return [];
 
         return value.Split(FieldKeyConstants.ConcatenationDelimiter)
             .Select(x => x.Trim())
