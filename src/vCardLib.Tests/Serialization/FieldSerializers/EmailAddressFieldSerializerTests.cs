@@ -1,0 +1,43 @@
+using NUnit.Framework;
+using Shouldly;
+using vCardLib.Enums;
+using vCardLib.Models;
+using vCardLib.Serialization.FieldSerializers;
+using vCardLib.Serialization.Interfaces;
+
+namespace vCardLib.Tests.Serialization.FieldSerializers;
+
+[TestFixture]
+public class EmailAddressFieldSerializerTests
+{
+    [Test]
+    public void Write_V2SimpleEmail_ReturnsCorrectString()
+    {
+        var email = new EmailAddress("john@example.com");
+        var serializer = new EmailAddressFieldSerializer();
+        var result = (serializer as IV2FieldSerializer<EmailAddress>).Write(email);
+
+        result.ShouldBe("EMAIL:john@example.com");
+    }
+
+    [Test]
+    public void Write_V2WithTypes_ReturnsCorrectString()
+    {
+        var email = new EmailAddress("john@example.com", EmailAddressType.Home | EmailAddressType.Internet);
+        var serializer = new EmailAddressFieldSerializer();
+        var result = (serializer as IV2FieldSerializer<EmailAddress>).Write(email);
+
+        result.ShouldContain(";HOME");
+        result.ShouldContain(";INTERNET");
+    }
+
+    [Test]
+    public void Write_V4WithPreference_ReturnsCorrectString()
+    {
+        var email = new EmailAddress("john@example.com", EmailAddressType.Work, 2);
+        var serializer = new EmailAddressFieldSerializer();
+        var result = (serializer as IV4FieldSerializer<EmailAddress>).Write(email);
+
+        result.ShouldBe("EMAIL;TYPE=work;PREF=2:john@example.com");
+    }
+}

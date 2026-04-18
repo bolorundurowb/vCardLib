@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <PackageVersion>6.2.0-beta.0</PackageVersion>
+        <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
+        <AssemblyVersion>6.2.0</AssemblyVersion>
+        <FileVersion>6.2.0</FileVersion>
+        <NeutralLanguage>en-NG</NeutralLanguage>
+        <LangVersion>14</LangVersion>
+        <Nullable>enable</Nullable>
+        <Copyright>© 2017-2026, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
+        <PackageReleaseNotes>- improve RFC compatibility  when serialising and deserialising photo, address and address types</PackageReleaseNotes>
+        <Authors>Winner-Timothy Bolorunduro</Authors>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageId>vCardLib.dll</PackageId>
+        <Description>vCardLib is a .NET library to help developers read either single or multiple contacts from a single vcf file or StreamReader.</Description>
+        <PackageIconUrl>https://res.cloudinary.com/dg2dgzbt4/image/upload/v1767354061/external_assets/open_source/icons/vCardLib.png</PackageIconUrl>
+        <PackageProjectUrl>https://bolorundurowb.github.io/vCardLib/</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/bolorundurowb/vCardLib/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/bolorundurowb/vCardLib</RepositoryUrl>
+        <Title>vCardLib</Title>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>vcard vcf contacts contact-management address-book dotnet csharp netstandard library parsing serializer deserialization serialization rfc6350 rfc2426 vcard21 vcard30 vcard40 open-source</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+        <PackageReference Include="System.ValueTuple" Version="4.5.0"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="System.ValueTuple" Version="4.5.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+</Project>
