@@ -92,7 +92,8 @@ public static class vCardDeserializer
 
     private static IEnumerable<string[]> SplitContent(string vcardContent)
     {
-        using var reader = new StringReader(vcardContent);
+        var unfoldedContent = Unfold(vcardContent);
+        using var reader = new StringReader(unfoldedContent);
         var response = new List<string>();
         string? line;
 
@@ -109,20 +110,52 @@ public static class vCardDeserializer
             {
                 response.Clear();
             }
-            else if (line.EndsWithIgnoreCase(FieldKeyConstants.StartToken))
-            {
-                var nested = new StringBuilder(line);
-
-                while (reader.ReadLine() != null && reader.ReadLine().Trim() is { } nestedLine && !nestedLine.EqualsIgnoreCase(FieldKeyConstants.EndToken))
-                    nested.AppendLine(nestedLine);
-
-                response.Add(nested.ToString());
-            }
             else
             {
                 response.Add(line);
             }
         }
+    }
+
+    private static string Unfold(string vcardContent)
+    {
+        if (string.IsNullOrEmpty(vcardContent)) return vcardContent;
+
+        var builder = new StringBuilder();
+        using var reader = new StringReader(vcardContent);
+        string? line;
+        string? previousLine = null;
+
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (string.IsNullOrEmpty(line)) continue;
+
+            // RFC 2426/6350 Unfolding (Space/Tab)
+            if (previousLine != null && (line[0] == ' ' || line[0] == '\t'))
+            {
+                previousLine += line.Substring(1);
+            }
+            // v2.1 Quoted-Printable continuation (Line ending with =)
+            else if (previousLine != null && previousLine.EndsWith("="))
+            {
+                previousLine = previousLine.Substring(0, previousLine.Length - 1) + line;
+            }
+            else
+            {
+                if (previousLine != null)
+                {
+                    builder.AppendLine(previousLine);
+                }
+                previousLine = line;
+            }
+        }
+
+        if (previousLine != null)
+        {
+            builder.AppendLine(previousLine);
+        }
+
+        return builder.ToString();
     }
 
     private static vCard Convert(string[] vcardContent)
