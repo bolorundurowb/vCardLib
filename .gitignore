@@ -213,3 +213,6 @@ ModelManifest.xml
 
 # Rider Files
 .idea/
+
+# Coverlet / local coverage output
+coverage/

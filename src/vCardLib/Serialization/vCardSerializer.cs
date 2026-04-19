@@ -82,21 +82,21 @@ public static class vCardSerializer
                 {
                     var serializer = new V2Serializer(FieldSerializers);
                     foreach (var card in cardList)
-                        builder.AppendLine(serializer.Serialize(card));
+                        builder.Append(serializer.Serialize(card));
                     break;
                 }
             case vCardVersion.v3:
                 {
                     var serializer = new V3Serializer(FieldSerializers);
                     foreach (var card in cardList)
-                        builder.AppendLine(serializer.Serialize(card));
+                        builder.Append(serializer.Serialize(card));
                     break;
                 }
             case vCardVersion.v4:
                 {
                     var serializer = new V4Serializer(FieldSerializers);
                     foreach (var card in cardList)
-                        builder.AppendLine(serializer.Serialize(card));
+                        builder.Append(serializer.Serialize(card));
                     break;
                 }
             default:

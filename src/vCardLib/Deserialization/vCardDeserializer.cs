@@ -73,10 +73,13 @@ public static class vCardDeserializer
         if (string.IsNullOrWhiteSpace(vcardContents))
             throw new ArgumentException("File is empty.", nameof(vcardContents));
 
-        if (!vcardContents.StartsWith(FieldKeyConstants.StartToken))
+        vcardContents = PrepareForParse(vcardContents);
+
+        if (!vcardContents.TrimStart().StartsWith(FieldKeyConstants.StartToken, StringComparison.Ordinal))
             throw new Exception($"A vCard must begin with '{FieldKeyConstants.StartToken}'.");
 
-        if (!vcardContents.EndsWith(FieldKeyConstants.EndToken))
+        // Lenient: allow trailing newlines (e.g. after normalizing CRLF to LF) or other trailing whitespace.
+        if (!vcardContents.TrimEnd('\r', '\n', ' ', '\t').EndsWith(FieldKeyConstants.EndToken, StringComparison.Ordinal))
             throw new Exception($"A vCard must end with '{FieldKeyConstants.EndToken}'.");
 
         if (!vcardContents.Contains(FieldKeyConstants.VersionKey))
@@ -89,6 +92,18 @@ public static class vCardDeserializer
     }
 
     #region Private Helpers
+
+    /// <summary>
+    /// Lenient input handling: strip a Unicode BOM, normalize CR/LF/CRLF to LF for parsing.
+    /// Serialized vCards from this library use strict CRLF and RFC folding.
+    /// </summary>
+    private static string PrepareForParse(string input)
+    {
+        if (input.Length > 0 && input[0] == '\uFEFF')
+            input = input.Substring(1);
+
+        return input.Replace("\r\n", "\n").Replace("\r", "\n");
+    }
 
     private static IEnumerable<string[]> SplitContent(string vcardContent)
     {
@@ -117,10 +132,15 @@ public static class vCardDeserializer
         }
     }
 
+    /// <summary>
+    /// Unfolds RFC 2426/6350 folded lines (leading space or tab on a new physical line).
+    /// Also joins vCard 2.1 lines that use a trailing '=' soft line break.
+    /// </summary>
     private static string Unfold(string vcardContent)
     {
         if (string.IsNullOrEmpty(vcardContent)) return vcardContent;
 
+        const char internalNewline = '\n';
         var builder = new StringBuilder();
         using var reader = new StringReader(vcardContent);
         string? line;
@@ -136,7 +156,7 @@ public static class vCardDeserializer
                 previousLine += line.Substring(1);
             }
             // v2.1 Quoted-Printable continuation (Line ending with =)
-            else if (previousLine != null && previousLine.EndsWith("="))
+            else if (previousLine != null && previousLine.EndsWith("=", StringComparison.Ordinal))
             {
                 previousLine = previousLine.Substring(0, previousLine.Length - 1) + line;
             }
@@ -144,7 +164,8 @@ public static class vCardDeserializer
             {
                 if (previousLine != null)
                 {
-                    builder.AppendLine(previousLine);
+                    builder.Append(previousLine);
+                    builder.Append(internalNewline);
                 }
                 previousLine = line;
             }
@@ -152,7 +173,8 @@ public static class vCardDeserializer
 
         if (previousLine != null)
         {
-            builder.AppendLine(previousLine);
+            builder.Append(previousLine);
+            builder.Append(internalNewline);
         }
 
         return builder.ToString();
