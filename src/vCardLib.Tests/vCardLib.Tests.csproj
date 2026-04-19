@@ -4,6 +4,10 @@
         <IsPackable>false</IsPackable>
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
+        <!-- When CollectCoverage=true, fail the build if branch coverage drops below project target -->
+        <Threshold>82.5</Threshold>
+        <ThresholdType>branch</ThresholdType>
+        <ThresholdStat>total</ThresholdStat>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="coverlet.msbuild" Version="10.0.0">

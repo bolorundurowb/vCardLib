@@ -221,4 +221,15 @@ public class VCardContentLineFormatterTests
         VCardContentLineFormatter.AppendFoldedContentLine(sb, "\u3042");
         sb.ToString().ShouldBe("\u3042\r\n");
     }
+
+    /// <summary>
+    /// Forces FindUtf8CutEnd to shrink to start of a multi-byte sequence so Utf8NextCodeUnitEnd runs.
+    /// </summary>
+    [Test]
+    public void AppendFoldedContentLine_SingleFourByteEmojiWithMaxOctetsOne_OnePhysicalLine()
+    {
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, "\U0001F600", maxOctets: 1);
+        sb.ToString().ShouldBe("\U0001F600\r\n");
+    }
 }
