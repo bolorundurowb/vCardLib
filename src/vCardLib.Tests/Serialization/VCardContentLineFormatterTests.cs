@@ -86,6 +86,29 @@ public class VCardContentLineFormatterTests
     }
 
     [Test]
+    public void AppendCrlf_NullTreatedAsEmptyLine()
+    {
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendCrlf(sb, null);
+        sb.ToString().ShouldBe("\r\n");
+    }
+
+    [Test]
+    public void AppendCrlf_AppendsAfterExistingContent()
+    {
+        var sb = new StringBuilder("X");
+        VCardContentLineFormatter.AppendCrlf(sb, "Y");
+        sb.ToString().ShouldBe("XY\r\n");
+    }
+
+    [Test]
+    public void CrLf_Constant_IsCarriageReturnLineFeed()
+    {
+        VCardContentLineFormatter.CrLf.ShouldBe("\r\n");
+        VCardContentLineFormatter.CrLf.Length.ShouldBe(2);
+    }
+
+    [Test]
     public void AppendFoldedContentLine_NullTreatedAsEmptyLine()
     {
         var sb = new StringBuilder();
@@ -121,5 +144,81 @@ public class VCardContentLineFormatterTests
         physical.Length.ShouldBe(2);
         (Encoding.UTF8.GetByteCount(physical[0]) <= 10).ShouldBeTrue();
         (Encoding.UTF8.GetByteCount(physical[1]) <= 10).ShouldBeTrue();
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_TwoByteUtf8AtBoundary_RejoinsCorrectly()
+    {
+        // U+00E9 LATIN SMALL LETTER E WITH ACUTE — 2 UTF-8 bytes (C3 A9)
+        var prefix = new string('p', 74); // 74 octets
+        var logical = prefix + "\u00e9";
+        Encoding.UTF8.GetByteCount(logical).ShouldBe(76);
+
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, logical);
+        var text = sb.ToString();
+
+        var joined = string.Concat(text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries)
+            .Select(l => l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
+        joined.ShouldBe(logical);
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_ThreeByteUtf8AtBoundary_RejoinsCorrectly()
+    {
+        // U+3042 HIRAGANA LETTER A — 3 UTF-8 bytes
+        var prefix = new string('q', 73); // 73 octets
+        var logical = prefix + "\u3042";
+        Encoding.UTF8.GetByteCount(logical).ShouldBe(76);
+
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, logical);
+        var text = sb.ToString();
+
+        var joined = string.Concat(text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries)
+            .Select(l => l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
+        joined.ShouldBe(logical);
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_MaxOctetsTwo_EachPhysicalLineAtMostTwoOctets()
+    {
+        var payload = "abcde";
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, payload, maxOctets: 2);
+        var physical = sb.ToString().Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+        (physical.Length > 1).ShouldBeTrue();
+        foreach (var line in physical)
+            (Encoding.UTF8.GetByteCount(line) <= 2).ShouldBeTrue();
+
+        var unfolded = string.Concat(physical.Select(l =>
+            l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
+        unfolded.ShouldBe(payload);
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_MaxOctetsOne_SingleAsciiChar_OnePhysicalLine()
+    {
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, "x", maxOctets: 1);
+        sb.ToString().ShouldBe("x\r\n");
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_ChainedCalls_BuildsMultipleLines()
+    {
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendCrlf(sb, "A");
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, "BB");
+        VCardContentLineFormatter.AppendCrlf(sb, "C");
+        sb.ToString().ShouldBe("A\r\nBB\r\nC\r\n");
+    }
+
+    [Test]
+    public void AppendFoldedContentLine_SingleCharUtf8_FitsOnePhysicalLine()
+    {
+        var sb = new StringBuilder();
+        VCardContentLineFormatter.AppendFoldedContentLine(sb, "\u3042");
+        sb.ToString().ShouldBe("\u3042\r\n");
     }
 }

@@ -11,9 +11,9 @@ internal static class VCardContentLineFormatter
     public const string CrLf = "\r\n";
 
     /// <summary>Appends a single logical line (no folding) plus CRLF.</summary>
-    public static void AppendCrlf(StringBuilder sb, string line)
+    public static void AppendCrlf(StringBuilder sb, string? line)
     {
-        sb.Append(line);
+        sb.Append(line ?? string.Empty);
         sb.Append(CrLf);
     }
 
