@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <PackageVersion>6.2.0-beta.1</PackageVersion>
+        <PackageVersion>6.2.0</PackageVersion>
         <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
         <AssemblyVersion>6.2.0</AssemblyVersion>
         <FileVersion>6.2.0</FileVersion>
@@ -8,7 +8,8 @@
         <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2026, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
-        <PackageReleaseNotes>- improve RFC compatibility  when serialising and deserialising photo, address and address types</PackageReleaseNotes>
+        <PackageReleaseNotes>- improve RFC compatibility  when serialising and deserialising photo, address and address types
+- Improve new line handling and conformance to the RFC spec</PackageReleaseNotes>
         <Authors>Winner-Timothy Bolorunduro</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>
