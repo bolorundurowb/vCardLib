@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="vCardLib.Tests/vCardLib.Tests.csproj" />
+  <Project Path="vCardLib/vCardLib.csproj" />
+  <Properties Name="MonoDevelopProperties">
+    <Property Name="$0.DotNetNamingPolicy" Value="$1" />
+    <Property Name="$1.DirectoryNamespaceAssociation" Value="None" />
+    <Property Name="$1.ResourceNamePolicy" Value="FileFormatDefault" />
+    <Property Name="Policies" Value="$0" />
+  </Properties>
+</Solution>
