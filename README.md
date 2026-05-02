@@ -122,7 +122,7 @@ string bundle = vCardSerializer.Serialize(new[] { card1, card2 });
 
 ### Contributors
 
-Thanks to [@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar), [@rmja](https://github.com/rmja), and [@JeanCollas](https://github.com/JeanCollas).
+Thanks to [@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar), [@rmja](https://github.com/rmja), [@JeanCollas](https://github.com/JeanCollas), [@axelgenus](https://github.com/axelgenus), [@ramiassi](https://github.com/ramiassi), [@nordfish-it](https://github.com/nordfish-it), [@JochumMedia](https://github.com/JochumMedia) and [@rallets](https://github.com/rallets)
 
 ## License
 
