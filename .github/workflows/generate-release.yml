@@ -1,0 +1,210 @@
+name: Generate Release
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: generate-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Generate Release
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    permissions:
+      contents: write
+
+    env:
+      PACKAGE_PROJECT: src/vCardLib/vCardLib.csproj
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve revision range and package versions
+        id: meta
+        run: |
+          set -euo pipefail
+
+          package_version_from() {
+            local rev="$1"
+            local out
+            if [[ -z "$rev" ]]; then
+              echo ""
+              return 0
+            fi
+            out="$(git show "${rev}:${PACKAGE_PROJECT}" 2>/dev/null \
+              | sed -n 's/^[^<]*<PackageVersion>\([^<]*\)<\/PackageVersion>.*$/\1/p' \
+              | head -1 \
+              | tr -d '[:space:]' || true)"
+            printf '%s' "$out"
+          }
+
+          EVENT_NAME="${{ github.event_name }}"
+          if [[ "$EVENT_NAME" == "push" ]]; then
+            BEFORE="${{ github.event.before }}"
+            AFTER="${{ github.sha }}"
+            if [[ -z "$BEFORE" || "$BEFORE" =~ ^0{40}$ ]]; then
+              if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+                BEFORE="$(git rev-parse HEAD^)"
+              else
+                BEFORE=""
+              fi
+            fi
+          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            AFTER="HEAD"
+            if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+              BEFORE="$(git rev-parse HEAD^)"
+            else
+              BEFORE=""
+            fi
+          else
+            echo "::error::Unsupported event: $EVENT_NAME"
+            exit 1
+          fi
+
+          CURRENT="$(package_version_from "$AFTER")"
+          PREVIOUS="$(package_version_from "$BEFORE")"
+
+          echo "before_sha=${BEFORE:-}" >> "$GITHUB_OUTPUT"
+          echo "after_sha=${AFTER}" >> "$GITHUB_OUTPUT"
+          echo "current_version=${CURRENT}" >> "$GITHUB_OUTPUT"
+          echo "previous_version=${PREVIOUS}" >> "$GITHUB_OUTPUT"
+
+          if [[ -z "$CURRENT" ]]; then
+            echo "::error::Could not read <PackageVersion> from ${PACKAGE_PROJECT} at ${AFTER}. Ensure the property is set and well-formed."
+            exit 1
+          fi
+
+          if [[ ! "$CURRENT" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::PackageVersion '${CURRENT}' is not a supported SemVer-style version."
+            exit 1
+          fi
+
+          if [[ "$CURRENT" == "$PREVIOUS" ]]; then
+            echo "result=no_version_change" >> "$GITHUB_OUTPUT"
+            echo "No <PackageVersion> change between revisions (${PREVIOUS:-<none>} -> ${CURRENT}). Skipping release."
+            exit 0
+          fi
+
+          echo "result=version_changed" >> "$GITHUB_OUTPUT"
+          echo "Version changed: ${PREVIOUS:-<none>} -> ${CURRENT}"
+
+      - name: Skip remaining steps when no version change
+        if: steps.meta.outputs.result != 'version_changed'
+        run: echo "Workflow finished without creating a release."
+
+      - name: Setup .NET SDK
+        if: steps.meta.outputs.result == 'version_changed'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Ensure release tag does not already exist
+        id: tag_check
+        if: steps.meta.outputs.result == 'version_changed'
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.meta.outputs.current_version }}"
+          git fetch --tags --force
+
+          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null 2>&1 \
+            || git ls-remote --tags origin "refs/tags/${VERSION}" | grep -q .; then
+            echo "result=exists" >> "$GITHUB_OUTPUT"
+            echo "Tag '${VERSION}' already exists on the remote. Skipping build and release."
+            exit 0
+          fi
+
+          echo "result=missing" >> "$GITHUB_OUTPUT"
+          echo "Tag '${VERSION}' is not present; proceeding with build and release."
+
+      - name: Restore, build, and pack
+        if: steps.meta.outputs.result == 'version_changed' && steps.tag_check.outcome == 'success' && steps.tag_check.outputs.result == 'missing'
+        working-directory: ./src
+        run: |
+          set -euo pipefail
+          mkdir -p "${GITHUB_WORKSPACE}/artifacts"
+          dotnet restore "vCardLib/vCardLib.csproj"
+          dotnet pack "vCardLib/vCardLib.csproj" \
+            --configuration Release \
+            --no-restore \
+            --output "${GITHUB_WORKSPACE}/artifacts"
+
+          shopt -s nullglob
+          nupkgs=("${GITHUB_WORKSPACE}"/artifacts/*.nupkg)
+          shopt -u nullglob
+          if [[ ${#nupkgs[@]} -eq 0 ]]; then
+            echo "::error::No .nupkg files were produced under artifacts/. Check packaging settings."
+            exit 1
+          fi
+
+      - name: Create annotated tag and GitHub release
+        if: steps.meta.outputs.result == 'version_changed' && steps.tag_check.outcome == 'success' && steps.tag_check.outputs.result == 'missing'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          VERSION="${{ steps.meta.outputs.current_version }}"
+          LV="$(printf '%s' "$VERSION" | tr '[:upper:]' '[:lower:]')"
+          PRERELEASE_FLAG=()
+          if [[ "$LV" == *"-alpha"* || "$LV" == *"-beta"* ]]; then
+            PRERELEASE_FLAG=(--prerelease)
+          fi
+
+          PRIOR_TAG_FOR_NOTES="$(git describe --tags --abbrev=0 2>/dev/null || true)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null 2>&1; then
+            echo "::error::Tag ${VERSION} appeared after the initial check; aborting to avoid duplicates."
+            exit 1
+          fi
+
+          git tag -a "${VERSION}" -m "Release ${VERSION}"
+          git push origin "refs/tags/${VERSION}"
+
+          shopt -s nullglob
+          NUPKGS=("${GITHUB_WORKSPACE}"/artifacts/*.nupkg)
+          shopt -u nullglob
+
+          release_notes_fallback() {
+            if [[ -n "$PRIOR_TAG_FOR_NOTES" ]]; then
+              git log "${PRIOR_TAG_FOR_NOTES}..HEAD" --pretty=format:'- %s'
+            else
+              git log -50 --pretty=format:'- %s'
+            fi
+          }
+
+          TITLE="Release ${VERSION}"
+
+          if gh release create "${VERSION}" "${NUPKGS[@]}" \
+            --title "${TITLE}" \
+            --generate-notes \
+            "${PRERELEASE_FLAG[@]}"; then
+            echo "Created GitHub release ${VERSION} with auto-generated notes."
+            exit 0
+          fi
+
+          echo "Auto-generated release notes were unavailable; falling back to recent commit subjects."
+          NOTES="$(release_notes_fallback)"
+          if [[ -z "$NOTES" ]]; then
+            NOTES="- No commit messages collected for release notes."
+          fi
+          NOTES_FILE="$(mktemp)"
+          printf '%s\n' "$NOTES" > "$NOTES_FILE"
+
+          gh release create "${VERSION}" "${NUPKGS[@]}" \
+            --title "${TITLE}" \
+            --notes-file "$NOTES_FILE" \
+            "${PRERELEASE_FLAG[@]}"
