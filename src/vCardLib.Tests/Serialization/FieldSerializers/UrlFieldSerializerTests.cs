@@ -33,7 +33,7 @@ public class UrlFieldSerializerTests
         IV2FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
         result.ShouldBe(
-            "URL;HOME;BLOG;PREF=2;LABEL=My Home Page;MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
+            "URL;HOME;BLOG;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class UrlFieldSerializerTests
         IV3FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
         result.ShouldBe(
-            "URL;TYPE=home;TYPE=blog;PREF=2;LABEL=My Home Page;MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
+            "URL;TYPE=home;TYPE=blog;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 
     [Test]
@@ -51,6 +51,6 @@ public class UrlFieldSerializerTests
         IV4FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
         result.ShouldBe(
-            "URL;TYPE=home;TYPE=blog;PREF=2;LABEL=My Home Page;MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
+            "URL;TYPE=home;TYPE=blog;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 }

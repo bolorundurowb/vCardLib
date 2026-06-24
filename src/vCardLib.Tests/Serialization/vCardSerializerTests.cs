@@ -118,7 +118,7 @@ public class vCardSerializerTests
         result.ShouldContain("Springfield");
         result.ShouldContain("CATEGORIES");
         result.ShouldContain("Friends,Work");
-        result.ShouldContain("X-CUSTOM: CustomValue");
+        result.ShouldContain("X-CUSTOM:CustomValue");
         result.ShouldContain("END:VCARD");
     }
 

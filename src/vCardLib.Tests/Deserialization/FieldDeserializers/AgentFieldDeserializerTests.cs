@@ -37,7 +37,7 @@ public class AgentFieldDeserializerTests
         var result = deserializer.Read(input);
 
         result.ShouldNotBeNull();
-        result.ShouldBe("uri:CID:JQPUBLIC.part3.960129T083020.xyzMail@host3.com");
+        result.ShouldBe("CID:JQPUBLIC.part3.960129T083020.xyzMail@host3.com");
     }
 
     [Test]

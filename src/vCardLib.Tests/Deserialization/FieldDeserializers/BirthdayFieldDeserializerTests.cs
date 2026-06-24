@@ -32,7 +32,7 @@ public class BirthdayFieldDeserializerTests
     [Test]
     public void Read_DateAndTime_ReturnsCorrectValue()
     {
-        const string input = "BDAY;20121201T134211Z";
+        const string input = "BDAY:20121201T134211Z";
         var deserializer = new BirthdayFieldDeserializer();
         var result = deserializer.Read(input);
 

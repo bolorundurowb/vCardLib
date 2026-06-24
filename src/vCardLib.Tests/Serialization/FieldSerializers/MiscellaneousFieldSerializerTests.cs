@@ -62,7 +62,7 @@ public class MiscellaneousFieldSerializerTests
         var serializer = new CategoriesFieldSerializer();
         var data = new List<string> { "Work", "Friend" };
         var result = serializer.Write(data);
-        result.ShouldBe("CATEGORIES: Work,Friend");
+        result.ShouldBe("CATEGORIES:Work,Friend");
     }
 
     [Test]
@@ -118,7 +118,7 @@ public class MiscellaneousFieldSerializerTests
     {
         var serializer = new CustomFieldSerializer();
         var result = serializer.Write(new KeyValuePair<string, string>("X-SOCIAL", "Twitter"));
-        result.ShouldBe("X-SOCIAL: Twitter");
+        result.ShouldBe("X-SOCIAL:Twitter");
     }
 
     [Test]

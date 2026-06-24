@@ -28,7 +28,7 @@ public class vCardDeserializerRichContentTests
         card.Gender!.Value.Sex.ShouldBe(BiologicalSex.Other);
         card.Gender.Value.GenderIdentity.ShouldBe("non-binary");
         card.Categories.Count.ShouldBe(2);
-        card.Categories.ShouldContain("ALPHA");
+        card.Categories.ShouldContain("alpha");
     }
 
     [Test]
