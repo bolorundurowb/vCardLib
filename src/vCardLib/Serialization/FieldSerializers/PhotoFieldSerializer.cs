@@ -54,7 +54,7 @@ internal sealed class PhotoFieldSerializer : IV2FieldSerializer<Photo>, IV3Field
         }
 
         builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Value);
+        builder.Append(data.Data);
 
         return builder.ToString();
     }
@@ -88,7 +88,7 @@ internal sealed class PhotoFieldSerializer : IV2FieldSerializer<Photo>, IV3Field
         }
 
         builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Value);
+        builder.Append(data.Data);
 
         return builder.ToString();
     }

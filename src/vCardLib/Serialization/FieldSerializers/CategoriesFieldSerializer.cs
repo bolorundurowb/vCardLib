@@ -11,6 +11,6 @@ internal sealed class CategoriesFieldSerializer : IV2FieldSerializer<List<string
     public string? Write(List<string> data)
     {
         var value = string.Join(",", data);
-        return $"{FieldKey}: {value}";
+        return $"{FieldKey}:{value}";
     }
 }

@@ -9,5 +9,5 @@ internal sealed class CustomFieldSerializer : IV2FieldSerializer<KeyValuePair<st
 {
     public string FieldKey => "UNKNOWN";
 
-    public string? Write(KeyValuePair<string, string> data) => $"{data.Key}: {data.Value}";
+    public string? Write(KeyValuePair<string, string> data) => $"{data.Key}:{data.Value}";
 }
