@@ -40,6 +40,24 @@ public class SharedParsersTests
         SharedParsers.ParseDate("not-a-date").ShouldBeNull();
     }
 
+    [Test]
+    public void ParseDate_WithParameters_ReturnsDate()
+    {
+        var result = SharedParsers.ParseDate(";VALUE=DATE:19900515");
+        result.ShouldNotBeNull();
+        result!.Value.Year.ShouldBe(1990);
+        result.Value.Month.ShouldBe(5);
+        result.Value.Day.ShouldBe(15);
+    }
+
+    [Test]
+    public void ParseDate_WithColonPrefix_ReturnsDate()
+    {
+        var result = SharedParsers.ParseDate(":19900515");
+        result.ShouldNotBeNull();
+        result!.Value.Year.ShouldBe(1990);
+    }
+
     [TestCase("home", AddressType.Home)]
     [TestCase("HOME", AddressType.Home)]
     [TestCase("work", AddressType.Work)]

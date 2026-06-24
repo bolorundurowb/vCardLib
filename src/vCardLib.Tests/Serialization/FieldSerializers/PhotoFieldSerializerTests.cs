@@ -49,4 +49,24 @@ public class PhotoFieldSerializerTests
 
         result.ShouldBe("PHOTO;VALUE=SGVsbG8=;ENCODING=base64;MEDIATYPE=image/jpeg:SGVsbG8=");
     }
+
+    [Test]
+    public void Write_V3_UsesDataProperty_NotValue()
+    {
+        var photo = new Photo("actual-base64-data", "BASE64", null, null, "debug-text");
+        var serializer = new PhotoFieldSerializer();
+        var result = (serializer as IV3FieldSerializer<Photo>).Write(photo);
+
+        result.ShouldContain("actual-base64-data");
+    }
+
+    [Test]
+    public void Write_V4_UsesDataProperty_NotValue()
+    {
+        var photo = new Photo("actual-base64-data", "base64", null, "image/jpeg", "debug-text");
+        var serializer = new PhotoFieldSerializer();
+        var result = (serializer as IV4FieldSerializer<Photo>).Write(photo);
+
+        result.ShouldContain("actual-base64-data");
+    }
 }

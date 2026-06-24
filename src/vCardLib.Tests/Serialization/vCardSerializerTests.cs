@@ -255,4 +255,50 @@ public class vCardSerializerTests
         result.ShouldContain("FN:Second");
         System.Text.RegularExpressions.Regex.Matches(result, "BEGIN:VCARD").Count.ShouldBe(2);
     }
+
+    [Test]
+    public void Serialize_WithGeo_IncludesGeoLine()
+    {
+        var card = new vCard(vCardVersion.v4)
+        {
+            FormattedName = "Geo Test",
+            Geo = new Geo(37.386013f, -122.08293f)
+        };
+
+        var result = vCardSerializer.Serialize(card);
+
+        result.ShouldContain("GEO:geo:37.386013,-122.08293");
+    }
+
+    [Test]
+    public void Serialize_WithLogo_IncludesLogoLine()
+    {
+        var card = new vCard(vCardVersion.v4)
+        {
+            FormattedName = "Logo Test",
+            Logo = new Photo("SGVsbG8=", "base64", null, "image/png", "SGVsbG8=")
+        };
+
+        var result = vCardSerializer.Serialize(card);
+
+        result.ShouldContain("LOGO;");
+        result.ShouldContain("SGVsbG8=");
+    }
+
+    [Test]
+    public void Serialize_WithPhoto_UsesDataProperty()
+    {
+        var card = new vCard(vCardVersion.v4)
+        {
+            FormattedName = "Photo Test",
+            Photos = new List<Photo>
+            {
+                new Photo("actual-image-data", "base64", null, "image/jpeg", null)
+            }
+        };
+
+        var result = vCardSerializer.Serialize(card);
+
+        result.ShouldContain("actual-image-data");
+    }
 }

@@ -53,4 +53,18 @@ public class UrlFieldSerializerTests
         result.ShouldBe(
             "URL;TYPE=home;TYPE=blog;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
+
+    [Test]
+    public void Write_V4_LabelWithoutWhitespace_NotQuoted()
+    {
+        var urlData = new Url
+        {
+            Value = "example.org",
+            Label = "HomePage"
+        };
+        IV4FieldSerializer<Url> serializer = new UrlFieldSerializer();
+        var result = serializer.Write(urlData);
+
+        result.ShouldBe("URL;LABEL=HomePage:example.org");
+    }
 }
