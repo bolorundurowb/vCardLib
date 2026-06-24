@@ -11,7 +11,9 @@ internal sealed class BirthdayFieldDeserializer : IV2FieldDeserializer<DateTime?
 
     public DateTime? Read(string input)
     {
-        input = input.ToUpper().Replace(FieldKey, string.Empty);
+        var colonIndex = input.IndexOf(':');
+        if (colonIndex >= 0)
+            input = input.Substring(colonIndex + 1);
         return SharedParsers.ParseDate(input);
     }
 }

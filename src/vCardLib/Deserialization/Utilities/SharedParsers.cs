@@ -60,10 +60,11 @@ internal static class SharedParsers
         const string timeFormat = "hhmm";
         const string dateTimeFormat = "yyyyMMddTHHmmssZ";
 
-        input = input.Replace(FieldKeyConstants.KeyValueDelimiter.ToString(), string.Empty)
-            .TrimStart(FieldKeyConstants.SectionDelimiter)
-            .TrimStart(FieldKeyConstants.MetadataDelimiter)
-            .TrimStart();
+        var colonIndex = input.IndexOf(FieldKeyConstants.SectionDelimiter);
+        if (colonIndex >= 0)
+            input = input.Substring(colonIndex + 1);
+
+        input = input.Trim();
 
         if (DateTime.TryParseExact(input, dateFormat, provider, DateTimeStyles.AssumeUniversal, out var date))
             return date.ToUniversalTime();
