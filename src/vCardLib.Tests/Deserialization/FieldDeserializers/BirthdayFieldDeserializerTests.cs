@@ -52,4 +52,15 @@ public class BirthdayFieldDeserializerTests
         result.ShouldNotBeNull();
         (result != null ? result.Value - DateTime.MinValue : (TimeSpan?)null).ShouldBe(timeSpan);
     }
+
+    [Test]
+    public void Read_ValueContainingFieldKey_ReturnsCorrectValue()
+    {
+        const string input = "BDAY:19900515";
+        var deserializer = new BirthdayFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.ShouldNotBeNull();
+        result.ShouldBe(new DateTime(1990, 5, 15, 0, 0, 0, DateTimeKind.Utc));
+    }
 }

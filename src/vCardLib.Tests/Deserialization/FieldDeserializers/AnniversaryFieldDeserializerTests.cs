@@ -73,4 +73,15 @@ public class AnniversaryFieldDeserializerTests
         result.ShouldNotBeNull();
         (result != null ? result.Value - DateTime.MinValue : (TimeSpan?)null).ShouldBe(timeSpan);
     }
+
+    [Test]
+    public void Read_ValueContainingAnniversarySubstring_ReturnsCorrectValue()
+    {
+        const string input = "ANNIVERSARY:19901021";
+        IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.ShouldNotBeNull();
+        result.ShouldBe(new DateTime(1990, 10, 21, 0, 0, 0, DateTimeKind.Utc));
+    }
 }

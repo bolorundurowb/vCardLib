@@ -59,4 +59,16 @@ public class OrganizationFieldDeserializerTests
         result.Value.PrimaryUnit.ShouldBeNull();
         result.Value.SecondaryUnit.ShouldBeNull();
     }
+
+    [Test]
+    public void Read_ValueContainingOrgSubstring_ReturnsCorrectValue()
+    {
+        const string input = "ORG:ORG:Tech;Division";
+        IV4FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.ShouldNotBeNull();
+        result.Value.Name.ShouldBe("ORG:Tech");
+        result.Value.PrimaryUnit.ShouldBe("Division");
+    }
 }
