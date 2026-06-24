@@ -8,12 +8,12 @@ namespace vCardLib.Models;
 /// Class to store the various vCard contact details
 /// </summary>
 // ReSharper disable once InconsistentNaming
-public class vCard
+public class vCard(vCardVersion version)
 {
     /// <summary>
     /// The version of the vcf file
     /// </summary>
-    public vCardVersion Version { get; private set; }
+    public vCardVersion Version { get; private set; } = version;
 
     /// <summary>
     /// Components of the name of the object the vCard represents.
@@ -151,6 +151,4 @@ public class vCard
     /// All other fields not defined in the spec
     /// </summary>
     public List<KeyValuePair<string, string>> CustomFields { get; set; } = [];
-
-    public vCard(vCardVersion version) => Version = version;
 }
