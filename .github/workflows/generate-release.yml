@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Resolve revision range and package versions
+      - name: Resolve package version and release eligibility
         id: meta
         run: |
           set -euo pipefail
@@ -52,37 +52,19 @@ jobs:
 
           EVENT_NAME="${{ github.event_name }}"
           if [[ "$EVENT_NAME" == "push" ]]; then
-            BEFORE="${{ github.event.before }}"
-            AFTER="${{ github.sha }}"
-            if [[ -z "$BEFORE" || "$BEFORE" =~ ^0{40}$ ]]; then
-              if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
-                BEFORE="$(git rev-parse HEAD^)"
-              else
-                BEFORE=""
-              fi
-            fi
+            REV="${{ github.sha }}"
           elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            AFTER="HEAD"
-            if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
-              BEFORE="$(git rev-parse HEAD^)"
-            else
-              BEFORE=""
-            fi
+            REV="HEAD"
           else
             echo "::error::Unsupported event: $EVENT_NAME"
             exit 1
           fi
 
-          CURRENT="$(package_version_from "$AFTER")"
-          PREVIOUS="$(package_version_from "$BEFORE")"
-
-          echo "before_sha=${BEFORE:-}" >> "$GITHUB_OUTPUT"
-          echo "after_sha=${AFTER}" >> "$GITHUB_OUTPUT"
+          CURRENT="$(package_version_from "$REV")"
           echo "current_version=${CURRENT}" >> "$GITHUB_OUTPUT"
-          echo "previous_version=${PREVIOUS}" >> "$GITHUB_OUTPUT"
 
           if [[ -z "$CURRENT" ]]; then
-            echo "::error::Could not read <PackageVersion> from ${PACKAGE_PROJECT} at ${AFTER}. Ensure the property is set and well-formed."
+            echo "::error::Could not read <PackageVersion> from ${PACKAGE_PROJECT} at ${REV}. Ensure the property is set and well-formed."
             exit 1
           fi
 
@@ -91,45 +73,30 @@ jobs:
             exit 1
           fi
 
-          if [[ "$CURRENT" == "$PREVIOUS" ]]; then
-            echo "result=no_version_change" >> "$GITHUB_OUTPUT"
-            echo "No <PackageVersion> change between revisions (${PREVIOUS:-<none>} -> ${CURRENT}). Skipping release."
+          git fetch --tags --force
+
+          if git rev-parse -q --verify "refs/tags/${CURRENT}" >/dev/null 2>&1 \
+            || git ls-remote --tags origin "refs/tags/${CURRENT}" | grep -q .; then
+            echo "result=skip" >> "$GITHUB_OUTPUT"
+            echo "Tag '${CURRENT}' already exists. Skipping release."
             exit 0
           fi
 
-          echo "result=version_changed" >> "$GITHUB_OUTPUT"
-          echo "Version changed: ${PREVIOUS:-<none>} -> ${CURRENT}"
+          echo "result=release_needed" >> "$GITHUB_OUTPUT"
+          echo "No tag for version ${CURRENT}; proceeding with build and release."
 
-      - name: Skip remaining steps when no version change
-        if: steps.meta.outputs.result != 'version_changed'
+      - name: Skip remaining steps when release is not needed
+        if: steps.meta.outputs.result != 'release_needed'
         run: echo "Workflow finished without creating a release."
 
       - name: Setup .NET SDK
-        if: steps.meta.outputs.result == 'version_changed'
+        if: steps.meta.outputs.result == 'release_needed'
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
 
-      - name: Ensure release tag does not already exist
-        id: tag_check
-        if: steps.meta.outputs.result == 'version_changed'
-        run: |
-          set -euo pipefail
-          VERSION="${{ steps.meta.outputs.current_version }}"
-          git fetch --tags --force
-
-          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null 2>&1 \
-            || git ls-remote --tags origin "refs/tags/${VERSION}" | grep -q .; then
-            echo "result=exists" >> "$GITHUB_OUTPUT"
-            echo "Tag '${VERSION}' already exists on the remote. Skipping build and release."
-            exit 0
-          fi
-
-          echo "result=missing" >> "$GITHUB_OUTPUT"
-          echo "Tag '${VERSION}' is not present; proceeding with build and release."
-
       - name: Restore, build, and pack
-        if: steps.meta.outputs.result == 'version_changed' && steps.tag_check.outcome == 'success' && steps.tag_check.outputs.result == 'missing'
+        if: steps.meta.outputs.result == 'release_needed'
         working-directory: ./src
         run: |
           set -euo pipefail
@@ -153,7 +120,7 @@ jobs:
           fi
 
       - name: Create annotated tag and GitHub release
-        if: steps.meta.outputs.result == 'version_changed' && steps.tag_check.outcome == 'success' && steps.tag_check.outputs.result == 'missing'
+        if: steps.meta.outputs.result == 'release_needed'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -170,7 +137,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null 2>&1; then
+          if git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null 2>&1 \
+            || git ls-remote --tags origin "refs/tags/${VERSION}" | grep -q .; then
             echo "::error::Tag ${VERSION} appeared after the initial check; aborting to avoid duplicates."
             exit 1
           fi
