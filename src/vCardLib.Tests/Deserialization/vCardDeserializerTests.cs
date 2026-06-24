@@ -260,24 +260,30 @@ public class vCardDeserializerTests
     }
 
     [Test]
-    public void FromContent_TrailingSpacesAfterEndToken_Parses()
+    public void FromContent_TrailingSpacesOnEndLine_ReturnsNoCards()
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Padded\nEND:VCARD   \t";
         var vcards = vCardDeserializer.FromContent(content).ToList();
 
-        vcards.Count.ShouldBe(1);
-        vcards[0].FormattedName.ShouldBe("Padded");
+        vcards.Count.ShouldBe(0);
     }
 
     [Test]
-    public void FromContent_BeginEndTokensCaseInsensitive_Parses()
+    public void FromContent_LowercaseBeginToken_ThrowsException()
     {
-        var content = "begin:vcard\nVERSION:3.0\nFN:Case\nend:vcard";
-        var vcards = vCardDeserializer.FromContent(content).ToList();
+        var content = "begin:vcard\nVERSION:3.0\nFN:Case\nEND:VCARD";
 
-        vcards.Count.ShouldBe(1);
-        vcards[0].FormattedName.ShouldBe("Case");
-        vcards[0].Version.ShouldBe(vCardLib.Enums.vCardVersion.v3);
+        Should.Throw<Exception>(() => vCardDeserializer.FromContent(content).ToList())
+            .Message.ShouldContain("A vCard must begin with 'BEGIN:VCARD'");
+    }
+
+    [Test]
+    public void FromContent_LowercaseEndToken_ThrowsException()
+    {
+        var content = "BEGIN:VCARD\nVERSION:3.0\nFN:Case\nend:vcard";
+
+        Should.Throw<Exception>(() => vCardDeserializer.FromContent(content).ToList())
+            .Message.ShouldContain("A vCard must end with 'END:VCARD'");
     }
 
     [Test]
