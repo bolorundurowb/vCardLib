@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class AnniversaryFieldDeserializerTests
 {
     [Test]
-    public void Read_V2Version_ReturnsNull()
+    public void Read_V2_ReturnsNull()
     {
         const string input = "ANNIVERSARY:19901021";
         IV2FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -20,7 +20,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3Version_ReturnsNull()
+    public void Read_V3_ReturnsNull()
     {
         const string input = "ANNIVERSARY:19901021";
         IV3FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -40,7 +40,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void Read_DateOnly_ReturnsCorrectValue()
+    public void Read_DateOnly_ReturnsExpectedValue()
     {
         const string input = "ANNIVERSARY:19901021";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -51,7 +51,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void Read_DateAndTime_ReturnsCorrectValue()
+    public void Read_DateAndTime_ReturnsExpectedValue()
     {
         const string input = "ANNIVERSARY:20121201T134211Z";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -62,7 +62,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void Read_TimeOnly_ReturnsCorrectValue()
+    public void Read_TimeOnly_ReturnsExpectedValue()
     {
         const string input = "ANNIVERSARY:0415";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();
@@ -75,7 +75,7 @@ public class AnniversaryFieldDeserializerTests
     }
 
     [Test]
-    public void Read_ValueContainingAnniversarySubstring_ReturnsCorrectValue()
+    public void Read_ValueContainingAnniversarySubstring_ReturnsExpectedValue()
     {
         const string input = "ANNIVERSARY:19901021";
         IV4FieldDeserializer<DateTime?> deserializer = new AnniversaryFieldDeserializer();

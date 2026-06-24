@@ -36,7 +36,7 @@ public class MemberFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_ReturnsCorrectString()
+    public void Write_V4_ReturnsExpectedWireFormat()
     {
         IV4FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("mailto:subscriber@example.com");
@@ -45,7 +45,7 @@ public class MemberFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_UrnMember_ReturnsCorrectString()
+    public void Write_V4_UrnMember_ReturnsExpectedWireFormat()
     {
         IV4FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("urn:uuid:550e8400-e29b-41d4-a716-446655440000");
@@ -54,7 +54,7 @@ public class MemberFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_HttpUri_ReturnsCorrectString()
+    public void Write_V4_HttpUri_ReturnsExpectedWireFormat()
     {
         IV4FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("http://directory.example.com/pdir/jdoe");

@@ -33,7 +33,7 @@ public class AddressFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2_SimpleAddress_ReturnsCorrectString()
+    public void Write_V2_SimpleAddress_ReturnsExpectedWireFormat()
     {
         var address = SampleAddress();
         IV2FieldSerializer<Address> serializer = new AddressFieldSerializer();
@@ -43,7 +43,7 @@ public class AddressFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3_SimpleAddress_ReturnsCorrectString()
+    public void Write_V3_SimpleAddress_ReturnsExpectedWireFormat()
     {
         var address = SampleAddress();
         IV3FieldSerializer<Address> serializer = new AddressFieldSerializer();
@@ -53,7 +53,7 @@ public class AddressFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_SimpleAddress_ReturnsCorrectString()
+    public void Write_V4_SimpleAddress_ReturnsExpectedWireFormat()
     {
         var address = SampleAddress();
         IV4FieldSerializer<Address> serializer = new AddressFieldSerializer();

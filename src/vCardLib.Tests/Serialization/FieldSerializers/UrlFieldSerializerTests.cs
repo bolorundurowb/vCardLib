@@ -28,7 +28,7 @@ public class UrlFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2Version_ReturnsCorrectString()
+    public void Write_V2_ReturnsExpectedWireFormat()
     {
         IV2FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
@@ -37,7 +37,7 @@ public class UrlFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3Version_ReturnsCorrectString()
+    public void Write_V3_ReturnsExpectedWireFormat()
     {
         IV3FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
@@ -46,7 +46,7 @@ public class UrlFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4Version_ReturnsCorrectString()
+    public void Write_V4_ReturnsExpectedWireFormat()
     {
         IV4FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);

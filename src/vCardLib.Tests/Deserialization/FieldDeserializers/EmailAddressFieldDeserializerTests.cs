@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class EmailAddressFieldDeserializerTests
 {
     [Test]
-    public void Read_V2SimpleInput_ReturnsCorrectValue()
+    public void Read_V2_SimpleInput_ReturnsExpectedValue()
     {
         const string input = "EMAIL:johndoe@hotmail.com";
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
@@ -23,7 +23,7 @@ public class EmailAddressFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3ComplexInput_ReturnsCorrectValue()
+    public void Read_V3_ComplexInput_ReturnsExpectedValue()
     {
         const string input = "EMAIL;type=INTERNET;type=WORK;pref:johnDoe@example.org";
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
@@ -36,7 +36,7 @@ public class EmailAddressFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4ComplexInput_ReturnsCorrectValue()
+    public void Read_V4_ComplexInput_ReturnsExpectedValue()
     {
         const string input = "EMAIL;type=Aol;type=HOME;pref=1:johnDoe@example.org";
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
@@ -71,7 +71,7 @@ public class EmailAddressFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4_WithExplicitPrefValue_ReturnsCorrectPreference()
+    public void Read_V4_WithExplicitPrefValue_ReturnsExpectedPreference()
     {
         const string input = "EMAIL;PREF=2:test@example.com";
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();

@@ -8,27 +8,24 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 [TestFixture]
 public class TimezoneFieldSerializerTests
 {
-    [Test]
-    public void WriteV2_ReturnsCorrectString()
+    [TestCase("-05:00", "TZ:-05:00")]
+    public void Write_V2_ReturnsExpectedWireFormat(string timezone, string expected)
     {
         var serializer = new TimezoneFieldSerializer();
-        var result = ((IV2FieldSerializer<string>)serializer).Write("-05:00");
-        result.ShouldBe("TZ:-05:00");
+        ((IV2FieldSerializer<string>)serializer).Write(timezone).ShouldBe(expected);
+    }
+
+    [TestCase("-05:00", "TZ:-05:00")]
+    public void Write_V3_ReturnsExpectedWireFormat(string timezone, string expected)
+    {
+        var serializer = new TimezoneFieldSerializer();
+        ((IV3FieldSerializer<string>)serializer).Write(timezone).ShouldBe(expected);
     }
 
     [Test]
-    public void WriteV3_ReturnsCorrectString()
+    public void Write_V4_ReturnsExpectedWireFormat()
     {
         var serializer = new TimezoneFieldSerializer();
-        var result = ((IV3FieldSerializer<string>)serializer).Write("-05:00");
-        result.ShouldBe("TZ:-05:00");
-    }
-
-    [Test]
-    public void WriteV4_ReturnsCorrectString()
-    {
-        var serializer = new TimezoneFieldSerializer();
-        var result = ((IV4FieldSerializer<string>)serializer).Write("America/New_York");
-        result.ShouldBe("TZ:America/New_York");
+        ((IV4FieldSerializer<string>)serializer).Write("America/New_York").ShouldBe("TZ:America/New_York");
     }
 }

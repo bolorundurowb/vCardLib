@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class AgentFieldDeserializerTests
 {
     [Test]
-    public void Read_V4Version_ReturnsNull()
+    public void Read_V4_ReturnsNull()
     {
         const string input = "AGENT:http://mi6.gov.uk/007";
         IV4FieldDeserializer<string?> deserializer = new AgentFieldDeserializer();
@@ -19,7 +19,7 @@ public class AgentFieldDeserializerTests
     }
 
     [Test]
-    public void Read_SimpleInput_ReturnsCorrectValue()
+    public void Read_SimpleInput_ReturnsExpectedValue()
     {
         const string input = "AGENT:http://mi6.gov.uk/007";
         var deserializer = new AgentFieldDeserializer();
@@ -30,7 +30,7 @@ public class AgentFieldDeserializerTests
     }
 
     [Test]
-    public void Read_ValueTypeInput_ReturnsCorrectValue()
+    public void Read_ValueTypeInput_ReturnsExpectedValue()
     {
         const string input = "AGENT;VALUE=uri:CID:JQPUBLIC.part3.960129T083020.xyzMail@host3.com";
         var deserializer = new AgentFieldDeserializer();
@@ -41,7 +41,7 @@ public class AgentFieldDeserializerTests
     }
 
     [Test]
-    public void Read_NestedInput_ReturnsCorrectValue()
+    public void Read_NestedInput_ReturnsExpectedValue()
     {
         const string input = @"AGENT:BEGIN:VCARD\nFN:Susan Thomas\nTEL:+1-919-555-1234\nEMAIL\;INTERNET:sthomas@host.com\nEND:VCARD\n";
         var deserializer = new AgentFieldDeserializer();
@@ -72,7 +72,7 @@ public class AgentFieldDeserializerTests
     }
 
     [Test]
-    public void Read_QuotedLabelWithColon_ReturnsCorrectValue()
+    public void Read_QuotedLabelWithColon_ReturnsExpectedValue()
     {
         const string input = @"AGENT;LABEL=""My:Label"":value";
         var deserializer = new AgentFieldDeserializer();
@@ -82,7 +82,7 @@ public class AgentFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V2Version_ReturnsCorrectValue()
+    public void Read_V2_ReturnsExpectedValue()
     {
         const string input = "AGENT:http://example.com/agent";
         IV2FieldDeserializer<string> deserializer = new AgentFieldDeserializer();
@@ -92,7 +92,7 @@ public class AgentFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3Version_ReturnsCorrectValue()
+    public void Read_V3_ReturnsExpectedValue()
     {
         const string input = "AGENT:http://example.com/agent";
         IV3FieldDeserializer<string> deserializer = new AgentFieldDeserializer();

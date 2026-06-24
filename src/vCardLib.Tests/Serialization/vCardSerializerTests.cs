@@ -166,19 +166,6 @@ public class vCardSerializerTests
         result.ShouldContain("VERSION:4.0");
     }
 
-    [Test]
-    public void Serialize_V3_ReturnsCorrectVersion()
-    {
-        var card = new vCard(vCardVersion.v3)
-        {
-            FormattedName = "John Doe"
-        };
-
-        var result = vCardSerializer.Serialize(card);
-
-        result.ShouldContain("VERSION:3.0");
-    }
-
     [TestCase(vCardVersion.v3)]
     [TestCase(vCardVersion.v4)]
     public void Serialize_UsesStrictCrlfLineEndings(vCardVersion version)

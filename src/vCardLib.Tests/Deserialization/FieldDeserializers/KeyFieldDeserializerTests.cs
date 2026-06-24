@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class KeyFieldDeserializerTests
 {
     [Test]
-    public void V2ShouldParseSimple()
+    public void Read_V2_SimplePgpKey_ReturnsExpectedValue()
     {
         const string input = "KEY;PGP:http://example.com/key.pgp";
         IV2FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
@@ -22,7 +22,7 @@ public class KeyFieldDeserializerTests
     }
 
     [Test]
-    public void V2ShouldParseBase64()
+    public void Read_V2_Base64PgpKey_ReturnsExpectedValue()
     {
         const string input = @"KEY;PGP;ENCODING=BASE64:MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
          wdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlIENbW11bmljYX
@@ -62,7 +62,7 @@ public class KeyFieldDeserializerTests
     }
 
     [Test]
-    public void V3ShouldParseSimple()
+    public void Read_V3_SimplePgpKey_ReturnsExpectedValue()
     {
         const string input = "KEY;TYPE=PGP:http://example.com/key.pgp";
         IV3FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
@@ -74,7 +74,7 @@ public class KeyFieldDeserializerTests
     }
 
     [Test]
-    public void V3ShouldParseBase64()
+    public void Read_V3_Base64PgpKey_ReturnsExpectedValue()
     {
         const string input = @"KEY;TYPE=PGP;ENCODING=b:MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
          wdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlIENbW11bmljYX
@@ -114,7 +114,7 @@ public class KeyFieldDeserializerTests
     }
 
     [Test]
-    public void V4ShouldParseSimple()
+    public void Read_V4_SimplePgpKey_ReturnsExpectedValue()
     {
         const string input = "KEY;MEDIATYPE=application/pgp-keys:ftp://example.com/keys/jdoe";
         IV4FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
@@ -127,7 +127,7 @@ public class KeyFieldDeserializerTests
     }
 
     [Test]
-    public void V4ShouldParseBase64()
+    public void Read_V4_Base64PgpKey_ReturnsExpectedValue()
     {
         const string input = @"KEY:data:application/pgp-keys;base64,MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
          wdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlIENbW11bmljYX

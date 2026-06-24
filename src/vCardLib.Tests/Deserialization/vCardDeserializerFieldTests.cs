@@ -8,14 +8,13 @@ using vCardLib.Enums;
 namespace vCardLib.Tests.Deserialization;
 
 /// <summary>
-/// Integration-style <see cref="vCardDeserializer.FromContent"/> cases to exercise many
-/// <see cref="vCardDeserializer"/> and field-deserializer branches (especially v4).
+/// Field-level integration tests for <see cref="vCardDeserializer.FromContent"/>.
 /// </summary>
 [TestFixture]
-public class vCardDeserializerRichContentTests
+public class vCardDeserializerFieldTests
 {
     [Test]
-    public void FromContent_V4_WithGeoKindGenderAndCategories_Parses()
+    public void FromContent_WhenV4WithGeoKindGenderAndCategories_ParsesFields()
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Rich\nGEO:12.5,-45.25\nKIND:group\nGENDER:O;non-binary\nCATEGORIES:alpha,beta\nEND:VCARD";
 
@@ -33,7 +32,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_WithTelEmailPhotoAdrAndCustom_Parses()
+    public void FromContent_WhenV4WithTelEmailPhotoAdrAndCustom_ParsesFields()
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Contact\nTEL:+15551234567\nEMAIL:me@example.org\nPHOTO:https://example.org/p.png\nADR:;;100 Main;City;ST;00000;US\nX-APP-ID:12345\nEND:VCARD";
 
@@ -47,7 +46,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_KindOrgAndDefaultIndividual_Parses()
+    public void FromContent_WhenV4WithKnownAndUnknownKind_ParsesExpectedKind()
     {
         var org = "BEGIN:VCARD\nVERSION:4.0\nFN:Org\nKIND:org\nEND:VCARD";
         vCardDeserializer.FromContent(org).Single().Kind.ShouldBe(ContactKind.Organization);
@@ -57,7 +56,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V3_WithOptionalFields_Parses()
+    public void FromContent_WhenV3WithGeoAndCategories_ParsesFields()
     {
         var content = "BEGIN:VCARD\nVERSION:3.0\nFN:V3\nGEO:1;2\nCATEGORIES:c1,c2\nEND:VCARD";
 
@@ -68,7 +67,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V2_WithGeoAndCategories_Parses()
+    public void FromContent_WhenV2WithGeoAndCategories_ParsesFields()
     {
         var content = "BEGIN:VCARD\nVERSION:2.1\nFN:V2\nGEO:3;4\nCATEGORIES:one,two\nEND:VCARD";
 
@@ -79,7 +78,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_ScalarProfileFields_Parses()
+    public void FromContent_WhenV4WithScalarProfileFields_ParsesFields()
     {
         var content =
             "BEGIN:VCARD\nVERSION:4.0\nN:Doe;Jane;;;\nFN:Jane Doe\nUID:urn:uuid:abc\nTITLE:Director\nTZ:Europe/London\nBDAY:19850315\nREV:20240601T101530Z\nANNIVERSARY:20100704\nORG:Acme Corp;R&D\nEND:VCARD";
@@ -101,26 +100,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V3_WithUrl_Parses()
-    {
-        var content = "BEGIN:VCARD\nVERSION:3.0\nFN:Jane\nURL:http://example.org\nEND:VCARD";
-
-        var card = vCardDeserializer.FromContent(content).Single();
-
-        card.Url.ShouldNotBeNull();
-        card.Url!.Value.Value.ShouldBe("http://example.org");
-    }
-
-    [Test]
-    public void FromContent_V4_WithUrl_ThrowsInvalidCastException()
-    {
-        var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Jane\nURL:http://example.org\nEND:VCARD";
-
-        Should.Throw<InvalidCastException>(() => vCardDeserializer.FromContent(content).Single());
-    }
-
-    [Test]
-    public void FromContent_V4_WithLanguage_Parses()
+    public void FromContent_WhenV4WithLanguage_ParsesField()
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Lang\nLANG:en-GB\nEND:VCARD";
 
@@ -131,7 +111,26 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_MultiplePhonesEmailsAndAddresses_ParsesAll()
+    public void FromContent_WhenV3WithUrl_ParsesField()
+    {
+        var content = "BEGIN:VCARD\nVERSION:3.0\nFN:Jane\nURL:http://example.org\nEND:VCARD";
+
+        var card = vCardDeserializer.FromContent(content).Single();
+
+        card.Url.ShouldNotBeNull();
+        card.Url!.Value.Value.ShouldBe("http://example.org");
+    }
+
+    [Test]
+    public void FromContent_WhenV4WithUrl_ThrowsInvalidCastException()
+    {
+        var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Jane\nURL:http://example.org\nEND:VCARD";
+
+        Should.Throw<InvalidCastException>(() => vCardDeserializer.FromContent(content).Single());
+    }
+
+    [Test]
+    public void FromContent_WhenV4WithMultiplePhonesEmailsAndAddresses_ParsesAll()
     {
         var content =
             "BEGIN:VCARD\nVERSION:4.0\nFN:Multi\nTEL:+111\nTEL:+222\nEMAIL:one@example.org\nEMAIL:two@example.org\nADR:;;1 Main;A;S;1;US\nADR:;;2 Oak;B;T;2;CA\nEND:VCARD";
@@ -149,7 +148,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_MultiplePhotos_ParsesAll()
+    public void FromContent_WhenV4WithMultiplePhotos_ParsesAll()
     {
         var content =
             "BEGIN:VCARD\nVERSION:4.0\nFN:Photos\nPHOTO:https://example.org/a.png\nPHOTO:https://example.org/b.png\nEND:VCARD";
@@ -162,7 +161,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_WithMembers_Parses()
+    public void FromContent_WhenV4WithMembers_ParsesAll()
     {
         var content =
             "BEGIN:VCARD\nVERSION:4.0\nFN:Group\nKIND:group\nMEMBER:mailto:one@example.org\nMEMBER:mailto:two@example.org\nEND:VCARD";
@@ -175,7 +174,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V3_WithNickname_Parses()
+    public void FromContent_WhenV3WithNickname_ParsesField()
     {
         var content = "BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nNICKNAME:Johnny\nEND:VCARD";
 
@@ -185,7 +184,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V2_WithNickname_ReturnsNull()
+    public void FromContent_WhenV2WithNickname_ReturnsNull()
     {
         var content = "BEGIN:VCARD\nVERSION:2.1\nFN:John Doe\nNICKNAME:Johnny\nEND:VCARD";
 
@@ -195,7 +194,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_WithNameAndNote_ParsesBoth()
+    public void FromContent_WhenV4WithNameAndNote_ParsesBoth()
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nN:Smith;Sam;;;\nFN:Sam Smith\nNOTE:Important client\nEND:VCARD";
 
@@ -207,7 +206,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_LogoLineStoredAsCustomField()
+    public void FromContent_WhenV4WithLogoLine_StoresCustomField()
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Logo\nLOGO:https://example.org/logo.png\nEND:VCARD";
 
@@ -220,7 +219,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V4_AgentAndMailer_ReturnNull()
+    public void FromContent_WhenV4WithAgentAndMailer_ReturnsNull()
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:V4\nAGENT:Rep\nMAILER:Client\nEND:VCARD";
 
@@ -231,7 +230,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V3_WithAgentMailerAndProdId_Parses()
+    public void FromContent_WhenV3WithAgentMailerAndProdId_ParsesFields()
     {
         var content = "BEGIN:VCARD\nVERSION:3.0\nFN:V3\nAGENT:Rep\nMAILER:Thunderbird\nPRODID:-//Example//vCard//EN\nEND:VCARD";
 
@@ -242,7 +241,7 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_V2_WithMailer_Parses()
+    public void FromContent_WhenV2WithMailer_ParsesField()
     {
         var content = "BEGIN:VCARD\nVERSION:2.1\nFN:V2\nMAILER:PicoMail\nEND:VCARD";
 
@@ -252,10 +251,9 @@ public class vCardDeserializerRichContentTests
     }
 
     [Test]
-    public void FromContent_MultipleCustomFields_ParsesAll()
+    public void FromContent_WhenMultipleCustomFields_ParsesAll()
     {
-        var content =
-            "BEGIN:VCARD\nVERSION:4.0\nFN:Custom\nX-FOO:bar\nX-BAZ:qux\nEND:VCARD";
+        var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Custom\nX-FOO:bar\nX-BAZ:qux\nEND:VCARD";
 
         var card = vCardDeserializer.FromContent(content).Single();
 

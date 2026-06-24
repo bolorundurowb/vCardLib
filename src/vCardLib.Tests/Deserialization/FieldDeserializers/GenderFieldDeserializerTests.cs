@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class GenderFieldDeserializerTests
 {
     [Test]
-    public void Read_V2Version_ReturnsNull()
+    public void Read_V2_ReturnsNull()
     {
         const string input = "GENDER:M";
         IV2FieldDeserializer<Gender?> deserializer = new GenderFieldDeserializer();
@@ -21,7 +21,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3Version_ReturnsNull()
+    public void Read_V3_ReturnsNull()
     {
         const string input = "GENDER:M";
         IV3FieldDeserializer<Gender?> deserializer = new GenderFieldDeserializer();
@@ -31,7 +31,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void Read_SexOnly_ReturnsCorrectValue()
+    public void Read_SexOnly_ReturnsExpectedValue()
     {
         const string input = "GENDER:M";
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
@@ -43,7 +43,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void Read_SexAndGenderIdentity_ReturnsCorrectValue()
+    public void Read_SexAndGenderIdentity_ReturnsExpectedValue()
     {
         const string input = "GENDER:F;grrrl";
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
@@ -56,7 +56,7 @@ public class GenderFieldDeserializerTests
     }
 
     [Test]
-    public void Read_GenderIdentityOnly_ReturnsCorrectValue()
+    public void Read_GenderIdentityOnly_ReturnsExpectedValue()
     {
         const string input = "GENDER:;it's complicated";
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();

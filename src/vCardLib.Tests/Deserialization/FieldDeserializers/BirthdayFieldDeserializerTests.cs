@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
@@ -19,7 +19,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void Read_DateOnly_ReturnsCorrectValue()
+    public void Read_DateOnly_ReturnsExpectedValue()
     {
         const string input = "BDAY:19901021";
         var deserializer = new BirthdayFieldDeserializer();
@@ -30,7 +30,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void Read_DateAndTime_ReturnsCorrectValue()
+    public void Read_DateAndTime_ReturnsExpectedValue()
     {
         const string input = "BDAY:20121201T134211Z";
         var deserializer = new BirthdayFieldDeserializer();
@@ -41,7 +41,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void Read_TimeOnly_ReturnsCorrectValue()
+    public void Read_TimeOnly_ReturnsExpectedValue()
     {
         const string input = "BDAY:0415";
         var deserializer = new BirthdayFieldDeserializer();
@@ -54,7 +54,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void Read_ValueContainingFieldKey_ReturnsCorrectValue()
+    public void Read_ValueContainingFieldKey_ReturnsExpectedValue()
     {
         const string input = "BDAY:19900515";
         var deserializer = new BirthdayFieldDeserializer();

@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class NoteFieldSerializerTests
 {
     [Test]
-    public void Write_Note_ReturnsCorrectString()
+    public void Write_Note_ReturnsExpectedWireFormat()
     {
         var serializer = new NoteFieldSerializer();
         var result = ((vCardLib.Serialization.Interfaces.IV2FieldSerializer<string>)serializer).Write("This is a note");

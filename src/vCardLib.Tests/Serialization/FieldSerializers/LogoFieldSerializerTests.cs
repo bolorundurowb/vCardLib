@@ -19,7 +19,7 @@ public class LogoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2SimpleLogo_ReturnsCorrectString()
+    public void Write_V2_SimpleLogo_ReturnsExpectedWireFormat()
     {
         var logo = new Photo("http://example.com/logo.png");
         IV2FieldSerializer<Photo> serializer = new LogoFieldSerializer();
@@ -29,7 +29,7 @@ public class LogoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2WithEncoding_ReturnsCorrectString()
+    public void Write_V2_WithEncoding_ReturnsExpectedWireFormat()
     {
         var logo = new Photo("SGVsbG8=", "BASE64", "PNG");
         IV2FieldSerializer<Photo> serializer = new LogoFieldSerializer();
@@ -39,7 +39,7 @@ public class LogoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3SimpleLogo_ReturnsCorrectString()
+    public void Write_V3_SimpleLogo_ReturnsExpectedWireFormat()
     {
         var logo = new Photo("http://example.com/logo.png", null, null, null, "http://example.com/logo.png");
         IV3FieldSerializer<Photo> serializer = new LogoFieldSerializer();
@@ -49,7 +49,7 @@ public class LogoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3WithEncoding_ReturnsCorrectString()
+    public void Write_V3_WithEncoding_ReturnsExpectedWireFormat()
     {
         var logo = new Photo("SGVsbG8=", "BASE64", null, null, "SGVsbG8=");
         IV3FieldSerializer<Photo> serializer = new LogoFieldSerializer();
@@ -59,7 +59,7 @@ public class LogoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4WithMimeType_ReturnsCorrectString()
+    public void Write_V4_WithMimeType_ReturnsExpectedWireFormat()
     {
         var logo = new Photo("SGVsbG8=", "base64", null, "image/png", "SGVsbG8=");
         IV4FieldSerializer<Photo> serializer = new LogoFieldSerializer();
@@ -117,7 +117,7 @@ public class LogoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2WithEncoding_RoundTripsThroughDeserializer()
+    public void Write_V2_WithEncoding_RoundTripsThroughDeserializer()
     {
         var logo = new Photo("SGVsbG8=", "BASE64", "PNG");
         IV2FieldSerializer<Photo> serializer = new LogoFieldSerializer();

@@ -19,7 +19,7 @@ public class VersionFieldSerializerTests
     [TestCase(vCardVersion.v2, "VERSION:2.1")]
     [TestCase(vCardVersion.v3, "VERSION:3.0")]
     [TestCase(vCardVersion.v4, "VERSION:4.0")]
-    public void Write_ReturnsCorrectString(vCardVersion version, string expected)
+    public void Write_ReturnsExpectedWireFormat(vCardVersion version, string expected)
     {
         var result = VersionFieldSerializer.Write(version);
         result.ShouldBe(expected);

@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 
@@ -58,7 +58,7 @@ public class CategoriesFieldDeserializerTests
     }
 
     [Test]
-    public void Read_ValueContainingCategoriesSubstring_ReturnsCorrectValue()
+    public void Read_ValueContainingCategoriesSubstring_ReturnsExpectedValue()
     {
         const string input = "CATEGORIES:CATEGORIES,test";
         var deserializer = new CategoriesFieldDeserializer();

@@ -19,7 +19,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2SimplePhoto_ReturnsCorrectString()
+    public void Write_V2_SimplePhoto_ReturnsExpectedWireFormat()
     {
         var photo = new Photo("http://example.com/photo.jpg");
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
@@ -29,7 +29,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2WithEncoding_ReturnsCorrectString()
+    public void Write_V2_WithEncoding_ReturnsExpectedWireFormat()
     {
         var photo = new Photo("SGVsbG8=", "BASE64");
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
@@ -39,7 +39,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2WithTypeAndEncoding_ReturnsCorrectString()
+    public void Write_V2_WithTypeAndEncoding_ReturnsExpectedWireFormat()
     {
         var photo = new Photo("SGVsbG8=", "BASE64", "PNG");
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
@@ -49,7 +49,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3SimplePhoto_ReturnsCorrectString()
+    public void Write_V3_SimplePhoto_ReturnsExpectedWireFormat()
     {
         var photo = new Photo("http://example.com/photo.jpg", null, null, null, "uri");
         IV3FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
@@ -59,7 +59,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3WithEncoding_ReturnsCorrectString()
+    public void Write_V3_WithEncoding_ReturnsExpectedWireFormat()
     {
         var photo = new Photo("SGVsbG8=", "BASE64", null, null, "SGVsbG8=");
         IV3FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
@@ -69,7 +69,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4WithMimeType_ReturnsCorrectString()
+    public void Write_V4_WithMimeType_ReturnsExpectedWireFormat()
     {
         var photo = new Photo("SGVsbG8=", "base64", null, "image/jpeg", "SGVsbG8=");
         IV4FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
@@ -127,7 +127,7 @@ public class PhotoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2WithEncoding_RoundTripsThroughDeserializer()
+    public void Write_V2_WithEncoding_RoundTripsThroughDeserializer()
     {
         var photo = new Photo("SGVsbG8=", "BASE64", "GIF");
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();

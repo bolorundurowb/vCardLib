@@ -19,7 +19,7 @@ public class GeoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2_ReturnsCorrectString()
+    public void Write_V2_ReturnsExpectedWireFormat()
     {
         var geo = new Geo(37.386013f, -122.08293f);
         IV2FieldSerializer<Geo> serializer = new GeoFieldSerializer();
@@ -29,7 +29,7 @@ public class GeoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3_ReturnsCorrectString()
+    public void Write_V3_ReturnsExpectedWireFormat()
     {
         var geo = new Geo(37.386013f, -122.08293f);
         IV3FieldSerializer<Geo> serializer = new GeoFieldSerializer();
@@ -39,7 +39,7 @@ public class GeoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_ReturnsCorrectString()
+    public void Write_V4_ReturnsExpectedWireFormat()
     {
         var geo = new Geo(37.386013f, -122.08293f);
         IV4FieldSerializer<Geo> serializer = new GeoFieldSerializer();
@@ -49,7 +49,7 @@ public class GeoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2_NegativeCoordinates_ReturnsCorrectString()
+    public void Write_V2_NegativeCoordinates_ReturnsExpectedWireFormat()
     {
         var geo = new Geo(-33.8688f, 151.2093f);
         IV2FieldSerializer<Geo> serializer = new GeoFieldSerializer();
@@ -59,7 +59,7 @@ public class GeoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V3_NegativeCoordinates_ReturnsCorrectString()
+    public void Write_V3_NegativeCoordinates_ReturnsExpectedWireFormat()
     {
         var geo = new Geo(-33.8688f, 151.2093f);
         IV3FieldSerializer<Geo> serializer = new GeoFieldSerializer();
@@ -69,7 +69,7 @@ public class GeoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_NegativeCoordinates_ReturnsCorrectString()
+    public void Write_V4_NegativeCoordinates_ReturnsExpectedWireFormat()
     {
         var geo = new Geo(-33.8688f, 151.2093f);
         IV4FieldSerializer<Geo> serializer = new GeoFieldSerializer();
@@ -79,7 +79,7 @@ public class GeoFieldSerializerTests
     }
 
     [Test]
-    public void Write_V4_ZeroCoordinates_ReturnsCorrectString()
+    public void Write_V4_ZeroCoordinates_ReturnsExpectedWireFormat()
     {
         var geo = new Geo(0f, 0f);
         IV4FieldSerializer<Geo> serializer = new GeoFieldSerializer();

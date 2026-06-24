@@ -8,43 +8,34 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 [TestFixture]
 public class MemberFieldDeserializerTests
 {
+    private const string Input = "MEMBER:mailto:subscriber1@example.com";
+
     [Test]
-    public void V2ShouldReturnNull()
+    public void Read_V2_ReturnsNull()
     {
-        const string input = "MEMBER:mailto:subscriber1@example.com";
         IV2FieldDeserializer<string?> deserializer = new MemberFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldBeNull();
+        deserializer.Read(Input).ShouldBeNull();
     }
 
     [Test]
-    public void V3ShouldReturnNull()
+    public void Read_V3_ReturnsNull()
     {
-        const string input = "MEMBER:mailto:subscriber1@example.com";
         IV3FieldDeserializer<string?> deserializer = new MemberFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldBeNull();
+        deserializer.Read(Input).ShouldBeNull();
     }
 
     [Test]
-    public void V4ShouldParseValue()
+    public void Read_V4_ReturnsExpectedValue()
     {
-        const string input = "MEMBER:mailto:subscriber1@example.com";
         IV4FieldDeserializer<string> deserializer = new MemberFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldBe("mailto:subscriber1@example.com");
+        deserializer.Read(Input).ShouldBe("mailto:subscriber1@example.com");
     }
 
     [Test]
-    public void V4ShouldParseWithSpaces()
+    public void Read_V4_WhenLineHasExtraSpaces_ReturnsExpectedValue()
     {
-        const string input = "MEMBER : mailto:subscriber1@example.com ";
+        const string spacedInput = "MEMBER : mailto:subscriber1@example.com ";
         IV4FieldDeserializer<string> deserializer = new MemberFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldBe("mailto:subscriber1@example.com");
+        deserializer.Read(spacedInput).ShouldBe("mailto:subscriber1@example.com");
     }
 }

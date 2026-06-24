@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -11,7 +11,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class TelephoneNumberFieldDeserializerTests
 {
     [Test]
-    public void Read_V2SimpleInput_ReturnsCorrectValue()
+    public void Read_V2_SimpleInput_ReturnsExpectedValue()
     {
         const string input = "TEL;TYPE=cell:(123) 555-5832";
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
@@ -23,7 +23,7 @@ public class TelephoneNumberFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3ComplexInput_ReturnsCorrectValue()
+    public void Read_V3_ComplexInput_ReturnsExpectedValue()
     {
         const string input = "TEL;TYPE=work,voice,pref,msg:+1-213-555-1234";
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
@@ -37,7 +37,7 @@ public class TelephoneNumberFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4ComplexInput_ReturnsCorrectValue()
+    public void Read_V4_ComplexInput_ReturnsExpectedValue()
     {
         const string input = @" TEL;VALUE=uri;PREF=1;TYPE=""voice,home"":tel:+1-555-555-5555;ext=5555";
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
@@ -73,7 +73,7 @@ public class TelephoneNumberFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3_WithExplicitPrefValue_ReturnsCorrectPreference()
+    public void Read_V3_WithExplicitPrefValue_ReturnsExpectedPreference()
     {
         const string input = "TEL;PREF=2:+1-555-555-5555";
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
@@ -84,7 +84,7 @@ public class TelephoneNumberFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4_WithExplicitPrefValue_ReturnsCorrectPreference()
+    public void Read_V4_WithExplicitPrefValue_ReturnsExpectedPreference()
     {
         const string input = "TEL;PREF=3:+1-555-555-5555";
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();

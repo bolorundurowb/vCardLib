@@ -9,11 +9,14 @@ using vCardLib.Serialization.Interfaces;
 
 namespace vCardLib.Tests.Serialization.FieldSerializers;
 
+/// <summary>
+/// Smoke tests for field serializers that do not yet have dedicated test fixtures.
+/// </summary>
 [TestFixture]
 public class MiscellaneousFieldSerializerTests
 {
     [Test]
-    public void AnniversaryFieldSerializer_WriteV4_ReturnsCorrectString()
+    public void Write_V4_Anniversary_ReturnsExpectedWireFormat()
     {
         var date = new DateTime(2000, 1, 1);
         var serializer = new AnniversaryFieldSerializer();
@@ -22,16 +25,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void BirthdayFieldSerializer_Write_ReturnsCorrectString()
-    {
-        var date = new DateTime(2000, 1, 1);
-        var serializer = new BirthdayFieldSerializer();
-        var result = serializer.Write(date);
-        result.ShouldBe("BDAY:20000101");
-    }
-
-    [Test]
-    public void GenderFieldSerializer_WriteV4_ReturnsCorrectString()
+    public void Write_V4_Gender_ReturnsExpectedWireFormat()
     {
         var gender = new Gender(BiologicalSex.Male, "Man");
         var serializer = new GenderFieldSerializer();
@@ -40,7 +34,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void OrganizationFieldSerializer_Write_ReturnsCorrectString()
+    public void Write_Organization_ReturnsExpectedWireFormat()
     {
         var org = new Organization("Company", "IT", "Dev");
         var serializer = new OrganizationFieldSerializer();
@@ -49,7 +43,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void FormattedNameSerializer_Write_ReturnsCorrectString()
+    public void Write_V2_FormattedName_ReturnsExpectedWireFormat()
     {
         var serializer = new FormattedNameSerializer();
         var result = ((IV2FieldSerializer<string>)serializer).Write("John Doe");
@@ -57,7 +51,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void CategoriesFieldSerializer_Write_ReturnsCorrectString()
+    public void Write_Categories_ReturnsExpectedWireFormat()
     {
         var serializer = new CategoriesFieldSerializer();
         var data = new List<string> { "Work", "Friend" };
@@ -66,15 +60,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void MemberFieldSerializer_WriteV4_ReturnsCorrectString()
-    {
-        var serializer = new MemberFieldSerializer();
-        var result = ((IV4FieldSerializer<string>)serializer).Write("mailto:john@example.com");
-        result.ShouldBe("MEMBER:mailto:john@example.com");
-    }
-
-    [Test]
-    public void AgentFieldSerializer_Write_ReturnsCorrectString()
+    public void Write_Agent_ReturnsExpectedWireFormat()
     {
         var serializer = new AgentFieldSerializer();
         var result = serializer.Write("http://example.com/agent");
@@ -82,7 +68,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void RevisionFieldSerializer_Write_ReturnsCorrectString()
+    public void Write_Revision_ReturnsExpectedWireFormat()
     {
         var serializer = new RevisionFieldSerializer();
         var date = new DateTime(2023, 10, 27, 10, 0, 0, DateTimeKind.Utc);
@@ -91,7 +77,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void UidFieldSerializer_Write_ReturnsCorrectString()
+    public void Write_Uid_ReturnsExpectedWireFormat()
     {
         var serializer = new UidFieldSerializer();
         var result = serializer.Write("12345");
@@ -99,14 +85,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void VersionFieldSerializer_Write_ReturnsCorrectString()
-    {
-        var result = VersionFieldSerializer.Write(vCardVersion.v3);
-        result.ShouldBe("VERSION:3.0");
-    }
-
-    [Test]
-    public void MailerFieldSerializer_WriteV2V3_ReturnsCorrectString()
+    public void Write_V2_Mailer_ReturnsExpectedWireFormat()
     {
         var serializer = new MailerFieldSerializer();
         var result = serializer.Write("PicoMail");
@@ -114,7 +93,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void CustomFieldSerializer_Write_ReturnsCorrectString()
+    public void Write_CustomField_ReturnsExpectedWireFormat()
     {
         var serializer = new CustomFieldSerializer();
         var result = serializer.Write(new KeyValuePair<string, string>("X-SOCIAL", "Twitter"));
@@ -122,7 +101,7 @@ public class MiscellaneousFieldSerializerTests
     }
 
     [Test]
-    public void KindSerializer_Write_ReturnsCorrectString()
+    public void Write_Kind_ReturnsExpectedWireFormat()
     {
         var serializer = new KindSerializer();
         var result = serializer.Write(ContactKind.Individual);

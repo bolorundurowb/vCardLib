@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -10,7 +10,7 @@ public class NoteFieldDeserializerTests
 {
 
     [Test]
-    public void Read_V3Version_ReturnsCorrectValue()
+    public void Read_V3_ReturnsExpectedValue()
     {
         const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
         IV3FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
@@ -21,7 +21,7 @@ public class NoteFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4Version_ReturnsCorrectValue()
+    public void Read_V4_ReturnsExpectedValue()
     {
         const string input = @"NOTE:This fax number is operational 0800 to 1715 EST\, Mon-Fri.";
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
