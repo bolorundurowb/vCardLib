@@ -135,9 +135,13 @@ jobs:
           set -euo pipefail
           mkdir -p "${GITHUB_WORKSPACE}/artifacts"
           dotnet restore "vCardLib/vCardLib.csproj"
+          dotnet build "vCardLib/vCardLib.csproj" \
+            --configuration Release \
+            --no-restore
           dotnet pack "vCardLib/vCardLib.csproj" \
             --configuration Release \
             --no-restore \
+            --no-build \
             --output "${GITHUB_WORKSPACE}/artifacts"
 
           shopt -s nullglob

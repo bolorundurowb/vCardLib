@@ -24,7 +24,6 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>vcard vcf contacts contact-management address-book dotnet csharp netstandard library parsing serializer deserialization serialization rfc6350 rfc2426 vcard21 vcard30 vcard40 open-source</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
