@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization;
@@ -242,5 +243,98 @@ public class vCardDeserializerTests
         var wire = "BEGIN:VCARD\r\nVERSION:4.0\r\nFN:Strict\r\nEND:VCARD\r\n";
         var vcards = vCardDeserializer.FromContent(wire).ToList();
         vcards[0].FormattedName.ShouldBe("Strict");
+    }
+
+    [Test]
+    public void FromContent_NullContent_ThrowsArgumentException()
+    {
+        var exception = Assert.Throws<ArgumentException>(() => vCardDeserializer.FromContent(null!).ToList());
+        exception!.Message.ShouldContain("File is empty.");
+    }
+
+    [Test]
+    public void FromContent_WhitespaceOnly_ThrowsArgumentException()
+    {
+        Should.Throw<ArgumentException>(() => vCardDeserializer.FromContent("   \t  ").ToList())
+            .Message.ShouldContain("File is empty.");
+    }
+
+    [Test]
+    public void FromContent_TrailingSpacesAfterEndToken_Parses()
+    {
+        var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Padded\nEND:VCARD   \t";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+
+        vcards.Count.ShouldBe(1);
+        vcards[0].FormattedName.ShouldBe("Padded");
+    }
+
+    [Test]
+    public void FromContent_BeginEndTokensCaseInsensitive_Parses()
+    {
+        var content = "begin:vcard\nVERSION:3.0\nFN:Case\nend:vcard";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+
+        vcards.Count.ShouldBe(1);
+        vcards[0].FormattedName.ShouldBe("Case");
+        vcards[0].Version.ShouldBe(vCardLib.Enums.vCardVersion.v3);
+    }
+
+    [Test]
+    public void FromFile_ValidTempFile_ReturnsVCard()
+    {
+        var tempPath = Path.Combine(Path.GetTempPath(), $"vcard-{Guid.NewGuid():N}.vcf");
+        try
+        {
+            File.WriteAllText(tempPath, "BEGIN:VCARD\nVERSION:4.0\nFN:From File\nEND:VCARD");
+            var vcards = vCardDeserializer.FromFile(tempPath).ToList();
+
+            vcards.Count.ShouldBe(1);
+            vcards[0].FormattedName.ShouldBe("From File");
+        }
+        finally
+        {
+            if (File.Exists(tempPath))
+                File.Delete(tempPath);
+        }
+    }
+
+    [Test]
+    public void FromStream_Utf16LeBom_DecodesContent()
+    {
+        var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Utf16\nEND:VCARD";
+        var body = Encoding.Unicode.GetBytes(content);
+        var preamble = Encoding.Unicode.GetPreamble();
+        using var stream = new MemoryStream();
+        stream.Write(preamble, 0, preamble.Length);
+        stream.Write(body, 0, body.Length);
+        stream.Position = 0;
+
+        var vcards = vCardDeserializer.FromStream(stream).ToList();
+
+        vcards.Count.ShouldBe(1);
+        vcards[0].FormattedName.ShouldBe("Utf16");
+    }
+
+    [Test]
+    public void FromContent_TwoCardsWithDifferentVersions_ParsesBoth()
+    {
+        var content = "BEGIN:VCARD\nVERSION:2.1\nFN:V2 Card\nEND:VCARD\nBEGIN:VCARD\nVERSION:4.0\nFN:V4 Card\nEND:VCARD";
+        var vcards = vCardDeserializer.FromContent(content).ToList();
+
+        vcards.Count.ShouldBe(2);
+        vcards[0].Version.ShouldBe(vCardLib.Enums.vCardVersion.v2);
+        vcards[0].FormattedName.ShouldBe("V2 Card");
+        vcards[1].Version.ShouldBe(vCardLib.Enums.vCardVersion.v4);
+        vcards[1].FormattedName.ShouldBe("V4 Card");
+    }
+
+    [Test]
+    public void FromContent_EscapedSemicolonInNote_UnescapesForV4()
+    {
+        var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Escape\nNOTE:part1\\;part2\nEND:VCARD";
+        var card = vCardDeserializer.FromContent(content).Single();
+
+        card.Note.ShouldBe("part1;part2");
     }
 }
