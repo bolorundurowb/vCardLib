@@ -14,7 +14,7 @@ public class TextFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V2RawValue_ReturnsCorrectValue()
+    public void Read_V2_RawValue_ReturnsExpectedValue()
     {
         const string input = @"NOTE:Value with \n and \,";
         IV2FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
@@ -24,7 +24,7 @@ public class TextFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3Escapes_ReturnsCorrectValue()
+    public void Read_V3_Escapes_ReturnsExpectedValue()
     {
         const string input = @"NOTE:Line 1\nLine 2\\Comma\,Semi\;";
         IV3FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
@@ -34,7 +34,7 @@ public class TextFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4Escapes_ReturnsCorrectValue()
+    public void Read_V4_Escapes_ReturnsExpectedValue()
     {
         const string input = @"NOTE:Line 1\NLine 2\\Comma\,Semi\;";
         IV4FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();

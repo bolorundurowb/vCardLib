@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class NicknameFieldSerializerTests
 {
     [Test]
-    public void Write_ValidNickname_ReturnsCorrectString()
+    public void Write_ValidNickname_ReturnsExpectedWireFormat()
     {
         var serializer = new NicknameFieldSerializer();
         var result = serializer.Write("Johnny");

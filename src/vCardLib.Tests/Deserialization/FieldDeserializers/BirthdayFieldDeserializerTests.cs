@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
@@ -19,7 +19,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void Read_DateOnly_ReturnsCorrectValue()
+    public void Read_DateOnly_ReturnsExpectedValue()
     {
         const string input = "BDAY:19901021";
         var deserializer = new BirthdayFieldDeserializer();
@@ -30,9 +30,9 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void Read_DateAndTime_ReturnsCorrectValue()
+    public void Read_DateAndTime_ReturnsExpectedValue()
     {
-        const string input = "BDAY;20121201T134211Z";
+        const string input = "BDAY:20121201T134211Z";
         var deserializer = new BirthdayFieldDeserializer();
         var result = deserializer.Read(input);
 
@@ -41,7 +41,7 @@ public class BirthdayFieldDeserializerTests
     }
 
     [Test]
-    public void Read_TimeOnly_ReturnsCorrectValue()
+    public void Read_TimeOnly_ReturnsExpectedValue()
     {
         const string input = "BDAY:0415";
         var deserializer = new BirthdayFieldDeserializer();
@@ -51,5 +51,16 @@ public class BirthdayFieldDeserializerTests
 
         result.ShouldNotBeNull();
         (result != null ? result.Value - DateTime.MinValue : (TimeSpan?)null).ShouldBe(timeSpan);
+    }
+
+    [Test]
+    public void Read_ValueContainingFieldKey_ReturnsExpectedValue()
+    {
+        const string input = "BDAY:19900515";
+        var deserializer = new BirthdayFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.ShouldNotBeNull();
+        result.ShouldBe(new DateTime(1990, 5, 15, 0, 0, 0, DateTimeKind.Utc));
     }
 }

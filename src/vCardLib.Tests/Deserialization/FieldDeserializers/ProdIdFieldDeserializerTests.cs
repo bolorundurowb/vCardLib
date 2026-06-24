@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class ProdIdFieldDeserializerTests
 {
     [Test]
-    public void Read_V2Version_ReturnsCorrectValue()
+    public void Read_V2_ReturnsExpectedValue()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
         IV2FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
@@ -19,7 +19,7 @@ public class ProdIdFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3Version_ReturnsCorrectValue()
+    public void Read_V3_ReturnsExpectedValue()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
         IV3FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
@@ -30,7 +30,7 @@ public class ProdIdFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4Version_ReturnsCorrectValue()
+    public void Read_V4_ReturnsExpectedValue()
     {
         const string input = "PRODID:-//ONLINE DIRECTORY//NONSGML Version 1//EN";
         IV4FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();

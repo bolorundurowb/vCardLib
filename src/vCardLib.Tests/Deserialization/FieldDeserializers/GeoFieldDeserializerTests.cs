@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class GeoFieldDeserializerTests
 {
     [Test]
-    public void Read_V2Format_ReturnsCorrectValue()
+    public void Read_V2_Format_ReturnsExpectedValue()
     {
         const string input = "GEO:37.386013;-122.082932";
         IV2FieldDeserializer<Geo> deserializer = new GeoFieldDeserializer();
@@ -21,7 +21,7 @@ public class GeoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3Format_ReturnsCorrectValue()
+    public void Read_V3_Format_ReturnsExpectedValue()
     {
         const string input = "GEO:37.386013;-122.082932";
         IV3FieldDeserializer<Geo> deserializer = new GeoFieldDeserializer();
@@ -32,7 +32,7 @@ public class GeoFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V4Format_ReturnsCorrectValue()
+    public void Read_V4_Format_ReturnsExpectedValue()
     {
         const string input = "GEO:geo:37.386013,-122.082932";
         IV4FieldDeserializer<Geo> deserializer = new GeoFieldDeserializer();

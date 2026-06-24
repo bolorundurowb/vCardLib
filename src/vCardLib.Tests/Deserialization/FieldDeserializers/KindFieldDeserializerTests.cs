@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -10,7 +10,7 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 public class KindFieldDeserializerTests
 {
     [Test]
-    public void Read_V2Version_ReturnsNull()
+    public void Read_V2_ReturnsNull()
     {
         const string input = "KIND:individual";
         IV2FieldDeserializer<ContactKind?> deserializer = new KindFieldDeserializer();
@@ -20,7 +20,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void Read_V3Version_ReturnsNull()
+    public void Read_V3_ReturnsNull()
     {
         const string input = "KIND:individual";
         IV3FieldDeserializer<ContactKind?> deserializer = new KindFieldDeserializer();
@@ -30,7 +30,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void Read_IndividualKind_ReturnsCorrectValue()
+    public void Read_IndividualKind_ReturnsExpectedValue()
     {
         const string input = "KIND:individual";
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
@@ -40,7 +40,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void Read_OrgKind_ReturnsCorrectValue()
+    public void Read_OrgKind_ReturnsExpectedValue()
     {
         const string input = "KIND:org";
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
@@ -50,7 +50,7 @@ public class KindFieldDeserializerTests
     }
 
     [Test]
-    public void Read_LocationKind_ReturnsCorrectValue()
+    public void Read_LocationKind_ReturnsExpectedValue()
     {
         const string input = "KIND:location";
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();

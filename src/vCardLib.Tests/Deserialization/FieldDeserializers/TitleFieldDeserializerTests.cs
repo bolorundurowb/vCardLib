@@ -8,36 +8,26 @@ namespace vCardLib.Tests.Deserialization.FieldDeserializers;
 [TestFixture]
 public class TitleFieldDeserializerTests
 {
+    private const string Input = "TITLE:Web & UI/UX Designer";
+
     [Test]
-    public void Write_Should_SerializeV2()
+    public void Read_V2_ReturnsExpectedValue()
     {
-        const string input = "TITLE:Web & UI/UX Designer";
         IV2FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldNotBeNull();
-        result.ShouldBe("Web & UI/UX Designer");
+        deserializer.Read(Input).ShouldBe("Web & UI/UX Designer");
     }
 
     [Test]
-    public void Write_Should_SerializeV3()
+    public void Read_V3_ReturnsExpectedValue()
     {
-        const string input = "TITLE:Web & UI/UX Designer";
         IV3FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldNotBeNull();
-        result.ShouldBe("Web & UI/UX Designer");
+        deserializer.Read(Input).ShouldBe("Web & UI/UX Designer");
     }
 
     [Test]
-    public void Write_Should_SerializeV4()
+    public void Read_V4_ReturnsExpectedValue()
     {
-        const string input = "TITLE:Web & UI/UX Designer";
         IV4FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        var result = deserializer.Read(input);
-
-        result.ShouldNotBeNull();
-        result.ShouldBe("Web & UI/UX Designer");
+        deserializer.Read(Input).ShouldBe("Web & UI/UX Designer");
     }
 }

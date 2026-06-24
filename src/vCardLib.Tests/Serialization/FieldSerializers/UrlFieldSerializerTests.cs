@@ -28,29 +28,43 @@ public class UrlFieldSerializerTests
     }
 
     [Test]
-    public void Write_V2Version_ReturnsCorrectString()
+    public void Write_V2_ReturnsExpectedWireFormat()
     {
         IV2FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
         result.ShouldBe(
-            "URL;HOME;BLOG;PREF=2;LABEL=My Home Page;MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
+            "URL;HOME;BLOG;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 
     [Test]
-    public void Write_V3Version_ReturnsCorrectString()
+    public void Write_V3_ReturnsExpectedWireFormat()
     {
         IV3FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
         result.ShouldBe(
-            "URL;TYPE=home;TYPE=blog;PREF=2;LABEL=My Home Page;MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
+            "URL;TYPE=home;TYPE=blog;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 
     [Test]
-    public void Write_V4Version_ReturnsCorrectString()
+    public void Write_V4_ReturnsExpectedWireFormat()
     {
         IV4FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
         result.ShouldBe(
-            "URL;TYPE=home;TYPE=blog;PREF=2;LABEL=My Home Page;MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
+            "URL;TYPE=home;TYPE=blog;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
+    }
+
+    [Test]
+    public void Write_V4_LabelWithoutWhitespace_NotQuoted()
+    {
+        var urlData = new Url
+        {
+            Value = "example.org",
+            Label = "HomePage"
+        };
+        IV4FieldSerializer<Url> serializer = new UrlFieldSerializer();
+        var result = serializer.Write(urlData);
+
+        result.ShouldBe("URL;LABEL=HomePage:example.org");
     }
 }

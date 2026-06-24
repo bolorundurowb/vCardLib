@@ -1,15 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <PackageVersion>6.2.0</PackageVersion>
+        <PackageVersion>6.3.0</PackageVersion>
         <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
-        <AssemblyVersion>6.2.0</AssemblyVersion>
-        <FileVersion>6.2.0</FileVersion>
+        <AssemblyVersion>6.3.0</AssemblyVersion>
+        <FileVersion>6.3.0</FileVersion>
         <NeutralLanguage>en-NG</NeutralLanguage>
         <LangVersion>14</LangVersion>
         <Nullable>enable</Nullable>
         <Copyright>© 2017-2026, Bolorunduro Winner-Timothy. All Rights reserved.</Copyright>
-        <PackageReleaseNotes>- improve RFC compatibility  when serialising and deserialising photo, address and address types
-- Improve new line handling and conformance to the RFC spec</PackageReleaseNotes>
+        <PackageReleaseNotes>- Add GEO and LOGO field serializers for vCard 2.1, 3.0, and 4.0
+- Fix serializer output for categories, custom fields, photo, and URL fields
+- Fix deserializer parsing for agent, anniversary, birthday, categories, organisation, and UID fields
+- Improve shared property-parameter parsing in field deserializers</PackageReleaseNotes>
         <Authors>Winner-Timothy Bolorunduro</Authors>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageId>vCardLib.dll</PackageId>

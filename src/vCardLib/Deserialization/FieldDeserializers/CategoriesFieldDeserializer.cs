@@ -12,8 +12,8 @@ internal sealed class CategoriesFieldDeserializer : IV2FieldDeserializer<List<st
 
     public List<string> Read(string input)
     {
-        input = input.ToUpper().Replace(FieldKey, string.Empty);
-        var value = input.TrimStart(FieldKeyConstants.SectionDelimiter);
+        var colonIndex = input.IndexOf(':');
+        var value = colonIndex >= 0 ? input.Substring(colonIndex + 1) : input;
 
         if (string.IsNullOrWhiteSpace(value))
             return [];

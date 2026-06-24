@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Shouldly;
 using vCardLib.Deserialization.FieldDeserializers;
 
@@ -42,5 +42,30 @@ public class CategoriesFieldDeserializerTests
         result.ShouldContain("IETF");
         result.ShouldContain("INDUSTRY");
         result.ShouldContain("INFORMATION TECHNOLOGY");
+    }
+
+    [Test]
+    public void Read_LowercaseCategories_PreservesCase()
+    {
+        const string input = "CATEGORIES:alpha,beta,gamma";
+        var deserializer = new CategoriesFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.Count.ShouldBe(3);
+        result.ShouldContain("alpha");
+        result.ShouldContain("beta");
+        result.ShouldContain("gamma");
+    }
+
+    [Test]
+    public void Read_ValueContainingCategoriesSubstring_ReturnsExpectedValue()
+    {
+        const string input = "CATEGORIES:CATEGORIES,test";
+        var deserializer = new CategoriesFieldDeserializer();
+        var result = deserializer.Read(input);
+
+        result.Count.ShouldBe(2);
+        result.ShouldContain("CATEGORIES");
+        result.ShouldContain("test");
     }
 }

@@ -10,7 +10,7 @@ internal sealed class UidFieldDeserializer : IV2FieldDeserializer<string>, IV3Fi
 
     public string Read(string input)
     {
-        var replaceTarget = $"{FieldKey}{FieldKeyConstants.SectionDelimiter}";
-        return input.Replace(replaceTarget, string.Empty).Trim();
+        var colonIndex = input.IndexOf(':');
+        return colonIndex >= 0 ? input.Substring(colonIndex + 1).Trim() : input.Trim();
     }
 }

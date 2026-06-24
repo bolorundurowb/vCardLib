@@ -9,7 +9,7 @@ namespace vCardLib.Tests.Serialization.FieldSerializers;
 public class NameFieldSerializerTests
 {
     [Test]
-    public void Write_ValidName_ReturnsCorrectString()
+    public void Write_ValidName_ReturnsExpectedWireFormat()
     {
         var name = new Name("Doe", "John", "Middle", "Mr.", "Esq.");
         var serializer = new NameFieldSerializer();

@@ -46,6 +46,8 @@ public static class vCardSerializer
             new TimezoneFieldSerializer(),
             new UidFieldSerializer(),
             new UrlFieldSerializer(),
+            new GeoFieldSerializer(),
+            new LogoFieldSerializer(),
         };
         FieldSerializers = serializers.ToDictionary(x => x.FieldKey, y => y);
     }

@@ -8,7 +8,7 @@ namespace vCardLib.Tests.Utilities;
 public class EnumExtensionsTests
 {
     [Test]
-    public void Parse_ValidInput_ReturnsCorrectEnum()
+    public void Parse_ValidInput_ReturnsExpectedEnum()
     {
         const string value = "Red";
         var expected = Color.Red;
@@ -19,7 +19,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Parse_LowercaseInput_ReturnsCorrectEnum()
+    public void Parse_LowercaseInput_ReturnsExpectedEnum()
     {
         const string value = "blue";
 
@@ -29,7 +29,7 @@ public class EnumExtensionsTests
     }
 
     [Test]
-    public void Parse_UppercaseInput_ReturnsCorrectEnum()
+    public void Parse_UppercaseInput_ReturnsExpectedEnum()
     {
         const string value = "BLUE";
 

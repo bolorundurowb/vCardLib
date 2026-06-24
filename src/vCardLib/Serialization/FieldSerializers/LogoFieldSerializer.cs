@@ -1,13 +1,13 @@
-﻿using System.Text;
+using System.Text;
 using vCardLib.Constants;
 using vCardLib.Models;
 using vCardLib.Serialization.Interfaces;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
-internal sealed class PhotoFieldSerializer : IV2FieldSerializer<Photo>, IV3FieldSerializer<Photo>, IV4FieldSerializer<Photo>
+internal sealed class LogoFieldSerializer : IV2FieldSerializer<Photo>, IV3FieldSerializer<Photo>, IV4FieldSerializer<Photo>
 {
-    public string FieldKey => "PHOTO";
+    public string FieldKey => "LOGO";
 
     string? IV2FieldSerializer<Photo>.Write(Photo data)
     {
@@ -54,7 +54,7 @@ internal sealed class PhotoFieldSerializer : IV2FieldSerializer<Photo>, IV3Field
         }
 
         builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Data);
+        builder.Append(data.Value);
 
         return builder.ToString();
     }
@@ -88,7 +88,7 @@ internal sealed class PhotoFieldSerializer : IV2FieldSerializer<Photo>, IV3Field
         }
 
         builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Data);
+        builder.Append(data.Value);
 
         return builder.ToString();
     }

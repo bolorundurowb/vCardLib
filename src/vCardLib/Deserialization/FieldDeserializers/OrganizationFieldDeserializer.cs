@@ -12,8 +12,8 @@ internal sealed class OrganizationFieldDeserializer : IV2FieldDeserializer<Organ
 
     public Organization? Read(string input)
     {
-        var replaceTarget = $"{FieldKey}:";
-        var value = input.Replace(replaceTarget, string.Empty).Trim();
+        var colonIndex = input.IndexOf(':');
+        var value = colonIndex >= 0 ? input.Substring(colonIndex + 1).Trim() : input.Trim();
         string? orgName = null,
             orgUnitOne = null,
             orgUnitTwo = null;
