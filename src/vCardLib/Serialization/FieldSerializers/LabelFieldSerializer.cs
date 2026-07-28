@@ -12,7 +12,14 @@ internal sealed class LabelFieldSerializer : IV2FieldSerializer<Label>, IV3Field
 {
     public string FieldKey => "LABEL";
 
-    public string? Write(Label data)
+    // v2.1 has no backslash escaping mechanism.
+    string? IV2FieldSerializer<Label>.Write(Label data) => Format(data, escape: false);
+
+    public string? Write(Label data) => Format(data, escape: true);
+
+    string? IV4FieldSerializer<Label>.Write(Label data) => null;
+
+    private string Format(Label data, bool escape)
     {
         var builder = new StringBuilder(FieldKey);
 
@@ -26,10 +33,8 @@ internal sealed class LabelFieldSerializer : IV2FieldSerializer<Label>, IV3Field
         }
 
         builder.Append(FieldKeyConstants.SectionDelimiter);
-        builder.Append(data.Text);
+        builder.Append(escape ? ValueEscaper.Escape(data.Text) : data.Text);
 
         return builder.ToString();
     }
-
-    string? IV4FieldSerializer<Label>.Write(Label data) => null;
 }

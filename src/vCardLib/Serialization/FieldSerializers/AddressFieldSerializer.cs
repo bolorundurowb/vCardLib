@@ -36,9 +36,13 @@ internal sealed class AddressFieldSerializer : IV2FieldSerializer<Address>, IV3F
 
         var parameters = SerializationHelpers.FormatParameters(version, types, null, extra);
 
+        // v2.1 has no backslash escaping mechanism.
+        var escape = version != vCardVersion.v2;
+        string E(string? component) => escape ? ValueEscaper.Escape(component) : component ?? string.Empty;
+
         var value = string.Join(FieldKeyConstants.MetadataDelimiter.ToString(),
-            data.PostOfficeBox, data.ApartmentOrSuiteNumber, data.StreetAddress, data.CityOrLocality,
-            data.StateOrProvinceOrRegion, data.PostalOrZipCode, data.Country);
+            E(data.PostOfficeBox), E(data.ApartmentOrSuiteNumber), E(data.StreetAddress), E(data.CityOrLocality),
+            E(data.StateOrProvinceOrRegion), E(data.PostalOrZipCode), E(data.Country));
 
         return $"{FieldKey}{parameters}{FieldKeyConstants.SectionDelimiter}{value}";
     }

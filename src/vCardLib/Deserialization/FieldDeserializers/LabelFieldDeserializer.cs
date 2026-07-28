@@ -1,4 +1,3 @@
-﻿using System.Text.RegularExpressions;
 using vCardLib.Constants;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Deserialization.Utilities;
@@ -13,12 +12,20 @@ internal sealed class LabelFieldDeserializer : IV2FieldDeserializer<Label>, IV3F
 {
     public static string FieldKey => "LABEL";
 
-    public Label Read(string input)
+    // v2.1 has no backslash escaping, so keep the text verbatim.
+    Label IV2FieldDeserializer<Label>.Read(string input) => Parse(input, unescape: false);
+
+    public Label Read(string input) => Parse(input, unescape: true);
+
+    Label? IV4FieldDeserializer<Label?>.Read(string input) => null;
+
+    private static Label Parse(string input, bool unescape)
     {
         var (metadata, value) = DataSplitHelpers.SplitLine(FieldKey, input);
+        var text = unescape ? ValueUnescaper.Unescape(value) : value;
 
         if (metadata.Length == 0)
-            return new Label(Regex.Unescape(value));
+            return new Label(text);
 
         AddressType? type = null;
 
@@ -43,8 +50,6 @@ internal sealed class LabelFieldDeserializer : IV2FieldDeserializer<Label>, IV3F
             }
         }
 
-        return new Label(Regex.Unescape(value), type);
+        return new Label(text, type);
     }
-
-    Label? IV4FieldDeserializer<Label?>.Read(string input) => null;
 }

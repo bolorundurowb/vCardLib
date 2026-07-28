@@ -1,5 +1,6 @@
 using vCardLib.Constants;
 using vCardLib.Serialization.Interfaces;
+using vCardLib.Serialization.Utilities;
 
 namespace vCardLib.Serialization.FieldSerializers;
 
@@ -20,17 +21,5 @@ internal abstract class TextFieldSerializer : IV2FieldSerializer<string>, IV3Fie
     private string FormatField(string value)
         => $"{FieldKey}{FieldKeyConstants.SectionDelimiter}{value}";
 
-    private static string Escape(string data)
-    {
-        if (string.IsNullOrEmpty(data)) return data;
-
-        // RFC 2426 & RFC 6350: Escape \, ;, , and newlines.
-        return data
-            .Replace(@"\", @"\\")   // Must be first
-            .Replace(";", @"\;")
-            .Replace(",", @"\,")
-            .Replace("\r\n", @"\n") // Normalize Windows line endings
-            .Replace("\n", @"\n")
-            .Replace("\r", @"\n");  // Handle stray CRs
-    }
+    private static string Escape(string data) => ValueEscaper.Escape(data);
 }
