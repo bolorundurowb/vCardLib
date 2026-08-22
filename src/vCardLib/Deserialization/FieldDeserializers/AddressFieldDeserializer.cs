@@ -13,7 +13,12 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
 {
     public static string FieldKey => "ADR";
 
-    public Address Read(string input)
+    // v2.1 has no backslash escaping, so split on the raw delimiter.
+    Address IV2FieldDeserializer<Address>.Read(string input) => Parse(input, unescape: false);
+
+    public Address Read(string input) => Parse(input, unescape: true);
+
+    private static Address Parse(string input, bool unescape)
     {
         var (parameters, value) = DataSplitHelpers.SplitLine(FieldKey, input);
 
@@ -46,11 +51,14 @@ internal sealed class AddressFieldDeserializer : IV2FieldDeserializer<Address>,
 
         if (isQuotedPrintable) value = SharedParsers.DecodeQuotedPrintable(value);
 
-        var values = value.Split(FieldKeyConstants.MetadataDelimiter);
+        var values = unescape
+            ? ValueUnescaper.SplitUnescaped(value, FieldKeyConstants.MetadataDelimiter)
+            : value.Split(FieldKeyConstants.MetadataDelimiter);
         if (values.Length != 7)
             throw new Exception("Address parts incomplete");
 
-        return new Address(values[0], values[1], values[2], values[3], values[4], values[5], values[6], type, label,
-            geo);
+        string V(int index) => unescape ? ValueUnescaper.Unescape(values[index]) : values[index];
+
+        return new Address(V(0), V(1), V(2), V(3), V(4), V(5), V(6), type, label, geo);
     }
 }
