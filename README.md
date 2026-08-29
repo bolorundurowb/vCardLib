@@ -108,12 +108,12 @@ string bundle = vCardSerializer.Serialize(new[] { card1, card2 });
 
 ## API summary
 
-| Operation | Entry point |
-|-----------|----------------|
-| Parse file | `vCardDeserializer.FromFile(string path)` |
-| Parse stream | `vCardDeserializer.FromStream(Stream stream)` |
-| Parse string | `vCardDeserializer.FromContent(string vcf)` |
-| Serialize one | `vCardSerializer.Serialize(vCard card, vCardVersion? overrideVersion = null)` |
+| Operation      | Entry point                                                                                 |
+|----------------|---------------------------------------------------------------------------------------------|
+| Parse file     | `vCardDeserializer.FromFile(string path)`                                                   |
+| Parse stream   | `vCardDeserializer.FromStream(Stream stream)`                                               |
+| Parse string   | `vCardDeserializer.FromContent(string vcf)`                                                 |
+| Serialize one  | `vCardSerializer.Serialize(vCard card, vCardVersion? overrideVersion = null)`               |
 | Serialize many | `vCardSerializer.Serialize(IEnumerable<vCard> cards, vCardVersion? overrideVersion = null)` |
 
 **Versions:** use enum members `vCardVersion.v2`, `vCardVersion.v3`, and `vCardVersion.v4` (not `V2` / `V4`).
@@ -122,7 +122,7 @@ string bundle = vCardSerializer.Serialize(new[] { card1, card2 });
 
 ### Contributors
 
-Thanks to [@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar), [@rmja](https://github.com/rmja), [@JeanCollas](https://github.com/JeanCollas), [@axelgenus](https://github.com/axelgenus), [@ramiassi](https://github.com/ramiassi), [@nordfish-it](https://github.com/nordfish-it), [@JochumMedia](https://github.com/JochumMedia) and [@rallets](https://github.com/rallets)
+Thanks to [@bolorundurowb](https://github.com/bolorundurowb), [@crowar](https://github.com/crowar), [@rmja](https://github.com/rmja), [@JeanCollas](https://github.com/JeanCollas), [@axelgenus](https://github.com/axelgenus), [@ramiassi](https://github.com/ramiassi), [@nordfish-it](https://github.com/nordfish-it), [@JochumMedia](https://github.com/JochumMedia), [@rallets](https://github.com/rallets) and [@gaoflow](https://github.com/gaoflow)
 
 ## License
 
