@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
@@ -21,7 +21,7 @@ public class MiscellaneousFieldSerializerTests
         var date = new DateTime(2000, 1, 1);
         var serializer = new AnniversaryFieldSerializer();
         var result = ((IV4FieldSerializer<DateTime>)serializer).Write(date);
-        result.ShouldBe("ANNIVERSARY:20000101");
+        result.Must().Be("ANNIVERSARY:20000101");
     }
 
     [Test]
@@ -30,7 +30,7 @@ public class MiscellaneousFieldSerializerTests
         var gender = new Gender(BiologicalSex.Male, "Man");
         var serializer = new GenderFieldSerializer();
         var result = ((IV4FieldSerializer<Gender>)serializer).Write(gender);
-        result.ShouldBe("GENDER:M;Man");
+        result.Must().Be("GENDER:M;Man");
     }
 
     [Test]
@@ -39,7 +39,7 @@ public class MiscellaneousFieldSerializerTests
         var org = new Organization("Company", "IT", "Dev");
         var serializer = new OrganizationFieldSerializer();
         var result = serializer.Write(org);
-        result.ShouldBe("ORG:Company;IT;Dev");
+        result.Must().Be("ORG:Company;IT;Dev");
     }
 
     [Test]
@@ -47,7 +47,7 @@ public class MiscellaneousFieldSerializerTests
     {
         var serializer = new FormattedNameSerializer();
         var result = ((IV2FieldSerializer<string>)serializer).Write("John Doe");
-        result.ShouldBe("FN:John Doe");
+        result.Must().Be("FN:John Doe");
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class MiscellaneousFieldSerializerTests
         var serializer = new CategoriesFieldSerializer();
         var data = new List<string> { "Work", "Friend" };
         var result = serializer.Write(data);
-        result.ShouldBe("CATEGORIES:Work,Friend");
+        result.Must().Be("CATEGORIES:Work,Friend");
     }
 
     [Test]
@@ -64,7 +64,7 @@ public class MiscellaneousFieldSerializerTests
     {
         var serializer = new AgentFieldSerializer();
         var result = serializer.Write("http://example.com/agent");
-        result.ShouldBe("AGENT;VALUE=uri:http://example.com/agent");
+        result.Must().Be("AGENT;VALUE=uri:http://example.com/agent");
     }
 
     [Test]
@@ -73,7 +73,7 @@ public class MiscellaneousFieldSerializerTests
         var serializer = new RevisionFieldSerializer();
         var date = new DateTime(2023, 10, 27, 10, 0, 0, DateTimeKind.Utc);
         var result = serializer.Write(date);
-        result.ShouldBe("REV:20231027T100000Z");
+        result.Must().Be("REV:20231027T100000Z");
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class MiscellaneousFieldSerializerTests
     {
         var serializer = new UidFieldSerializer();
         var result = serializer.Write("12345");
-        result.ShouldBe("UID:12345");
+        result.Must().Be("UID:12345");
     }
 
     [Test]
@@ -89,7 +89,7 @@ public class MiscellaneousFieldSerializerTests
     {
         var serializer = new MailerFieldSerializer();
         var result = serializer.Write("PicoMail");
-        result.ShouldBe("MAILER:PicoMail");
+        result.Must().Be("MAILER:PicoMail");
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class MiscellaneousFieldSerializerTests
     {
         var serializer = new CustomFieldSerializer();
         var result = serializer.Write(new KeyValuePair<string, string>("X-SOCIAL", "Twitter"));
-        result.ShouldBe("X-SOCIAL:Twitter");
+        result.Must().Be("X-SOCIAL:Twitter");
     }
 
     [Test]
@@ -105,6 +105,6 @@ public class MiscellaneousFieldSerializerTests
     {
         var serializer = new KindSerializer();
         var result = serializer.Write(ContactKind.Individual);
-        result.ShouldBe("KIND:individual");
+        result.Must().Be("KIND:individual");
     }
 }

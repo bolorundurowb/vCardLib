@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Serialization.FieldSerializers;
 using vCardLib.Serialization.Interfaces;
 
@@ -12,20 +12,20 @@ public class TimezoneFieldSerializerTests
     public void Write_V2_ReturnsExpectedWireFormat(string timezone, string expected)
     {
         var serializer = new TimezoneFieldSerializer();
-        ((IV2FieldSerializer<string>)serializer).Write(timezone).ShouldBe(expected);
+        ((IV2FieldSerializer<string>)serializer).Write(timezone).Must().Be(expected);
     }
 
     [TestCase("-05:00", "TZ:-05:00")]
     public void Write_V3_ReturnsExpectedWireFormat(string timezone, string expected)
     {
         var serializer = new TimezoneFieldSerializer();
-        ((IV3FieldSerializer<string>)serializer).Write(timezone).ShouldBe(expected);
+        ((IV3FieldSerializer<string>)serializer).Write(timezone).Must().Be(expected);
     }
 
     [Test]
     public void Write_V4_ReturnsExpectedWireFormat()
     {
         var serializer = new TimezoneFieldSerializer();
-        ((IV4FieldSerializer<string>)serializer).Write("America/New_York").ShouldBe("TZ:America/New_York");
+        ((IV4FieldSerializer<string>)serializer).Write("America/New_York").Must().Be("TZ:America/New_York");
     }
 }

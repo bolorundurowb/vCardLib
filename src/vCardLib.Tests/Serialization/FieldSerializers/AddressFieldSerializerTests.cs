@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
@@ -19,7 +19,7 @@ public class AddressFieldSerializerTests
     public void FieldKey_ReturnsAdr()
     {
         var serializer = new AddressFieldSerializer();
-        serializer.FieldKey.ShouldBe("ADR");
+        serializer.FieldKey.Must().Be("ADR");
     }
 
     [Test]
@@ -29,7 +29,7 @@ public class AddressFieldSerializerTests
         var serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
+        result.Must().Be("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
     [Test]
@@ -39,7 +39,7 @@ public class AddressFieldSerializerTests
         IV2FieldSerializer<Address> serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
+        result.Must().Be("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class AddressFieldSerializerTests
         IV3FieldSerializer<Address> serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
+        result.Must().Be("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class AddressFieldSerializerTests
         IV4FieldSerializer<Address> serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
+        result.Must().Be("ADR:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class AddressFieldSerializerTests
         IV2FieldSerializer<Address> serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe("ADR;HOME:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
+        result.Must().Be("ADR;HOME:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class AddressFieldSerializerTests
         IV3FieldSerializer<Address> serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe("ADR;TYPE=home:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
+        result.Must().Be("ADR;TYPE=home:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
     [Test]
@@ -89,7 +89,7 @@ public class AddressFieldSerializerTests
         IV4FieldSerializer<Address> serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe("ADR;TYPE=home,work:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
+        result.Must().Be("ADR;TYPE=home,work:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
     [Test]
@@ -99,7 +99,7 @@ public class AddressFieldSerializerTests
         IV4FieldSerializer<Address> serializer = new AddressFieldSerializer();
         var result = serializer.Write(address);
 
-        result.ShouldBe(
+        result.Must().Be(
             "ADR;TYPE=work;LABEL=Head Office;GEO=37.386013,-122.08293:PO Box 1;Suite 100;123 Main St;Anytown;State;12345;USA");
     }
 
@@ -113,14 +113,14 @@ public class AddressFieldSerializerTests
         var wire = serializer.Write(address)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.PostOfficeBox.ShouldBe(address.PostOfficeBox);
-        roundTrip.ApartmentOrSuiteNumber.ShouldBe(address.ApartmentOrSuiteNumber);
-        roundTrip.StreetAddress.ShouldBe(address.StreetAddress);
-        roundTrip.CityOrLocality.ShouldBe(address.CityOrLocality);
-        roundTrip.StateOrProvinceOrRegion.ShouldBe(address.StateOrProvinceOrRegion);
-        roundTrip.PostalOrZipCode.ShouldBe(address.PostalOrZipCode);
-        roundTrip.Country.ShouldBe(address.Country);
-        roundTrip.Type.ShouldBe(address.Type);
+        roundTrip.PostOfficeBox.Must().Be(address.PostOfficeBox);
+        roundTrip.ApartmentOrSuiteNumber.Must().Be(address.ApartmentOrSuiteNumber);
+        roundTrip.StreetAddress.Must().Be(address.StreetAddress);
+        roundTrip.CityOrLocality.Must().Be(address.CityOrLocality);
+        roundTrip.StateOrProvinceOrRegion.Must().Be(address.StateOrProvinceOrRegion);
+        roundTrip.PostalOrZipCode.Must().Be(address.PostalOrZipCode);
+        roundTrip.Country.Must().Be(address.Country);
+        roundTrip.Type.Must().Be(address.Type);
     }
 
     [Test]
@@ -133,9 +133,9 @@ public class AddressFieldSerializerTests
         var wire = serializer.Write(address)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.StreetAddress.ShouldBe(address.StreetAddress);
-        roundTrip.Type.ShouldBe(address.Type);
-        roundTrip.Label.ShouldBe(address.Label);
+        roundTrip.StreetAddress.Must().Be(address.StreetAddress);
+        roundTrip.Type.Must().Be(address.Type);
+        roundTrip.Label.Must().Be(address.Label);
     }
 
     [Test]
@@ -148,12 +148,12 @@ public class AddressFieldSerializerTests
         var wire = serializer.Write(address)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.StreetAddress.ShouldBe(address.StreetAddress);
-        roundTrip.CityOrLocality.ShouldBe(address.CityOrLocality);
-        roundTrip.Type.ShouldBe(address.Type);
-        roundTrip.Label.ShouldBe(address.Label);
-        roundTrip.Geographic.ShouldNotBeNull();
-        roundTrip.Geographic!.Value.Latitude.ShouldBe(address.Geographic!.Value.Latitude);
-        roundTrip.Geographic.Value.Longitude.ShouldBe(address.Geographic.Value.Longitude);
+        roundTrip.StreetAddress.Must().Be(address.StreetAddress);
+        roundTrip.CityOrLocality.Must().Be(address.CityOrLocality);
+        roundTrip.Type.Must().Be(address.Type);
+        roundTrip.Label.Must().Be(address.Label);
+        roundTrip.Geographic.Must().NotBeNull();
+        roundTrip.Geographic!.Value.Latitude.Must().Be(address.Geographic!.Value.Latitude);
+        roundTrip.Geographic.Value.Longitude.Must().Be(address.Geographic.Value.Longitude);
     }
 }

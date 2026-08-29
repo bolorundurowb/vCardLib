@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
@@ -17,9 +17,9 @@ public class EmailAddressFieldDeserializerTests
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBeNull();
-        result.Type.ShouldBe(EmailAddressType.None);
-        result.Value.ShouldBe("johndoe@hotmail.com");
+        result.Preference.Must().BeNull();
+        result.Type.Must().Be(EmailAddressType.None);
+        result.Value.Must().Be("johndoe@hotmail.com");
     }
 
     [Test]
@@ -29,10 +29,10 @@ public class EmailAddressFieldDeserializerTests
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Type.HasFlag(EmailAddressType.Internet).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Work).ShouldBeTrue();
-        result.Value.ShouldBe("johnDoe@example.org");
+        result.Preference.Must().Be(1);
+        result.Type.HasFlag(EmailAddressType.Internet).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Work).Must().BeTrue();
+        result.Value.Must().Be("johnDoe@example.org");
     }
 
     [Test]
@@ -42,10 +42,10 @@ public class EmailAddressFieldDeserializerTests
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Type.HasFlag(EmailAddressType.Aol).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Home).ShouldBeTrue();
-        result.Value.ShouldBe("johnDoe@example.org");
+        result.Preference.Must().Be(1);
+        result.Type.HasFlag(EmailAddressType.Aol).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Home).Must().BeTrue();
+        result.Value.Must().Be("johnDoe@example.org");
     }
 
     [Test]
@@ -55,8 +55,8 @@ public class EmailAddressFieldDeserializerTests
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Value.ShouldBe("test@example.com");
+        result.Preference.Must().Be(1);
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -66,8 +66,8 @@ public class EmailAddressFieldDeserializerTests
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Value.ShouldBe("test@example.com");
+        result.Preference.Must().Be(1);
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -77,8 +77,8 @@ public class EmailAddressFieldDeserializerTests
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(2);
-        result.Value.ShouldBe("test@example.com");
+        result.Preference.Must().Be(2);
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -88,8 +88,8 @@ public class EmailAddressFieldDeserializerTests
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBeNull();
-        result.Value.ShouldBe("test@example.com");
+        result.Preference.Must().BeNull();
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -99,7 +99,7 @@ public class EmailAddressFieldDeserializerTests
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Value.ShouldBe("test@example.com");
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -109,7 +109,7 @@ public class EmailAddressFieldDeserializerTests
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Value.ShouldBe("test@example.com");
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -119,7 +119,7 @@ public class EmailAddressFieldDeserializerTests
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Value.ShouldBe("test@example.com");
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -129,9 +129,9 @@ public class EmailAddressFieldDeserializerTests
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.HasFlag(EmailAddressType.Internet).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Work).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Home).ShouldBeTrue();
+        result.Type.HasFlag(EmailAddressType.Internet).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Work).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Home).Must().BeTrue();
     }
 
     [Test]
@@ -141,9 +141,9 @@ public class EmailAddressFieldDeserializerTests
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.HasFlag(EmailAddressType.Internet).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Work).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Home).ShouldBeTrue();
+        result.Type.HasFlag(EmailAddressType.Internet).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Work).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Home).Must().BeTrue();
     }
 
     [Test]
@@ -153,9 +153,9 @@ public class EmailAddressFieldDeserializerTests
         IV4FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.HasFlag(EmailAddressType.Internet).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Work).ShouldBeTrue();
-        result.Type.HasFlag(EmailAddressType.Home).ShouldBeTrue();
+        result.Type.HasFlag(EmailAddressType.Internet).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Work).Must().BeTrue();
+        result.Type.HasFlag(EmailAddressType.Home).Must().BeTrue();
     }
 
     [Test]
@@ -165,8 +165,8 @@ public class EmailAddressFieldDeserializerTests
         IV2FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe(EmailAddressType.None);
-        result.Value.ShouldBe("test@example.com");
+        result.Type.Must().Be(EmailAddressType.None);
+        result.Value.Must().Be("test@example.com");
     }
 
     [Test]
@@ -176,8 +176,8 @@ public class EmailAddressFieldDeserializerTests
         IV3FieldDeserializer<EmailAddress> deserializer = new EmailAddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe(EmailAddressType.None);
-        result.Preference.ShouldBeNull();
-        result.Value.ShouldBe("test@example.com");
+        result.Type.Must().Be(EmailAddressType.None);
+        result.Preference.Must().BeNull();
+        result.Value.Must().Be("test@example.com");
     }
 }

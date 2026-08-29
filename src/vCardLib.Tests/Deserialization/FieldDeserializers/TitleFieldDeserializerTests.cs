@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Shouldly;
+using NUnit.Framework;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -14,20 +14,20 @@ public class TitleFieldDeserializerTests
     public void Read_V2_ReturnsExpectedValue()
     {
         IV2FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        deserializer.Read(Input).ShouldBe("Web & UI/UX Designer");
+        deserializer.Read(Input).Must().Be("Web & UI/UX Designer");
     }
 
     [Test]
     public void Read_V3_ReturnsExpectedValue()
     {
         IV3FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        deserializer.Read(Input).ShouldBe("Web & UI/UX Designer");
+        deserializer.Read(Input).Must().Be("Web & UI/UX Designer");
     }
 
     [Test]
     public void Read_V4_ReturnsExpectedValue()
     {
         IV4FieldDeserializer<string> deserializer = new TitleFieldDeserializer();
-        deserializer.Read(Input).ShouldBe("Web & UI/UX Designer");
+        deserializer.Read(Input).Must().Be("Web & UI/UX Designer");
     }
 }

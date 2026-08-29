@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
@@ -15,7 +15,7 @@ public class PhotoFieldSerializerTests
     public void FieldKey_ReturnsPhoto()
     {
         var serializer = new PhotoFieldSerializer();
-        serializer.FieldKey.ShouldBe("PHOTO");
+        serializer.FieldKey.Must().Be("PHOTO");
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class PhotoFieldSerializerTests
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO:http://example.com/photo.jpg");
+        result.Must().Be("PHOTO:http://example.com/photo.jpg");
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class PhotoFieldSerializerTests
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO;ENCODING=BASE64:SGVsbG8=");
+        result.Must().Be("PHOTO;ENCODING=BASE64:SGVsbG8=");
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class PhotoFieldSerializerTests
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO;PNG;ENCODING=BASE64:SGVsbG8=");
+        result.Must().Be("PHOTO;PNG;ENCODING=BASE64:SGVsbG8=");
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class PhotoFieldSerializerTests
         IV3FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO;VALUE=uri:http://example.com/photo.jpg");
+        result.Must().Be("PHOTO;VALUE=uri:http://example.com/photo.jpg");
     }
 
     [Test]
@@ -65,7 +65,7 @@ public class PhotoFieldSerializerTests
         IV3FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO;VALUE=SGVsbG8=;ENCODING=b:SGVsbG8=");
+        result.Must().Be("PHOTO;VALUE=SGVsbG8=;ENCODING=b:SGVsbG8=");
     }
 
     [Test]
@@ -75,7 +75,7 @@ public class PhotoFieldSerializerTests
         IV4FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO;VALUE=SGVsbG8=;ENCODING=base64;MEDIATYPE=image/jpeg:SGVsbG8=");
+        result.Must().Be("PHOTO;VALUE=SGVsbG8=;ENCODING=base64;MEDIATYPE=image/jpeg:SGVsbG8=");
     }
 
     [Test]
@@ -85,8 +85,8 @@ public class PhotoFieldSerializerTests
         IV2FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldContain("actual-data");
-        result.ShouldNotContain("debug-value");
+        result.Must().Contain("actual-data");
+        result.Must().NotContain("debug-value");
     }
 
     [Test]
@@ -96,8 +96,8 @@ public class PhotoFieldSerializerTests
         IV3FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO;VALUE=debug-text;ENCODING=b:actual-base64-data");
-        result.ShouldContain("actual-base64-data");
+        result.Must().Be("PHOTO;VALUE=debug-text;ENCODING=b:actual-base64-data");
+        result.Must().Contain("actual-base64-data");
     }
 
     [Test]
@@ -107,8 +107,8 @@ public class PhotoFieldSerializerTests
         IV4FieldSerializer<Photo> serializer = new PhotoFieldSerializer();
         var result = serializer.Write(photo);
 
-        result.ShouldBe("PHOTO;VALUE=debug-text;ENCODING=base64;MEDIATYPE=image/jpeg:actual-base64-data");
-        result.ShouldContain("actual-base64-data");
+        result.Must().Be("PHOTO;VALUE=debug-text;ENCODING=base64;MEDIATYPE=image/jpeg:actual-base64-data");
+        result.Must().Contain("actual-base64-data");
     }
 
     [Test]
@@ -121,9 +121,9 @@ public class PhotoFieldSerializerTests
         var wire = serializer.Write(photo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(photo.Data);
-        roundTrip.Type.ShouldBe(photo.Type);
-        roundTrip.Encoding.ShouldBe(photo.Encoding);
+        roundTrip.Data.Must().Be(photo.Data);
+        roundTrip.Type.Must().Be(photo.Type);
+        roundTrip.Encoding.Must().Be(photo.Encoding);
     }
 
     [Test]
@@ -136,9 +136,9 @@ public class PhotoFieldSerializerTests
         var wire = serializer.Write(photo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(photo.Data);
-        roundTrip.Encoding.ShouldBe(photo.Encoding);
-        roundTrip.Type.ShouldBe(photo.Type);
+        roundTrip.Data.Must().Be(photo.Data);
+        roundTrip.Encoding.Must().Be(photo.Encoding);
+        roundTrip.Type.Must().Be(photo.Type);
     }
 
     [Test]
@@ -151,8 +151,8 @@ public class PhotoFieldSerializerTests
         var wire = serializer.Write(photo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(photo.Data);
-        roundTrip.Encoding.ShouldBe("BASE64");
+        roundTrip.Data.Must().Be(photo.Data);
+        roundTrip.Encoding.Must().Be("BASE64");
     }
 
     [Test]
@@ -165,7 +165,7 @@ public class PhotoFieldSerializerTests
         var wire = serializer.Write(photo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(photo.Data);
-        roundTrip.MimeType.ShouldBe(photo.MimeType);
+        roundTrip.Data.Must().Be(photo.Data);
+        roundTrip.MimeType.Must().Be(photo.MimeType);
     }
 }

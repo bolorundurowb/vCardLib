@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
@@ -17,10 +17,10 @@ public class TelephoneNumberFieldSerializerTests
         var serializer = new TelephoneNumberFieldSerializer();
         var result = ((IV2FieldSerializer<TelephoneNumber>)serializer).Write(tel);
 
-        result.ShouldContain("TEL");
-        result.ShouldContain(";HOME");
-        result.ShouldContain(";VOICE");
-        result.ShouldEndWith(":123456");
+        result.Must().Contain("TEL");
+        result.Must().Contain(";HOME");
+        result.Must().Contain(";VOICE");
+        result.Must().EndWith(":123456");
     }
 
     [Test]
@@ -30,6 +30,6 @@ public class TelephoneNumberFieldSerializerTests
         var serializer = new TelephoneNumberFieldSerializer();
         var result = ((IV3FieldSerializer<TelephoneNumber>)serializer).Write(tel);
 
-        result.ShouldContain("TEL;PREF:123456");
+        result.Must().Contain("TEL;PREF:123456");
     }
 }

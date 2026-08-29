@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Shouldly;
+using NUnit.Framework;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 
 namespace vCardLib.Tests.Deserialization.FieldDeserializers;
@@ -14,7 +14,7 @@ public class FormattedNameDeserializerTests
         var deserializer = new FormattedNameDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe(@"Mr. John Q. Public\, Esq.");
+        result.Must().NotBeNull();
+        result.Must().Be(@"Mr. John Q. Public\, Esq.");
     }
 }

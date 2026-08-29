@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -16,8 +16,8 @@ public class NoteFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("This fax number is operational 0800 to 1715 EST, Mon-Fri.");
+        result.Must().NotBeNull();
+        result.Must().Be("This fax number is operational 0800 to 1715 EST, Mon-Fri.");
     }
 
     [Test]
@@ -27,8 +27,8 @@ public class NoteFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("This fax number is operational 0800 to 1715 EST, Mon-Fri.");
+        result.Must().NotBeNull();
+        result.Must().Be("This fax number is operational 0800 to 1715 EST, Mon-Fri.");
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class NoteFieldDeserializerTests
     {
         const string input = "NOTE;ENCODING=QUOTED-PRINTABLE:=48=69";
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        deserializer.Read(input).ShouldBe("Hi");
+        deserializer.Read(input).Must().Be("Hi");
     }
 
     [Test]
@@ -45,9 +45,9 @@ public class NoteFieldDeserializerTests
         var input = @"NOTE:line1\nline2";
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
         var result = deserializer.Read(input);
-        result.ShouldContain(System.Environment.NewLine);
-        result.ShouldContain("line1");
-        result.ShouldContain("line2");
+        result.Must().Contain(System.Environment.NewLine);
+        result.Must().Contain("line1");
+        result.Must().Contain("line2");
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class NoteFieldDeserializerTests
     {
         const string input = @"NOTE:a\;b\,c";
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        deserializer.Read(input).ShouldBe("a;b,c");
+        deserializer.Read(input).Must().Be("a;b,c");
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class NoteFieldDeserializerTests
     {
         const string input = @"NOTE:keep\zhere";
         IV4FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        deserializer.Read(input).ShouldBe(@"keep\zhere");
+        deserializer.Read(input).Must().Be(@"keep\zhere");
     }
 
     [Test]
@@ -71,6 +71,6 @@ public class NoteFieldDeserializerTests
     {
         const string input = @"NOTE:raw\;value";
         IV2FieldDeserializer<string> deserializer = new NoteFieldDeserializer();
-        deserializer.Read(input).ShouldBe(@"raw\;value");
+        deserializer.Read(input).Must().Be(@"raw\;value");
     }
 }

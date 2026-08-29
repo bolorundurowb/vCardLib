@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -14,8 +14,8 @@ public class ProdIdFieldDeserializerTests
         IV2FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("-//ONLINE DIRECTORY//NONSGML Version 1//EN");
+        result.Must().NotBeNull();
+        result.Must().Be("-//ONLINE DIRECTORY//NONSGML Version 1//EN");
     }
 
     [Test]
@@ -25,8 +25,8 @@ public class ProdIdFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("-//ONLINE DIRECTORY//NONSGML Version 1//EN");
+        result.Must().NotBeNull();
+        result.Must().Be("-//ONLINE DIRECTORY//NONSGML Version 1//EN");
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class ProdIdFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new ProdIdFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("-//ONLINE DIRECTORY//NONSGML Version 1//EN");
+        result.Must().NotBeNull();
+        result.Must().Be("-//ONLINE DIRECTORY//NONSGML Version 1//EN");
     }
 }

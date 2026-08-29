@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Serialization.FieldSerializers;
 
 namespace vCardLib.Tests.Serialization.FieldSerializers;
@@ -15,6 +15,6 @@ public class BirthdayFieldSerializerTests
         var serializer = new BirthdayFieldSerializer();
         var result = serializer.Write(date);
 
-        result.ShouldBe("BDAY:19900101");
+        result.Must().Be("BDAY:19900101");
     }
 }

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -15,8 +15,8 @@ public class LanguageFieldDeserializerTests
         var deserializer = new LanguageFieldDeserializer();
         var result = (deserializer as IV4FieldDeserializer<vCardLib.Models.Language?>).Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Locale.ShouldBe("en-US");
+        result.Must().NotBeNull();
+        result.Value.Locale.Must().Be("en-US");
     }
 
     [Test]
@@ -26,10 +26,10 @@ public class LanguageFieldDeserializerTests
         var deserializer = new LanguageFieldDeserializer();
         var result = (deserializer as IV4FieldDeserializer<vCardLib.Models.Language?>).Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Locale.ShouldBe("en-US");
-        result.Value.Type.ShouldBe("home");
-        result.Value.Preference.ShouldBe(1);
+        result.Must().NotBeNull();
+        result.Value.Locale.Must().Be("en-US");
+        result.Value.Type.Must().Be("home");
+        result.Value.Preference.Must().Be(1);
     }
 
     [Test]
@@ -39,6 +39,6 @@ public class LanguageFieldDeserializerTests
         var deserializer = new LanguageFieldDeserializer();
         var result = (deserializer as IV2FieldDeserializer<vCardLib.Models.Language?>).Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -16,8 +16,8 @@ public class CustomFieldDeserializerTests
         var deserializer = new CustomFieldDeserializer();
         var result = ((IV2FieldDeserializer<KeyValuePair<string, string>>)deserializer).Read(input);
 
-        result.Key.ShouldBe("X-CUSTOM");
-        result.Value.ShouldBe("Value");
+        result.Key.Must().Be("X-CUSTOM");
+        result.Value.Must().Be("Value");
     }
 
     [Test]
@@ -27,8 +27,8 @@ public class CustomFieldDeserializerTests
         var deserializer = new CustomFieldDeserializer();
         var result = ((IV3FieldDeserializer<KeyValuePair<string, string>>)deserializer).Read(input);
 
-        result.Key.ShouldBe("X-CUSTOM");
-        result.Value.ShouldBe("Value");
+        result.Key.Must().Be("X-CUSTOM");
+        result.Value.Must().Be("Value");
     }
 
     [Test]
@@ -38,7 +38,7 @@ public class CustomFieldDeserializerTests
         var deserializer = new CustomFieldDeserializer();
         var result = ((IV4FieldDeserializer<KeyValuePair<string, string>>)deserializer).Read(input);
 
-        result.Key.ShouldBe("X-CUSTOM:Value:With");
-        result.Value.ShouldBe("Colons");
+        result.Key.Must().Be("X-CUSTOM:Value:With");
+        result.Value.Must().Be("Colons");
     }
 }

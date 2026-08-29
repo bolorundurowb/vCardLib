@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
@@ -17,7 +17,7 @@ public class EmailAddressFieldSerializerTests
         var serializer = new EmailAddressFieldSerializer();
         var result = (serializer as IV2FieldSerializer<EmailAddress>).Write(email);
 
-        result.ShouldBe("EMAIL:john@example.com");
+        result.Must().Be("EMAIL:john@example.com");
     }
 
     [Test]
@@ -27,8 +27,8 @@ public class EmailAddressFieldSerializerTests
         var serializer = new EmailAddressFieldSerializer();
         var result = (serializer as IV2FieldSerializer<EmailAddress>).Write(email);
 
-        result.ShouldContain(";HOME");
-        result.ShouldContain(";INTERNET");
+        result.Must().Contain(";HOME");
+        result.Must().Contain(";INTERNET");
     }
 
     [Test]
@@ -38,6 +38,6 @@ public class EmailAddressFieldSerializerTests
         var serializer = new EmailAddressFieldSerializer();
         var result = (serializer as IV4FieldSerializer<EmailAddress>).Write(email);
 
-        result.ShouldBe("EMAIL;TYPE=work;PREF=2:john@example.com");
+        result.Must().Be("EMAIL;TYPE=work;PREF=2:john@example.com");
     }
 }

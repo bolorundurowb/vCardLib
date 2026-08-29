@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
@@ -17,7 +17,7 @@ public class GenderFieldDeserializerTests
         IV2FieldDeserializer<Gender?> deserializer = new GenderFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -27,7 +27,7 @@ public class GenderFieldDeserializerTests
         IV3FieldDeserializer<Gender?> deserializer = new GenderFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -37,9 +37,9 @@ public class GenderFieldDeserializerTests
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Sex.ShouldNotBeNull();
-        result.Sex.ShouldBe(BiologicalSex.Male);
-        result.GenderIdentity.ShouldBeNull();
+        result.Sex.Must().NotBeNull();
+        result.Sex.Must().Be(BiologicalSex.Male);
+        result.GenderIdentity.Must().BeNull();
     }
 
     [Test]
@@ -49,10 +49,10 @@ public class GenderFieldDeserializerTests
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Sex.ShouldNotBeNull();
-        result.Sex.ShouldBe(BiologicalSex.Female);
-        result.GenderIdentity.ShouldNotBeNull();
-        result.GenderIdentity.ShouldBe("grrrl");
+        result.Sex.Must().NotBeNull();
+        result.Sex.Must().Be(BiologicalSex.Female);
+        result.GenderIdentity.Must().NotBeNull();
+        result.GenderIdentity.Must().Be("grrrl");
     }
 
     [Test]
@@ -62,9 +62,9 @@ public class GenderFieldDeserializerTests
         IV4FieldDeserializer<Gender> deserializer = new GenderFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Sex.ShouldBeNull();
-        result.GenderIdentity.ShouldNotBeNull();
-        result.GenderIdentity.ShouldBe("it's complicated");
+        result.Sex.Must().BeNull();
+        result.GenderIdentity.Must().NotBeNull();
+        result.GenderIdentity.Must().Be("it's complicated");
     }
 
     [Test]
@@ -74,19 +74,19 @@ public class GenderFieldDeserializerTests
         var input = "GENDER:O";
         var result = deserializer.Read(input);
 
-        result.Sex.ShouldNotBeNull();
-        result.Sex.ShouldBe(BiologicalSex.Other);
+        result.Sex.Must().NotBeNull();
+        result.Sex.Must().Be(BiologicalSex.Other);
 
         input = "GENDER:U";
         result = deserializer.Read(input);
 
-        result.Sex.ShouldNotBeNull();
-        result.Sex.ShouldBe(BiologicalSex.Unknown);
+        result.Sex.Must().NotBeNull();
+        result.Sex.Must().Be(BiologicalSex.Unknown);
 
         input = "GENDER:N";
         result = deserializer.Read(input);
 
-        result.Sex.ShouldNotBeNull();
-        result.Sex.ShouldBe(BiologicalSex.None);
+        result.Sex.Must().NotBeNull();
+        result.Sex.Must().Be(BiologicalSex.None);
     }
 }

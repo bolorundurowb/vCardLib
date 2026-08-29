@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Extensions;
 
 namespace vCardLib.Tests.Extensions;
@@ -12,7 +12,7 @@ public class StringExtensionsTests
     [TestCase("a", "b", false)]
     public void EqualsIgnoreCase_ReturnsExpected(string input, string value, bool expected)
     {
-        input.EqualsIgnoreCase(value).ShouldBe(expected);
+        input.EqualsIgnoreCase(value).Must().Be(expected);
     }
 
     [TestCase("BEGIN:VCARD", "begin:", true)]
@@ -20,7 +20,7 @@ public class StringExtensionsTests
     [TestCase("FN:X", "gz:", false)]
     public void StartsWithIgnoreCase_ReturnsExpected(string input, string value, bool expected)
     {
-        input.StartsWithIgnoreCase(value).ShouldBe(expected);
+        input.StartsWithIgnoreCase(value).Must().Be(expected);
     }
 
     [TestCase("file.TXT", ".txt", true)]
@@ -28,6 +28,6 @@ public class StringExtensionsTests
     [TestCase("a.b", ".c", false)]
     public void EndsWithIgnoreCase_ReturnsExpected(string input, string value, bool expected)
     {
-        input.EndsWithIgnoreCase(value).ShouldBe(expected);
+        input.EndsWithIgnoreCase(value).Must().Be(expected);
     }
 }

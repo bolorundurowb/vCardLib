@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
@@ -17,9 +17,9 @@ public class TelephoneNumberFieldDeserializerTests
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBeNull();
-        result.Type.ShouldBe(TelephoneNumberType.Cell);
-        result.Number.ShouldBe("(123) 555-5832");
+        result.Preference.Must().BeNull();
+        result.Type.Must().Be(TelephoneNumberType.Cell);
+        result.Number.Must().Be("(123) 555-5832");
     }
 
     [Test]
@@ -29,11 +29,11 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Type.HasFlag(TelephoneNumberType.Work).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Voice).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Preferred).ShouldBeTrue();
-        result.Number.ShouldBe("+1-213-555-1234");
+        result.Preference.Must().Be(1);
+        result.Type.HasFlag(TelephoneNumberType.Work).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Voice).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Preferred).Must().BeTrue();
+        result.Number.Must().Be("+1-213-555-1234");
     }
 
     [Test]
@@ -43,11 +43,11 @@ public class TelephoneNumberFieldDeserializerTests
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Type.HasFlag(TelephoneNumberType.Voice).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Home).ShouldBeTrue();
-        result.Number.ShouldBe("+1-555-555-5555");
-        result.Extension.ShouldBe("5555");
+        result.Preference.Must().Be(1);
+        result.Type.HasFlag(TelephoneNumberType.Voice).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Home).Must().BeTrue();
+        result.Number.Must().Be("+1-555-555-5555");
+        result.Extension.Must().Be("5555");
     }
 
     [Test]
@@ -57,8 +57,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Preference.Must().Be(1);
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -68,8 +68,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(1);
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Preference.Must().Be(1);
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -79,8 +79,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(2);
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Preference.Must().Be(2);
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -90,8 +90,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBe(3);
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Preference.Must().Be(3);
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -101,8 +101,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Preference.ShouldBeNull();
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Preference.Must().BeNull();
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -112,7 +112,7 @@ public class TelephoneNumberFieldDeserializerTests
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Number.ShouldBe("+1-555-5555");
+        result.Number.Must().Be("+1-555-5555");
     }
 
     [Test]
@@ -122,7 +122,7 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Number.ShouldBe("+1-555-5555");
+        result.Number.Must().Be("+1-555-5555");
     }
 
     [Test]
@@ -132,7 +132,7 @@ public class TelephoneNumberFieldDeserializerTests
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Number.ShouldBe("+1-555-5555");
+        result.Number.Must().Be("+1-555-5555");
     }
 
     [Test]
@@ -142,9 +142,9 @@ public class TelephoneNumberFieldDeserializerTests
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.HasFlag(TelephoneNumberType.Voice).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Fax).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Cell).ShouldBeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Voice).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Fax).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Cell).Must().BeTrue();
     }
 
     [Test]
@@ -154,9 +154,9 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.HasFlag(TelephoneNumberType.Voice).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Fax).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Cell).ShouldBeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Voice).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Fax).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Cell).Must().BeTrue();
     }
 
     [Test]
@@ -166,9 +166,9 @@ public class TelephoneNumberFieldDeserializerTests
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.HasFlag(TelephoneNumberType.Voice).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Fax).ShouldBeTrue();
-        result.Type.HasFlag(TelephoneNumberType.Cell).ShouldBeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Voice).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Fax).Must().BeTrue();
+        result.Type.HasFlag(TelephoneNumberType.Cell).Must().BeTrue();
     }
 
     [Test]
@@ -178,8 +178,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe(TelephoneNumberType.None);
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Type.Must().Be(TelephoneNumberType.None);
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -189,8 +189,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Number.ShouldBe("+1-555-555-5555");
-        result.Extension.ShouldBe("1234");
+        result.Number.Must().Be("+1-555-555-5555");
+        result.Extension.Must().Be("1234");
     }
 
     [Test]
@@ -200,8 +200,8 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Number.ShouldBe("+1-555-555-5555");
-        result.Extension.ShouldBe("1234");
+        result.Number.Must().Be("+1-555-555-5555");
+        result.Extension.Must().Be("1234");
     }
 
     [Test]
@@ -211,7 +211,7 @@ public class TelephoneNumberFieldDeserializerTests
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -221,7 +221,7 @@ public class TelephoneNumberFieldDeserializerTests
         IV4FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -231,10 +231,10 @@ public class TelephoneNumberFieldDeserializerTests
         IV3FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe(TelephoneNumberType.None);
-        result.Preference.ShouldBeNull();
-        result.Extension.ShouldBeNull();
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Type.Must().Be(TelephoneNumberType.None);
+        result.Preference.Must().BeNull();
+        result.Extension.Must().BeNull();
+        result.Number.Must().Be("+1-555-555-5555");
     }
 
     [Test]
@@ -244,9 +244,9 @@ public class TelephoneNumberFieldDeserializerTests
         IV2FieldDeserializer<TelephoneNumber> deserializer = new TelephoneNumberFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe(TelephoneNumberType.None);
-        result.Preference.ShouldBeNull();
-        result.Extension.ShouldBeNull();
-        result.Number.ShouldBe("+1-555-555-5555");
+        result.Type.Must().Be(TelephoneNumberType.None);
+        result.Preference.Must().BeNull();
+        result.Extension.Must().BeNull();
+        result.Number.Must().Be("+1-555-555-5555");
     }
 }

@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Enums;
 using vCardLib.Serialization.FieldSerializers;
@@ -13,7 +13,7 @@ public class VersionFieldSerializerTests
     [Test]
     public void FieldKey_ReturnsVersion()
     {
-        VersionFieldSerializer.FieldKey.ShouldBe("VERSION");
+        VersionFieldSerializer.FieldKey.Must().Be("VERSION");
     }
 
     [TestCase(vCardVersion.v2, "VERSION:2.1")]
@@ -22,13 +22,13 @@ public class VersionFieldSerializerTests
     public void Write_ReturnsExpectedWireFormat(vCardVersion version, string expected)
     {
         var result = VersionFieldSerializer.Write(version);
-        result.ShouldBe(expected);
+        result.Must().Be(expected);
     }
 
     [Test]
     public void Write_UnsupportedVersion_ThrowsArgumentOutOfRangeException()
     {
-        Should.Throw<ArgumentOutOfRangeException>(() => VersionFieldSerializer.Write((vCardVersion)99));
+        Ensure.Throws<ArgumentOutOfRangeException>(() => VersionFieldSerializer.Write((vCardVersion)99));
     }
 
     [TestCase("VERSION:2.1", vCardVersion.v2)]
@@ -37,6 +37,6 @@ public class VersionFieldSerializerTests
     public void Write_RoundTripsThroughDeserializer(string wire, vCardVersion expectedVersion)
     {
         var roundTrip = VersionDeserializer.Read(wire);
-        roundTrip.ShouldBe(expectedVersion);
+        roundTrip.Must().Be(expectedVersion);
     }
 }

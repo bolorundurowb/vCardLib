@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
@@ -18,7 +18,7 @@ public class LabelFieldSerializerTests
 
         var line = serializer.Write(label)!;
 
-        line.ShouldBe("LABEL:123 Main St");
+        line.Must().Be("LABEL:123 Main St");
     }
 
     [Test]
@@ -29,8 +29,8 @@ public class LabelFieldSerializerTests
 
         var line = serializer.Write(label)!;
 
-        line.ShouldContain("TYPE=work");
-        line.ShouldContain("HQ");
+        line.Must().Contain("TYPE=work");
+        line.Must().Contain("HQ");
     }
 
     [Test]
@@ -41,8 +41,8 @@ public class LabelFieldSerializerTests
 
         var line = serializer.Write(label)!;
 
-        line.ShouldContain("TYPE=home");
-        line.ShouldContain("TYPE=postal");
+        line.Must().Contain("TYPE=home");
+        line.Must().Contain("TYPE=postal");
     }
 
     [Test]
@@ -51,6 +51,6 @@ public class LabelFieldSerializerTests
         IV4FieldSerializer<Label> serializer = new LabelFieldSerializer();
         var label = new Label("ignored", AddressType.Home);
 
-        serializer.Write(label).ShouldBeNull();
+        serializer.Write(label).Must().BeNull();
     }
 }

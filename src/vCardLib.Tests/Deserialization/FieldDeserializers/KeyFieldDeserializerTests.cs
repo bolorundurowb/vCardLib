@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using Shouldly;
+using NUnit.Framework;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
@@ -16,9 +16,9 @@ public class KeyFieldDeserializerTests
         IV2FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Encoding.ShouldBeNull();
-        result.Type.ShouldBe("pgp");
-        result.Value.ShouldBe("http://example.com/key.pgp");
+        result.Encoding.Must().BeNull();
+        result.Type.Must().Be("pgp");
+        result.Value.Must().Be("http://example.com/key.pgp");
     }
 
     [Test]
@@ -42,9 +42,9 @@ public class KeyFieldDeserializerTests
         IV2FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe("pgp");
-        result.Encoding.ShouldBe("base64");
-        result.Value.ShouldBe(@"MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
+        result.Type.Must().Be("pgp");
+        result.Encoding.Must().Be("base64");
+        result.Value.Must().Be(@"MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
          wdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlIENbW11bmljYX
          Rpb25zIENvcnBvcmF0aW9uMRwwGgYDVQQLExNJbmZvcm1hdGlvbiBTeXN0
          ZW1zMRwwGgYDVQQDExNyb290Y2EubmV0c2NhcGUuY29tMB4XDTk3MDYwNj
@@ -68,9 +68,9 @@ public class KeyFieldDeserializerTests
         IV3FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Encoding.ShouldBeNull();
-        result.Type.ShouldBe("pgp");
-        result.Value.ShouldBe("http://example.com/key.pgp");
+        result.Encoding.Must().BeNull();
+        result.Type.Must().Be("pgp");
+        result.Value.Must().Be("http://example.com/key.pgp");
     }
 
     [Test]
@@ -94,9 +94,9 @@ public class KeyFieldDeserializerTests
         IV3FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe("pgp");
-        result.Encoding.ShouldBe("base64");
-        result.Value.ShouldBe(@"MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
+        result.Type.Must().Be("pgp");
+        result.Encoding.Must().Be("base64");
+        result.Value.Must().Be(@"MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
          wdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlIENbW11bmljYX
          Rpb25zIENvcnBvcmF0aW9uMRwwGgYDVQQLExNJbmZvcm1hdGlvbiBTeXN0
          ZW1zMRwwGgYDVQQDExNyb290Y2EubmV0c2NhcGUuY29tMB4XDTk3MDYwNj
@@ -120,10 +120,10 @@ public class KeyFieldDeserializerTests
         IV4FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Encoding.ShouldBeNull();
-        result.Type.ShouldBeNull();
-        result.MimeType.ShouldBe("application/pgp-keys");
-        result.Value.ShouldBe("ftp://example.com/keys/jdoe");
+        result.Encoding.Must().BeNull();
+        result.Type.Must().BeNull();
+        result.MimeType.Must().Be("application/pgp-keys");
+        result.Value.Must().Be("ftp://example.com/keys/jdoe");
     }
 
     [Test]
@@ -147,10 +147,10 @@ public class KeyFieldDeserializerTests
         IV4FieldDeserializer<Key> deserializer = new KeyFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBeNull();
-        result.MimeType.ShouldBe("application/pgp-keys");
-        result.Encoding.ShouldBe("base64");
-        result.Value.ShouldBe(@"MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
+        result.Type.Must().BeNull();
+        result.MimeType.Must().Be("application/pgp-keys");
+        result.Encoding.Must().Be("base64");
+        result.Value.Must().Be(@"MIICajCCAdOgAwIBAgICBEUwDQYJKoZIhvcNAQEEBQA
          wdzELMAkGA1UEBhMCVVMxLDAqBgNVBAoTI05ldHNjYXBlIENbW11bmljYX
          Rpb25zIENvcnBvcmF0aW9uMRwwGgYDVQQLExNJbmZvcm1hdGlvbiBTeXN0
          ZW1zMRwwGgYDVQQDExNyb290Y2EubmV0c2NhcGUuY29tMB4XDTk3MDYwNj

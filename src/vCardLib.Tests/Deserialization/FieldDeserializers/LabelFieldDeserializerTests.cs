@@ -1,5 +1,6 @@
+using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
@@ -18,7 +19,7 @@ public class LabelFieldDeserializerTests
         IV4FieldDeserializer<Label?> deserializer = new LabelFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -29,9 +30,13 @@ public class LabelFieldDeserializerTests
         var deserializer = new LabelFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Text.ShouldBe(
-            "Mr.John Q. Public, Esq.\nMail Drop: TNE QB\n123 Main Street\nAny Town, CA  91921-1234\nU.S.A.");
-        result.Type.ShouldBe(AddressType.Domestic | AddressType.Home | AddressType.Postal | AddressType.Parcel);
+        result.Text.Must().Be(
+            "Mr.John Q. Public, Esq." + Environment.NewLine +
+            "Mail Drop: TNE QB" + Environment.NewLine +
+            "123 Main Street" + Environment.NewLine +
+            "Any Town, CA  91921-1234" + Environment.NewLine +
+            "U.S.A.");
+        result.Type.Must().Be(AddressType.Domestic | AddressType.Home | AddressType.Postal | AddressType.Parcel);
     }
 
     [Test]
@@ -41,7 +46,10 @@ public class LabelFieldDeserializerTests
         var deserializer = new LabelFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Text.ShouldBe("123 Main St.\nSpringfield, IL 12345\nUSA");
-        result.Type.ShouldBe(AddressType.Home);
+        result.Text.Must().Be(
+            "123 Main St." + Environment.NewLine +
+            "Springfield, IL 12345" + Environment.NewLine +
+            "USA");
+        result.Type.Must().Be(AddressType.Home);
     }
 }

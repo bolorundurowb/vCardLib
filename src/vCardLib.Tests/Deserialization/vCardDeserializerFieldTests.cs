@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization;
 using vCardLib.Enums;
 
@@ -19,16 +19,16 @@ public class vCardDeserializerFieldTests
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Rich\nGEO:12.5,-45.25\nKIND:group\nGENDER:O;non-binary\nCATEGORIES:alpha,beta\nEND:VCARD";
 
         var card = vCardDeserializer.FromContent(content).Single();
-        card.Version.ShouldBe(vCardVersion.v4);
-        card.FormattedName.ShouldBe("Rich");
-        card.Geo!.Value.Latitude.ShouldBe(12.5f);
-        card.Geo.Value.Longitude.ShouldBe(-45.25f);
-        card.Kind.ShouldBe(ContactKind.Group);
-        card.Gender.ShouldNotBeNull();
-        card.Gender!.Value.Sex.ShouldBe(BiologicalSex.Other);
-        card.Gender.Value.GenderIdentity.ShouldBe("non-binary");
-        card.Categories.Count.ShouldBe(2);
-        card.Categories.ShouldContain("alpha");
+        card.Version.Must().Be(vCardVersion.v4);
+        card.FormattedName.Must().Be("Rich");
+        card.Geo!.Value.Latitude.Must().Be(12.5f);
+        card.Geo.Value.Longitude.Must().Be(-45.25f);
+        card.Kind.Must().Be(ContactKind.Group);
+        card.Gender.Must().NotBeNull();
+        card.Gender!.Value.Sex.Must().Be(BiologicalSex.Other);
+        card.Gender.Value.GenderIdentity.Must().Be("non-binary");
+        card.Categories.Count.Must().Be(2);
+        card.Categories.Must().Contain("alpha");
     }
 
     [Test]
@@ -37,22 +37,22 @@ public class vCardDeserializerFieldTests
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Contact\nTEL:+15551234567\nEMAIL:me@example.org\nPHOTO:https://example.org/p.png\nADR:;;100 Main;City;ST;00000;US\nX-APP-ID:12345\nEND:VCARD";
 
         var card = vCardDeserializer.FromContent(content).Single();
-        card.PhoneNumbers.Count.ShouldBe(1);
-        card.EmailAddresses.Count.ShouldBe(1);
-        card.Photos.Count.ShouldBe(1);
-        card.Addresses.Count.ShouldBe(1);
-        card.CustomFields.Count.ShouldBe(1);
-        card.CustomFields[0].Key.ShouldBe("X-APP-ID");
+        card.PhoneNumbers.Count.Must().Be(1);
+        card.EmailAddresses.Count.Must().Be(1);
+        card.Photos.Count.Must().Be(1);
+        card.Addresses.Count.Must().Be(1);
+        card.CustomFields.Count.Must().Be(1);
+        card.CustomFields[0].Key.Must().Be("X-APP-ID");
     }
 
     [Test]
     public void FromContent_WhenV4WithKnownAndUnknownKind_ParsesExpectedKind()
     {
         var org = "BEGIN:VCARD\nVERSION:4.0\nFN:Org\nKIND:org\nEND:VCARD";
-        vCardDeserializer.FromContent(org).Single().Kind.ShouldBe(ContactKind.Organization);
+        vCardDeserializer.FromContent(org).Single().Kind.Must().Be(ContactKind.Organization);
 
         var unknownKind = "BEGIN:VCARD\nVERSION:4.0\nFN:Def\nKIND:unknown-value\nEND:VCARD";
-        vCardDeserializer.FromContent(unknownKind).Single().Kind.ShouldBe(ContactKind.Individual);
+        vCardDeserializer.FromContent(unknownKind).Single().Kind.Must().Be(ContactKind.Individual);
     }
 
     [Test]
@@ -61,9 +61,9 @@ public class vCardDeserializerFieldTests
         var content = "BEGIN:VCARD\nVERSION:3.0\nFN:V3\nGEO:1;2\nCATEGORIES:c1,c2\nEND:VCARD";
 
         var card = vCardDeserializer.FromContent(content).Single();
-        card.Version.ShouldBe(vCardVersion.v3);
-        card.Geo!.Value.Latitude.ShouldBe(1f);
-        card.Categories.Count.ShouldBe(2);
+        card.Version.Must().Be(vCardVersion.v3);
+        card.Geo!.Value.Latitude.Must().Be(1f);
+        card.Categories.Count.Must().Be(2);
     }
 
     [Test]
@@ -72,9 +72,9 @@ public class vCardDeserializerFieldTests
         var content = "BEGIN:VCARD\nVERSION:2.1\nFN:V2\nGEO:3;4\nCATEGORIES:one,two\nEND:VCARD";
 
         var card = vCardDeserializer.FromContent(content).Single();
-        card.Version.ShouldBe(vCardVersion.v2);
-        card.Geo!.Value.Longitude.ShouldBe(4f);
-        card.Categories.Count.ShouldBe(2);
+        card.Version.Must().Be(vCardVersion.v2);
+        card.Geo!.Value.Longitude.Must().Be(4f);
+        card.Categories.Count.Must().Be(2);
     }
 
     [Test]
@@ -85,18 +85,18 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Name.ShouldNotBeNull();
-        card.Name!.Value.FamilyName.ShouldBe("Doe");
-        card.Name.Value.GivenName.ShouldBe("Jane");
-        card.Uid.ShouldBe("urn:uuid:abc");
-        card.Title.ShouldBe("Director");
-        card.Timezone.ShouldBe("Europe/London");
-        card.BirthDay.ShouldNotBeNull();
-        card.BirthDay!.Value.Year.ShouldBe(1985);
-        card.Revision.ShouldNotBeNull();
-        card.Anniversary.ShouldNotBeNull();
-        card.Organization.ShouldNotBeNull();
-        card.Organization!.Value.Name.ShouldBe("Acme Corp");
+        card.Name.Must().NotBeNull();
+        card.Name!.Value.FamilyName.Must().Be("Doe");
+        card.Name.Value.GivenName.Must().Be("Jane");
+        card.Uid.Must().Be("urn:uuid:abc");
+        card.Title.Must().Be("Director");
+        card.Timezone.Must().Be("Europe/London");
+        card.BirthDay.Must().NotBeNull();
+        card.BirthDay!.Value.Year.Must().Be(1985);
+        card.Revision.Must().NotBeNull();
+        card.Anniversary.Must().NotBeNull();
+        card.Organization.Must().NotBeNull();
+        card.Organization!.Value.Name.Must().Be("Acme Corp");
     }
 
     [Test]
@@ -106,8 +106,8 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Language.ShouldNotBeNull();
-        card.Language!.Value.Locale.ShouldBe("en-GB");
+        card.Language.Must().NotBeNull();
+        card.Language!.Value.Locale.Must().Be("en-GB");
     }
 
     [Test]
@@ -117,8 +117,8 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Url.ShouldNotBeNull();
-        card.Url!.Value.Value.ShouldBe("http://example.org");
+        card.Url.Must().NotBeNull();
+        card.Url!.Value.Value.Must().Be("http://example.org");
     }
 
     [Test]
@@ -126,7 +126,7 @@ public class vCardDeserializerFieldTests
     {
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Jane\nURL:http://example.org\nEND:VCARD";
 
-        Should.Throw<InvalidCastException>(() => vCardDeserializer.FromContent(content).Single());
+        Ensure.Throws<InvalidCastException>(() => vCardDeserializer.FromContent(content).Single());
     }
 
     [Test]
@@ -137,14 +137,14 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.PhoneNumbers.Count.ShouldBe(2);
-        card.PhoneNumbers.Select(p => p.Number).ShouldContain("+111");
-        card.PhoneNumbers.Select(p => p.Number).ShouldContain("+222");
-        card.EmailAddresses.Count.ShouldBe(2);
-        card.EmailAddresses.Select(e => e.Value).ShouldContain("one@example.org");
-        card.Addresses.Count.ShouldBe(2);
-        card.Addresses.Select(a => a.StreetAddress).ShouldContain("1 Main");
-        card.Addresses.Select(a => a.StreetAddress).ShouldContain("2 Oak");
+        card.PhoneNumbers.Count.Must().Be(2);
+        card.PhoneNumbers.Select(p => p.Number).Must().Contain("+111");
+        card.PhoneNumbers.Select(p => p.Number).Must().Contain("+222");
+        card.EmailAddresses.Count.Must().Be(2);
+        card.EmailAddresses.Select(e => e.Value).Must().Contain("one@example.org");
+        card.Addresses.Count.Must().Be(2);
+        card.Addresses.Select(a => a.StreetAddress).Must().Contain("1 Main");
+        card.Addresses.Select(a => a.StreetAddress).Must().Contain("2 Oak");
     }
 
     [Test]
@@ -155,9 +155,9 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Photos.Count.ShouldBe(2);
-        card.Photos.Select(p => p.Data).ShouldContain("https://example.org/a.png");
-        card.Photos.Select(p => p.Data).ShouldContain("https://example.org/b.png");
+        card.Photos.Count.Must().Be(2);
+        card.Photos.Select(p => p.Data).Must().Contain("https://example.org/a.png");
+        card.Photos.Select(p => p.Data).Must().Contain("https://example.org/b.png");
     }
 
     [Test]
@@ -168,9 +168,9 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Members.Count.ShouldBe(2);
-        card.Members.ShouldContain("mailto:one@example.org");
-        card.Members.ShouldContain("mailto:two@example.org");
+        card.Members.Count.Must().Be(2);
+        card.Members.Must().Contain("mailto:one@example.org");
+        card.Members.Must().Contain("mailto:two@example.org");
     }
 
     [Test]
@@ -180,7 +180,7 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.NickName.ShouldBe("Johnny");
+        card.NickName.Must().Be("Johnny");
     }
 
     [Test]
@@ -190,7 +190,7 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.NickName.ShouldBeNull();
+        card.NickName.Must().BeNull();
     }
 
     [Test]
@@ -200,9 +200,9 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Name.ShouldNotBeNull();
-        card.Name!.Value.FamilyName.ShouldBe("Smith");
-        card.Note.ShouldBe("Important client");
+        card.Name.Must().NotBeNull();
+        card.Name!.Value.FamilyName.Must().Be("Smith");
+        card.Note.Must().Be("Important client");
     }
 
     [Test]
@@ -212,10 +212,10 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Logo.ShouldBeNull();
-        card.CustomFields.Count.ShouldBe(1);
-        card.CustomFields[0].Key.ShouldBe("LOGO:https");
-        card.CustomFields[0].Value.ShouldBe("//example.org/logo.png");
+        card.Logo.Must().BeNull();
+        card.CustomFields.Count.Must().Be(1);
+        card.CustomFields[0].Key.Must().Be("LOGO:https");
+        card.CustomFields[0].Value.Must().Be("//example.org/logo.png");
     }
 
     [Test]
@@ -225,8 +225,8 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Agent.ShouldBeNull();
-        card.Mailer.ShouldBeNull();
+        card.Agent.Must().BeNull();
+        card.Mailer.Must().BeNull();
     }
 
     [Test]
@@ -236,8 +236,8 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Agent.ShouldBe("Rep");
-        card.Mailer.ShouldBe("Thunderbird");
+        card.Agent.Must().Be("Rep");
+        card.Mailer.Must().Be("Thunderbird");
     }
 
     [Test]
@@ -247,7 +247,7 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Mailer.ShouldBe("PicoMail");
+        card.Mailer.Must().Be("PicoMail");
     }
 
     [Test]
@@ -257,8 +257,8 @@ public class vCardDeserializerFieldTests
 
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.CustomFields.Count.ShouldBe(2);
-        card.CustomFields.ShouldContain(kv => kv.Key == "X-FOO" && kv.Value == "bar");
-        card.CustomFields.ShouldContain(kv => kv.Key == "X-BAZ" && kv.Value == "qux");
+        card.CustomFields.Count.Must().Be(2);
+        card.CustomFields.Must().Contain(kv => kv.Key == "X-FOO" && kv.Value == "bar");
+        card.CustomFields.Must().Contain(kv => kv.Key == "X-BAZ" && kv.Value == "qux");
     }
 }

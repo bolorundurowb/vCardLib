@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Utilities;
 
 namespace vCardLib.Tests.Utilities;
@@ -15,7 +15,7 @@ public class EnumExtensionsTests
 
         var actual = EnumExtensions.Parse<Color>(value);
 
-        actual.ShouldBe(expected);
+        actual.Must().Be(expected);
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class EnumExtensionsTests
 
         var actual = EnumExtensions.Parse<Color>(value);
 
-        actual.ShouldBe(Color.Blue);
+        actual.Must().Be(Color.Blue);
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class EnumExtensionsTests
 
         var actual = EnumExtensions.Parse<Color>(value);
 
-        actual.ShouldBe(Color.Blue);
+        actual.Must().Be(Color.Blue);
     }
 
     [Test]
@@ -43,19 +43,19 @@ public class EnumExtensionsTests
     {
         const string value = "InvalidColor";
 
-        Assert.Throws<ArgumentException>(() => EnumExtensions.Parse<Color>(value));
+        Ensure.Throws<ArgumentException>(() => EnumExtensions.Parse<Color>(value));
     }
 
     [Test]
     public void Parse_NullInput_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => EnumExtensions.Parse<Color>(null!));
+        Ensure.Throws<ArgumentNullException>(() => EnumExtensions.Parse<Color>(null!));
     }
 
     [Test]
     public void Parse_EmptyInput_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => EnumExtensions.Parse<Color>(string.Empty));
+        Ensure.Throws<ArgumentNullException>(() => EnumExtensions.Parse<Color>(string.Empty));
     }
 
     [Test]
@@ -65,7 +65,7 @@ public class EnumExtensionsTests
 
         var actual = EnumExtensions.Values(value);
 
-        actual.ShouldBe(new[] { Color.Red });
+        actual.Must().BeSequenceEqual(new[] { Color.Red });
     }
 
     [Test]
@@ -75,7 +75,7 @@ public class EnumExtensionsTests
 
         var actual = EnumExtensions.Values(value);
 
-        actual.ShouldBe(new[] { Color.Red, Color.Green });
+        actual.Must().BeSequenceEqual(new[] { Color.Red, Color.Green });
     }
 }
 

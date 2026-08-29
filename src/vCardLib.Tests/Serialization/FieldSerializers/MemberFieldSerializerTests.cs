@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Serialization.FieldSerializers;
@@ -14,7 +14,7 @@ public class MemberFieldSerializerTests
     public void FieldKey_ReturnsMember()
     {
         var serializer = new MemberFieldSerializer();
-        serializer.FieldKey.ShouldBe("MEMBER");
+        serializer.FieldKey.Must().Be("MEMBER");
     }
 
     [Test]
@@ -23,7 +23,7 @@ public class MemberFieldSerializerTests
         IV2FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("mailto:subscriber@example.com");
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -32,7 +32,7 @@ public class MemberFieldSerializerTests
         IV3FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("mailto:subscriber@example.com");
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -41,7 +41,7 @@ public class MemberFieldSerializerTests
         IV4FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("mailto:subscriber@example.com");
 
-        result.ShouldBe("MEMBER:mailto:subscriber@example.com");
+        result.Must().Be("MEMBER:mailto:subscriber@example.com");
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class MemberFieldSerializerTests
         IV4FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("urn:uuid:550e8400-e29b-41d4-a716-446655440000");
 
-        result.ShouldBe("MEMBER:urn:uuid:550e8400-e29b-41d4-a716-446655440000");
+        result.Must().Be("MEMBER:urn:uuid:550e8400-e29b-41d4-a716-446655440000");
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class MemberFieldSerializerTests
         IV4FieldSerializer<string> serializer = new MemberFieldSerializer();
         var result = serializer.Write("http://directory.example.com/pdir/jdoe");
 
-        result.ShouldBe("MEMBER:http://directory.example.com/pdir/jdoe");
+        result.Must().Be("MEMBER:http://directory.example.com/pdir/jdoe");
     }
 
     [Test]
@@ -72,6 +72,6 @@ public class MemberFieldSerializerTests
         var wire = serializer.Write(member)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.ShouldBe(member);
+        roundTrip.Must().Be(member);
     }
 }

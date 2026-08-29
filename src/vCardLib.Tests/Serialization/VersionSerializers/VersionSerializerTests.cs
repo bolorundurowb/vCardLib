@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization;
 using vCardLib.Enums;
 using vCardLib.Models;
@@ -71,10 +71,10 @@ public class VersionSerializerTests
             _ => new V4Serializer(serializers).Serialize(card)
         };
 
-        result.ShouldContain("BEGIN:VCARD");
-        result.ShouldContain($"VERSION:{expectedVersion}");
-        result.ShouldContain("FN:Jane Doe");
-        result.ShouldContain("END:VCARD");
+        result.Must().Contain("BEGIN:VCARD");
+        result.Must().Contain($"VERSION:{expectedVersion}");
+        result.Must().Contain("FN:Jane Doe");
+        result.Must().Contain("END:VCARD");
     }
 
     [Test]
@@ -88,7 +88,7 @@ public class VersionSerializerTests
 
         var result = new V2Serializer(CreateFieldSerializers()).Serialize(card);
 
-        result.ShouldNotContain("NICKNAME");
+        result.Must().NotContain("NICKNAME");
     }
 
     [Test]
@@ -102,7 +102,7 @@ public class VersionSerializerTests
 
         var result = new V3Serializer(CreateFieldSerializers()).Serialize(card);
 
-        result.ShouldContain("NICKNAME:Janey");
+        result.Must().Contain("NICKNAME:Janey");
     }
 
     [Test]
@@ -116,7 +116,7 @@ public class VersionSerializerTests
 
         var result = new V4Serializer(CreateFieldSerializers()).Serialize(card);
 
-        result.ShouldContain("GEO:geo:37.386013,-122.08293");
+        result.Must().Contain("GEO:geo:37.386013,-122.08293");
     }
 
     [Test]
@@ -134,9 +134,9 @@ public class VersionSerializerTests
 
         var result = new V4Serializer(CreateFieldSerializers()).Serialize(card);
 
-        result.Split("PHOTO:").Length.ShouldBe(3);
-        result.ShouldContain("http://example.com/a.jpg");
-        result.ShouldContain("http://example.com/b.jpg");
+        result.Split("PHOTO:").Length.Must().Be(3);
+        result.Must().Contain("http://example.com/a.jpg");
+        result.Must().Contain("http://example.com/b.jpg");
     }
 
     [TestCase(typeof(V2Serializer))]
@@ -166,10 +166,10 @@ public class VersionSerializerTests
         for (var i = 0; i < result.Length; i++)
         {
             if (result[i] == '\n' && (i == 0 || result[i - 1] != '\r'))
-                Assert.Fail("Version serializer output must use CRLF only.");
+                Ensure.Fail("Version serializer output must use CRLF only.");
         }
 
-        result.ShouldEndWith("\r\n");
+        result.Must().EndWith("\r\n");
     }
 
     [Test]
@@ -180,7 +180,7 @@ public class VersionSerializerTests
         var wire = new V4Serializer(CreateFieldSerializers()).Serialize(card);
         var roundTrip = vCardDeserializer.FromContent(wire).Single();
 
-        roundTrip.FormattedName.ShouldBe("Round Trip");
-        roundTrip.Version.ShouldBe(vCardVersion.v4);
+        roundTrip.FormattedName.Must().Be("Round Trip");
+        roundTrip.Version.Must().Be(vCardVersion.v4);
     }
 }

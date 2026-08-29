@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
 using vCardLib.Serialization.Interfaces;
@@ -16,7 +16,7 @@ public class LanguageFieldSerializerTests
         var serializer = new LanguageFieldSerializer();
         var result = (serializer as IV4FieldSerializer<Language>).Write(language);
 
-        result.ShouldBe("LANG;TYPE=home;PREF=1:en-US");
+        result.Must().Be("LANG;TYPE=home;PREF=1:en-US");
     }
 
     [Test]
@@ -26,7 +26,7 @@ public class LanguageFieldSerializerTests
         var serializer = new LanguageFieldSerializer();
         var result = (serializer as IV4FieldSerializer<Language>).Write(language);
 
-        result.ShouldBe("LANG:en-US");
+        result.Must().Be("LANG:en-US");
     }
 
     [Test]
@@ -36,6 +36,6 @@ public class LanguageFieldSerializerTests
         var serializer = new LanguageFieldSerializer();
         var result = (serializer as IV2FieldSerializer<Language>).Write(language);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 }

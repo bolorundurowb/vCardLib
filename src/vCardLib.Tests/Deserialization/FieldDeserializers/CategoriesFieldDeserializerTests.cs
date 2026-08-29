@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 
 namespace vCardLib.Tests.Deserialization.FieldDeserializers;
@@ -14,7 +14,7 @@ public class CategoriesFieldDeserializerTests
         var deserializer = new CategoriesFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeEmpty();
+        result.Must().BeEmpty();
     }
 
     [Test]
@@ -24,9 +24,9 @@ public class CategoriesFieldDeserializerTests
         var deserializer = new CategoriesFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeEmpty();
-        result.Count.ShouldBe(1);
-        result.ShouldContain("TRAVEL AGENT");
+        result.Must().NotBeEmpty();
+        result.Count.Must().Be(1);
+        result.Must().Contain("TRAVEL AGENT");
     }
 
     [Test]
@@ -36,12 +36,12 @@ public class CategoriesFieldDeserializerTests
         var deserializer = new CategoriesFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeEmpty();
-        result.Count.ShouldBe(4);
-        result.ShouldContain("INTERNET");
-        result.ShouldContain("IETF");
-        result.ShouldContain("INDUSTRY");
-        result.ShouldContain("INFORMATION TECHNOLOGY");
+        result.Must().NotBeEmpty();
+        result.Count.Must().Be(4);
+        result.Must().Contain("INTERNET");
+        result.Must().Contain("IETF");
+        result.Must().Contain("INDUSTRY");
+        result.Must().Contain("INFORMATION TECHNOLOGY");
     }
 
     [Test]
@@ -51,10 +51,10 @@ public class CategoriesFieldDeserializerTests
         var deserializer = new CategoriesFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Count.ShouldBe(3);
-        result.ShouldContain("alpha");
-        result.ShouldContain("beta");
-        result.ShouldContain("gamma");
+        result.Count.Must().Be(3);
+        result.Must().Contain("alpha");
+        result.Must().Contain("beta");
+        result.Must().Contain("gamma");
     }
 
     [Test]
@@ -64,8 +64,8 @@ public class CategoriesFieldDeserializerTests
         var deserializer = new CategoriesFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Count.ShouldBe(2);
-        result.ShouldContain("CATEGORIES");
-        result.ShouldContain("test");
+        result.Count.Must().Be(2);
+        result.Must().Contain("CATEGORIES");
+        result.Must().Contain("test");
     }
 }

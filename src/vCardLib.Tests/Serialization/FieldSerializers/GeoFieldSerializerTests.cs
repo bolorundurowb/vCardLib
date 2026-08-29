@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
@@ -15,7 +15,7 @@ public class GeoFieldSerializerTests
     public void FieldKey_ReturnsGeo()
     {
         var serializer = new GeoFieldSerializer();
-        serializer.FieldKey.ShouldBe("GEO");
+        serializer.FieldKey.Must().Be("GEO");
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class GeoFieldSerializerTests
         IV2FieldSerializer<Geo> serializer = new GeoFieldSerializer();
         var result = serializer.Write(geo);
 
-        result.ShouldBe("GEO:37.386013;-122.08293");
+        result.Must().Be("GEO:37.386013;-122.08293");
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class GeoFieldSerializerTests
         IV3FieldSerializer<Geo> serializer = new GeoFieldSerializer();
         var result = serializer.Write(geo);
 
-        result.ShouldBe("GEO:37.386013;-122.08293");
+        result.Must().Be("GEO:37.386013;-122.08293");
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class GeoFieldSerializerTests
         IV4FieldSerializer<Geo> serializer = new GeoFieldSerializer();
         var result = serializer.Write(geo);
 
-        result.ShouldBe("GEO:geo:37.386013,-122.08293");
+        result.Must().Be("GEO:geo:37.386013,-122.08293");
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class GeoFieldSerializerTests
         IV2FieldSerializer<Geo> serializer = new GeoFieldSerializer();
         var result = serializer.Write(geo);
 
-        result.ShouldBe("GEO:-33.8688;151.2093");
+        result.Must().Be("GEO:-33.8688;151.2093");
     }
 
     [Test]
@@ -65,7 +65,7 @@ public class GeoFieldSerializerTests
         IV3FieldSerializer<Geo> serializer = new GeoFieldSerializer();
         var result = serializer.Write(geo);
 
-        result.ShouldBe("GEO:-33.8688;151.2093");
+        result.Must().Be("GEO:-33.8688;151.2093");
     }
 
     [Test]
@@ -75,7 +75,7 @@ public class GeoFieldSerializerTests
         IV4FieldSerializer<Geo> serializer = new GeoFieldSerializer();
         var result = serializer.Write(geo);
 
-        result.ShouldBe("GEO:geo:-33.8688,151.2093");
+        result.Must().Be("GEO:geo:-33.8688,151.2093");
     }
 
     [Test]
@@ -85,7 +85,7 @@ public class GeoFieldSerializerTests
         IV4FieldSerializer<Geo> serializer = new GeoFieldSerializer();
         var result = serializer.Write(geo);
 
-        result.ShouldBe("GEO:geo:0,0");
+        result.Must().Be("GEO:geo:0,0");
     }
 
     [Test]
@@ -98,8 +98,8 @@ public class GeoFieldSerializerTests
         var wire = serializer.Write(geo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Latitude.ShouldBe(geo.Latitude);
-        roundTrip.Longitude.ShouldBe(geo.Longitude);
+        roundTrip.Latitude.Must().Be(geo.Latitude);
+        roundTrip.Longitude.Must().Be(geo.Longitude);
     }
 
     [Test]
@@ -112,8 +112,8 @@ public class GeoFieldSerializerTests
         var wire = serializer.Write(geo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Latitude.ShouldBe(geo.Latitude);
-        roundTrip.Longitude.ShouldBe(geo.Longitude);
+        roundTrip.Latitude.Must().Be(geo.Latitude);
+        roundTrip.Longitude.Must().Be(geo.Longitude);
     }
 
     [Test]
@@ -126,7 +126,7 @@ public class GeoFieldSerializerTests
         var wire = serializer.Write(geo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Latitude.ShouldBe(geo.Latitude);
-        roundTrip.Longitude.ShouldBe(geo.Longitude);
+        roundTrip.Latitude.Must().Be(geo.Latitude);
+        roundTrip.Longitude.Must().Be(geo.Longitude);
     }
 }

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
@@ -15,7 +15,7 @@ public class LogoFieldSerializerTests
     public void FieldKey_ReturnsLogo()
     {
         var serializer = new LogoFieldSerializer();
-        serializer.FieldKey.ShouldBe("LOGO");
+        serializer.FieldKey.Must().Be("LOGO");
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class LogoFieldSerializerTests
         IV2FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldBe("LOGO:http://example.com/logo.png");
+        result.Must().Be("LOGO:http://example.com/logo.png");
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class LogoFieldSerializerTests
         IV2FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldBe("LOGO;PNG;ENCODING=BASE64:SGVsbG8=");
+        result.Must().Be("LOGO;PNG;ENCODING=BASE64:SGVsbG8=");
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class LogoFieldSerializerTests
         IV3FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldBe("LOGO;VALUE=http://example.com/logo.png:http://example.com/logo.png");
+        result.Must().Be("LOGO;VALUE=http://example.com/logo.png:http://example.com/logo.png");
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class LogoFieldSerializerTests
         IV3FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldBe("LOGO;VALUE=SGVsbG8=;ENCODING=b:SGVsbG8=");
+        result.Must().Be("LOGO;VALUE=SGVsbG8=;ENCODING=b:SGVsbG8=");
     }
 
     [Test]
@@ -65,7 +65,7 @@ public class LogoFieldSerializerTests
         IV4FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldBe("LOGO;VALUE=SGVsbG8=;ENCODING=base64;MEDIATYPE=image/png:SGVsbG8=");
+        result.Must().Be("LOGO;VALUE=SGVsbG8=;ENCODING=base64;MEDIATYPE=image/png:SGVsbG8=");
     }
 
     [Test]
@@ -75,8 +75,8 @@ public class LogoFieldSerializerTests
         IV2FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldContain("actual-data");
-        result.ShouldNotContain("debug-value");
+        result.Must().Contain("actual-data");
+        result.Must().NotContain("debug-value");
     }
 
     [Test]
@@ -86,8 +86,8 @@ public class LogoFieldSerializerTests
         IV3FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldBe("LOGO;VALUE=debug-text;ENCODING=b:debug-text");
-        result.ShouldNotContain("actual-base64-data");
+        result.Must().Be("LOGO;VALUE=debug-text;ENCODING=b:debug-text");
+        result.Must().NotContain("actual-base64-data");
     }
 
     [Test]
@@ -97,8 +97,8 @@ public class LogoFieldSerializerTests
         IV4FieldSerializer<Photo> serializer = new LogoFieldSerializer();
         var result = serializer.Write(logo);
 
-        result.ShouldBe("LOGO;VALUE=debug-text;ENCODING=base64;MEDIATYPE=image/png:debug-text");
-        result.ShouldNotContain("actual-base64-data");
+        result.Must().Be("LOGO;VALUE=debug-text;ENCODING=base64;MEDIATYPE=image/png:debug-text");
+        result.Must().NotContain("actual-base64-data");
     }
 
     [Test]
@@ -111,9 +111,9 @@ public class LogoFieldSerializerTests
         var wire = serializer.Write(logo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(logo.Data);
-        roundTrip.Type.ShouldBe(logo.Type);
-        roundTrip.Encoding.ShouldBe(logo.Encoding);
+        roundTrip.Data.Must().Be(logo.Data);
+        roundTrip.Type.Must().Be(logo.Type);
+        roundTrip.Encoding.Must().Be(logo.Encoding);
     }
 
     [Test]
@@ -126,9 +126,9 @@ public class LogoFieldSerializerTests
         var wire = serializer.Write(logo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(logo.Data);
-        roundTrip.Encoding.ShouldBe(logo.Encoding);
-        roundTrip.Type.ShouldBe(logo.Type);
+        roundTrip.Data.Must().Be(logo.Data);
+        roundTrip.Encoding.Must().Be(logo.Encoding);
+        roundTrip.Type.Must().Be(logo.Type);
     }
 
     [Test]
@@ -141,8 +141,8 @@ public class LogoFieldSerializerTests
         var wire = serializer.Write(logo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(logo.Data);
-        roundTrip.Encoding.ShouldBe("BASE64");
+        roundTrip.Data.Must().Be(logo.Data);
+        roundTrip.Encoding.Must().Be("BASE64");
     }
 
     [Test]
@@ -155,7 +155,7 @@ public class LogoFieldSerializerTests
         var wire = serializer.Write(logo)!;
         var roundTrip = deserializer.Read(wire);
 
-        roundTrip.Data.ShouldBe(logo.Data);
-        roundTrip.MimeType.ShouldBe(logo.MimeType);
+        roundTrip.Data.Must().Be(logo.Data);
+        roundTrip.MimeType.Must().Be(logo.MimeType);
     }
 }

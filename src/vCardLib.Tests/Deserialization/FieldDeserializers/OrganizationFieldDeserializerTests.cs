@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
@@ -16,10 +16,10 @@ public class OrganizationFieldDeserializerTests
         IV2FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Name.ShouldBe("ABC, Inc.");
-        result.Value.PrimaryUnit.ShouldBeNull();
-        result.Value.SecondaryUnit.ShouldBeNull();
+        result.Must().NotBeNull();
+        result.Value.Name.Must().Be("ABC, Inc.");
+        result.Value.PrimaryUnit.Must().BeNull();
+        result.Value.SecondaryUnit.Must().BeNull();
     }
 
     [Test]
@@ -29,10 +29,10 @@ public class OrganizationFieldDeserializerTests
         IV3FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Name.ShouldBe("ABC, Inc.");
-        result.Value.PrimaryUnit.ShouldBe("North American Division");
-        result.Value.SecondaryUnit.ShouldBe("Marketing");
+        result.Must().NotBeNull();
+        result.Value.Name.Must().Be("ABC, Inc.");
+        result.Value.PrimaryUnit.Must().Be("North American Division");
+        result.Value.SecondaryUnit.Must().Be("Marketing");
     }
 
     [Test]
@@ -42,9 +42,9 @@ public class OrganizationFieldDeserializerTests
         IV4FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Name.ShouldBe("ABC, Inc.");
-        result.Value.PrimaryUnit.ShouldBe("North American Division");
+        result.Must().NotBeNull();
+        result.Value.Name.Must().Be("ABC, Inc.");
+        result.Value.PrimaryUnit.Must().Be("North American Division");
     }
 
     [Test]
@@ -54,10 +54,10 @@ public class OrganizationFieldDeserializerTests
         IV4FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Name.ShouldBe(string.Empty);
-        result.Value.PrimaryUnit.ShouldBeNull();
-        result.Value.SecondaryUnit.ShouldBeNull();
+        result.Must().NotBeNull();
+        result.Value.Name.Must().Be(string.Empty);
+        result.Value.PrimaryUnit.Must().BeNull();
+        result.Value.SecondaryUnit.Must().BeNull();
     }
 
     [Test]
@@ -67,8 +67,8 @@ public class OrganizationFieldDeserializerTests
         IV4FieldDeserializer<Organization?> deserializer = new OrganizationFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Name.ShouldBe("ORG:Tech");
-        result.Value.PrimaryUnit.ShouldBe("Division");
+        result.Must().NotBeNull();
+        result.Value.Name.Must().Be("ORG:Tech");
+        result.Value.PrimaryUnit.Must().Be("Division");
     }
 }

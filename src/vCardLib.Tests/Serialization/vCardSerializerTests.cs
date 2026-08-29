@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization;
 using vCardLib.Enums;
 using vCardLib.Models;
@@ -87,39 +87,39 @@ public class vCardSerializerTests
 
         var result = vCardSerializer.Serialize(card);
 
-        result.ShouldContain("BEGIN:VCARD");
-        result.ShouldContain($"VERSION:{expectedVersion}");
-        result.ShouldContain("FN:John Doe");
-        result.ShouldContain("N:Doe;John;Robert;Mr.;Jr.");
+        result.Must().Contain("BEGIN:VCARD");
+        result.Must().Contain($"VERSION:{expectedVersion}");
+        result.Must().Contain("FN:John Doe");
+        result.Must().Contain("N:Doe;John;Robert;Mr.;Jr.");
 
         if (version != vCardVersion.v2)
-            result.ShouldContain("NICKNAME:Johnny");
+            result.Must().Contain("NICKNAME:Johnny");
 
-        result.ShouldContain("TITLE:Software Engineer");
-        result.ShouldContain("ORG:Tech Corp;Development;Backend");
-        result.ShouldContain("NOTE:Important contact");
-        result.ShouldContain("URL");
-        result.ShouldContain("https://example.com");
-        result.ShouldContain("TZ:America/New_York");
-        result.ShouldContain("UID:urn:uuid:12345");
-        result.ShouldContain("BDAY:19900515");
+        result.Must().Contain("TITLE:Software Engineer");
+        result.Must().Contain("ORG:Tech Corp;Development;Backend");
+        result.Must().Contain("NOTE:Important contact");
+        result.Must().Contain("URL");
+        result.Must().Contain("https://example.com");
+        result.Must().Contain("TZ:America/New_York");
+        result.Must().Contain("UID:urn:uuid:12345");
+        result.Must().Contain("BDAY:19900515");
 
         if (version == vCardVersion.v4)
-            result.ShouldContain("ANNIVERSARY:");
+            result.Must().Contain("ANNIVERSARY:");
 
-        result.ShouldContain("TEL");
-        result.ShouldContain("+1234567890");
-        result.ShouldContain("+0987654321");
-        result.ShouldContain("EMAIL");
-        result.ShouldContain("john.doe@example.com");
-        result.ShouldContain("johnny@personal.com");
-        result.ShouldContain("ADR");
-        result.ShouldContain("123 Main St");
-        result.ShouldContain("Springfield");
-        result.ShouldContain("CATEGORIES");
-        result.ShouldContain("Friends,Work");
-        result.ShouldContain("X-CUSTOM:CustomValue");
-        result.ShouldContain("END:VCARD");
+        result.Must().Contain("TEL");
+        result.Must().Contain("+1234567890");
+        result.Must().Contain("+0987654321");
+        result.Must().Contain("EMAIL");
+        result.Must().Contain("john.doe@example.com");
+        result.Must().Contain("johnny@personal.com");
+        result.Must().Contain("ADR");
+        result.Must().Contain("123 Main St");
+        result.Must().Contain("Springfield");
+        result.Must().Contain("CATEGORIES");
+        result.Must().Contain("Friends,Work");
+        result.Must().Contain("X-CUSTOM:CustomValue");
+        result.Must().Contain("END:VCARD");
     }
 
     [TestCase(vCardVersion.v2, "2.1")]
@@ -135,22 +135,22 @@ public class vCardSerializerTests
 
         var result = vCardSerializer.Serialize(cards);
 
-        result.ShouldContain("BEGIN:VCARD");
-        result.ShouldContain($"VERSION:{expectedVersion}");
-        result.ShouldContain("FN:John Doe");
-        result.ShouldContain("FN:Jane Doe");
-        result.ShouldContain("END:VCARD");
+        result.Must().Contain("BEGIN:VCARD");
+        result.Must().Contain($"VERSION:{expectedVersion}");
+        result.Must().Contain("FN:John Doe");
+        result.Must().Contain("FN:Jane Doe");
+        result.Must().Contain("END:VCARD");
 
         // Count occurrences of BEGIN:VCARD
         var count = System.Text.RegularExpressions.Regex.Matches(result, "BEGIN:VCARD").Count;
-        count.ShouldBe(2);
+        count.Must().Be(2);
     }
 
     [Test]
     public void Serialize_EmptyCollection_ReturnsEmptyString()
     {
         var result = vCardSerializer.Serialize(Enumerable.Empty<vCard>());
-        result.ShouldBe(string.Empty);
+        result.Must().Be(string.Empty);
     }
 
     [Test]
@@ -163,7 +163,7 @@ public class vCardSerializerTests
 
         var result = vCardSerializer.Serialize(card, vCardVersion.v4);
 
-        result.ShouldContain("VERSION:4.0");
+        result.Must().Contain("VERSION:4.0");
     }
 
     [TestCase(vCardVersion.v3)]
@@ -176,10 +176,10 @@ public class vCardSerializerTests
         for (var i = 0; i < result.Length; i++)
         {
             if (result[i] == '\n' && (i == 0 || result[i - 1] != '\r'))
-                Assert.Fail("Serialized vCard must not contain bare LF; use CRLF per RFC 6350 §3.2.");
+                Ensure.Fail("Serialized vCard must not contain bare LF; use CRLF per RFC 6350 §3.2.");
         }
 
-        result.ShouldEndWith("\r\n");
+        result.Must().EndWith("\r\n");
     }
 
     [Test]
@@ -193,12 +193,12 @@ public class vCardSerializerTests
         };
 
         var wire = vCardSerializer.Serialize(card);
-        wire.ShouldContain("\r\n ");
+        wire.Must().Contain("\r\n ");
         foreach (var line in wire.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
-            (Encoding.UTF8.GetByteCount(line) <= 75).ShouldBeTrue();
+            (Encoding.UTF8.GetByteCount(line) <= 75).Must().BeTrue();
 
         var roundTrip = vCardDeserializer.FromContent(wire).Single();
-        roundTrip.Note.ShouldBe(longNote);
+        roundTrip.Note.Must().Be(longNote);
     }
 
     [Test]
@@ -212,12 +212,12 @@ public class vCardSerializerTests
         };
 
         var wire = vCardSerializer.Serialize(card);
-        wire.ShouldContain("\r\n ");
+        wire.Must().Contain("\r\n ");
         foreach (var line in wire.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
-            (Encoding.UTF8.GetByteCount(line) <= 75).ShouldBeTrue();
+            (Encoding.UTF8.GetByteCount(line) <= 75).Must().BeTrue();
 
         var roundTrip = vCardDeserializer.FromContent(wire).Single();
-        roundTrip.Note.ShouldBe(longNote);
+        roundTrip.Note.Must().Be(longNote);
     }
 
     [Test]
@@ -234,13 +234,13 @@ public class vCardSerializerTests
         for (var i = 0; i < result.Length; i++)
         {
             if (result[i] == '\n' && (i == 0 || result[i - 1] != '\r'))
-                Assert.Fail("Serialized vCards must use CRLF only.");
+                Ensure.Fail("Serialized vCards must use CRLF only.");
         }
 
-        result.ShouldEndWith("\r\n");
-        result.ShouldContain("FN:First");
-        result.ShouldContain("FN:Second");
-        System.Text.RegularExpressions.Regex.Matches(result, "BEGIN:VCARD").Count.ShouldBe(2);
+        result.Must().EndWith("\r\n");
+        result.Must().Contain("FN:First");
+        result.Must().Contain("FN:Second");
+        System.Text.RegularExpressions.Regex.Matches(result, "BEGIN:VCARD").Count.Must().Be(2);
     }
 
     [Test]
@@ -254,7 +254,7 @@ public class vCardSerializerTests
 
         var result = vCardSerializer.Serialize(card);
 
-        result.ShouldContain("GEO:geo:37.386013,-122.08293");
+        result.Must().Contain("GEO:geo:37.386013,-122.08293");
     }
 
     [Test]
@@ -268,8 +268,8 @@ public class vCardSerializerTests
 
         var result = vCardSerializer.Serialize(card);
 
-        result.ShouldContain("LOGO;");
-        result.ShouldContain("SGVsbG8=");
+        result.Must().Contain("LOGO;");
+        result.Must().Contain("SGVsbG8=");
     }
 
     [Test]
@@ -286,6 +286,6 @@ public class vCardSerializerTests
 
         var result = vCardSerializer.Serialize(card);
 
-        result.ShouldContain("actual-image-data");
+        result.Must().Contain("actual-image-data");
     }
 }

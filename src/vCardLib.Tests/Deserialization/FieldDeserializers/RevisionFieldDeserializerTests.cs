@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -16,10 +16,10 @@ public class RevisionFieldDeserializerTests
         IV2FieldDeserializer<DateTime?> deserializer = new RevisionFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Year.ShouldBe(1995);
-        result.Value.Month.ShouldBe(10);
-        result.Value.Day.ShouldBe(31);
+        result.Must().NotBeNull();
+        result.Value.Year.Must().Be(1995);
+        result.Value.Month.Must().Be(10);
+        result.Value.Day.Must().Be(31);
     }
 
     [Test]
@@ -29,8 +29,8 @@ public class RevisionFieldDeserializerTests
         IV3FieldDeserializer<DateTime?> deserializer = new RevisionFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Year.ShouldBe(1995);
+        result.Must().NotBeNull();
+        result.Value.Year.Must().Be(1995);
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class RevisionFieldDeserializerTests
         IV4FieldDeserializer<DateTime?> deserializer = new RevisionFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.Value.Year.ShouldBe(1995);
+        result.Must().NotBeNull();
+        result.Value.Year.Must().Be(1995);
     }
 }

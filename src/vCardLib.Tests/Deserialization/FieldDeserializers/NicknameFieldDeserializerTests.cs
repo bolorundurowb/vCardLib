@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -15,7 +15,7 @@ public class NicknameFieldDeserializerTests
         var deserializer = new NicknameFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("Johnny");
+        result.Must().Be("Johnny");
     }
 
     [Test]
@@ -25,6 +25,6 @@ public class NicknameFieldDeserializerTests
         var deserializer = new NicknameFieldDeserializer();
         var result = (deserializer as IV2FieldDeserializer<string?>).Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 }

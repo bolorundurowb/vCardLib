@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
@@ -36,7 +36,7 @@ public class StructuredFieldEscapingRoundTripTests
         var result = RoundTrip(card, version).Categories;
 
         Console.WriteLine($"in=[{string.Join("|", input)}] out=[{string.Join("|", result)}]");
-        result.ShouldBe(input);
+        result.Must().BeSequenceEqual(input);
     }
 
     [TestCase(vCardVersion.v3)]
@@ -50,10 +50,10 @@ public class StructuredFieldEscapingRoundTripTests
 
         Console.WriteLine($"in=[{org.Name}|{org.PrimaryUnit}|{org.SecondaryUnit}] " +
                           $"out=[{result?.Name}|{result?.PrimaryUnit}|{result?.SecondaryUnit}]");
-        result.ShouldNotBeNull();
-        result.Value.Name.ShouldBe(org.Name);
-        result.Value.PrimaryUnit.ShouldBe(org.PrimaryUnit);
-        result.Value.SecondaryUnit.ShouldBe(org.SecondaryUnit);
+        result.Must().NotBeNull();
+        result.Value.Name.Must().Be(org.Name);
+        result.Value.PrimaryUnit.Must().Be(org.PrimaryUnit);
+        result.Value.SecondaryUnit.Must().Be(org.SecondaryUnit);
     }
 
     [TestCase(vCardVersion.v3)]
@@ -66,10 +66,10 @@ public class StructuredFieldEscapingRoundTripTests
         var result = RoundTrip(card, version).Name;
 
         Console.WriteLine($"in=[{name.FamilyName}] out=[{result?.FamilyName}] given=[{result?.GivenName}]");
-        result.ShouldNotBeNull();
-        result.Value.FamilyName.ShouldBe(name.FamilyName);
-        result.Value.GivenName.ShouldBe(name.GivenName);
-        result.Value.AdditionalNames.ShouldBe(name.AdditionalNames);
+        result.Must().NotBeNull();
+        result.Value.FamilyName.Must().Be(name.FamilyName);
+        result.Value.GivenName.Must().Be(name.GivenName);
+        result.Value.AdditionalNames.Must().Be(name.AdditionalNames);
     }
 
     [TestCase(vCardVersion.v3)]
@@ -89,9 +89,9 @@ public class StructuredFieldEscapingRoundTripTests
         var result = RoundTrip(card, version).Addresses.First();
 
         Console.WriteLine($"in=[{address.StreetAddress}] out=[{result.StreetAddress}] city=[{result.CityOrLocality}]");
-        result.StreetAddress.ShouldBe(address.StreetAddress);
-        result.CityOrLocality.ShouldBe(address.CityOrLocality);
-        result.Country.ShouldBe(address.Country);
+        result.StreetAddress.Must().Be(address.StreetAddress);
+        result.CityOrLocality.Must().Be(address.CityOrLocality);
+        result.Country.Must().Be(address.Country);
     }
 
     [TestCase(vCardVersion.v3)]
@@ -104,9 +104,9 @@ public class StructuredFieldEscapingRoundTripTests
 
         var result = RoundTrip(card, version).Organization;
 
-        result.ShouldNotBeNull();
-        result.Value.Name.ShouldBe(@"C:\temp Corp");
-        result.Value.Name.ShouldNotContain("\t");
+        result.Must().NotBeNull();
+        result.Value.Name.Must().Be(@"C:\temp Corp");
+        result.Value.Name.Must().NotContain("\t");
     }
 
     [TestCase(vCardVersion.v3)]
@@ -118,8 +118,8 @@ public class StructuredFieldEscapingRoundTripTests
 
         var result = RoundTrip(card, version).Categories;
 
-        result.Count.ShouldBe(1);
-        result[0].ShouldBe(value);
+        result.Count.Must().Be(1);
+        result[0].Must().Be(value);
     }
 
     // --- Escape-aware split truth table (deserializer level) ---
@@ -128,16 +128,16 @@ public class StructuredFieldEscapingRoundTripTests
     public void OrgSplit_UnescapedSemicolon_SplitsComponents()
     {
         var result = ((IV3FieldDeserializer<Organization?>)new OrganizationFieldDeserializer()).Read("ORG:a;b");
-        result!.Value.Name.ShouldBe("a");
-        result.Value.PrimaryUnit.ShouldBe("b");
+        result!.Value.Name.Must().Be("a");
+        result.Value.PrimaryUnit.Must().Be("b");
     }
 
     [Test]
     public void OrgSplit_EscapedSemicolon_IsOneLiteralComponent()
     {
         var result = ((IV3FieldDeserializer<Organization?>)new OrganizationFieldDeserializer()).Read(@"ORG:a\;b");
-        result!.Value.Name.ShouldBe("a;b");
-        result.Value.PrimaryUnit.ShouldBeNull();
+        result!.Value.Name.Must().Be("a;b");
+        result.Value.PrimaryUnit.Must().BeNull();
     }
 
     [Test]
@@ -145,15 +145,15 @@ public class StructuredFieldEscapingRoundTripTests
     {
         // \\ ; -> escaped backslash followed by a structural separator.
         var result = ((IV3FieldDeserializer<Organization?>)new OrganizationFieldDeserializer()).Read(@"ORG:a\\;b");
-        result!.Value.Name.ShouldBe(@"a\");
-        result.Value.PrimaryUnit.ShouldBe("b");
+        result!.Value.Name.Must().Be(@"a\");
+        result.Value.PrimaryUnit.Must().Be("b");
     }
 
     [Test]
     public void CategoriesSplit_EscapedComma_IsOneValue()
     {
         var result = new CategoriesFieldDeserializer().Read(@"CATEGORIES:a\,b,c");
-        result.ShouldBe(new List<string> { "a,b", "c" });
+        result.Must().BeSequenceEqual(new List<string> { "a,b", "c" });
     }
 
     // --- Lenient decode of loose input: undefined escapes keep the backslash (RFC 6350 3.4).
@@ -163,15 +163,15 @@ public class StructuredFieldEscapingRoundTripTests
     public void OrgDecode_RawWindowsPath_KeepsBackslashNotTab()
     {
         var result = ((IV3FieldDeserializer<Organization?>)new OrganizationFieldDeserializer()).Read(@"ORG:C:\temp");
-        result!.Value.Name.ShouldBe(@"C:\temp");
-        result.Value.Name.ShouldNotContain("\t");
+        result!.Value.Name.Must().Be(@"C:\temp");
+        result.Value.Name.Must().NotContain("\t");
     }
 
     [Test]
     public void OrgDecode_TrailingBackslash_IsPreserved()
     {
         var result = ((IV3FieldDeserializer<Organization?>)new OrganizationFieldDeserializer()).Read(@"ORG:Acme\");
-        result!.Value.Name.ShouldBe(@"Acme\");
+        result!.Value.Name.Must().Be(@"Acme\");
     }
 
     // --- LABEL codec (Regex.Unescape misuse removed) ---
@@ -184,9 +184,9 @@ public class StructuredFieldEscapingRoundTripTests
         var result = new LabelFieldDeserializer().Read(line);
 
         Console.WriteLine($"line=[{line}] in=[{label.Text}] out=[{result.Text}]");
-        result.Text.ShouldBe(label.Text);
-        result.Text.ShouldNotContain("\t");
-        result.Type.ShouldBe(AddressType.Home);
+        result.Text.Must().Be(label.Text);
+        result.Text.Must().NotContain("\t");
+        result.Type.Must().Be(AddressType.Home);
     }
 
     // --- No regression ---
@@ -204,10 +204,10 @@ public class StructuredFieldEscapingRoundTripTests
 
         var text = vCardSerializer.Serialize(card, vCardVersion.v3);
 
-        text.ShouldContain("N:Doe;John;Middle;Mr.;Esq.");
-        text.ShouldContain("ORG:ABC Inc;Sales");
-        text.ShouldContain("CATEGORIES:INTERNET,IETF");
-        text.ShouldNotContain(@"\");
+        text.Must().Contain("N:Doe;John;Middle;Mr.;Esq.");
+        text.Must().Contain("ORG:ABC Inc;Sales");
+        text.Must().Contain("CATEGORIES:INTERNET,IETF");
+        text.Must().NotContain(@"\");
     }
 
     [Test]
@@ -221,8 +221,8 @@ public class StructuredFieldEscapingRoundTripTests
 
         var text = vCardSerializer.Serialize(card, vCardVersion.v2);
 
-        text.ShouldContain("ORG:A; B, C");
-        text.ShouldNotContain(@"\;");
-        text.ShouldNotContain(@"\,");
+        text.Must().Contain("ORG:A; B, C");
+        text.Must().NotContain(@"\;");
+        text.Must().NotContain(@"\,");
     }
 }

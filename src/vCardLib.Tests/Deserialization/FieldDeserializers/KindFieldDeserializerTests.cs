@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Enums;
@@ -16,7 +16,7 @@ public class KindFieldDeserializerTests
         IV2FieldDeserializer<ContactKind?> deserializer = new KindFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -26,7 +26,7 @@ public class KindFieldDeserializerTests
         IV3FieldDeserializer<ContactKind?> deserializer = new KindFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class KindFieldDeserializerTests
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe(ContactKind.Individual);
+        result.Must().Be(ContactKind.Individual);
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class KindFieldDeserializerTests
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe(ContactKind.Organization);
+        result.Must().Be(ContactKind.Organization);
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class KindFieldDeserializerTests
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe(ContactKind.Location);
+        result.Must().Be(ContactKind.Location);
     }
 
     [Test]
@@ -66,6 +66,6 @@ public class KindFieldDeserializerTests
         IV4FieldDeserializer<ContactKind> deserializer = new KindFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe(ContactKind.Individual);
+        result.Must().Be(ContactKind.Individual);
     }
 }

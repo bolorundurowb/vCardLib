@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -15,7 +15,7 @@ public class MailerFieldDeserializerTests
         IV4FieldDeserializer<string?> deserializer = new MailerFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class MailerFieldDeserializerTests
         var deserializer = new MailerFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("PigeonMail 2.1");
+        result.Must().NotBeNull();
+        result.Must().Be("PigeonMail 2.1");
     }
 }

@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -20,7 +20,7 @@ public class TextFieldDeserializerTests
         IV2FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe(@"Value with \n and \,");
+        result.Must().Be(@"Value with \n and \,");
     }
 
     [Test]
@@ -30,7 +30,7 @@ public class TextFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe($"Line 1{Environment.NewLine}Line 2\\Comma,Semi;");
+        result.Must().Be($"Line 1{Environment.NewLine}Line 2\\Comma,Semi;");
     }
 
     [Test]
@@ -40,7 +40,7 @@ public class TextFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe($"Line 1{Environment.NewLine}Line 2\\Comma,Semi;");
+        result.Must().Be($"Line 1{Environment.NewLine}Line 2\\Comma,Semi;");
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class TextFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe(@"Unknown \z escape");
+        result.Must().Be(@"Unknown \z escape");
     }
 
     [Test]
@@ -60,6 +60,6 @@ public class TextFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new TestTextFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe(string.Empty);
+        result.Must().Be(string.Empty);
     }
 }

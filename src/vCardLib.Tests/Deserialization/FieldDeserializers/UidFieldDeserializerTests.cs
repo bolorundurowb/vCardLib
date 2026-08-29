@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -15,7 +15,7 @@ public class UidFieldDeserializerTests
         IV2FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("19950401-080045-40000F192713");
+        result.Must().Be("19950401-080045-40000F192713");
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class UidFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("19950401-080045-40000F192713");
+        result.Must().Be("19950401-080045-40000F192713");
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class UidFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("19950401-080045-40000F192713");
+        result.Must().Be("19950401-080045-40000F192713");
     }
 
     [Test]
@@ -45,7 +45,7 @@ public class UidFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("urn:UID:12345");
+        result.Must().Be("urn:UID:12345");
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class UidFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6");
+        result.Must().Be("urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6");
     }
 
     [Test]
@@ -65,7 +65,7 @@ public class UidFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("12345");
+        result.Must().Be("12345");
     }
 
     [Test]
@@ -75,7 +75,7 @@ public class UidFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("https://example.com/user/12345");
+        result.Must().Be("https://example.com/user/12345");
     }
 
     [Test]
@@ -85,6 +85,6 @@ public class UidFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new UidFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("12345");
+        result.Must().Be("12345");
     }
 }

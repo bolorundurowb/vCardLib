@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Extensions;
 
 namespace vCardLib.Tests.Extensions;
@@ -14,7 +14,7 @@ public class CollectionExtensionsTests
     {
         var source = new List<int> { 1, 2, 3, 4, 5 };
         var matched = source.FilterInPlace(x => x % 2 == 0).OrderBy(x => x).ToList();
-        matched.ShouldBe(new List<int> { 2, 4 });
+        matched.Must().BeSequenceEqual(new List<int> { 2, 4 });
     }
 
     [Test]
@@ -22,7 +22,7 @@ public class CollectionExtensionsTests
     {
         var source = new List<int> { 1, 3, 5 };
         var matched = source.FilterInPlace(x => x > 10).ToList();
-        matched.ShouldBeEmpty();
+        matched.Must().BeEmpty();
     }
 
     [Test]
@@ -30,8 +30,8 @@ public class CollectionExtensionsTests
     {
         var source = new[] { "a", "b" };
         var matched = source.FilterInPlace(_ => true).ToList();
-        matched.Count.ShouldBe(2);
-        matched.ShouldContain("a");
-        matched.ShouldContain("b");
+        matched.Count.Must().Be(2);
+        matched.Must().Contain("a");
+        matched.Must().Contain("b");
     }
 }

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -15,7 +15,7 @@ public class TimezoneFieldDeserializerTests
         IV2FieldDeserializer<string> deserializer = new TimezoneFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("-05:00");
+        result.Must().Be("-05:00");
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class TimezoneFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new TimezoneFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("-05:00");
+        result.Must().Be("-05:00");
     }
 
     [Test]
@@ -35,6 +35,6 @@ public class TimezoneFieldDeserializerTests
         IV4FieldDeserializer<string> deserializer = new TimezoneFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("Raleigh/North America");
+        result.Must().Be("Raleigh/North America");
     }
 }

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
 using vCardLib.Serialization.Interfaces;
@@ -17,10 +17,10 @@ public class KeyFieldSerializerTests
 
         var line = serializer.Write(key)!;
 
-        line.ShouldStartWith("KEY;");
-        line.ShouldContain("pgp");
-        line.ShouldContain("ENCODING=BASE64");
-        line.ShouldContain("http://example.com/key.asc");
+        line.Must().StartWith("KEY;");
+        line.Must().Contain("pgp");
+        line.Must().Contain("ENCODING=base64");
+        line.Must().Contain("http://example.com/key.asc");
     }
 
     [Test]
@@ -31,7 +31,7 @@ public class KeyFieldSerializerTests
 
         var line = serializer.Write(key)!;
 
-        line.ShouldBe("KEY:plain-value");
+        line.Must().Be("KEY:plain-value");
     }
 
     [Test]
@@ -42,10 +42,10 @@ public class KeyFieldSerializerTests
 
         var line = serializer.Write(key)!;
 
-        line.ShouldContain("TYPE=PGP");
-        line.ShouldContain("ENCODING=b");
-        line.ShouldNotContain("ENCODING=BASE64");
-        line.ShouldContain("dGVzdA==");
+        line.Must().Contain("TYPE=pgp");
+        line.Must().Contain("ENCODING=b");
+        line.Must().NotContain("ENCODING=base64");
+        line.Must().Contain("dGVzdA==");
     }
 
     [Test]
@@ -56,7 +56,7 @@ public class KeyFieldSerializerTests
 
         var line = serializer.Write(key)!;
 
-        line.ShouldContain("ENCODING=8BIT");
+        line.Must().Contain("ENCODING=8bit");
     }
 
     [Test]
@@ -67,8 +67,8 @@ public class KeyFieldSerializerTests
 
         var line = serializer.Write(key)!;
 
-        line.ShouldContain("base64,QUJD");
-        line.ShouldNotContain(":QUJD");
+        line.Must().Contain("base64,QUJD");
+        line.Must().NotContain(":QUJD");
     }
 
     [Test]
@@ -79,8 +79,8 @@ public class KeyFieldSerializerTests
 
         var line = serializer.Write(key)!;
 
-        line.ShouldContain("TYPE=work");
-        line.ShouldContain("MEDIATYPE=application/pgp-keys");
-        line.ShouldContain(":ftp://keys/jdoe");
+        line.Must().Contain("TYPE=work");
+        line.Must().Contain("MEDIATYPE=application/pgp-keys");
+        line.Must().Contain(":ftp://keys/jdoe");
     }
 }

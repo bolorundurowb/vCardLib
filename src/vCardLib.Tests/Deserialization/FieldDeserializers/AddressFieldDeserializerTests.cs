@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Enums;
 
@@ -16,11 +16,11 @@ public class AddressFieldDeserializerTests
         var deserializer = new AddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.StreetAddress.ShouldBe("123 Main St");
-        result.CityOrLocality.ShouldBe("Anytown");
-        result.StateOrProvinceOrRegion.ShouldBe("State");
-        result.PostalOrZipCode.ShouldBe("12345");
-        result.Country.ShouldBe("USA");
+        result.StreetAddress.Must().Be("123 Main St");
+        result.CityOrLocality.Must().Be("Anytown");
+        result.StateOrProvinceOrRegion.Must().Be("State");
+        result.PostalOrZipCode.Must().Be("12345");
+        result.Country.Must().Be("USA");
     }
 
     [Test]
@@ -30,8 +30,8 @@ public class AddressFieldDeserializerTests
         var deserializer = new AddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.StreetAddress.ShouldBe("123 Main St");
-        result.Type.ShouldBe(AddressType.Home);
+        result.StreetAddress.Must().Be("123 Main St");
+        result.Type.Must().Be(AddressType.Home);
     }
 
     [Test]
@@ -40,8 +40,8 @@ public class AddressFieldDeserializerTests
         var input = "ADR:;;123 Main St;Anytown";
         var deserializer = new AddressFieldDeserializer();
 
-        Should.Throw<Exception>(() => deserializer.Read(input))
-            .Message.ShouldBe("Address parts incomplete");
+        Ensure.Throws<Exception>(() => deserializer.Read(input))
+            .WithMessage("Address parts incomplete");
     }
 
     [Test]
@@ -51,12 +51,12 @@ public class AddressFieldDeserializerTests
         var deserializer = new AddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Type.ShouldBe(AddressType.Work);
-        result.Label.ShouldBe("HQ");
-        result.Geographic.ShouldNotBeNull();
-        result.Geographic!.Value.Latitude.ShouldBe(10.5f);
-        result.Geographic.Value.Longitude.ShouldBe(20.25f);
-        result.StreetAddress.ShouldBe("100 Rd");
+        result.Type.Must().Be(AddressType.Work);
+        result.Label.Must().Be("HQ");
+        result.Geographic.Must().NotBeNull();
+        result.Geographic!.Value.Latitude.Must().Be(10.5f);
+        result.Geographic.Value.Longitude.Must().Be(20.25f);
+        result.StreetAddress.Must().Be("100 Rd");
     }
 
     [Test]
@@ -66,8 +66,8 @@ public class AddressFieldDeserializerTests
         var deserializer = new AddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        ((result.Type & AddressType.Home) != 0).ShouldBeTrue();
-        ((result.Type & AddressType.Work) != 0).ShouldBeTrue();
+        ((result.Type & AddressType.Home) != 0).Must().BeTrue();
+        ((result.Type & AddressType.Work) != 0).Must().BeTrue();
     }
 
     [Test]
@@ -77,6 +77,6 @@ public class AddressFieldDeserializerTests
         var deserializer = new AddressFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.StreetAddress.ShouldBe("ABC");
+        result.StreetAddress.Must().Be("ABC");
     }
 }

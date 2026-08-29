@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Utilities;
 
 namespace vCardLib.Tests.Utilities;
@@ -21,12 +21,12 @@ public class StringHelpersTests
     [TestCase("\"hello\"extra", false)]
     public void IsQuoted_ReturnsExpected(string? input, bool expected)
     {
-        StringHelpers.IsQuoted(input).ShouldBe(expected);
+        StringHelpers.IsQuoted(input).Must().Be(expected);
     }
 
     [Test]
     public void IsQuoted_WhitespaceAroundQuotes_IsRecognized()
     {
-        StringHelpers.IsQuoted(" \t \"quoted value\" \r\n ").ShouldBeTrue();
+        StringHelpers.IsQuoted(" \t \"quoted value\" \r\n ").Must().BeTrue();
     }
 }

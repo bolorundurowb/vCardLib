@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Serialization.FieldSerializers;
 using vCardLib.Serialization.Interfaces;
 
@@ -14,7 +14,7 @@ public class NicknameFieldSerializerTests
         var serializer = new NicknameFieldSerializer();
         var result = serializer.Write("Johnny");
 
-        result.ShouldBe("NICKNAME:Johnny");
+        result.Must().Be("NICKNAME:Johnny");
     }
 
     [Test]
@@ -23,6 +23,6 @@ public class NicknameFieldSerializerTests
         var serializer = new NicknameFieldSerializer();
         var result = (serializer as IV2FieldSerializer<string>).Write("Johnny");
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 }

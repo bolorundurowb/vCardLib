@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Extensions;
 
 namespace vCardLib.Tests.Utilities;
@@ -15,9 +15,9 @@ public class CollectionExtensionsTests
         var list = new List<int> { 1, 2, 3, 4, 5 };
         var result = list.FilterInPlace(x => x % 2 == 0).ToList();
 
-        result.Count.ShouldBe(2);
-        result.ShouldContain(2);
-        result.ShouldContain(4);
+        result.Count.Must().Be(2);
+        result.Must().Contain(2);
+        result.Must().Contain(4);
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class CollectionExtensionsTests
         var result = list.FilterInPlace(x => x % 2 == 0).ToList();
 
         // The original 'list' remains unchanged because .ToList() created a copy.
-        list.Count.ShouldBe(5);
-        result.Count.ShouldBe(2);
+        list.Count.Must().Be(5);
+        result.Count.Must().Be(2);
     }
 }

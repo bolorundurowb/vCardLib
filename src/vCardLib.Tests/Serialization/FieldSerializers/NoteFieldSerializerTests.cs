@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Serialization.FieldSerializers;
 
 namespace vCardLib.Tests.Serialization.FieldSerializers;
@@ -12,7 +12,7 @@ public class NoteFieldSerializerTests
     {
         var serializer = new NoteFieldSerializer();
         var result = ((vCardLib.Serialization.Interfaces.IV2FieldSerializer<string>)serializer).Write("This is a note");
-        result.ShouldBe("NOTE:This is a note");
+        result.Must().Be("NOTE:This is a note");
     }
 
     [Test]
@@ -20,6 +20,6 @@ public class NoteFieldSerializerTests
     {
         var serializer = new NoteFieldSerializer();
         var result = ((vCardLib.Serialization.Interfaces.IV3FieldSerializer<string>)serializer).Write("Note with; commas, and\\ backslashes");
-        result.ShouldBe(@"NOTE:Note with\; commas\, and\\ backslashes");
+        result.Must().Be(@"NOTE:Note with\; commas\, and\\ backslashes");
     }
 }

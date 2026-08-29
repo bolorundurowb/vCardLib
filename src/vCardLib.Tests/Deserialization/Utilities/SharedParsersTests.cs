@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.Utilities;
 using vCardLib.Enums;
 
@@ -13,49 +13,49 @@ public class SharedParsersTests
     public void ParseDate_YyyyMmDd_ReturnsUtcDate()
     {
         var result = SharedParsers.ParseDate("19900515");
-        result.ShouldNotBeNull();
-        result!.Value.Year.ShouldBe(1990);
-        result.Value.Month.ShouldBe(5);
-        result.Value.Day.ShouldBe(15);
+        result.Must().NotBeNull();
+        result!.Value.Year.Must().Be(1990);
+        result.Value.Month.Must().Be(5);
+        result.Value.Day.Must().Be(15);
     }
 
     [Test]
     public void ParseDate_YyyyMmDdThhMmSsZ_ReturnsUtc()
     {
         var result = SharedParsers.ParseDate("19900515T120000Z");
-        result.ShouldNotBeNull();
-        result!.Value.Hour.ShouldBe(12);
+        result.Must().NotBeNull();
+        result!.Value.Hour.Must().Be(12);
     }
 
     [Test]
     public void ParseDate_HhMmTime_ReturnsDateWithTimeOffset()
     {
         var result = SharedParsers.ParseDate("0630");
-        result.ShouldNotBeNull();
+        result.Must().NotBeNull();
     }
 
     [Test]
     public void ParseDate_Unrecognized_ReturnsNull()
     {
-        SharedParsers.ParseDate("not-a-date").ShouldBeNull();
+        SharedParsers.ParseDate("not-a-date").Must().BeNull();
     }
 
     [Test]
     public void ParseDate_WithParameters_ReturnsDate()
     {
         var result = SharedParsers.ParseDate(";VALUE=DATE:19900515");
-        result.ShouldNotBeNull();
-        result!.Value.Year.ShouldBe(1990);
-        result.Value.Month.ShouldBe(5);
-        result.Value.Day.ShouldBe(15);
+        result.Must().NotBeNull();
+        result!.Value.Year.Must().Be(1990);
+        result.Value.Month.Must().Be(5);
+        result.Value.Day.Must().Be(15);
     }
 
     [Test]
     public void ParseDate_WithColonPrefix_ReturnsDate()
     {
         var result = SharedParsers.ParseDate(":19900515");
-        result.ShouldNotBeNull();
-        result!.Value.Year.ShouldBe(1990);
+        result.Must().NotBeNull();
+        result!.Value.Year.Must().Be(1990);
     }
 
     [TestCase("home", AddressType.Home)]
@@ -67,13 +67,13 @@ public class SharedParsersTests
     [TestCase("postal", AddressType.Postal)]
     public void ParseAddressType_KnownKeys_ReturnsType(string key, AddressType expected)
     {
-        key.ParseAddressType().ShouldBe(expected);
+        key.ParseAddressType().Must().Be(expected);
     }
 
     [Test]
     public void ParseAddressType_Unknown_ReturnsNull()
     {
-        "unknown-type".ParseAddressType().ShouldBeNull();
+        "unknown-type".ParseAddressType().Must().BeNull();
     }
 
     [TestCase("internet", EmailAddressType.Internet)]
@@ -83,13 +83,13 @@ public class SharedParsersTests
     [TestCase("applelink", EmailAddressType.Applelink)]
     public void ParseEmailAddressType_KnownKeys_ReturnsType(string key, EmailAddressType expected)
     {
-        SharedParsers.ParseEmailAddressType(key).ShouldBe(expected);
+        SharedParsers.ParseEmailAddressType(key).Must().Be(expected);
     }
 
     [Test]
     public void ParseEmailAddressType_Unknown_ReturnsNull()
     {
-        SharedParsers.ParseEmailAddressType("satellite").ShouldBeNull();
+        SharedParsers.ParseEmailAddressType("satellite").Must().BeNull();
     }
 
     [TestCase("voice", TelephoneNumberType.Voice)]
@@ -102,50 +102,50 @@ public class SharedParsersTests
     [TestCase("isdn", TelephoneNumberType.ISDN)]
     public void ParseTelephoneNumberType_KnownKeys_ReturnsType(string key, TelephoneNumberType expected)
     {
-        SharedParsers.ParseTelephoneNumberType(key).ShouldBe(expected);
+        SharedParsers.ParseTelephoneNumberType(key).Must().Be(expected);
     }
 
     [Test]
     public void ParseTelephoneNumberType_Unknown_ReturnsNull()
     {
-        SharedParsers.ParseTelephoneNumberType("satphone").ShouldBeNull();
+        SharedParsers.ParseTelephoneNumberType("satphone").Must().BeNull();
     }
 
     [Test]
     public void DecodeQuotedPrintable_Empty_ReturnsEmpty()
     {
-        SharedParsers.DecodeQuotedPrintable(string.Empty).ShouldBe(string.Empty);
+        SharedParsers.DecodeQuotedPrintable(string.Empty).Must().Be(string.Empty);
     }
 
     [Test]
     public void DecodeQuotedPrintable_HexByte_Decodes()
     {
-        SharedParsers.DecodeQuotedPrintable("=41=42").ShouldBe("AB");
+        SharedParsers.DecodeQuotedPrintable("=41=42").Must().Be("AB");
     }
 
     [Test]
     public void DecodeQuotedPrintable_InvalidHex_KeepsEqualsSignAsByte()
     {
         var result = SharedParsers.DecodeQuotedPrintable("=ZZ");
-        result.ShouldNotBeNull();
-        result.Length.ShouldBeGreaterThan(0);
+        result.Must().NotBeNull();
+        result.Length.Must().BeGreaterThan(0);
     }
 
     [Test]
     public void DecodeQuotedPrintable_PlainAscii_Passthrough()
     {
-        SharedParsers.DecodeQuotedPrintable("hello").ShouldBe("hello");
+        SharedParsers.DecodeQuotedPrintable("hello").Must().Be("hello");
     }
 
     [Test]
     public void DecodeQuotedPrintable_TrailingEqualsWithoutHex_AppendsEqualsByte()
     {
-        SharedParsers.DecodeQuotedPrintable("ab=").ShouldBe("ab=");
+        SharedParsers.DecodeQuotedPrintable("ab=").Must().Be("ab=");
     }
 
     [Test]
     public void DecodeQuotedPrintable_IncompleteHexAfterEquals_AppendsEquals()
     {
-        SharedParsers.DecodeQuotedPrintable("x=A").ShouldBe("x=A");
+        SharedParsers.DecodeQuotedPrintable("x=A").Must().Be("x=A");
     }
 }

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Enums;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
@@ -32,7 +32,7 @@ public class UrlFieldSerializerTests
     {
         IV2FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
-        result.ShouldBe(
+        result.Must().Be(
             "URL;HOME;BLOG;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 
@@ -41,7 +41,7 @@ public class UrlFieldSerializerTests
     {
         IV3FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
-        result.ShouldBe(
+        result.Must().Be(
             "URL;TYPE=home;TYPE=blog;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 
@@ -50,7 +50,7 @@ public class UrlFieldSerializerTests
     {
         IV4FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(data);
-        result.ShouldBe(
+        result.Must().Be(
             "URL;TYPE=home;TYPE=blog;PREF=2;\"LABEL=My Home Page\";MEDIA-TYPE=text/html;LANGUAGE=en;CHARSET=UTF-8:example.org");
     }
 
@@ -65,6 +65,6 @@ public class UrlFieldSerializerTests
         IV4FieldSerializer<Url> serializer = new UrlFieldSerializer();
         var result = serializer.Write(urlData);
 
-        result.ShouldBe("URL;LABEL=HomePage:example.org");
+        result.Must().Be("URL;LABEL=HomePage:example.org");
     }
 }

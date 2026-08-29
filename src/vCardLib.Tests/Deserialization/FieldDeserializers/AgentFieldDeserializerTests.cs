@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 
@@ -15,7 +15,7 @@ public class AgentFieldDeserializerTests
         IV4FieldDeserializer<string?> deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -25,8 +25,8 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("http://mi6.gov.uk/007");
+        result.Must().NotBeNull();
+        result.Must().Be("http://mi6.gov.uk/007");
     }
 
     [Test]
@@ -36,8 +36,8 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("CID:JQPUBLIC.part3.960129T083020.xyzMail@host3.com");
+        result.Must().NotBeNull();
+        result.Must().Be("CID:JQPUBLIC.part3.960129T083020.xyzMail@host3.com");
     }
 
     [Test]
@@ -47,8 +47,8 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe("BEGIN:VCARD\nFN:Susan Thomas\nTEL:+1-919-555-1234\nEMAIL;INTERNET:sthomas@host.com\nEND:VCARD\n");
+        result.Must().NotBeNull();
+        result.Must().Be("BEGIN:VCARD\nFN:Susan Thomas\nTEL:+1-919-555-1234\nEMAIL;INTERNET:sthomas@host.com\nEND:VCARD\n");
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("ABC, Inc.");
+        result.Must().Be("ABC, Inc.");
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("path\\to\\file");
+        result.Must().Be("path\\to\\file");
     }
 
     [Test]
@@ -78,7 +78,7 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("value");
+        result.Must().Be("value");
     }
 
     [Test]
@@ -88,7 +88,7 @@ public class AgentFieldDeserializerTests
         IV2FieldDeserializer<string> deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("http://example.com/agent");
+        result.Must().Be("http://example.com/agent");
     }
 
     [Test]
@@ -98,7 +98,7 @@ public class AgentFieldDeserializerTests
         IV3FieldDeserializer<string> deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("http://example.com/agent");
+        result.Must().Be("http://example.com/agent");
     }
 
     [Test]
@@ -108,7 +108,7 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("http://example.com/agent");
+        result.Must().Be("http://example.com/agent");
     }
 
     [Test]
@@ -118,7 +118,7 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("Line1\nLine2");
+        result.Must().Be("Line1\nLine2");
     }
 
     [Test]
@@ -128,7 +128,7 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("value;with;semicolons");
+        result.Must().Be("value;with;semicolons");
     }
 
     [Test]
@@ -138,7 +138,7 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("value\\unknown");
+        result.Must().Be("value\\unknown");
     }
 
     [Test]
@@ -148,6 +148,6 @@ public class AgentFieldDeserializerTests
         var deserializer = new AgentFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBe("value\\");
+        result.Must().Be("value\\");
     }
 }

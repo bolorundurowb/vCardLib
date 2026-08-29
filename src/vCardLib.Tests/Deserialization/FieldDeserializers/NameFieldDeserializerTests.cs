@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 
 namespace vCardLib.Tests.Deserialization.FieldDeserializers;
@@ -14,10 +14,10 @@ public class NameFieldDeserializerTests
         var deserializer = new NameFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.FamilyName.ShouldBe("Doe");
-        result.GivenName.ShouldBe("John");
-        result.AdditionalNames.ShouldBe("");
-        result.HonorificPrefix.ShouldBe("");
+        result.FamilyName.Must().Be("Doe");
+        result.GivenName.Must().Be("John");
+        result.AdditionalNames.Must().Be("");
+        result.HonorificPrefix.Must().Be("");
     }
 
     [Test]
@@ -27,10 +27,10 @@ public class NameFieldDeserializerTests
         var deserializer = new NameFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.FamilyName.ShouldBe("Doe");
-        result.GivenName.ShouldBe("John");
-        result.AdditionalNames.ShouldBe("Middle");
-        result.HonorificPrefix.ShouldBe("Mr.");
-        result.HonorificSuffix.ShouldBe("Esq.");
+        result.FamilyName.Must().Be("Doe");
+        result.GivenName.Must().Be("John");
+        result.AdditionalNames.Must().Be("Middle");
+        result.HonorificPrefix.Must().Be("Mr.");
+        result.HonorificSuffix.Must().Be("Esq.");
     }
 }

@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 using vCardLib.Deserialization.Interfaces;
 using vCardLib.Models;
@@ -16,8 +16,8 @@ public class GeoFieldDeserializerTests
         IV2FieldDeserializer<Geo> deserializer = new GeoFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Latitude.ShouldBe(37.386013f);
-        result.Longitude.ShouldBe(-122.082932f);
+        result.Latitude.Must().Be(37.386013f);
+        result.Longitude.Must().Be(-122.082932f);
     }
 
     [Test]
@@ -27,8 +27,8 @@ public class GeoFieldDeserializerTests
         IV3FieldDeserializer<Geo> deserializer = new GeoFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Latitude.ShouldBe(37.386013f);
-        result.Longitude.ShouldBe(-122.082932f);
+        result.Latitude.Must().Be(37.386013f);
+        result.Longitude.Must().Be(-122.082932f);
     }
 
     [Test]
@@ -38,7 +38,7 @@ public class GeoFieldDeserializerTests
         IV4FieldDeserializer<Geo> deserializer = new GeoFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.Latitude.ShouldBe(37.386013f);
-        result.Longitude.ShouldBe(-122.082932f);
+        result.Latitude.Must().Be(37.386013f);
+        result.Longitude.Must().Be(-122.082932f);
     }
 }

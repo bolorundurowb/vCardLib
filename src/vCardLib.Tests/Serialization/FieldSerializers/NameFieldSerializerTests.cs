@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Models;
 using vCardLib.Serialization.FieldSerializers;
 
@@ -15,6 +15,6 @@ public class NameFieldSerializerTests
         var serializer = new NameFieldSerializer();
         var result = serializer.Write(name);
 
-        result.ShouldBe("N:Doe;John;Middle;Mr.;Esq.");
+        result.Must().Be("N:Doe;John;Middle;Mr.;Esq.");
     }
 }

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization;
 using vCardLib.Enums;
 using vCardLib.Tests.Helpers;
@@ -16,43 +16,43 @@ public class vCardDeserializerTests
     [Test]
     public void FromContent_WhenEmpty_ThrowsArgumentException()
     {
-        var exception = Assert.Throws<ArgumentException>(() => vCardDeserializer.FromContent("").ToList());
-        exception!.Message.ShouldContain("File is empty.");
+        Ensure.Throws<ArgumentException>(() => vCardDeserializer.FromContent("").ToList())
+            .WithMessageContaining("File is empty.");
     }
 
     [Test]
     public void FromContent_WhenNull_ThrowsArgumentException()
     {
-        var exception = Assert.Throws<ArgumentException>(() => vCardDeserializer.FromContent(null!).ToList());
-        exception!.Message.ShouldContain("File is empty.");
+        Ensure.Throws<ArgumentException>(() => vCardDeserializer.FromContent(null!).ToList())
+            .WithMessageContaining("File is empty.");
     }
 
     [Test]
     public void FromContent_WhenWhitespaceOnly_ThrowsArgumentException()
     {
-        Should.Throw<ArgumentException>(() => vCardDeserializer.FromContent("   \t  ").ToList())
-            .Message.ShouldContain("File is empty.");
+        Ensure.Throws<ArgumentException>(() => vCardDeserializer.FromContent("   \t  ").ToList())
+            .WithMessageContaining("File is empty.");
     }
 
     [Test]
     public void FromContent_WhenMissingStartToken_ThrowsException()
     {
-        var exception = Assert.Throws<Exception>(() => vCardDeserializer.FromContent("VERSION:2.1\nEND:VCARD").ToList());
-        exception!.Message.ShouldContain("A vCard must begin with 'BEGIN:VCARD'");
+        Ensure.Throws<Exception>(() => vCardDeserializer.FromContent("VERSION:2.1\nEND:VCARD").ToList())
+            .WithMessageContaining("A vCard must begin with 'BEGIN:VCARD'");
     }
 
     [Test]
     public void FromContent_WhenMissingEndToken_ThrowsException()
     {
-        var exception = Assert.Throws<Exception>(() => vCardDeserializer.FromContent("BEGIN:VCARD\nVERSION:2.1").ToList());
-        exception!.Message.ShouldContain("A vCard must end with 'END:VCARD'");
+        Ensure.Throws<Exception>(() => vCardDeserializer.FromContent("BEGIN:VCARD\nVERSION:2.1").ToList())
+            .WithMessageContaining("A vCard must end with 'END:VCARD'");
     }
 
     [Test]
     public void FromContent_WhenMissingVersionKey_ThrowsException()
     {
-        var exception = Assert.Throws<Exception>(() => vCardDeserializer.FromContent("BEGIN:VCARD\nEND:VCARD").ToList());
-        exception!.Message.ShouldContain("A vCard must contain a 'VERSION'");
+        Ensure.Throws<Exception>(() => vCardDeserializer.FromContent("BEGIN:VCARD\nEND:VCARD").ToList())
+            .WithMessageContaining("A vCard must contain a 'VERSION'");
     }
 
     [Test]
@@ -60,8 +60,8 @@ public class vCardDeserializerTests
     {
         var content = "begin:vcard\nVERSION:3.0\nFN:Case\nEND:VCARD";
 
-        Should.Throw<Exception>(() => vCardDeserializer.FromContent(content).ToList())
-            .Message.ShouldContain("A vCard must begin with 'BEGIN:VCARD'");
+        Ensure.Throws<Exception>(() => vCardDeserializer.FromContent(content).ToList())
+            .WithMessageContaining("A vCard must begin with 'BEGIN:VCARD'");
     }
 
     [Test]
@@ -69,8 +69,8 @@ public class vCardDeserializerTests
     {
         var content = "BEGIN:VCARD\nVERSION:3.0\nFN:Case\nend:vcard";
 
-        Should.Throw<Exception>(() => vCardDeserializer.FromContent(content).ToList())
-            .Message.ShouldContain("A vCard must end with 'END:VCARD'");
+        Ensure.Throws<Exception>(() => vCardDeserializer.FromContent(content).ToList())
+            .WithMessageContaining("A vCard must end with 'END:VCARD'");
     }
 
     [Test]
@@ -78,7 +78,7 @@ public class vCardDeserializerTests
     {
         var content = "BEGIN:VCARD\nVERSION:1.0\nFN:X\nEND:VCARD";
 
-        Should.Throw<ArgumentOutOfRangeException>(() => vCardDeserializer.FromContent(content).ToList());
+        Ensure.Throws<ArgumentOutOfRangeException>(() => vCardDeserializer.FromContent(content).ToList());
     }
 
     [Test]
@@ -86,8 +86,8 @@ public class vCardDeserializerTests
     {
         var content = "BEGIN:VCARD\nFN:VERSION:2.1 embedded\nEND:VCARD";
 
-        var exception = Assert.Throws<ArgumentException>(() => vCardDeserializer.FromContent(content).ToList());
-        exception!.Message.ShouldContain("No version specified");
+        Ensure.Throws<ArgumentException>(() => vCardDeserializer.FromContent(content).ToList())
+            .WithMessageContaining("No version specified");
     }
 
     [TestCase(vCardVersion.v2)]
@@ -97,28 +97,28 @@ public class vCardDeserializerTests
     {
         var vcards = vCardDeserializer.FromContent(VCardTestContent.Minimal(version, "John Doe")).ToList();
 
-        vcards.Count.ShouldBe(1);
-        vcards[0].FormattedName.ShouldBe("John Doe");
-        vcards[0].Version.ShouldBe(version);
+        vcards.Count.Must().Be(1);
+        vcards[0].FormattedName.Must().Be("John Doe");
+        vcards[0].Version.Must().Be(version);
     }
 
     [Test]
     public void FromFile_WhenInvalidPath_ThrowsArgumentException()
     {
-        Should.Throw<ArgumentException>(() => vCardDeserializer.FromFile(""))
-            .Message.ShouldContain("File path cannot be null or empty.");
+        Ensure.Throws<ArgumentException>(() => vCardDeserializer.FromFile(""))
+            .WithMessageContaining("File path cannot be null or empty.");
     }
 
     [Test]
     public void FromFile_WhenWhitespacePath_ThrowsArgumentException()
     {
-        Should.Throw<ArgumentException>(() => vCardDeserializer.FromFile("   "));
+        Ensure.Throws<ArgumentException>(() => vCardDeserializer.FromFile("   "));
     }
 
     [Test]
     public void FromFile_WhenFileNotFound_ThrowsFileNotFoundException()
     {
-        Should.Throw<FileNotFoundException>(() => vCardDeserializer.FromFile("non-existent-file.vcf"));
+        Ensure.Throws<FileNotFoundException>(() => vCardDeserializer.FromFile("non-existent-file.vcf"));
     }
 
     [Test]
@@ -130,8 +130,8 @@ public class vCardDeserializerTests
             File.WriteAllText(tempPath, VCardTestContent.Minimal(vCardVersion.v4, "From File"));
             var vcards = vCardDeserializer.FromFile(tempPath).ToList();
 
-            vcards.Count.ShouldBe(1);
-            vcards[0].FormattedName.ShouldBe("From File");
+            vcards.Count.Must().Be(1);
+            vcards[0].FormattedName.Must().Be("From File");
         }
         finally
         {
@@ -147,8 +147,8 @@ public class vCardDeserializerTests
         using var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
         var vcards = vCardDeserializer.FromStream(stream).ToList();
 
-        vcards.Count.ShouldBe(1);
-        vcards[0].FormattedName.ShouldBe("John Doe");
+        vcards.Count.Must().Be(1);
+        vcards[0].FormattedName.Must().Be("John Doe");
     }
 
     [Test]
@@ -164,8 +164,8 @@ public class vCardDeserializerTests
 
         var vcards = vCardDeserializer.FromStream(stream).ToList();
 
-        vcards.Count.ShouldBe(1);
-        vcards[0].FormattedName.ShouldBe("Jane");
+        vcards.Count.Must().Be(1);
+        vcards[0].FormattedName.Must().Be("Jane");
     }
 
     [Test]
@@ -181,8 +181,8 @@ public class vCardDeserializerTests
 
         var vcards = vCardDeserializer.FromStream(stream).ToList();
 
-        vcards.Count.ShouldBe(1);
-        vcards[0].FormattedName.ShouldBe("Utf16");
+        vcards.Count.Must().Be(1);
+        vcards[0].FormattedName.Must().Be("Utf16");
     }
 
     [Test]
@@ -192,10 +192,10 @@ public class vCardDeserializerTests
 
         var vcards = vCardDeserializer.FromContent(content).ToList();
 
-        vcards.Count.ShouldBe(1);
-        vcards[0].Note.ShouldNotBeNull();
-        vcards[0].Note!.ShouldContain("This is a long note that continues");
-        vcards[0].Note!.ShouldContain("on the next line.");
+        vcards.Count.Must().Be(1);
+        vcards[0].Note.Must().NotBeNull();
+        vcards[0].Note!.Must().Contain("This is a long note that continues");
+        vcards[0].Note!.Must().Contain("on the next line.");
     }
 
     [Test]
@@ -205,7 +205,7 @@ public class vCardDeserializerTests
 
         var vcards = vCardDeserializer.FromContent(content).ToList();
 
-        vcards[0].Note.ShouldBe("joinedwithout equals sign");
+        vcards[0].Note.Must().Be("joinedwithout equals sign");
     }
 
     [Test]
@@ -213,7 +213,7 @@ public class vCardDeserializerTests
     {
         var content = "BEGIN:VCARD\r\nVERSION:4.0\r\nNOTE:line1\r\n continuation\r\nEND:VCARD";
         var vcards = vCardDeserializer.FromContent(content).ToList();
-        vcards[0].Note.ShouldBe("line1continuation");
+        vcards[0].Note.Must().Be("line1continuation");
     }
 
     [Test]
@@ -221,7 +221,7 @@ public class vCardDeserializerTests
     {
         var content = "BEGIN:VCARD\nVERSION:2.1\nNOTE:hello\n\tworld\nEND:VCARD";
         var vcards = vCardDeserializer.FromContent(content).ToList();
-        vcards[0].Note.ShouldBe("helloworld");
+        vcards[0].Note.Must().Be("helloworld");
     }
 
     [Test]
@@ -232,9 +232,9 @@ public class vCardDeserializerTests
 
         var vcards = vCardDeserializer.FromContent(content).ToList();
 
-        vcards.Count.ShouldBe(2);
-        vcards[0].FormattedName.ShouldBe("One");
-        vcards[1].FormattedName.ShouldBe("Two");
+        vcards.Count.Must().Be(2);
+        vcards[0].FormattedName.Must().Be("One");
+        vcards[1].FormattedName.Must().Be("Two");
     }
 
     [Test]
@@ -244,11 +244,11 @@ public class vCardDeserializerTests
             $"{VCardTestContent.Minimal(vCardVersion.v2, "V2 Card")}\n{VCardTestContent.Minimal(vCardVersion.v4, "V4 Card")}";
         var vcards = vCardDeserializer.FromContent(content).ToList();
 
-        vcards.Count.ShouldBe(2);
-        vcards[0].Version.ShouldBe(vCardVersion.v2);
-        vcards[0].FormattedName.ShouldBe("V2 Card");
-        vcards[1].Version.ShouldBe(vCardVersion.v4);
-        vcards[1].FormattedName.ShouldBe("V4 Card");
+        vcards.Count.Must().Be(2);
+        vcards[0].Version.Must().Be(vCardVersion.v2);
+        vcards[0].FormattedName.Must().Be("V2 Card");
+        vcards[1].Version.Must().Be(vCardVersion.v4);
+        vcards[1].FormattedName.Must().Be("V4 Card");
     }
 
     [Test]
@@ -256,7 +256,7 @@ public class vCardDeserializerTests
     {
         var content = "\uFEFF" + VCardTestContent.Minimal(vCardVersion.v4, "Bom");
         var vcards = vCardDeserializer.FromContent(content).ToList();
-        vcards[0].FormattedName.ShouldBe("Bom");
+        vcards[0].FormattedName.Must().Be("Bom");
     }
 
     [Test]
@@ -264,7 +264,7 @@ public class vCardDeserializerTests
     {
         var content = VCardTestContent.Minimal(vCardVersion.v3, "CrOnly").Replace("\n", "\r");
         var vcards = vCardDeserializer.FromContent(content).ToList();
-        vcards[0].FormattedName.ShouldBe("CrOnly");
+        vcards[0].FormattedName.Must().Be("CrOnly");
     }
 
     [Test]
@@ -272,7 +272,7 @@ public class vCardDeserializerTests
     {
         var content = "BEGIN:VCARD\r\nVERSION:3.0\nFN:Mixed\r\nEND:VCARD";
         var vcards = vCardDeserializer.FromContent(content).ToList();
-        vcards[0].FormattedName.ShouldBe("Mixed");
+        vcards[0].FormattedName.Must().Be("Mixed");
     }
 
     [Test]
@@ -280,7 +280,7 @@ public class vCardDeserializerTests
     {
         var content = "\n\n" + VCardTestContent.Minimal(vCardVersion.v4, "Leading");
         var vcards = vCardDeserializer.FromContent(content).ToList();
-        vcards[0].FormattedName.ShouldBe("Leading");
+        vcards[0].FormattedName.Must().Be("Leading");
     }
 
     [Test]
@@ -288,7 +288,7 @@ public class vCardDeserializerTests
     {
         var content = VCardTestContent.Minimal(vCardVersion.v4, "Trailing") + "\n\n";
         var vcards = vCardDeserializer.FromContent(content).ToList();
-        vcards[0].FormattedName.ShouldBe("Trailing");
+        vcards[0].FormattedName.Must().Be("Trailing");
     }
 
     [Test]
@@ -297,7 +297,7 @@ public class vCardDeserializerTests
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Padded\nEND:VCARD   \t";
         var vcards = vCardDeserializer.FromContent(content).ToList();
 
-        vcards.Count.ShouldBe(0);
+        vcards.Count.Must().Be(0);
     }
 
     [Test]
@@ -305,7 +305,7 @@ public class vCardDeserializerTests
     {
         var wire = "BEGIN:VCARD\r\nVERSION:4.0\r\nFN:Strict\r\nEND:VCARD\r\n";
         var vcards = vCardDeserializer.FromContent(wire).ToList();
-        vcards[0].FormattedName.ShouldBe("Strict");
+        vcards[0].FormattedName.Must().Be("Strict");
     }
 
     [Test]
@@ -314,6 +314,6 @@ public class vCardDeserializerTests
         var content = "BEGIN:VCARD\nVERSION:4.0\nFN:Escape\nNOTE:part1\\;part2\nEND:VCARD";
         var card = vCardDeserializer.FromContent(content).Single();
 
-        card.Note.ShouldBe("part1;part2");
+        card.Note.Must().Be("part1;part2");
     }
 }

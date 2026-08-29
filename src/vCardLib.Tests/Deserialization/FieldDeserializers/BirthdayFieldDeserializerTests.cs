@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Deserialization.FieldDeserializers;
 
 namespace vCardLib.Tests.Deserialization.FieldDeserializers;
@@ -15,7 +15,7 @@ public class BirthdayFieldDeserializerTests
         var deserializer = new BirthdayFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldBeNull();
+        result.Must().BeNull();
     }
 
     [Test]
@@ -25,8 +25,8 @@ public class BirthdayFieldDeserializerTests
         var deserializer = new BirthdayFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe(new DateTime(1990, 10, 21, 0, 0, 0, DateTimeKind.Utc));
+        result.Must().NotBeNull();
+        result.Must().Be(new DateTime(1990, 10, 21, 0, 0, 0, DateTimeKind.Utc));
     }
 
     [Test]
@@ -36,8 +36,8 @@ public class BirthdayFieldDeserializerTests
         var deserializer = new BirthdayFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe(new DateTime(2012, 12, 1, 13, 42, 11, DateTimeKind.Utc));
+        result.Must().NotBeNull();
+        result.Must().Be(new DateTime(2012, 12, 1, 13, 42, 11, DateTimeKind.Utc));
     }
 
     [Test]
@@ -49,8 +49,8 @@ public class BirthdayFieldDeserializerTests
 
         var timeSpan = new TimeSpan(4, 15, 00);
 
-        result.ShouldNotBeNull();
-        (result != null ? result.Value - DateTime.MinValue : (TimeSpan?)null).ShouldBe(timeSpan);
+        result.Must().NotBeNull();
+        (result != null ? result.Value - DateTime.MinValue : (TimeSpan?)null).Must().Be(timeSpan);
     }
 
     [Test]
@@ -60,7 +60,7 @@ public class BirthdayFieldDeserializerTests
         var deserializer = new BirthdayFieldDeserializer();
         var result = deserializer.Read(input);
 
-        result.ShouldNotBeNull();
-        result.ShouldBe(new DateTime(1990, 5, 15, 0, 0, 0, DateTimeKind.Utc));
+        result.Must().NotBeNull();
+        result.Must().Be(new DateTime(1990, 5, 15, 0, 0, 0, DateTimeKind.Utc));
     }
 }

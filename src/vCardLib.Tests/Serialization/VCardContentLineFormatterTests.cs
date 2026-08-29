@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using Shouldly;
+using OmniAssert;
 using vCardLib.Serialization.Utilities;
 
 namespace vCardLib.Tests.Serialization;
@@ -14,7 +14,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendCrlf(sb, "BEGIN:VCARD");
-        sb.ToString().ShouldBe("BEGIN:VCARD\r\n");
+        sb.ToString().Must().Be("BEGIN:VCARD\r\n");
     }
 
     [Test]
@@ -22,7 +22,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, "FN:Short");
-        sb.ToString().ShouldBe("FN:Short\r\n");
+        sb.ToString().Must().Be("FN:Short\r\n");
     }
 
     [Test]
@@ -32,8 +32,8 @@ public class VCardContentLineFormatterTests
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, payload);
         var line = sb.ToString();
-        line.ShouldEndWith("\r\n");
-        line.TrimEnd('\r', '\n').Length.ShouldBe(75);
+        line.Must().EndWith("\r\n");
+        line.TrimEnd('\r', '\n').Length.Must().Be(75);
     }
 
     [Test]
@@ -43,12 +43,12 @@ public class VCardContentLineFormatterTests
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, payload);
         var text = sb.ToString();
-        text.ShouldContain("\r\n ");
+        text.Must().Contain("\r\n ");
         var lines = text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-        lines.Length.ShouldBe(2);
-        lines[0].Length.ShouldBe(75);
-        lines[1].ShouldStartWith(" ");
-        (Encoding.UTF8.GetByteCount(lines[1]) <= 75).ShouldBeTrue();
+        lines.Length.Must().Be(2);
+        lines[0].Length.Must().Be(75);
+        lines[1].Must().StartWith(" ");
+        (Encoding.UTF8.GetByteCount(lines[1]) <= 75).Must().BeTrue();
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class VCardContentLineFormatterTests
         var prefix = new string('x', 72); // 72 octets
         var emoji = "\U0001F600"; // 4 octets; total logical line 76 octets
         var logical = prefix + emoji;
-        Encoding.UTF8.GetByteCount(logical).ShouldBe(76);
+        Encoding.UTF8.GetByteCount(logical).Must().Be(76);
 
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, logical);
@@ -66,7 +66,7 @@ public class VCardContentLineFormatterTests
 
         var joined = string.Join(string.Empty, text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries)
             .Select(l => l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
-        joined.ShouldBe(logical);
+        joined.Must().Be(logical);
     }
 
     [Test]
@@ -74,7 +74,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, string.Empty);
-        sb.ToString().ShouldBe("\r\n");
+        sb.ToString().Must().Be("\r\n");
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendCrlf(sb, string.Empty);
-        sb.ToString().ShouldBe("\r\n");
+        sb.ToString().Must().Be("\r\n");
     }
 
     [Test]
@@ -90,7 +90,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendCrlf(sb, null);
-        sb.ToString().ShouldBe("\r\n");
+        sb.ToString().Must().Be("\r\n");
     }
 
     [Test]
@@ -98,14 +98,14 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder("X");
         VCardContentLineFormatter.AppendCrlf(sb, "Y");
-        sb.ToString().ShouldBe("XY\r\n");
+        sb.ToString().Must().Be("XY\r\n");
     }
 
     [Test]
     public void CrLf_Constant_IsCarriageReturnLineFeed()
     {
-        VCardContentLineFormatter.CrLf.ShouldBe("\r\n");
-        VCardContentLineFormatter.CrLf.Length.ShouldBe(2);
+        VCardContentLineFormatter.CrLf.Must().Be("\r\n");
+        VCardContentLineFormatter.CrLf.Length.Must().Be(2);
     }
 
     [Test]
@@ -113,7 +113,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, null);
-        sb.ToString().ShouldBe("\r\n");
+        sb.ToString().Must().Be("\r\n");
     }
 
     [Test]
@@ -125,13 +125,13 @@ public class VCardContentLineFormatterTests
         var text = sb.ToString();
 
         var physical = text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-        (physical.Length >= 3).ShouldBeTrue();
+        physical.Length.Must().BeGreaterThanOrEqualTo(3);
         foreach (var line in physical)
-            (Encoding.UTF8.GetByteCount(line) <= 75).ShouldBeTrue();
+            Encoding.UTF8.GetByteCount(line).Must().BeLessThanOrEqualTo(75);
 
         var unfolded = string.Concat(physical.Select(l =>
             l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
-        unfolded.ShouldBe(payload);
+        unfolded.Must().Be(payload);
     }
 
     [Test]
@@ -141,9 +141,9 @@ public class VCardContentLineFormatterTests
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, payload, maxOctets: 10);
         var physical = sb.ToString().Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-        physical.Length.ShouldBe(2);
-        (Encoding.UTF8.GetByteCount(physical[0]) <= 10).ShouldBeTrue();
-        (Encoding.UTF8.GetByteCount(physical[1]) <= 10).ShouldBeTrue();
+        physical.Length.Must().Be(2);
+        (Encoding.UTF8.GetByteCount(physical[0]) <= 10).Must().BeTrue();
+        (Encoding.UTF8.GetByteCount(physical[1]) <= 10).Must().BeTrue();
     }
 
     [Test]
@@ -152,7 +152,7 @@ public class VCardContentLineFormatterTests
         // U+00E9 LATIN SMALL LETTER E WITH ACUTE — 2 UTF-8 bytes (C3 A9)
         var prefix = new string('p', 74); // 74 octets
         var logical = prefix + "\u00e9";
-        Encoding.UTF8.GetByteCount(logical).ShouldBe(76);
+        Encoding.UTF8.GetByteCount(logical).Must().Be(76);
 
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, logical);
@@ -160,7 +160,7 @@ public class VCardContentLineFormatterTests
 
         var joined = string.Concat(text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries)
             .Select(l => l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
-        joined.ShouldBe(logical);
+        joined.Must().Be(logical);
     }
 
     [Test]
@@ -169,7 +169,7 @@ public class VCardContentLineFormatterTests
         // U+3042 HIRAGANA LETTER A — 3 UTF-8 bytes
         var prefix = new string('q', 73); // 73 octets
         var logical = prefix + "\u3042";
-        Encoding.UTF8.GetByteCount(logical).ShouldBe(76);
+        Encoding.UTF8.GetByteCount(logical).Must().Be(76);
 
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, logical);
@@ -177,7 +177,7 @@ public class VCardContentLineFormatterTests
 
         var joined = string.Concat(text.Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries)
             .Select(l => l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
-        joined.ShouldBe(logical);
+        joined.Must().Be(logical);
     }
 
     [Test]
@@ -187,13 +187,13 @@ public class VCardContentLineFormatterTests
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, payload, maxOctets: 2);
         var physical = sb.ToString().Split(new[] { "\r\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-        (physical.Length > 1).ShouldBeTrue();
+        physical.Length.Must().BeGreaterThan(1);
         foreach (var line in physical)
-            (Encoding.UTF8.GetByteCount(line) <= 2).ShouldBeTrue();
+            Encoding.UTF8.GetByteCount(line).Must().BeLessThanOrEqualTo(2);
 
         var unfolded = string.Concat(physical.Select(l =>
             l.StartsWith(" ", System.StringComparison.Ordinal) ? l.Substring(1) : l));
-        unfolded.ShouldBe(payload);
+        unfolded.Must().Be(payload);
     }
 
     [Test]
@@ -201,7 +201,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, "x", maxOctets: 1);
-        sb.ToString().ShouldBe("x\r\n");
+        sb.ToString().Must().Be("x\r\n");
     }
 
     [Test]
@@ -211,7 +211,7 @@ public class VCardContentLineFormatterTests
         VCardContentLineFormatter.AppendCrlf(sb, "A");
         VCardContentLineFormatter.AppendFoldedContentLine(sb, "BB");
         VCardContentLineFormatter.AppendCrlf(sb, "C");
-        sb.ToString().ShouldBe("A\r\nBB\r\nC\r\n");
+        sb.ToString().Must().Be("A\r\nBB\r\nC\r\n");
     }
 
     [Test]
@@ -219,7 +219,7 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, "\u3042");
-        sb.ToString().ShouldBe("\u3042\r\n");
+        sb.ToString().Must().Be("\u3042\r\n");
     }
 
     /// <summary>
@@ -230,6 +230,6 @@ public class VCardContentLineFormatterTests
     {
         var sb = new StringBuilder();
         VCardContentLineFormatter.AppendFoldedContentLine(sb, "\U0001F600", maxOctets: 1);
-        sb.ToString().ShouldBe("\U0001F600\r\n");
+        sb.ToString().Must().Be("\U0001F600\r\n");
     }
 }
