@@ -158,7 +158,7 @@ jobs:
             fi
           }
 
-          TITLE="Release ${VERSION}"
+          TITLE="v${VERSION}"
 
           if gh release create "${VERSION}" "${NUPKGS[@]}" \
             --title "${TITLE}" \
