@@ -16,6 +16,44 @@ namespace vCardLib.Tests.Deserialization;
 public class UnrecognisedVCardFormatTests
 {
     [Test]
+    public void FromContent_WhenBase64EndsWithPadding_PreservesFollowingPropertyAndCard()
+    {
+        const string content = "BEGIN:VCARD\nVERSION:2.1\nPHOTO;JPEG;ENCODING=BASE64:\nYQ==\nFN:First\nEND:VCARD\n" +
+                               "BEGIN:VCARD\nVERSION:2.1\nPHOTO;JPEG;ENCODING=BASE64:Yg==\nEND:VCARD";
+        var cards = vCardDeserializer.FromContent(content).ToList();
+        cards.Count.Must().Be(2);
+        cards[0].Photos[0].Data.Must().Be("YQ==");
+        cards[0].FormattedName.Must().Be("First");
+        cards[1].Photos[0].Data.Must().Be("Yg==");
+    }
+
+    [Test]
+    public void FromContent_WhenQuotedPrintableLegacyCharset_DecodesStructuredComponents()
+    {
+        const string content = "BEGIN:VCARD\nVERSION:2.1\n" +
+                               "N;CHARSET=Windows-1251;ENCODING=QUOTED-PRINTABLE:=C8=E2=E0=ED=EE=E2=E0;;;;\n" +
+                               "ORG;ENCODING=QUOTED-PRINTABLE:One=3BTwo;Unit\nEND:VCARD";
+        var card = vCardDeserializer.FromContent(content).Single();
+        card.Name!.Value.FamilyName.Must().Be("Иванова");
+        card.Organization!.Value.Name.Must().Be("One;Two");
+    }
+
+    [Test]
+    public void FromStream_WhenMixedCharsets_DecodesEachPropertySeparately()
+    {
+        RegisterCodePages();
+        using var stream = new MemoryStream();
+        var first = Encoding.GetEncoding(1251).GetBytes("BEGIN:VCARD\nVERSION:2.1\nN;CHARSET=Windows-1251:Иванова;;;;\n");
+        var last = Encoding.UTF8.GetBytes("FN:Екатерина\nEND:VCARD");
+        stream.Write(first, 0, first.Length);
+        stream.Write(last, 0, last.Length);
+        stream.Position = 0;
+        var card = vCardDeserializer.FromStream(stream).Single();
+        card.Name!.Value.FamilyName.Must().Be("Иванова");
+        card.FormattedName.Must().Be("Екатерина");
+    }
+
+    [Test]
     public void FromContent_WhenWrappedBase64Photo_ReturnsConcatenatedData()
     {
         const string firstLine = "/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJ";

@@ -57,14 +57,16 @@ public static class vCardDeserializer
         if (!File.Exists(filePath))
             throw new FileNotFoundException("File not found.", filePath);
 
-        return FromContent(File.ReadAllText(filePath));
+        using var stream = File.OpenRead(filePath);
+        return FromStream(stream);
     }
 
     public static IEnumerable<vCard> FromStream(Stream stream)
     {
-        var encoding = stream.GetEncoding();
-        using var reader = new StreamReader(stream, encoding);
-        var contents = reader.ReadToEnd();
+        using var input = stream;
+        using var buffer = new MemoryStream();
+        input.CopyTo(buffer);
+        var contents = FileDataHelpers.ReadContent(buffer.ToArray());
         return FromContent(contents);
     }
 
@@ -150,15 +152,24 @@ public static class vCardDeserializer
         {
             if (string.IsNullOrEmpty(line)) continue;
 
+            // Preserve Base64 padding. Also accept legacy soft breaks without
+            // an encoding parameter when the next line is not a new property.
+            if (previousLine != null && previousLine.EndsWith("=", StringComparison.Ordinal) &&
+                (string.Equals(PropertyEncoding.Parameter(previousLine, "ENCODING"), "QUOTED-PRINTABLE", StringComparison.OrdinalIgnoreCase) ||
+                 (PropertyEncoding.Parameter(previousLine, "ENCODING") == null && line.IndexOf(':') < 0)))
+            {
+                previousLine = previousLine.Substring(0, previousLine.Length - 1) + line;
+            }
             // RFC 2426/6350 Unfolding (Space/Tab)
-            if (previousLine != null && (line[0] == ' ' || line[0] == '\t'))
+            else if (previousLine != null && (line[0] == ' ' || line[0] == '\t'))
             {
                 previousLine += line.Substring(1);
             }
-            // v2.1 Quoted-Printable continuation (Line ending with =)
-            else if (previousLine != null && previousLine.EndsWith("=", StringComparison.Ordinal))
+            // v2.1 Base64 exporters may wrap data without leading whitespace.
+            else if (previousLine != null && line.IndexOf(':') < 0 &&
+                     string.Equals(PropertyEncoding.Parameter(previousLine, "ENCODING"), "BASE64", StringComparison.OrdinalIgnoreCase))
             {
-                previousLine = previousLine.Substring(0, previousLine.Length - 1) + line;
+                previousLine += line;
             }
             else
             {

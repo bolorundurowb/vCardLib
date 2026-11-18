@@ -27,7 +27,8 @@ internal sealed class OrganizationFieldDeserializer : IV2FieldDeserializer<Organ
         if (parts.Length == 0)
             return null;
 
-        string Component(int index) => unescape ? ValueUnescaper.Unescape(parts[index]) : parts[index];
+        string Component(int index) => PropertyEncoding.DecodeValue(input,
+            unescape ? ValueUnescaper.Unescape(parts[index]) : parts[index]);
 
         var orgName = Component(0);
         var orgUnitOne = parts.Length > 1 ? Component(1) : null;
