@@ -30,7 +30,7 @@ internal sealed class NameFieldDeserializer : IV2FieldDeserializer<Name>, IV3Fie
             : value.Split(FieldKeyConstants.MetadataDelimiter);
 
         string? Component(int index) =>
-            unescape ? ValueUnescaper.Unescape(parts[index]) : parts[index];
+            PropertyEncoding.DecodeValue(input, unescape ? ValueUnescaper.Unescape(parts[index]) : parts[index]);
 
         if (parts.Length > 0)
             familyName = Component(0);

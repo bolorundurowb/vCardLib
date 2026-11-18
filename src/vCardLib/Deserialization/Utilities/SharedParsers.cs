@@ -86,7 +86,7 @@ internal static class SharedParsers
 
     public static TelephoneNumberType? ParseTelephoneNumberType(this string type) => TelephoneNumberTypeMap.TryGetValue(type, out var result) ? result : null;
 
-    public static string DecodeQuotedPrintable(string input)
+    public static string DecodeQuotedPrintable(string input, System.Text.Encoding? encoding = null)
     {
         if (string.IsNullOrEmpty(input)) return input;
 
@@ -111,6 +111,6 @@ internal static class SharedParsers
                 bytes.Add((byte)input[i]);
             }
         }
-        return System.Text.Encoding.UTF8.GetString(bytes.ToArray());
+        return (encoding ?? System.Text.Encoding.UTF8).GetString(bytes.ToArray());
     }
 }
